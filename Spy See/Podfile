@@ -9,5 +9,7 @@ target 'Spy See' do
 
   pod 'SwiftLint'
   pod 'IQKeyboardManager'
+  pod 'FirebaseAuth'
+  pod 'FirebaseFirestore'
 
 end
