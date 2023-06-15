@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		2A999499F0A07CF74D53E358 /* Pods_Spy_See.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CC0AB13E4E3C18858E4941B /* Pods_Spy_See.framework */; };
+		B522AF112A3AB4A000FF956C /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF102A3AB4A000FF956C /* LobbyViewController.swift */; };
+		B522AF132A3AC3CF00FF956C /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF122A3AC3CF00FF956C /* SettingViewController.swift */; };
 		B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */; };
 		B5D2B0A12A39C8E800ED3516 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */; };
-		B5D2B0A32A39C8E800ED3516 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0A22A39C8E800ED3516 /* ViewController.swift */; };
+		B5D2B0A32A39C8E800ED3516 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */; };
 		B5D2B0A62A39C8E800ED3516 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5D2B0A42A39C8E800ED3516 /* Main.storyboard */; };
 		B5D2B0A82A39C8ED00ED3516 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5D2B0A72A39C8ED00ED3516 /* Assets.xcassets */; };
 		B5D2B0AB2A39C8ED00ED3516 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5D2B0A92A39C8ED00ED3516 /* LaunchScreen.storyboard */; };
@@ -22,10 +24,12 @@
 		07696FC57C387E2A3AD5BB2E /* Pods-Spy See.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spy See.release.xcconfig"; path = "Target Support Files/Pods-Spy See/Pods-Spy See.release.xcconfig"; sourceTree = "<group>"; };
 		1CC0AB13E4E3C18858E4941B /* Pods_Spy_See.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spy_See.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F7C80141FC1BA96FBC07A8 /* Pods-Spy See.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spy See.debug.xcconfig"; path = "Target Support Files/Pods-Spy See/Pods-Spy See.debug.xcconfig"; sourceTree = "<group>"; };
+		B522AF102A3AB4A000FF956C /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
+		B522AF122A3AC3CF00FF956C /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		B5D2B09B2A39C8E800ED3516 /* Spy See.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spy See.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B5D2B0A22A39C8E800ED3516 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		B5D2B0A52A39C8E800ED3516 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B5D2B0A72A39C8ED00ED3516 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5D2B0AA2A39C8ED00ED3516 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -78,7 +82,9 @@
 			children = (
 				B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */,
 				B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */,
-				B5D2B0A22A39C8E800ED3516 /* ViewController.swift */,
+				B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */,
+				B522AF102A3AB4A000FF956C /* LobbyViewController.swift */,
+				B522AF122A3AC3CF00FF956C /* SettingViewController.swift */,
 				B5D2B0B52A3A98A000ED3516 /* Prompt.swift */,
 				B5D2B0A42A39C8E800ED3516 /* Main.storyboard */,
 				B5D2B0A72A39C8ED00ED3516 /* Assets.xcassets */,
@@ -231,10 +237,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5D2B0A32A39C8E800ED3516 /* ViewController.swift in Sources */,
+				B5D2B0A32A39C8E800ED3516 /* LoginViewController.swift in Sources */,
+				B522AF112A3AB4A000FF956C /* LobbyViewController.swift in Sources */,
 				B5D2B0B62A3A98A000ED3516 /* Prompt.swift in Sources */,
 				B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */,
 				B5D2B0A12A39C8E800ED3516 /* SceneDelegate.swift in Sources */,
+				B522AF132A3AC3CF00FF956C /* SettingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
