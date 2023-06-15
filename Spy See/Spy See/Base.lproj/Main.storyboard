@@ -89,7 +89,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="邀請碼：" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v6b-B1-vFV">
-                                <rect key="frame" x="96.666666666666686" y="362" width="200" height="34"/>
+                                <rect key="frame" x="96.333333333333329" y="362" width="200.33333333333337" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="RJ7-qX-kyh"/>
                                 </constraints>
@@ -108,15 +108,27 @@
                                     <segue destination="SXd-Fe-wLU" kind="show" id="HBH-DK-d9q"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gOf-1Q-1cK">
+                                <rect key="frame" x="317" y="361" width="51" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="paperplane.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="joinRoom:" destination="ebf-ug-7VQ" eventType="touchUpInside" id="eiF-7D-UEt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="b0J-Ri-N8k"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="b0J-Ri-N8k" firstAttribute="trailing" secondItem="gOf-1Q-1cK" secondAttribute="trailing" constant="25" id="3Fc-87-gqh"/>
+                            <constraint firstItem="b0J-Ri-N8k" firstAttribute="bottom" secondItem="gOf-1Q-1cK" secondAttribute="bottom" constant="422" id="4Qd-lt-qiV"/>
                             <constraint firstItem="v6b-B1-vFV" firstAttribute="centerX" secondItem="2j7-0d-Aky" secondAttribute="centerX" id="N5b-7A-vPu"/>
                             <constraint firstItem="WLZ-Lf-MTG" firstAttribute="top" secondItem="b0J-Ri-N8k" secondAttribute="top" constant="178" id="UA9-Mc-8Ch"/>
                             <constraint firstItem="v6b-B1-vFV" firstAttribute="top" secondItem="WLZ-Lf-MTG" secondAttribute="bottom" constant="46" id="UDK-5o-WlA"/>
+                            <constraint firstItem="gOf-1Q-1cK" firstAttribute="leading" secondItem="v6b-B1-vFV" secondAttribute="trailing" constant="20.329999999999998" id="ZnR-4Z-xDz"/>
                             <constraint firstItem="WLZ-Lf-MTG" firstAttribute="centerX" secondItem="2j7-0d-Aky" secondAttribute="centerX" id="guU-qI-hiD"/>
                             <constraint firstItem="b0J-Ri-N8k" firstAttribute="bottom" secondItem="v6b-B1-vFV" secondAttribute="bottom" constant="422" id="nNL-71-Fi0"/>
+                            <constraint firstItem="gOf-1Q-1cK" firstAttribute="top" secondItem="b0J-Ri-N8k" secondAttribute="top" constant="258" id="wFo-1Z-qO9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Nt6-yu-3H2"/>
@@ -258,6 +270,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="paperplane.fill" catalog="system" width="128" height="119"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

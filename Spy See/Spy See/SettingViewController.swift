@@ -30,7 +30,7 @@ class SettingViewController: UIViewController {
         }
         let data: [String: Any] = [
             "prompts": generatePromptArray(),
-            "player": email
+            "player": [email]
         ]
         documentRef.setData(data) { error in
             if let error = error {
