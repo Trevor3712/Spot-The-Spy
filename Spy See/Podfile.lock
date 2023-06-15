@@ -707,13 +707,11 @@ PODS:
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
   - PromisesObjC (2.1.1)
-  - SwiftLint (0.52.2)
 
 DEPENDENCIES:
   - FirebaseAuth
   - FirebaseFirestore
   - IQKeyboardManager
-  - SwiftLint
 
 SPEC REPOS:
   trunk:
@@ -732,7 +730,6 @@ SPEC REPOS:
     - Libuv-gRPC
     - nanopb
     - PromisesObjC
-    - SwiftLint
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
@@ -750,8 +747,7 @@ SPEC CHECKSUMS:
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
-  SwiftLint: 1ac76dac888ca05cb0cf24d0c85887ec1209961d
 
-PODFILE CHECKSUM: 01632540cea11ecbd8cf4d468d60863444c5850f
+PODFILE CHECKSUM: 84fd7161c993113894430861c364485d72e07134
 
 COCOAPODS: 1.12.1

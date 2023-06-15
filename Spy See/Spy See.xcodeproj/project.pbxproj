@@ -15,6 +15,7 @@
 		B5D2B0A82A39C8ED00ED3516 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5D2B0A72A39C8ED00ED3516 /* Assets.xcassets */; };
 		B5D2B0AB2A39C8ED00ED3516 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5D2B0A92A39C8ED00ED3516 /* LaunchScreen.storyboard */; };
 		B5D2B0B42A3A017D00ED3516 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */; };
+		B5D2B0B62A3A98A000ED3516 /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0B52A3A98A000ED3516 /* Prompt.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		B5D2B0AA2A39C8ED00ED3516 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5D2B0AC2A39C8ED00ED3516 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B5D2B0B52A3A98A000ED3516 /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */,
 				B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */,
 				B5D2B0A22A39C8E800ED3516 /* ViewController.swift */,
+				B5D2B0B52A3A98A000ED3516 /* Prompt.swift */,
 				B5D2B0A42A39C8E800ED3516 /* Main.storyboard */,
 				B5D2B0A72A39C8ED00ED3516 /* Assets.xcassets */,
 				B5D2B0A92A39C8ED00ED3516 /* LaunchScreen.storyboard */,
@@ -219,7 +222,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -229,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5D2B0A32A39C8E800ED3516 /* ViewController.swift in Sources */,
+				B5D2B0B62A3A98A000ED3516 /* Prompt.swift in Sources */,
 				B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */,
 				B5D2B0A12A39C8E800ED3516 /* SceneDelegate.swift in Sources */,
 			);
