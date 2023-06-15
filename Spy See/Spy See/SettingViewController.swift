@@ -15,6 +15,7 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var spyNumber: UITextField!
     let dataBase = Firestore.firestore()
     var promptArray: [String] = []
+    let inviteVC = InviteViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -23,15 +24,26 @@ class SettingViewController: UIViewController {
         let room = dataBase.collection("Rooms")
         let roomId = generateRoomId()
         let documentRef = room.document(roomId)
+        guard let email = Auth.auth().currentUser?.email else {
+            print("Email is missing")
+            return
+        }
         let data: [String: Any] = [
             "prompts": generatePromptArray(),
-            "player": String(describing: Auth.auth().currentUser)
+            "player": email
         ]
         documentRef.setData(data) { error in
             if let error = error {
                 print("Error adding document: \(error)")
             } else {
                 print("Document added successfully")
+            }
+            DispatchQueue.main.async {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil) 
+                if let inviteVC = storyboard.instantiateViewController(withIdentifier: "InviteViewController") as? InviteViewController {
+                    inviteVC.roomId = roomId
+                    self.navigationController?.pushViewController(inviteVC, animated: true)
+                }
             }
         }
     }
