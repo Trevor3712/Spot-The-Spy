@@ -12,6 +12,7 @@ import FirebaseFirestore
 class LobbyViewController: UIViewController {
     @IBOutlet weak var invitationCode: UITextField!
     let dataBase = Firestore.firestore()
+    var playerPrompt: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,28 +26,45 @@ class LobbyViewController: UIViewController {
         UserDefaults.standard.setValue(invitationCode.text, forKey: "roomId")
         documentRef.getDocument { (document, error) in
             if let document = document, document.exists {
-                // 房间文档存在
                 if var players = document.data()?["player"] as? [String] {
-                    // 获取当前的玩家数组
                     guard let email = Auth.auth().currentUser?.email else {
                         print("Email is missing")
                         return
                     }
                     players.append(email)
-                    documentRef.setData(["player": players], merge: true) { error in
+                    // 計算玩家的index
+                    let playerIndex = players.count - 1
+                    documentRef.setData([
+                        "player": players,
+                        "playerIndex": playerIndex // 存入玩家的index
+                    ], merge: true) { error in
                         if let error = error {
                             print("Error updating document: \(error)")
                         } else {
                             print("Document updated successfully")
-//                            let waitingVC = WaitingViewController()
-//                            self.navigationController?.pushViewController(waitingVC, animated: true)
+                            // 取回自己的index及對應的題目
+                            documentRef.getDocument { (document, error) in
+                                if let document = document, let playerIndex = document.data()?["playerIndex"] as? Int, let prompts = document.data()?["prompts"] as? [String] {
+                                    self.playerPrompt = self.handlePlayerIndex(playerIndex, prompts)
+                                } else {
+                                    print("Failed to retrieve player index: \(error?.localizedDescription ?? "")")
+                                }
+                            }
                         }
                     }
                 }
             } else {
-                // 房间文档不存在或出错
                 print("Document does not exist or there was an error: \(error?.localizedDescription ?? "")")
             }
         }
+    }
+    func handlePlayerIndex(_ playerIndex: Int, _ prompts: [String]) -> String {
+        guard playerIndex >= 0 && playerIndex < prompts.count else {
+            print("Invalid player index")
+            return ""
+        }
+        let selectedprompt = prompts[playerIndex]
+        print("Selected prompt: \(selectedprompt)")
+        return selectedprompt
     }
 }
