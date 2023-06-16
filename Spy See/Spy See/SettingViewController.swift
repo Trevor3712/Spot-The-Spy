@@ -23,6 +23,7 @@ class SettingViewController: UIViewController {
     @IBAction func createInvationCode(_ sender: UIButton) {
         let room = dataBase.collection("Rooms")
         let roomId = generateRoomId()
+        UserDefaults.standard.setValue(roomId, forKey: "roomId")
         let documentRef = room.document(roomId)
         guard let email = Auth.auth().currentUser?.email else {
             print("Email is missing")
@@ -37,13 +38,6 @@ class SettingViewController: UIViewController {
                 print("Error adding document: \(error)")
             } else {
                 print("Document added successfully")
-            }
-            DispatchQueue.main.async {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil) 
-                if let inviteVC = storyboard.instantiateViewController(withIdentifier: "InviteViewController") as? InviteViewController {
-                    inviteVC.roomId = roomId
-                    self.navigationController?.pushViewController(inviteVC, animated: true)
-                }
             }
         }
     }

@@ -174,6 +174,7 @@
                                 <buttonConfiguration key="configuration" style="plain" title="取得邀請碼"/>
                                 <connections>
                                     <action selector="createInvationCode:" destination="SXd-Fe-wLU" eventType="touchUpInside" id="vf9-jF-tee"/>
+                                    <segue destination="Xas-5K-gto" kind="show" id="Zso-4q-amt"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -210,7 +211,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LVs-uG-ixb">
-                                <rect key="frame" x="96.666666666666686" y="237" width="200" height="65"/>
+                                <rect key="frame" x="96.666666666666686" y="281" width="200" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="nfA-Et-1ot"/>
                                 </constraints>
@@ -227,6 +228,7 @@
                                 <buttonConfiguration key="configuration" style="plain" title="進入房間"/>
                                 <connections>
                                     <action selector="joinRoom:" destination="Xas-5K-gto" eventType="touchUpInside" id="Osi-Hd-AtT"/>
+                                    <segue destination="GCJ-8H-c8z" kind="show" id="w66-on-Lkh"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -249,6 +251,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mJJ-xN-1KK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4529" y="4"/>
+        </scene>
+        <!--Waiting View Controller-->
+        <scene sceneID="TBt-BH-A1F">
+            <objects>
+                <viewController id="GCJ-8H-c8z" customClass="WaitingViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="i0d-pf-cS3">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="yZH-jj-9AU"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="REk-0s-5nk"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fv0-aP-jT5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5330.5343511450383" y="3.5211267605633805"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QCp-Y1-tva">

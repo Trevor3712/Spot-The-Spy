@@ -11,6 +11,8 @@
 		B522AF112A3AB4A000FF956C /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF102A3AB4A000FF956C /* LobbyViewController.swift */; };
 		B522AF132A3AC3CF00FF956C /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF122A3AC3CF00FF956C /* SettingViewController.swift */; };
 		B522AF152A3B67E800FF956C /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF142A3B67E800FF956C /* InviteViewController.swift */; };
+		B522AF172A3C0F4900FF956C /* WaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF162A3C0F4900FF956C /* WaitingViewController.swift */; };
+		B522AF192A3C113900FF956C /* PlayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF182A3C113900FF956C /* PlayerCell.swift */; };
 		B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */; };
 		B5D2B0A12A39C8E800ED3516 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */; };
 		B5D2B0A32A39C8E800ED3516 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */; };
@@ -28,6 +30,8 @@
 		B522AF102A3AB4A000FF956C /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
 		B522AF122A3AC3CF00FF956C /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		B522AF142A3B67E800FF956C /* InviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
+		B522AF162A3C0F4900FF956C /* WaitingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingViewController.swift; sourceTree = "<group>"; };
+		B522AF182A3C113900FF956C /* PlayerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCell.swift; sourceTree = "<group>"; };
 		B5D2B09B2A39C8E800ED3516 /* Spy See.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spy See.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +92,8 @@
 				B522AF102A3AB4A000FF956C /* LobbyViewController.swift */,
 				B522AF122A3AC3CF00FF956C /* SettingViewController.swift */,
 				B522AF142A3B67E800FF956C /* InviteViewController.swift */,
+				B522AF162A3C0F4900FF956C /* WaitingViewController.swift */,
+				B522AF182A3C113900FF956C /* PlayerCell.swift */,
 				B5D2B0B52A3A98A000ED3516 /* Prompt.swift */,
 				B5D2B0A42A39C8E800ED3516 /* Main.storyboard */,
 				B5D2B0A72A39C8ED00ED3516 /* Assets.xcassets */,
@@ -240,8 +246,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B522AF172A3C0F4900FF956C /* WaitingViewController.swift in Sources */,
 				B5D2B0A32A39C8E800ED3516 /* LoginViewController.swift in Sources */,
 				B522AF112A3AB4A000FF956C /* LobbyViewController.swift in Sources */,
+				B522AF192A3C113900FF956C /* PlayerCell.swift in Sources */,
 				B5D2B0B62A3A98A000ED3516 /* Prompt.swift in Sources */,
 				B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */,
 				B5D2B0A12A39C8E800ED3516 /* SceneDelegate.swift in Sources */,

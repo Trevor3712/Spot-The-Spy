@@ -9,12 +9,9 @@ import UIKit
 
 class InviteViewController: UIViewController {
     @IBOutlet weak var inviteLabel: UILabel!
-    var roomId: String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard roomId != nil else {
-            return
-        }
+        let roomId = UserDefaults.standard.string(forKey: "roomId")
         inviteLabel.text = roomId
     }
     @IBAction func joinRoom(_ sender: UIButton) {
