@@ -12,7 +12,7 @@ import FirebaseFirestore
 class LobbyViewController: UIViewController {
     @IBOutlet weak var invitationCode: UITextField!
     let dataBase = Firestore.firestore()
-    var playerPrompt: String?
+//    var playerPrompt: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +45,7 @@ class LobbyViewController: UIViewController {
                             // 取回自己的index及對應的題目
                             documentRef.getDocument { (document, error) in
                                 if let document = document, let playerIndex = document.data()?["playerIndex"] as? Int, let prompts = document.data()?["prompts"] as? [String] {
-                                    self.playerPrompt = self.handlePlayerIndex(playerIndex, prompts)
+                                        self.handlePlayerIndex(playerIndex, prompts)
                                 } else {
                                     print("Failed to retrieve player index: \(error?.localizedDescription ?? "")")
                                 }
@@ -58,13 +58,18 @@ class LobbyViewController: UIViewController {
             }
         }
     }
-    func handlePlayerIndex(_ playerIndex: Int, _ prompts: [String]) -> String {
+    func handlePlayerIndex(_ playerIndex: Int, _ prompts: [String]) -> String? {
         guard playerIndex >= 0 && playerIndex < prompts.count else {
             print("Invalid player index")
-            return ""
+            return nil
         }
-        let selectedprompt = prompts[playerIndex]
-        print("Selected prompt: \(selectedprompt)")
-        return selectedprompt
+        let selectedPrompt = prompts[playerIndex]
+//        let passPromptVC = self.storyboard?.instantiateViewController(withIdentifier: "PassPromptViewController") as! PassPromptViewController
+//        passPromptVC.playerPrompt = selectedPrompt
+        UserDefaults.standard.removeObject(forKey: "playerPrompt")
+        UserDefaults.standard.setValue(selectedPrompt, forKey: "playerPrompt")
+        print(UserDefaults.standard.string(forKey: "playerPrompt")!)
+        print("Selected prompt: \(selectedPrompt)")
+        return selectedPrompt
     }
 }

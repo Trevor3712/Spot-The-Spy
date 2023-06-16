@@ -275,14 +275,45 @@
         <!--Pass Prompt View Controller-->
         <scene sceneID="9BA-MY-wDC">
             <objects>
-                <viewController id="Gw4-1s-vBo" customClass="PassPromptViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PassPromptViewController" id="Gw4-1s-vBo" customClass="PassPromptViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oHX-A6-TJV">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你的題目" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LSD-43-QcY">
+                                <rect key="frame" x="146.66666666666666" y="194" width="100" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="PRv-dP-V5V"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vf1-Uv-5AK">
+                                <rect key="frame" x="146.66666666666666" y="340" width="100" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="smw-pp-9CC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="hXu-kE-dhV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vf1-Uv-5AK" firstAttribute="centerX" secondItem="oHX-A6-TJV" secondAttribute="centerX" id="2ja-1A-LMn"/>
+                            <constraint firstItem="LSD-43-QcY" firstAttribute="centerX" secondItem="oHX-A6-TJV" secondAttribute="centerX" id="86U-0A-oWU"/>
+                            <constraint firstItem="hXu-kE-dhV" firstAttribute="bottom" secondItem="vf1-Uv-5AK" secondAttribute="bottom" constant="457" id="Dx1-FE-Jzv"/>
+                            <constraint firstItem="vf1-Uv-5AK" firstAttribute="top" secondItem="LSD-43-QcY" secondAttribute="bottom" constant="125" id="S3i-X3-7us"/>
+                            <constraint firstItem="hXu-kE-dhV" firstAttribute="bottom" secondItem="LSD-43-QcY" secondAttribute="bottom" constant="603" id="WjS-mZ-NZy"/>
+                            <constraint firstItem="LSD-43-QcY" firstAttribute="top" secondItem="hXu-kE-dhV" secondAttribute="top" constant="91" id="fEj-sW-9VL"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Mcx-M7-46u"/>
+                    <connections>
+                        <outlet property="promptLabel" destination="vf1-Uv-5AK" id="1ng-fH-9jn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oyy-5f-XiB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

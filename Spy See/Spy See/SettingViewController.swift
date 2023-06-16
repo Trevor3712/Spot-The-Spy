@@ -28,8 +28,9 @@ class SettingViewController: UIViewController {
             print("Email is missing")
             return
         }
+        let prompts = generatePromptArray()
         let data: [String: Any] = [
-            "prompts": generatePromptArray(),
+            "prompts": prompts,
             "player": [email],
             "playerNumber": playerNumber.text ?? ""
         ]
@@ -38,6 +39,8 @@ class SettingViewController: UIViewController {
                 print("Error adding document: \(error)")
             } else {
                 print("Document added successfully")
+                UserDefaults.standard.removeObject(forKey: "hostPrompt")
+                UserDefaults.standard.setValue(prompts[0], forKey: "hostPrompt")
             }
         }
     }
