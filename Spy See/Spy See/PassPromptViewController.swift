@@ -9,16 +9,19 @@ import UIKit
 
 class PassPromptViewController: UIViewController {
     @IBOutlet weak var promptLabel: UILabel!
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        let playerPrompt = UserDefaults.standard.string(forKey: "playerPrompt")
-        let hostPrompt = UserDefaults.standard.string(forKey: "hostPrompt")
-        print(playerPrompt)
-        print(hostPrompt)
-        if playerPrompt != nil {
-            promptLabel.text = playerPrompt
-        } else {
-            promptLabel.text = hostPrompt
+    var playerPrompt: String?
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            let playerPrompt = UserDefaults.standard.string(forKey: "playerPrompt")
+            let hostPrompt = UserDefaults.standard.string(forKey: "hostPrompt")
+            print(playerPrompt)
+            print(hostPrompt)
+            if playerPrompt != nil {
+                self.promptLabel.text = playerPrompt
+            } else {
+                self.promptLabel.text = hostPrompt
+            }
         }
     }
 }
