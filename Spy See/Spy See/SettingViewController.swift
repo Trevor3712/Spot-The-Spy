@@ -15,7 +15,6 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var spyNumber: UITextField!
     let dataBase = Firestore.firestore()
     var promptArray: [String] = []
-    let inviteVC = InviteViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -31,7 +30,8 @@ class SettingViewController: UIViewController {
         }
         let data: [String: Any] = [
             "prompts": generatePromptArray(),
-            "player": [email]
+            "player": [email],
+            "playerNumber": playerNumber.text ?? ""
         ]
         documentRef.setData(data) { error in
             if let error = error {

@@ -264,10 +264,29 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="REk-0s-5nk"/>
+                    <connections>
+                        <segue destination="Gw4-1s-vBo" kind="show" identifier="waitingToPrompt" id="g1y-FL-vEB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fv0-aP-jT5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5330.5343511450383" y="3.5211267605633805"/>
+        </scene>
+        <!--Pass Prompt View Controller-->
+        <scene sceneID="9BA-MY-wDC">
+            <objects>
+                <viewController id="Gw4-1s-vBo" customClass="PassPromptViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oHX-A6-TJV">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="hXu-kE-dhV"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Mcx-M7-46u"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oyy-5f-XiB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6134" y="4"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QCp-Y1-tva">

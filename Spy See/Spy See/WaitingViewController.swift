@@ -19,6 +19,7 @@ class WaitingViewController: UIViewController {
     }()
     let dataBase = Firestore.firestore()
     var players: [String] = []
+    var playerNumber: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
@@ -40,9 +41,7 @@ class WaitingViewController: UIViewController {
             print("Invalid roomId")
             return
         }
-//        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = dataBase.collection("Rooms").document(roomId)
-//        self.players = []
         var existingPlayers: Set<String> = Set(self.players)
         documentRef.addSnapshotListener { (documentSnapshot, error) in
             if let error = error {
@@ -53,13 +52,23 @@ class WaitingViewController: UIViewController {
                 print("No data available")
                 return
             }
+            if let playerNumberData = data["playerNumber"] as? String {
+                self.playerNumber = Int(playerNumberData)
+            }
             if let playersData = data["player"] as? [String] {
                 self.players = []
                 let newPlayers = playersData.filter { !existingPlayers.contains($0) }
                 self.players.append(contentsOf: newPlayers)
                 self.tableView.reloadData()
+                
+                if self.allPlayersJoined() {
+                    self.performSegue(withIdentifier: "waitingToPrompt", sender: self)
+                }
             }
         }
+    }
+    func allPlayersJoined() -> Bool {
+        return self.players.count == playerNumber
     }
 }
 
@@ -76,5 +85,15 @@ extension WaitingViewController: UITableViewDataSource {
 extension WaitingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         40
+    }
+}
+
+extension WaitingViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "waitingToPrompt" {
+//            if let promptVC = segue.destination as? PassPromptViewController {
+//
+//            }
+        }
     }
 }
