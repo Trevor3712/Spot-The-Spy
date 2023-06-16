@@ -36,9 +36,14 @@ class WaitingViewController: UIViewController {
         ])
     }
     func loadRoomData() {
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
+        guard let roomId = UserDefaults.standard.string(forKey: "roomId"), !roomId.isEmpty else {
+            print("Invalid roomId")
+            return
+        }
+//        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = dataBase.collection("Rooms").document(roomId)
-       self.players = []
+//        self.players = []
+        var existingPlayers: Set<String> = Set(self.players)
         documentRef.addSnapshotListener { (documentSnapshot, error) in
             if let error = error {
                 print(error)
@@ -49,7 +54,9 @@ class WaitingViewController: UIViewController {
                 return
             }
             if let playersData = data["player"] as? [String] {
-                self.players.append(contentsOf: playersData)
+                self.players = []
+                let newPlayers = playersData.filter { !existingPlayers.contains($0) }
+                self.players.append(contentsOf: newPlayers)
                 self.tableView.reloadData()
             }
         }

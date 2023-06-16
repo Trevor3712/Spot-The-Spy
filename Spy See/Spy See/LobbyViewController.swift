@@ -22,6 +22,7 @@ class LobbyViewController: UIViewController {
     @IBAction func joinRoom(_ sender: UIButton) {
         let room = dataBase.collection("Rooms")
         let documentRef = room.document(invitationCode.text ?? "")
+        UserDefaults.standard.setValue(invitationCode.text, forKey: "roomId")
         documentRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 // 房间文档存在
@@ -37,6 +38,8 @@ class LobbyViewController: UIViewController {
                             print("Error updating document: \(error)")
                         } else {
                             print("Document updated successfully")
+//                            let waitingVC = WaitingViewController()
+//                            self.navigationController?.pushViewController(waitingVC, animated: true)
                         }
                     }
                 }

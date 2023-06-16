@@ -114,6 +114,7 @@
                                 <buttonConfiguration key="configuration" style="plain" image="paperplane.fill" catalog="system"/>
                                 <connections>
                                     <action selector="joinRoom:" destination="ebf-ug-7VQ" eventType="touchUpInside" id="eiF-7D-UEt"/>
+                                    <segue destination="GCJ-8H-c8z" kind="show" id="UiY-CT-8kC"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -287,6 +288,9 @@
             <point key="canvasLocation" x="947.32824427480909" y="3.5211267605633805"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="UiY-CT-8kC"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="paperplane.fill" catalog="system" width="128" height="119"/>
         <systemColor name="systemBackgroundColor">
