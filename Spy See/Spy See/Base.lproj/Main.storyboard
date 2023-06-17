@@ -89,7 +89,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="邀請碼：" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v6b-B1-vFV">
-                                <rect key="frame" x="96.333333333333329" y="362" width="200.33333333333337" height="34"/>
+                                <rect key="frame" x="96.333333333333329" y="362" width="200.33333333333343" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="RJ7-qX-kyh"/>
                                 </constraints>
@@ -350,17 +350,54 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fh-md-ark">
+                                <rect key="frame" x="46.666666666666657" y="372" width="300" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="H1t-el-oZ0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3aR-80-GAS">
+                                <rect key="frame" x="76" y="516" width="240" height="128"/>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZR6-Ta-uAq">
+                                <rect key="frame" x="172" y="679" width="51" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="paperplane.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="giveClue:" destination="04L-e8-13C" eventType="touchUpInside" id="BuH-KH-tTS"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mgb-Eh-Ki4"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="3fh-md-ark" firstAttribute="top" secondItem="oWG-WB-0lb" secondAttribute="bottom" constant="165" id="2Ec-jG-zVD"/>
+                            <constraint firstItem="mgb-Eh-Ki4" firstAttribute="trailing" secondItem="ZR6-Ta-uAq" secondAttribute="trailing" constant="170" id="6Vb-fE-4a4"/>
+                            <constraint firstItem="3fh-md-ark" firstAttribute="centerX" secondItem="h2j-GR-rST" secondAttribute="centerX" id="Bt9-ph-kfY"/>
+                            <constraint firstItem="3aR-80-GAS" firstAttribute="top" secondItem="3fh-md-ark" secondAttribute="bottom" constant="123" id="Qdm-Ra-lsG"/>
+                            <constraint firstItem="mgb-Eh-Ki4" firstAttribute="bottom" secondItem="3aR-80-GAS" secondAttribute="bottom" constant="174" id="V5K-5a-pEn"/>
                             <constraint firstItem="oWG-WB-0lb" firstAttribute="top" secondItem="mgb-Eh-Ki4" secondAttribute="top" constant="83" id="gdJ-Mw-IFG"/>
                             <constraint firstItem="oWG-WB-0lb" firstAttribute="centerX" secondItem="h2j-GR-rST" secondAttribute="centerX" id="hbe-ga-gRj"/>
                             <constraint firstItem="mgb-Eh-Ki4" firstAttribute="bottom" secondItem="oWG-WB-0lb" secondAttribute="bottom" constant="611" id="htb-o4-VXw"/>
+                            <constraint firstItem="3aR-80-GAS" firstAttribute="leading" secondItem="mgb-Eh-Ki4" secondAttribute="leading" constant="76" id="icc-1o-PgR"/>
+                            <constraint firstItem="ZR6-Ta-uAq" firstAttribute="leading" secondItem="mgb-Eh-Ki4" secondAttribute="leading" constant="172" id="ioP-Hl-Nyw"/>
+                            <constraint firstItem="mgb-Eh-Ki4" firstAttribute="bottom" secondItem="ZR6-Ta-uAq" secondAttribute="bottom" constant="104" id="kNe-Hh-RmO"/>
+                            <constraint firstItem="ZR6-Ta-uAq" firstAttribute="top" secondItem="3aR-80-GAS" secondAttribute="bottom" constant="35" id="n6O-l1-FsF"/>
+                            <constraint firstItem="mgb-Eh-Ki4" firstAttribute="bottom" secondItem="3fh-md-ark" secondAttribute="bottom" constant="425" id="o2F-LO-k1e"/>
+                            <constraint firstItem="mgb-Eh-Ki4" firstAttribute="trailing" secondItem="3aR-80-GAS" secondAttribute="trailing" constant="77" id="wG5-r0-Xbh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qAA-TO-GXu"/>
                     <connections>
+                        <outlet property="clueLabel" destination="3fh-md-ark" id="Uih-mM-CCK"/>
+                        <outlet property="clueTextView" destination="3aR-80-GAS" id="aJk-KJ-xyu"/>
                         <outlet property="promptLabel" destination="oWG-WB-0lb" id="8Ec-gm-H5o"/>
                     </connections>
                 </viewController>
@@ -388,10 +425,16 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="UiY-CT-8kC"/>
+        <segue reference="w66-on-Lkh"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="paperplane.fill" catalog="system" width="128" height="119"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
