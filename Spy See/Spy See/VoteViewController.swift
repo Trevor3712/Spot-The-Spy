@@ -8,5 +8,46 @@
 import UIKit
 
 class VoteViewController: UIViewController {
-    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .white
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(PlayerCell.self, forCellReuseIdentifier: PlayerCell.reuseIdentifier)
+        return tableView
+    }()
+    var players = UserDefaults.standard.stringArray(forKey: "playersArray")
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureTableView()
+    }
+    func configureTableView() {
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -200)
+        ])
+    }
+}
+
+extension VoteViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        players?.count ?? 0
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlayerCell.reuseIdentifier) as? PlayerCell else { fatalError("Can't create cell") }
+        cell.titleLabel.text = players?[indexPath.row]
+        return cell
+    }
+}
+extension VoteViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        40
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        <#code#>
+    }
 }

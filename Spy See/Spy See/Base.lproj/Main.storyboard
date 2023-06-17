@@ -413,8 +413,24 @@
                     <view key="view" contentMode="scaleToFill" id="oge-iY-R5P">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你覺得誰是臥底？" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Bi-bn-Vsw">
+                                <rect key="frame" x="96.666666666666686" y="177" width="200" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="rNR-ru-vuk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="4Bs-0I-K4a"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="0Bi-bn-Vsw" firstAttribute="top" secondItem="4Bs-0I-K4a" secondAttribute="top" constant="74" id="EXr-qj-tKE"/>
+                            <constraint firstItem="0Bi-bn-Vsw" firstAttribute="centerX" secondItem="oge-iY-R5P" secondAttribute="centerX" id="ary-8P-zZa"/>
+                            <constraint firstItem="4Bs-0I-K4a" firstAttribute="bottom" secondItem="0Bi-bn-Vsw" secondAttribute="bottom" constant="620" id="kbf-sx-y1b"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xMc-7q-cSO"/>
                 </viewController>
