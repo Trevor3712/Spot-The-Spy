@@ -64,7 +64,7 @@ extension VoteViewController: UITableViewDelegate {
         let documentRef = room.document(roomId)
         let email = Auth.auth().currentUser?.email
 
-        documentRef.updateData(["\(email ?? "")": votedPlayer ?? ""]) { error in
+        documentRef.updateData(["voted": FieldValue.arrayUnion([["\(email ?? "")": votedPlayer ?? ""]])]) { error in
             if let error = error {
                 print("Error updating document: \(error)")
             } else {
