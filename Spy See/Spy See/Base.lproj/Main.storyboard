@@ -423,13 +423,27 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FSc-a4-gKj">
+                                <rect key="frame" x="146.66666666666666" y="667" width="100" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="Lbw-7w-xWO"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="投票"/>
+                                <connections>
+                                    <action selector="addVotedPlayer:" destination="TBl-QV-YA4" eventType="touchUpInside" id="x0H-IE-S5F"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4Bs-0I-K4a"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="4Bs-0I-K4a" firstAttribute="bottom" secondItem="FSc-a4-gKj" secondAttribute="bottom" constant="116" id="EFu-4p-59b"/>
                             <constraint firstItem="0Bi-bn-Vsw" firstAttribute="top" secondItem="4Bs-0I-K4a" secondAttribute="top" constant="74" id="EXr-qj-tKE"/>
                             <constraint firstItem="0Bi-bn-Vsw" firstAttribute="centerX" secondItem="oge-iY-R5P" secondAttribute="centerX" id="ary-8P-zZa"/>
                             <constraint firstItem="4Bs-0I-K4a" firstAttribute="bottom" secondItem="0Bi-bn-Vsw" secondAttribute="bottom" constant="620" id="kbf-sx-y1b"/>
+                            <constraint firstItem="FSc-a4-gKj" firstAttribute="centerX" secondItem="oge-iY-R5P" secondAttribute="centerX" id="oVX-ki-YuR"/>
+                            <constraint firstItem="FSc-a4-gKj" firstAttribute="top" secondItem="0Bi-bn-Vsw" secondAttribute="bottom" constant="469" id="vwL-xq-6Va"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xMc-7q-cSO"/>

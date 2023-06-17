@@ -35,7 +35,7 @@ class SpeakViewController: UIViewController {
         currentPlayerIndex += 1
         print(currentPlayerIndex)
         if currentPlayerIndex == players.count {
-            timer = Timer.scheduledTimer(withTimeInterval: 20, repeats: false) { [weak self] _ in
+            timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { [weak self] _ in
                 self?.performSegue(withIdentifier: "SpeakToVote", sender: self)
                 self?.timer?.invalidate()
             }
@@ -44,7 +44,7 @@ class SpeakViewController: UIViewController {
 //        if currentPlayerIndex >= players.count {
 //            currentPlayerIndex = 0
 //        }
-        timer = Timer.scheduledTimer(withTimeInterval: 20, repeats: false) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { [weak self] _ in
             self?.showNextPrompt()
         }
     }
