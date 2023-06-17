@@ -26,6 +26,10 @@ class WaitingViewController: UIViewController {
         players = []
         loadRoomData()
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UserDefaults.standard.setValue(players, forKey: "playersArray")
+    }
     func configureTableView() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -60,7 +64,6 @@ class WaitingViewController: UIViewController {
                 let newPlayers = playersData.filter { !existingPlayers.contains($0) }
                 self.players.append(contentsOf: newPlayers)
                 self.tableView.reloadData()
-                
                 if self.allPlayersJoined() {
                     self.performSegue(withIdentifier: "waitingToPrompt", sender: self)
                 }

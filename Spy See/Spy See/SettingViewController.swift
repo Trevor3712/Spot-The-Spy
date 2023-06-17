@@ -39,8 +39,10 @@ class SettingViewController: UIViewController {
                 print("Error adding document: \(error)")
             } else {
                 print("Document added successfully")
+                UserDefaults.standard.removeObject(forKey: "playerPrompt")
                 UserDefaults.standard.removeObject(forKey: "hostPrompt")
-                UserDefaults.standard.setValue(prompts[0], forKey: "hostPrompt")
+                UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
+                print(UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt"))
             }
         }
     }
