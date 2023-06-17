@@ -35,7 +35,10 @@ class SpeakViewController: UIViewController {
         currentPlayerIndex += 1
         print(currentPlayerIndex)
         if currentPlayerIndex == players.count {
-            timer?.invalidate()
+            timer = Timer.scheduledTimer(withTimeInterval: 20, repeats: false) { [weak self] _ in
+                self?.performSegue(withIdentifier: "SpeakToVote", sender: self)
+                self?.timer?.invalidate()
+            }
             return
         }
 //        if currentPlayerIndex >= players.count {
@@ -46,7 +49,6 @@ class SpeakViewController: UIViewController {
         }
     }
     @IBAction func giveClue(_ sender: UIButton) {
-        clueTextView.text = ""
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
@@ -58,6 +60,7 @@ class SpeakViewController: UIViewController {
                 print("Error adding document: \(error)")
             } else {
                 print("Document added successfully")
+                self.clueTextView.text = ""
             }
         }
     }
@@ -77,6 +80,13 @@ class SpeakViewController: UIViewController {
             if let clue = data["clue"] as? String {
                 self.clueLabel.text = clue
             }
+        }
+    }
+}
+extension SpeakViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SpeakToVote" {
+            
         }
     }
 }

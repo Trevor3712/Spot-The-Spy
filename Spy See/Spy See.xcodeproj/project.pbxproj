@@ -15,6 +15,7 @@
 		B522AF192A3C113900FF956C /* PlayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF182A3C113900FF956C /* PlayerCell.swift */; };
 		B522AF1B2A3C5CAF00FF956C /* PassPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF1A2A3C5CAF00FF956C /* PassPromptViewController.swift */; };
 		B522AF1D2A3CBF2200FF956C /* SpeakViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF1C2A3CBF2200FF956C /* SpeakViewController.swift */; };
+		B59588952A3D98430058E170 /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588942A3D98430058E170 /* VoteViewController.swift */; };
 		B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */; };
 		B5D2B0A12A39C8E800ED3516 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */; };
 		B5D2B0A32A39C8E800ED3516 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */; };
@@ -36,6 +37,7 @@
 		B522AF182A3C113900FF956C /* PlayerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCell.swift; sourceTree = "<group>"; };
 		B522AF1A2A3C5CAF00FF956C /* PassPromptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassPromptViewController.swift; sourceTree = "<group>"; };
 		B522AF1C2A3CBF2200FF956C /* SpeakViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakViewController.swift; sourceTree = "<group>"; };
+		B59588942A3D98430058E170 /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
 		B5D2B09B2A39C8E800ED3516 /* Spy See.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spy See.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				B522AF162A3C0F4900FF956C /* WaitingViewController.swift */,
 				B522AF1A2A3C5CAF00FF956C /* PassPromptViewController.swift */,
 				B522AF1C2A3CBF2200FF956C /* SpeakViewController.swift */,
+				B59588942A3D98430058E170 /* VoteViewController.swift */,
 				B522AF182A3C113900FF956C /* PlayerCell.swift */,
 				B5D2B0B52A3A98A000ED3516 /* Prompt.swift */,
 				B5D2B0A42A39C8E800ED3516 /* Main.storyboard */,
@@ -252,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B59588952A3D98430058E170 /* VoteViewController.swift in Sources */,
 				B522AF172A3C0F4900FF956C /* WaitingViewController.swift in Sources */,
 				B5D2B0A32A39C8E800ED3516 /* LoginViewController.swift in Sources */,
 				B522AF112A3AB4A000FF956C /* LobbyViewController.swift in Sources */,

@@ -399,11 +399,28 @@
                         <outlet property="clueLabel" destination="3fh-md-ark" id="Uih-mM-CCK"/>
                         <outlet property="clueTextView" destination="3aR-80-GAS" id="aJk-KJ-xyu"/>
                         <outlet property="promptLabel" destination="oWG-WB-0lb" id="8Ec-gm-H5o"/>
+                        <segue destination="TBl-QV-YA4" kind="show" identifier="SpeakToVote" id="7N3-DJ-1rg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VAI-7e-fah" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6903" y="4"/>
+        </scene>
+        <!--Vote View Controller-->
+        <scene sceneID="E1T-Ra-0Sb">
+            <objects>
+                <viewController id="TBl-QV-YA4" customClass="VoteViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oge-iY-R5P">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="4Bs-0I-K4a"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="xMc-7q-cSO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vL1-J4-hGD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7732" y="4"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QCp-Y1-tva">
