@@ -432,6 +432,7 @@
                                 <buttonConfiguration key="configuration" style="plain" title="投票"/>
                                 <connections>
                                     <action selector="addVotedPlayer:" destination="TBl-QV-YA4" eventType="touchUpInside" id="x0H-IE-S5F"/>
+                                    <segue destination="coD-jQ-cyL" kind="show" id="ChB-zL-EqZ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -447,10 +448,29 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xMc-7q-cSO"/>
+                    <connections>
+                        <outlet property="voteButton" destination="FSc-a4-gKj" id="u0i-DD-Rrb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vL1-J4-hGD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7732" y="4"/>
+        </scene>
+        <!--Kill View Controller-->
+        <scene sceneID="gr9-Vb-24s">
+            <objects>
+                <viewController id="coD-jQ-cyL" customClass="KillViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="C1D-hj-Krs">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="W2d-wJ-21l"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="i8B-P3-WGw"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="13w-Op-Qcu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8572" y="4"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QCp-Y1-tva">

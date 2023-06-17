@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import FirebaseAuth
 import FirebaseFirestore
 
 class VoteViewController: UIViewController {
+    @IBOutlet weak var voteButton: UIButton!
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
@@ -56,45 +58,19 @@ extension VoteViewController: UITableViewDelegate {
         }
         votedPlayer = cell.titleLabel.text
     }
-    
     @IBAction func addVotedPlayer(_ sender: UIButton) {
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
-        
-        documentRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                // 取得現有的voted數組
-                var votedArray = document.get("voted") as? [String] ?? []
-                
-                // 添加重複的votedPlayer到votedArray
-                if let votedPlayer = self.votedPlayer {
-                    votedArray.append(votedPlayer)
-                }
-                
-                // 更新voted字段
-                documentRef.updateData(["voted": votedArray]) { error in
-                    if let error = error {
-                        print("Error updating document: \(error)")
-                    } else {
-                        print("Document updated successfully")
-                    }
-                }
+        let email = Auth.auth().currentUser?.email
+
+        documentRef.updateData(["\(email ?? "")": votedPlayer ?? ""]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
             } else {
-                print("Document does not exist")
+                print("Document updated successfully")
+//                self.voteButton.isEnabled = false
             }
         }
-        
-//        let data: [String: Any] = [
-//            "voted": [votedPlayer]
-//        ]
-//
-//        documentRef.updateData(["voted": FieldValue.arrayUnion([votedPlayer ?? ""])]) { error in
-//            if let error = error {
-//                print("Error updating document: \(error)")
-//            } else {
-//                print("Document updated successfully")
-//            }
-//        }
     }
 }
