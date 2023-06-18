@@ -55,7 +55,7 @@ class SpeakViewController: UIViewController {
         let data: [String: Any] = [
             "clue": clueTextView.text ?? ""
         ]
-        documentRef.setData(data) { error in
+        documentRef.updateData(data) { error in
             if let error = error {
                 print("Error adding document: \(error)")
             } else {
@@ -78,7 +78,13 @@ class SpeakViewController: UIViewController {
                 return
             }
             if let clue = data["clue"] as? String {
-                self.clueLabel.text = clue
+                DispatchQueue.main.async {
+                    self.clueLabel.text = clue
+                } 
+            } else {
+                DispatchQueue.main.async {
+                    self.clueLabel.text = ""
+                }
             }
         }
     }

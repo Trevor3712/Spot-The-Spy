@@ -18,6 +18,7 @@ class WaitingViewController: UIViewController {
         return tableView
     }()
     let dataBase = Firestore.firestore()
+    var documentListener: ListenerRegistration?
     var players: [String] = []
     var playerNumber: Int?
     override func viewDidLoad() {
@@ -28,6 +29,7 @@ class WaitingViewController: UIViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        documentListener?.remove()
         UserDefaults.standard.setValue(players, forKey: "playersArray")
     }
     func configureTableView() {
@@ -47,7 +49,7 @@ class WaitingViewController: UIViewController {
         }
         let documentRef = dataBase.collection("Rooms").document(roomId)
         var existingPlayers: Set<String> = Set(self.players)
-        documentRef.addSnapshotListener { (documentSnapshot, error) in
+        documentListener = documentRef.addSnapshotListener { (documentSnapshot, error) in
             if let error = error {
                 print(error)
                 return
