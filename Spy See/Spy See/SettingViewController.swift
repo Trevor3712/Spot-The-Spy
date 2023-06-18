@@ -15,6 +15,9 @@ class SettingViewController: UIViewController {
     @IBOutlet weak var spyNumber: UITextField!
     let dataBase = Firestore.firestore()
     var promptArray: [String] = []
+    var identityArray: [String] = []
+    var shuffledIndices: [Int] = []
+    var choosedPrompt: ([String], [String]) = ([], [])
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -29,8 +32,10 @@ class SettingViewController: UIViewController {
             return
         }
         let prompts = generatePromptArray()
+        let identities = generateIdentityArray()
         let data: [String: Any] = [
             "prompts": prompts,
+            "identities": identities,
             "player": [email],
             "playerNumber": playerNumber.text ?? ""
         ]
@@ -42,7 +47,7 @@ class SettingViewController: UIViewController {
                 UserDefaults.standard.removeObject(forKey: "playerPrompt")
                 UserDefaults.standard.removeObject(forKey: "hostPrompt")
                 UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
-                print("Selected host prompt: \(UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt"))")
+                UserDefaults.standard.set(self.identityArray, forKey: "identities")
             }
         }
     }
@@ -56,14 +61,26 @@ class SettingViewController: UIViewController {
     }
     func generatePromptArray() -> [String] {
         promptArray = []
-        let choosedPrompt = prompt.randomElement()
+        choosedPrompt = prompt.randomElement() ?? ([""], [""])
         for _ in 0...(Int(playerNumber.text ?? "") ?? 0) - (Int(spyNumber.text ?? "") ?? 0) - 1 {
-            promptArray.append(choosedPrompt?.0[1] ?? "")
+            promptArray.append(choosedPrompt.0[1])
         }
         for _ in 0...(Int(spyNumber.text ?? "") ?? 0) - 1 {
-            promptArray.append(choosedPrompt?.1[1] ?? "")
+            promptArray.append(choosedPrompt.1[1])
         }
-        promptArray.shuffle()
+        shuffledIndices = Array(promptArray.indices).shuffled()
+        promptArray = shuffledIndices.map { promptArray[$0] }
         return promptArray
+    }
+    func generateIdentityArray() -> [String] {
+        identityArray = []
+        for _ in 0...(Int(playerNumber.text ?? "") ?? 0) - (Int(spyNumber.text ?? "") ?? 0) - 1 {
+            identityArray.append(choosedPrompt.0[0])
+        }
+        for _ in 0...(Int(spyNumber.text ?? "") ?? 0) - 1 {
+            identityArray.append(choosedPrompt.1[0])
+        }
+        identityArray = shuffledIndices.map { identityArray[$0] }
+        return identityArray
     }
 }
