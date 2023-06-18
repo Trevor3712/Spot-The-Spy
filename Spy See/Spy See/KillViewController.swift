@@ -11,8 +11,10 @@ import FirebaseFirestore
 class KillViewController: UIViewController {
     @IBOutlet weak var votedLabel: UILabel!
     @IBOutlet weak var waitLabel: UILabel!
+    @IBOutlet weak var identityLabel: UILabel!
     let dataBase = Firestore.firestore()
     var votedArray: [[String: String]] = []
+    var identitesArray: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         loadVotedPlayers()
@@ -34,8 +36,12 @@ class KillViewController: UIViewController {
                 if let voted = data["voted"] as? [[String: String]] {
                     self.votedArray = voted
                     print(self.votedArray)
-                    self.killWhchPlayer()
                 }
+                if let identities = data["identities"] as? [String] {
+                    self.identitesArray = identities
+                    print(self.identitesArray)
+                }
+                self.killWhchPlayer()
             }
         }
     }
@@ -55,6 +61,7 @@ class KillViewController: UIViewController {
                 print("mostFrequentValue: \(mostFrequentValue), index: \(index)")
                 self.waitLabel.text = ""
                 self.votedLabel.text = "\(mostFrequentValue)被殺死了！"
+                self.identityLabel.text = "他的身份是\(identitesArray[index])"
             }
         }
     }

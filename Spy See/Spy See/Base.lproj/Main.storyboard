@@ -482,21 +482,34 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGL-aX-qG2">
+                                <rect key="frame" x="96.666666666666686" y="485" width="200" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="Bzw-Az-cfc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="W2d-wJ-21l"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="W2d-wJ-21l" firstAttribute="bottom" secondItem="wsI-JM-UsA" secondAttribute="bottom" constant="414" id="3oz-qn-G2Q"/>
+                            <constraint firstItem="iGL-aX-qG2" firstAttribute="centerX" secondItem="C1D-hj-Krs" secondAttribute="centerX" id="Aap-PV-Qeg"/>
                             <constraint firstItem="cpl-Nb-6uS" firstAttribute="top" secondItem="W2d-wJ-21l" secondAttribute="top" constant="72" id="IcF-9g-qXF"/>
                             <constraint firstItem="W2d-wJ-21l" firstAttribute="bottom" secondItem="cpl-Nb-6uS" secondAttribute="bottom" constant="622" id="MC3-Im-chX"/>
                             <constraint firstItem="wsI-JM-UsA" firstAttribute="top" secondItem="cpl-Nb-6uS" secondAttribute="bottom" constant="172" id="dJz-p4-Tkp"/>
+                            <constraint firstItem="W2d-wJ-21l" firstAttribute="bottom" secondItem="iGL-aX-qG2" secondAttribute="bottom" constant="293" id="fjI-AB-hm2"/>
                             <constraint firstItem="cpl-Nb-6uS" firstAttribute="centerX" secondItem="C1D-hj-Krs" secondAttribute="centerX" id="hoX-O9-Lvd"/>
+                            <constraint firstItem="iGL-aX-qG2" firstAttribute="top" secondItem="wsI-JM-UsA" secondAttribute="bottom" constant="81" id="lT6-Vv-nnR"/>
                             <constraint firstItem="wsI-JM-UsA" firstAttribute="centerX" secondItem="C1D-hj-Krs" secondAttribute="centerX" id="rf1-dY-ZZZ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="i8B-P3-WGw"/>
                     <connections>
-                        <outlet property="votedLabel" destination="wsI-JM-UsA" id="NNL-KM-CXx"/>
+                        <outlet property="identityLabel" destination="iGL-aX-qG2" id="lVp-D6-xTD"/>
+                        <outlet property="votedLabel" destination="wsI-JM-UsA" id="psc-k7-9h7"/>
                         <outlet property="waitLabel" destination="cpl-Nb-6uS" id="Z3B-43-ATU"/>
                     </connections>
                 </viewController>

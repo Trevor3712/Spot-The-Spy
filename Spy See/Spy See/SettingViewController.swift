@@ -47,7 +47,6 @@ class SettingViewController: UIViewController {
                 UserDefaults.standard.removeObject(forKey: "playerPrompt")
                 UserDefaults.standard.removeObject(forKey: "hostPrompt")
                 UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
-                UserDefaults.standard.set(self.identityArray, forKey: "identities")
             }
         }
     }
