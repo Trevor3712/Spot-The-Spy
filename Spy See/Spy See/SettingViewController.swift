@@ -42,7 +42,7 @@ class SettingViewController: UIViewController {
                 UserDefaults.standard.removeObject(forKey: "playerPrompt")
                 UserDefaults.standard.removeObject(forKey: "hostPrompt")
                 UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
-                print(UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt"))
+                print("Selected host prompt: \(UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt"))")
             }
         }
     }
@@ -58,10 +58,10 @@ class SettingViewController: UIViewController {
         promptArray = []
         let choosedPrompt = prompt.randomElement()
         for _ in 0...(Int(playerNumber.text ?? "") ?? 0) - (Int(spyNumber.text ?? "") ?? 0) - 1 {
-            promptArray.append(choosedPrompt?.0 ?? "")
+            promptArray.append(choosedPrompt?.0[1] ?? "")
         }
         for _ in 0...(Int(spyNumber.text ?? "") ?? 0) - 1 {
-            promptArray.append(choosedPrompt?.1 ?? "")
+            promptArray.append(choosedPrompt?.1[1] ?? "")
         }
         promptArray.shuffle()
         return promptArray

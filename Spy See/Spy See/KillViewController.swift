@@ -42,19 +42,20 @@ class KillViewController: UIViewController {
     func killWhchPlayer() {
         var voteCount: [String: Int] = [:]
 
-        // 计算每个值的出现次数
+        // 計算每個值的出現次數
         for dict in votedArray {
             for (_, value) in dict {
                 voteCount[value, default: 0] += 1
             }
         }
-
-        // 查找出现次数最多的值
+        // 查找出現次數最多的值
         if let (mostFrequentValue, _) = voteCount.max(by: { $0.value < $1.value }) {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
+            let players = UserDefaults.standard.stringArray(forKey: "playersArray")
+            if let index = players?.firstIndex(of: mostFrequentValue) {
+                print("mostFrequentValue: \(mostFrequentValue), index: \(index)")
                 self.waitLabel.text = ""
                 self.votedLabel.text = "\(mostFrequentValue)被殺死了！"
-//            }
+            }
         }
     }
 }

@@ -69,7 +69,7 @@ class LobbyViewController: UIViewController {
         UserDefaults.standard.removeObject(forKey: "playerPrompt")
         UserDefaults.standard.setValue(selectedPrompt, forKey: "playerPrompt")
         print(UserDefaults.standard.string(forKey: "playerPrompt")!)
-        print("Selected prompt: \(selectedPrompt)")
+        print("Selected plyer prompt: \(selectedPrompt)")
         return selectedPrompt
     }
 }
