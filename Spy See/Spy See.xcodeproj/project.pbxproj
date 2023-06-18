@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2A999499F0A07CF74D53E358 /* Pods_Spy_See.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CC0AB13E4E3C18858E4941B /* Pods_Spy_See.framework */; };
+		B507CD672A3F39CE00434003 /* VictoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B507CD662A3F39CE00434003 /* VictoryViewController.swift */; };
 		B522AF112A3AB4A000FF956C /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF102A3AB4A000FF956C /* LobbyViewController.swift */; };
 		B522AF132A3AC3CF00FF956C /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF122A3AC3CF00FF956C /* SettingViewController.swift */; };
 		B522AF152A3B67E800FF956C /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF142A3B67E800FF956C /* InviteViewController.swift */; };
@@ -31,6 +32,7 @@
 		07696FC57C387E2A3AD5BB2E /* Pods-Spy See.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spy See.release.xcconfig"; path = "Target Support Files/Pods-Spy See/Pods-Spy See.release.xcconfig"; sourceTree = "<group>"; };
 		1CC0AB13E4E3C18858E4941B /* Pods_Spy_See.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spy_See.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F7C80141FC1BA96FBC07A8 /* Pods-Spy See.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spy See.debug.xcconfig"; path = "Target Support Files/Pods-Spy See/Pods-Spy See.debug.xcconfig"; sourceTree = "<group>"; };
+		B507CD662A3F39CE00434003 /* VictoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictoryViewController.swift; sourceTree = "<group>"; };
 		B522AF102A3AB4A000FF956C /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
 		B522AF122A3AC3CF00FF956C /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		B522AF142A3B67E800FF956C /* InviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				B522AF1C2A3CBF2200FF956C /* SpeakViewController.swift */,
 				B59588942A3D98430058E170 /* VoteViewController.swift */,
 				B59588962A3DDD630058E170 /* KillViewController.swift */,
+				B507CD662A3F39CE00434003 /* VictoryViewController.swift */,
 				B522AF182A3C113900FF956C /* PlayerCell.swift */,
 				B5D2B0B52A3A98A000ED3516 /* Prompt.swift */,
 				B5D2B0A42A39C8E800ED3516 /* Main.storyboard */,
@@ -267,6 +270,7 @@
 				B5D2B0B62A3A98A000ED3516 /* Prompt.swift in Sources */,
 				B59588972A3DDD630058E170 /* KillViewController.swift in Sources */,
 				B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */,
+				B507CD672A3F39CE00434003 /* VictoryViewController.swift in Sources */,
 				B5D2B0A12A39C8E800ED3516 /* SceneDelegate.swift in Sources */,
 				B522AF152A3B67E800FF956C /* InviteViewController.swift in Sources */,
 				B522AF132A3AC3CF00FF956C /* SettingViewController.swift in Sources */,

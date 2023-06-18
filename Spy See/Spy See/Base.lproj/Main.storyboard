@@ -532,6 +532,36 @@
             </objects>
             <point key="canvasLocation" x="8572" y="4"/>
         </scene>
+        <!--Victory View Controller-->
+        <scene sceneID="ClM-Di-whW">
+            <objects>
+                <viewController id="zWf-sO-c4J" customClass="VictoryViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Zam-iu-rSu">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7d7-vi-2Qb">
+                                <rect key="frame" x="141" y="569" width="111" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="回遊戲大廳"/>
+                                <connections>
+                                    <action selector="backToHome:" destination="zWf-sO-c4J" eventType="touchUpInside" id="OCe-yR-gOm"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="EfV-Xt-y8V"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="7d7-vi-2Qb" firstAttribute="centerX" secondItem="Zam-iu-rSu" secondAttribute="centerX" id="8OE-fU-Bov"/>
+                            <constraint firstItem="EfV-Xt-y8V" firstAttribute="bottom" secondItem="7d7-vi-2Qb" secondAttribute="bottom" constant="214" id="d1f-Xe-DGo"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="8Jm-LF-Xfu"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mja-pP-Sld" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9387" y="4"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="QCp-Y1-tva">
             <objects>
