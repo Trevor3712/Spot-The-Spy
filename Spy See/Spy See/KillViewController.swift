@@ -51,23 +51,36 @@ class KillViewController: UIViewController {
     }
     func killWhchPlayer() {
         var voteCount: [String: Int] = [:]
-
         // 計算每個值的出現次數
         for dict in votedArray {
             for (_, value) in dict {
                 voteCount[value, default: 0] += 1
             }
         }
-        // 查找出現次數最多的值
-        if let (mostFrequentValue, _) = voteCount.max(by: { $0.value < $1.value }) {
-            let players = UserDefaults.standard.stringArray(forKey: "playersArray")
-            playersArray = players ?? [""]
-            if let index = players?.firstIndex(of: mostFrequentValue) {
-                arrayIndex = index
-                print("mostFrequentValue: \(mostFrequentValue), index: \(index)")
-                self.waitLabel.text = ""
-                self.votedLabel.text = "\(mostFrequentValue)被殺死了！"
-                self.identityLabel.text = "他的身份是\(identitiesArray[index])"
+        let players = UserDefaults.standard.stringArray(forKey: "playersArray")
+        playersArray = players ?? [""]
+        // 檢查是否有平手的狀況
+        let maxVoteCount = voteCount.values.max() ?? 0
+        let tiedPlayers = voteCount.filter { $0.value == maxVoteCount }
+        if tiedPlayers.count > 1 {
+            // 排序平手玩家的索引
+            let sortedIndexes = tiedPlayers.keys.compactMap { playersArray.firstIndex(of: $0) }.sorted()
+            let selectedIndex = sortedIndexes.first ?? 0
+            let selectedPlayer = playersArray[selectedIndex]
+            print("Selected player: \(selectedPlayer), index: \(selectedIndex)")
+            self.waitLabel.text = ""
+            self.votedLabel.text = "\(selectedPlayer)被殺死了！"
+            self.identityLabel.text = "他的身份是\(identitiesArray[selectedIndex])"
+        } else {
+            // 查找出現次數最多的值
+            if let (mostFrequentValue, _) = voteCount.max(by: { $0.value < $1.value }) {
+                if let index = players?.firstIndex(of: mostFrequentValue) {
+                    arrayIndex = index
+                    print("mostFrequentValue: \(mostFrequentValue), index: \(index)")
+                    self.waitLabel.text = ""
+                    self.votedLabel.text = "\(mostFrequentValue)被殺死了！"
+                    self.identityLabel.text = "他的身份是\(identitiesArray[index])"
+                }
             }
         }
     }
