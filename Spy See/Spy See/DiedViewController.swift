@@ -8,9 +8,7 @@
 import UIKit
 
 class DiedViewController: UIViewController {
-    
     lazy var diedLabel = UILabel()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -22,5 +20,4 @@ class DiedViewController: UIViewController {
         ])
         diedLabel.text = "你已經死了！"
     }
-    
 }
