@@ -16,6 +16,7 @@
 		B522AF192A3C113900FF956C /* PlayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF182A3C113900FF956C /* PlayerCell.swift */; };
 		B522AF1B2A3C5CAF00FF956C /* PassPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF1A2A3C5CAF00FF956C /* PassPromptViewController.swift */; };
 		B522AF1D2A3CBF2200FF956C /* SpeakViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF1C2A3CBF2200FF956C /* SpeakViewController.swift */; };
+		B54212EE2A40030200D7C90C /* DiedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54212ED2A40030200D7C90C /* DiedViewController.swift */; };
 		B59588952A3D98430058E170 /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588942A3D98430058E170 /* VoteViewController.swift */; };
 		B59588972A3DDD630058E170 /* KillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588962A3DDD630058E170 /* KillViewController.swift */; };
 		B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */; };
@@ -40,6 +41,7 @@
 		B522AF182A3C113900FF956C /* PlayerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCell.swift; sourceTree = "<group>"; };
 		B522AF1A2A3C5CAF00FF956C /* PassPromptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassPromptViewController.swift; sourceTree = "<group>"; };
 		B522AF1C2A3CBF2200FF956C /* SpeakViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakViewController.swift; sourceTree = "<group>"; };
+		B54212ED2A40030200D7C90C /* DiedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiedViewController.swift; sourceTree = "<group>"; };
 		B59588942A3D98430058E170 /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
 		B59588962A3DDD630058E170 /* KillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillViewController.swift; sourceTree = "<group>"; };
 		B5D2B09B2A39C8E800ED3516 /* Spy See.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spy See.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,6 +110,7 @@
 				B59588942A3D98430058E170 /* VoteViewController.swift */,
 				B59588962A3DDD630058E170 /* KillViewController.swift */,
 				B507CD662A3F39CE00434003 /* VictoryViewController.swift */,
+				B54212ED2A40030200D7C90C /* DiedViewController.swift */,
 				B522AF182A3C113900FF956C /* PlayerCell.swift */,
 				B5D2B0B52A3A98A000ED3516 /* Prompt.swift */,
 				B5D2B0A42A39C8E800ED3516 /* Main.storyboard */,
@@ -261,6 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B54212EE2A40030200D7C90C /* DiedViewController.swift in Sources */,
 				B59588952A3D98430058E170 /* VoteViewController.swift in Sources */,
 				B522AF172A3C0F4900FF956C /* WaitingViewController.swift in Sources */,
 				B5D2B0A32A39C8E800ED3516 /* LoginViewController.swift in Sources */,

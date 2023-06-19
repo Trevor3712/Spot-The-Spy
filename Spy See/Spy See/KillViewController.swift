@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 import FirebaseFirestore
 
 class KillViewController: UIViewController {
@@ -85,7 +86,13 @@ class KillViewController: UIViewController {
             goToVictoryVC(true)
         } else {
             print("繼續下一輪")
-            performSegue(withIdentifier: "KillToSpeak", sender: self)
+            let currentUser = Auth.auth().currentUser?.email ?? ""
+            if playersArray.contains(currentUser) {
+                performSegue(withIdentifier: "KillToSpeak", sender: self)
+            } else {
+                let diedVC = DiedViewController()
+                navigationController?.pushViewController(diedVC, animated: true)
+            }
         }
     }
     func updateData() {
@@ -109,11 +116,6 @@ class KillViewController: UIViewController {
         let victoryVC = VictoryViewController()
         victoryVC.isSpyWin = bool
         navigationController?.pushViewController(victoryVC, animated: true)
-//        guard let victoryVC = storyboard?.instantiateViewController(withIdentifier: "VictoryViewController") as? VictoryViewController else {
-//            return
-//        }
-//        victoryVC.isSpyWin = bool
-//        navigationController?.pushViewController(victoryVC, animated: true)
     }
 }
 extension KillViewController {

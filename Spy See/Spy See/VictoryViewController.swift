@@ -8,7 +8,6 @@
 import UIKit
 
 class VictoryViewController: UIViewController {
-//    @IBOutlet weak var victoryLabel: UILabel!
     lazy var victoryLabel = UILabel()
     lazy var backToLobbyButton: UIButton = {
         let backToLobbyButton = UIButton()
