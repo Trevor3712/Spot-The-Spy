@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class VictoryViewController: UIViewController {
     lazy var victoryLabel = UILabel()
@@ -15,7 +16,8 @@ class VictoryViewController: UIViewController {
         backToLobbyButton.setTitleColor(.black, for: .normal)
         return backToLobbyButton
     }()
-    var isSpyWin: Bool = true
+    let dataBase = Firestore.firestore()
+    var isSpyWin = true
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white

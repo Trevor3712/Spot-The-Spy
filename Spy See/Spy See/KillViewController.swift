@@ -83,9 +83,11 @@ class KillViewController: UIViewController {
         if countSpy == 0 {
             print("平民獲勝！")
             goToVictoryVC(false)
+            updateWinMessage(false)
         } else if countSpy >= countCivilian {
             print("臥底獲勝！")
             goToVictoryVC(true)
+            updateWinMessage(true)
         } else {
             print("繼續下一輪")
             let currentUser = Auth.auth().currentUser?.email ?? ""
@@ -104,7 +106,7 @@ class KillViewController: UIViewController {
         let data: [String: Any] = [
             "player": playersArray,
             "identities": identitiesArray,
-            "voted": votedArray
+            "voted": votedArray,
         ]
         documentRef.updateData(data) { error in
             if let error = error {
@@ -118,6 +120,35 @@ class KillViewController: UIViewController {
         let victoryVC = VictoryViewController()
         victoryVC.isSpyWin = bool
         navigationController?.pushViewController(victoryVC, animated: true)
+    }
+    func updateWinMessage(_ isSpyWin: Bool) {
+        let room = dataBase.collection("Rooms")
+        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
+        let documentRef = room.document(roomId)
+        if isSpyWin {
+            let data: [String: Any] = [
+                "isSpyWin": true
+            ]
+            documentRef.updateData(data) { error in
+                if let error = error {
+                    print("Error adding document: \(error)")
+                } else {
+                    print("Document added successfully")
+                }
+            }
+        } else {
+            let data: [String: Any] = [
+                "isSpyWin": false
+            ]
+            documentRef.updateData(data) { error in
+                if let error = error {
+                    print("Error adding document: \(error)")
+                } else {
+                    print("Document added successfully")
+                }
+            }
+        }
+        
     }
 }
 extension KillViewController {
