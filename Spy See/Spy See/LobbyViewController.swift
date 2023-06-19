@@ -12,7 +12,6 @@ import FirebaseFirestore
 class LobbyViewController: UIViewController {
     @IBOutlet weak var invitationCode: UITextField!
     let dataBase = Firestore.firestore()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -49,6 +48,7 @@ class LobbyViewController: UIViewController {
                                     print("Failed to retrieve player index: \(error?.localizedDescription ?? "")")
                                 }
                             }
+                            self.invitationCode.text = ""
                         }
                     }
                 }
