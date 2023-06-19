@@ -78,17 +78,14 @@ class KillViewController: UIViewController {
         let countCivilian = identitiesArray.filter { $0 == "平民" }.count
         let countSpy = identitiesArray.filter { $0 == "臥底" }.count
         if countSpy == 0 {
-            // 去平民獲勝頁面
             print("平民獲勝！")
-//            performSegue(withIdentifier: "KillToVictory", sender: self)
             goToVictoryVC(false)
         } else if countSpy >= countCivilian {
-            // 去臥底獲勝頁面
             print("臥底獲勝！")
             goToVictoryVC(true)
         } else {
-            // 回到發言頁
             print("繼續下一輪")
+            performSegue(withIdentifier: "KillToSpeak", sender: self)
         }
     }
     func updateData() {
@@ -112,12 +109,16 @@ class KillViewController: UIViewController {
         let victoryVC = VictoryViewController()
         victoryVC.isSpyWin = bool
         navigationController?.pushViewController(victoryVC, animated: true)
+//        guard let victoryVC = storyboard?.instantiateViewController(withIdentifier: "VictoryViewController") as? VictoryViewController else {
+//            return
+//        }
+//        victoryVC.isSpyWin = bool
+//        navigationController?.pushViewController(victoryVC, animated: true)
     }
 }
-//extension KillViewController {
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "KillToVictory" {
-//            
-//        }
-//    }
-//}
+extension KillViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "KillToSpeak" {
+        }
+    }
+}
