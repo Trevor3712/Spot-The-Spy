@@ -89,7 +89,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="邀請碼：" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v6b-B1-vFV">
-                                <rect key="frame" x="96.333333333333329" y="362" width="200.33333333333337" height="34"/>
+                                <rect key="frame" x="96.333333333333329" y="362" width="200.33333333333343" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="RJ7-qX-kyh"/>
                                 </constraints>
@@ -351,7 +351,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fh-md-ark">
-                                <rect key="frame" x="46.666666666666657" y="337" width="300" height="21"/>
+                                <rect key="frame" x="46.666666666666657" y="337" width="300" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="H1t-el-oZ0"/>
                                 </constraints>
@@ -360,19 +360,31 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3aR-80-GAS">
-                                <rect key="frame" x="76" y="481" width="240" height="128"/>
+                                <rect key="frame" x="76" y="417" width="241" height="70"/>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="C7h-Wk-vVi"/>
+                                </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZR6-Ta-uAq">
-                                <rect key="frame" x="172" y="644" width="51" height="35"/>
+                                <rect key="frame" x="172" y="517" width="51" height="34.333333333333371"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="paperplane.fill" catalog="system"/>
                                 <connections>
                                     <action selector="giveClue:" destination="04L-e8-13C" eventType="touchUpInside" id="BuH-KH-tTS"/>
                                 </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w57-wS-nTX">
+                                <rect key="frame" x="121.66666666666669" y="613.33333333333337" width="150" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="0cd-YJ-wus"/>
+                                    <constraint firstAttribute="height" constant="50" id="Qj1-vt-05n"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="長按後說話"/>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mgb-Eh-Ki4"/>
@@ -381,17 +393,17 @@
                             <constraint firstItem="3fh-md-ark" firstAttribute="top" secondItem="oWG-WB-0lb" secondAttribute="bottom" constant="165" id="2Ec-jG-zVD"/>
                             <constraint firstItem="mgb-Eh-Ki4" firstAttribute="trailing" secondItem="ZR6-Ta-uAq" secondAttribute="trailing" constant="170" id="6Vb-fE-4a4"/>
                             <constraint firstItem="3fh-md-ark" firstAttribute="centerX" secondItem="h2j-GR-rST" secondAttribute="centerX" id="Bt9-ph-kfY"/>
-                            <constraint firstItem="3aR-80-GAS" firstAttribute="top" secondItem="3fh-md-ark" secondAttribute="bottom" constant="123" id="Qdm-Ra-lsG"/>
-                            <constraint firstItem="mgb-Eh-Ki4" firstAttribute="bottom" secondItem="3aR-80-GAS" secondAttribute="bottom" constant="174" id="V5K-5a-pEn"/>
+                            <constraint firstItem="3aR-80-GAS" firstAttribute="leading" secondItem="mgb-Eh-Ki4" secondAttribute="leading" constant="76" id="Og3-WX-BWA"/>
+                            <constraint firstItem="ZR6-Ta-uAq" firstAttribute="top" secondItem="3aR-80-GAS" secondAttribute="bottom" constant="30" id="R1D-xo-dwV"/>
+                            <constraint firstItem="3aR-80-GAS" firstAttribute="centerX" secondItem="h2j-GR-rST" secondAttribute="centerX" id="R3z-aS-Ib2"/>
+                            <constraint firstItem="w57-wS-nTX" firstAttribute="top" secondItem="ZR6-Ta-uAq" secondAttribute="bottom" constant="62" id="fIX-jR-Npn"/>
                             <constraint firstItem="oWG-WB-0lb" firstAttribute="top" secondItem="mgb-Eh-Ki4" secondAttribute="top" constant="83" id="gdJ-Mw-IFG"/>
+                            <constraint firstItem="3aR-80-GAS" firstAttribute="top" secondItem="3fh-md-ark" secondAttribute="bottom" constant="30" id="gz5-dg-Yig"/>
                             <constraint firstItem="oWG-WB-0lb" firstAttribute="centerX" secondItem="h2j-GR-rST" secondAttribute="centerX" id="hbe-ga-gRj"/>
                             <constraint firstItem="mgb-Eh-Ki4" firstAttribute="bottom" secondItem="oWG-WB-0lb" secondAttribute="bottom" constant="611" id="htb-o4-VXw"/>
-                            <constraint firstItem="3aR-80-GAS" firstAttribute="leading" secondItem="mgb-Eh-Ki4" secondAttribute="leading" constant="76" id="icc-1o-PgR"/>
                             <constraint firstItem="ZR6-Ta-uAq" firstAttribute="leading" secondItem="mgb-Eh-Ki4" secondAttribute="leading" constant="172" id="ioP-Hl-Nyw"/>
-                            <constraint firstItem="mgb-Eh-Ki4" firstAttribute="bottom" secondItem="ZR6-Ta-uAq" secondAttribute="bottom" constant="104" id="kNe-Hh-RmO"/>
-                            <constraint firstItem="ZR6-Ta-uAq" firstAttribute="top" secondItem="3aR-80-GAS" secondAttribute="bottom" constant="35" id="n6O-l1-FsF"/>
-                            <constraint firstItem="mgb-Eh-Ki4" firstAttribute="bottom" secondItem="3fh-md-ark" secondAttribute="bottom" constant="425" id="o2F-LO-k1e"/>
-                            <constraint firstItem="mgb-Eh-Ki4" firstAttribute="trailing" secondItem="3aR-80-GAS" secondAttribute="trailing" constant="77" id="wG5-r0-Xbh"/>
+                            <constraint firstItem="w57-wS-nTX" firstAttribute="centerX" secondItem="3aR-80-GAS" secondAttribute="centerX" id="k47-CI-Nhw"/>
+                            <constraint firstItem="mgb-Eh-Ki4" firstAttribute="bottom" secondItem="3fh-md-ark" secondAttribute="bottom" constant="396" id="o2F-LO-k1e"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qAA-TO-GXu"/>
@@ -399,6 +411,7 @@
                         <outlet property="clueLabel" destination="3fh-md-ark" id="Uih-mM-CCK"/>
                         <outlet property="clueTextView" destination="3aR-80-GAS" id="aJk-KJ-xyu"/>
                         <outlet property="promptLabel" destination="oWG-WB-0lb" id="8Ec-gm-H5o"/>
+                        <outlet property="speakButton" destination="w57-wS-nTX" id="hmI-cQ-TUf"/>
                         <segue destination="TBl-QV-YA4" kind="show" identifier="SpeakToVote" id="7N3-DJ-1rg"/>
                     </connections>
                 </viewController>
@@ -584,6 +597,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="7N3-DJ-1rg"/>
         <segue reference="qp3-Hr-OcL"/>
         <segue reference="UiY-CT-8kC"/>
     </inferredMetricsTieBreakers>

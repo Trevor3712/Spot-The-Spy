@@ -7,16 +7,19 @@
 
 import UIKit
 import FirebaseFirestore
+import AVFoundation
 
 class SpeakViewController: UIViewController {
     @IBOutlet weak var promptLabel: UILabel!
     @IBOutlet weak var clueLabel: UILabel!
     @IBOutlet weak var clueTextView: UITextView!
+    @IBOutlet weak var speakButton: UIButton!
     var players: [String] = []
     var currentPlayerIndex: Int = 0
 //    var initialPlayerIndex: Int = 0
     var timer: Timer?
     let dataBase = Firestore.firestore()
+    var audioRecoder: AVAudioRecorder?
     override func viewDidLoad() {
         super.viewDidLoad()
         if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
@@ -26,6 +29,10 @@ class SpeakViewController: UIViewController {
 //        initialPlayerIndex = currentPlayerIndex
         showNextPrompt()
         showClue()
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(speakButtonPressed))
+        longPressRecognizer.minimumPressDuration = 0.5
+        speakButton.addGestureRecognizer(longPressRecognizer)
     }
     func showNextPrompt() {
         guard currentPlayerIndex < players.count else {
