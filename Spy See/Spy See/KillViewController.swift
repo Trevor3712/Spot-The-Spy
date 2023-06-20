@@ -119,7 +119,7 @@ class KillViewController: UIViewController {
         let data: [String: Any] = [
             "player": playersArray,
             "identities": identitiesArray,
-            "voted": votedArray,
+            "voted": votedArray
         ]
         documentRef.updateData(data) { error in
             if let error = error {
@@ -161,7 +161,6 @@ class KillViewController: UIViewController {
                 }
             }
         }
-        
     }
 }
 extension KillViewController {

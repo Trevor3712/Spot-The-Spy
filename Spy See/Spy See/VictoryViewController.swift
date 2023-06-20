@@ -46,7 +46,20 @@ class VictoryViewController: UIViewController {
     }
     @objc func backToLobby() {
         if let targetViewController = navigationController?.viewControllers.filter({ $0 is LobbyViewController }).first {
-                navigationController?.popToViewController(targetViewController, animated: true)
+            navigationController?.popToViewController(targetViewController, animated: true)
+            deleteGameData()
+        }
+    }
+    func deleteGameData() {
+        let room = dataBase.collection("Rooms")
+        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
+        let documentRef = room.document(roomId)
+        documentRef.delete { error in
+            if let error = error {
+                print("Delete error：\(error.localizedDescription)")
+            } else {
+                print("Delete successfully")
+            }
         }
     }
 }
