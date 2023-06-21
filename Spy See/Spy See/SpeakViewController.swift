@@ -20,6 +20,8 @@ class SpeakViewController: UIViewController {
     var timer: Timer?
     let dataBase = Firestore.firestore()
     var audioRecoder: AVAudioRecorder?
+    var audioPlayer: AVAudioPlayer?
+    var fileName: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
@@ -29,32 +31,32 @@ class SpeakViewController: UIViewController {
 //        initialPlayerIndex = currentPlayerIndex
         showNextPrompt()
         showClue()
-        
+        configRecordSession()
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(speakButtonPressed))
         longPressRecognizer.minimumPressDuration = 0.5
         speakButton.addGestureRecognizer(longPressRecognizer)
     }
     func showNextPrompt() {
-        guard currentPlayerIndex < players.count else {
-            return
+    guard currentPlayerIndex < players.count else {
+        return
+    }
+    promptLabel.text = "\(players[currentPlayerIndex])請發言"
+    currentPlayerIndex += 1
+    print(currentPlayerIndex)
+    if currentPlayerIndex == players.count {
+        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { [weak self] _ in
+            self?.performSegue(withIdentifier: "SpeakToVote", sender: self)
+            self?.timer?.invalidate()
         }
-        promptLabel.text = "\(players[currentPlayerIndex])請發言"
-        currentPlayerIndex += 1
-        print(currentPlayerIndex)
-        if currentPlayerIndex == players.count {
-            timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { [weak self] _ in
-                self?.performSegue(withIdentifier: "SpeakToVote", sender: self)
-                self?.timer?.invalidate()
-            }
-            return
-        }
+        return
+    }
 //        if currentPlayerIndex >= players.count {
 //            currentPlayerIndex = 0
 //        }
-        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { [weak self] _ in
-            self?.showNextPrompt()
-        }
+    timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { [weak self] _ in
+        self?.showNextPrompt()
     }
+}
     @IBAction func giveClue(_ sender: UIButton) {
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
@@ -87,7 +89,8 @@ class SpeakViewController: UIViewController {
             if let clue = data["clue"] as? String {
                 DispatchQueue.main.async {
                     self.clueLabel.text = clue
-                } 
+                    
+                }
             } else {
                 DispatchQueue.main.async {
                     self.clueLabel.text = ""
@@ -95,11 +98,62 @@ class SpeakViewController: UIViewController {
             }
         }
     }
+    @objc func speakButtonPressed() {
+        guard audioRecoder == nil else {
+            audioRecoder?.stop()
+            audioRecoder = nil
+            return
+        }
+        fileName = UUID().uuidString
+        let destinationUrl = getDirectoryPath().appendingPathComponent("\(fileName).m4a")
+        let settings = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 44100,
+            AVNumberOfChannelsKey: 2,
+            AVEncoderAudioQualityKey:
+                AVAudioQuality.high.rawValue
+        ]
+        do {
+            audioRecoder = try AVAudioRecorder(url: destinationUrl, settings: settings)
+            audioRecoder?.record()
+        } catch {
+            print("Record error:", error.localizedDescription)
+        }
+    }
+    func getDirectoryPath() -> URL {
+        let fileDiretoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return fileDiretoryURL
+    }
+    func configRecordSession() {
+        do {
+            let recordingSession = AVAudioSession.sharedInstance()
+            try recordingSession.setCategory(AVAudioSession.Category.playAndRecord)
+            try recordingSession.setActive(true)
+            recordingSession.requestRecordPermission { permissionAllowed in
+                if permissionAllowed {
+                    // 可以開始錄音
+                } else {
+                    // 無法錄音，處理錯誤情況
+                }
+            }
+        } catch {
+            print("Session error:", error.localizedDescription)
+        }
+    }
+    @IBAction func playSound(_ sender: UIButton) {
+        let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName).m4a")
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: recordFilePath)
+            audioPlayer?.volume = 1.0
+            audioPlayer?.play()
+        } catch {
+            print("Play error", error.localizedDescription)
+        }
+    }
 }
 extension SpeakViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SpeakToVote" {
-            
         }
     }
 }
