@@ -89,7 +89,6 @@ class SpeakViewController: UIViewController {
             if let clue = data["clue"] as? String {
                 DispatchQueue.main.async {
                     self.clueLabel.text = clue
-                    
                 }
             } else {
                 DispatchQueue.main.async {
@@ -150,6 +149,8 @@ class SpeakViewController: UIViewController {
             print("Play error", error.localizedDescription)
         }
     }
+//    @IBAction func speakButtonPressed(_ sender: UIButton) {
+//    }
 }
 extension SpeakViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
