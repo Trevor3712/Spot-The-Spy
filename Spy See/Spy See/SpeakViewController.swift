@@ -44,7 +44,7 @@ class SpeakViewController: UIViewController {
     currentPlayerIndex += 1
     print(currentPlayerIndex)
     if currentPlayerIndex == players.count {
-        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { [weak self] _ in
             self?.performSegue(withIdentifier: "SpeakToVote", sender: self)
             self?.timer?.invalidate()
         }
@@ -53,7 +53,7 @@ class SpeakViewController: UIViewController {
 //        if currentPlayerIndex >= players.count {
 //            currentPlayerIndex = 0
 //        }
-    timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { [weak self] _ in
+    timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { [weak self] _ in
         self?.showNextPrompt()
     }
 }
@@ -119,10 +119,22 @@ class SpeakViewController: UIViewController {
             print("Record error:", error.localizedDescription)
         }
     }
-    func getDirectoryPath() -> URL {
-        let fileDiretoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        return fileDiretoryURL
+//    @IBAction func speakButtonPressed(_ sender: UIButton) {
+//    }
+    @IBAction func playSound(_ sender: UIButton) {
+        let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName).m4a")
+        do {
+           audioPlayer = try AVAudioPlayer(contentsOf: recordFilePath)
+           audioPlayer?.volume = 1.0
+           audioPlayer?.play()
+        } catch {
+           print("Play error", error.localizedDescription)
+        }
     }
+    func getDirectoryPath() -> URL {
+            let fileDiretoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            return fileDiretoryURL
+        }
     func configRecordSession() {
         do {
             let recordingSession = AVAudioSession.sharedInstance()
@@ -139,18 +151,6 @@ class SpeakViewController: UIViewController {
             print("Session error:", error.localizedDescription)
         }
     }
-    @IBAction func playSound(_ sender: UIButton) {
-        let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName).m4a")
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: recordFilePath)
-            audioPlayer?.volume = 1.0
-            audioPlayer?.play()
-        } catch {
-            print("Play error", error.localizedDescription)
-        }
-    }
-//    @IBAction func speakButtonPressed(_ sender: UIButton) {
-//    }
 }
 extension SpeakViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
