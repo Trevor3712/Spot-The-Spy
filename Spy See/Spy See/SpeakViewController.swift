@@ -97,21 +97,21 @@ class SpeakViewController: UIViewController, SFSpeechRecognizerDelegate {
                     self.clueLabel.text = clue
                 }
             }
-            if let audioClueString = data["audioClue"] as? String, let audioClue = URL(string: audioClueString) {
-                print("audio clue:\(audioClue)")
-                DispatchQueue.main.async {
-                    do {
-                        self.audioPlayer = try AVAudioPlayer(contentsOf: audioClue, fileTypeHint: AVFileType.m4a.rawValue)
-                        self.audioPlayer?.volume = 1.0
-                        self.audioPlayer?.prepareToPlay()
-                        self.audioPlayer?.play()
-                        print("play audio")
-                    } catch {
-                        print("Play error", error.localizedDescription)
-                        print("Play error: \(error)")
-                    }
-                }
-            }
+//            if let audioClueString = data["audioClue"] as? String, let audioClue = URL(string: audioClueString) {
+//                print("audio clue:\(audioClue)")
+//                DispatchQueue.main.async {
+//                    do {
+//                        self.audioPlayer = try AVAudioPlayer(contentsOf: audioClue, fileTypeHint: AVFileType.m4a.rawValue)
+//                        self.audioPlayer?.volume = 1.0
+//                        self.audioPlayer?.prepareToPlay()
+//                        self.audioPlayer?.play()
+//                        print("play audio")
+//                    } catch {
+//                        print("Play error", error.localizedDescription)
+//                        print("Play error: \(error)")
+//                    }
+//                }
+//            }
             else {
                 DispatchQueue.main.async {
                     self.clueLabel.text = ""
@@ -119,7 +119,6 @@ class SpeakViewController: UIViewController, SFSpeechRecognizerDelegate {
             }
         }
     }
-    
     //MARK: - Audio Record
     @IBAction func speakButtonPressed(_ sender: UIButton) {
         if audioEngine.isRunning {

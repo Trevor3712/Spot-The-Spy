@@ -15,6 +15,7 @@ class PassPromptViewController: UIViewController {
     let dataBase = Firestore.firestore()
     var readyPlayers: [String] = []
     var playerNumber: Int?
+    var documentListener: ListenerRegistration?
     override func viewDidLoad() {
         super.viewDidLoad()
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -27,6 +28,10 @@ class PassPromptViewController: UIViewController {
             }
         }
         loadReadyPlayers()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        documentListener?.remove()
     }
     @IBAction func readyButtonPressed(_ sender: UIButton) {
         let room = self.dataBase.collection("Rooms")
@@ -66,7 +71,7 @@ class PassPromptViewController: UIViewController {
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
         var existingPlayers: Set<String> = Set(self.readyPlayers)
-        documentRef.addSnapshotListener { (documentSnapshot, error) in
+        documentListener = documentRef.addSnapshotListener { (documentSnapshot, error) in
             DispatchQueue.main.async {
                 guard let document = documentSnapshot else {
                     print("Error fetching document: \(error)")
