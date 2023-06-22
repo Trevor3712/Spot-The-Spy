@@ -25,6 +25,7 @@ class SpeakViewController: UIViewController, SFSpeechRecognizerDelegate {
     var audioPlayer: AVAudioPlayer?
     var fileName: String?
     var audioUrl: URL?
+    var audioUrlFromFS: URL?
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "zh-TW"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
@@ -96,19 +97,21 @@ class SpeakViewController: UIViewController, SFSpeechRecognizerDelegate {
                     self.clueLabel.text = clue
                 }
             }
-//            if let audioClue = data["audioClue"] as? URL {
-//                DispatchQueue.main.async {
-//                    let recordFilePath = self.getDirectoryPath().appendingPathComponent("\(self.fileName ?? "").m4a")
-//                    do {
-//                        self.audioPlayer = try AVAudioPlayer(contentsOf: recordFilePath)
-//                        self.audioPlayer?.volume = 1.0
-//                        self.audioPlayer?.play()
-//                        print("play audio")
-//                    } catch {
-//                       print("Play error", error.localizedDescription)
-//                    }
-//                }
-//            }
+            if let audioClueString = data["audioClue"] as? String, let audioClue = URL(string: audioClueString) {
+                print("audio clue:\(audioClue)")
+                DispatchQueue.main.async {
+                    do {
+                        self.audioPlayer = try AVAudioPlayer(contentsOf: audioClue, fileTypeHint: AVFileType.m4a.rawValue)
+                        self.audioPlayer?.volume = 1.0
+                        self.audioPlayer?.prepareToPlay()
+                        self.audioPlayer?.play()
+                        print("play audio")
+                    } catch {
+                        print("Play error", error.localizedDescription)
+                        print("Play error: \(error)")
+                    }
+                }
+            }
             else {
                 DispatchQueue.main.async {
                     self.clueLabel.text = ""
@@ -120,33 +123,32 @@ class SpeakViewController: UIViewController, SFSpeechRecognizerDelegate {
     //MARK: - Audio Record
     @IBAction func speakButtonPressed(_ sender: UIButton) {
         if audioEngine.isRunning {
-            audioEngine.stop()
-            recognitionRequest?.endAudio()
-            speakButton.isEnabled = false
-            clueTextView.text = ""
-            
-            
-            uploadAudio(audioURL: audioUrl!) { result in
-                switch result {
-                case .success(let url):
-                    print(url)
-//                    let room = self.dataBase.collection("Rooms")
-//                    let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-//                    let documentRef = room.document(roomId)
-//                    let data: [String: Any] = [
-//                        "audioClue": url
-//                    ]
-//                    documentRef.updateData(data) { error in
-//                        if let error = error {
-//                            print("Error adding document: \(error)")
-//                        } else {
-//                            print("Document added successfully")
-//                        }
-//                    }
-                case .failure(let error):
-                   print(error)
-                }
-            }
+           audioEngine.stop()
+           recognitionRequest?.endAudio()
+           speakButton.isEnabled = false
+           clueTextView.text = ""
+           uploadAudio(audioURL: audioUrl!) { result in
+               switch result {
+               case .success(let url):
+                   print(url)
+                   let room = self.dataBase.collection("Rooms")
+                   let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
+                   let documentRef = room.document(roomId)
+                   let data: [String: Any] = [
+                       "audioClue": url.absoluteString
+                   ]
+                   documentRef.updateData(data) { error in
+                       if let error = error {
+                           print("Error adding document: \(error)")
+                       } else {
+                           print("Document added successfully")
+                           print("upload local audioUrl:\(url)")
+                       }
+                   }
+               case .failure(let error):
+                  print(error)
+               }
+           }
         } else {
             speechRecognize()
         }
@@ -157,18 +159,15 @@ class SpeakViewController: UIViewController, SFSpeechRecognizerDelegate {
             return
         }
         fileName = UUID().uuidString
-        let destinationUrl = getDirectoryPath().appendingPathComponent("\(fileName ?? "").wav")
+        let destinationUrl = getDirectoryPath().appendingPathComponent("\(fileName ?? "").m4a")
         audioUrl = destinationUrl
         let settings = [
-            AVFormatIDKey: Int(kAudioFormatLinearPCM),
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 44100,
             AVNumberOfChannelsKey: 2,
-            AVEncoderAudioQualityKey:
-                AVAudioQuality.max.rawValue,
-            AVLinearPCMBitDepthKey: 16,
-            AVLinearPCMIsBigEndianKey: false,
-            AVLinearPCMIsFloatKey: false,
-        ] as [String : Any]
+            AVEncoderBitRateKey: 128000,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        ]
         do {
             audioRecoder = try AVAudioRecorder(url: destinationUrl, settings: settings)
             audioRecoder?.record()
@@ -179,13 +178,14 @@ class SpeakViewController: UIViewController, SFSpeechRecognizerDelegate {
     }
     @IBAction func playSound(_ sender: UIButton) {
         print("pressed")
-        let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName ?? "").wav")
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: recordFilePath)
-            audioPlayer?.volume = 1.0
-            audioPlayer?.prepareToPlay()
-            audioPlayer?.play()
-            print(recordFilePath)
+        let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName ?? "").m4a")
+        let audioFileURL = URL(fileURLWithPath: recordFilePath.path)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: audioFileURL)
+                audioPlayer?.volume = 1.0
+                audioPlayer?.prepareToPlay()
+                audioPlayer?.play()
+                print(recordFilePath)
         } catch {
             print("Play error", error.localizedDescription)
         }
@@ -302,13 +302,15 @@ class SpeakViewController: UIViewController, SFSpeechRecognizerDelegate {
     }
     //MARK: - Upload audio and play
     func uploadAudio(audioURL: URL, completion: @escaping (Result<URL, Error>) -> Void) {
-        let fileReference = Storage.storage().reference().child("\(fileName ?? "").wav")
-        if let data = try? Data(contentsOf: audioUrl!) {
+        let fileReference = Storage.storage().reference().child("\(fileName ?? "").m4a")
+        if let data = try? Data(contentsOf: audioURL) {
             fileReference.putData(data, metadata: nil) { result in
                 switch result {
-                case .success(let url):
+                case .success(_):
                     fileReference.downloadURL { url, error in
                         if let downloadURL = url {
+                            self.audioUrlFromFS = downloadURL
+                            print("audioUrlFromFS:\(self.audioUrlFromFS)")
                             completion(.success(downloadURL))
                         } else if let error = error {
                             completion(.failure(error))
