@@ -116,7 +116,7 @@ class SpeakViewController: UIViewController, SFSpeechRecognizerDelegate {
             return
         }
         fileName = UUID().uuidString
-        let destinationUrl = getDirectoryPath().appendingPathComponent("\(fileName).m4a")
+        let destinationUrl = getDirectoryPath().appendingPathComponent("\(fileName ?? "").m4a")
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 44100,
@@ -133,7 +133,7 @@ class SpeakViewController: UIViewController, SFSpeechRecognizerDelegate {
         }
     }
     @IBAction func playSound(_ sender: UIButton) {
-        let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName).m4a")
+        let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName ?? "").m4a")
         do {
            audioPlayer = try AVAudioPlayer(contentsOf: recordFilePath)
            audioPlayer?.volume = 1.0
