@@ -59,7 +59,7 @@ class SpeakViewController: UIViewController, SFSpeechRecognizerDelegate {
 //        if currentPlayerIndex >= players.count {
 //            currentPlayerIndex = 0
 //        }
-    timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { [weak self] _ in
+    timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { [weak self] _ in
         self?.showNextPrompt()
     }
 }

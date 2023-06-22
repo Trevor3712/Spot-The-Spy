@@ -19,37 +19,45 @@ class KillViewController: UIViewController {
     var identitiesArray: [String] = []
     var arrayIndex: Int?
     var playersArray: [String] = []
+    let players = UserDefaults.standard.stringArray(forKey: "playersArray")
     override func viewDidLoad() {
         super.viewDidLoad()
+        playersArray = players ?? [""]
         loadVotedPlayers()
     }
     func loadVotedPlayers() {
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
-            documentRef.getDocument { (documentSnapshot, error) in
-                if let error = error {
-                    print(error)
-                    return
-                }
-                guard let data = documentSnapshot?.data() else {
-                    print("No data available")
-                    return
-                }
-                if let voted = data["voted"] as? [[String: String]] {
-                    self.votedArray = voted
-                    print(self.votedArray)
-                }
-                if let identities = data["identities"] as? [String] {
-                    self.identitiesArray = identities
-                    print(self.identitiesArray)
-                }
-                self.killWhchPlayer()
+        var votedPlayers: Set<String> = Set(self.votedArray.flatMap { $0.keys })
+        documentRef.addSnapshotListener { (documentSnapshot, error) in
+            if let error = error {
+                print(error)
+                return
+            }
+            guard let data = documentSnapshot?.data() else {
+                print("No data available")
+                return
+            }
+            if let identities = data["identities"] as? [String] {
+                self.identitiesArray = identities
+            }
+            if let voted = data["voted"] as? [[String: String]] {
+                self.votedArray = []
+                let newVotedPlayers = voted.filter { !votedPlayers.contains($0.keys.first ?? "") }
+                self.votedArray.append(contentsOf: newVotedPlayers)
+            }
+            if self.isAllPlayersVote() {
+                self.killWhichPlayer()
             }
         }
     }
-    func killWhchPlayer() {
+    func isAllPlayersVote() -> Bool {
+        print(self.playersArray.count)
+        print(self.votedArray.count)
+        return self.votedArray.count == self.playersArray.count
+    }
+    func killWhichPlayer() {
         var voteCount: [String: Int] = [:]
         // 計算每個值的出現次數
         for dict in votedArray {
@@ -57,8 +65,6 @@ class KillViewController: UIViewController {
                 voteCount[value, default: 0] += 1
             }
         }
-        let players = UserDefaults.standard.stringArray(forKey: "playersArray")
-        playersArray = players ?? [""]
         // 檢查是否有平手的狀況
         let maxVoteCount = voteCount.values.max() ?? 0
         let tiedPlayers = voteCount.filter { $0.value == maxVoteCount }
