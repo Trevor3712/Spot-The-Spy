@@ -10,5 +10,6 @@ target 'Spy See' do
   pod 'IQKeyboardManager'
   pod 'FirebaseAuth'
   pod 'FirebaseFirestore'
+  pod 'FirebaseStorage'
 
 end
