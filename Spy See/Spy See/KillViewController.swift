@@ -20,17 +20,21 @@ class KillViewController: UIViewController {
     var arrayIndex: Int?
     var playersArray: [String] = []
     let players = UserDefaults.standard.stringArray(forKey: "playersArray")
+    var votedListener: ListenerRegistration?
     override func viewDidLoad() {
         super.viewDidLoad()
         playersArray = players ?? [""]
         loadVotedPlayers()
     }
+    override func viewWillDisappear(_ animated: Bool) {
+       super.viewWillDisappear(animated)
+       votedListener?.remove()
+   }
     func loadVotedPlayers() {
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
-        
-        documentRef.addSnapshotListener { (documentSnapshot, error) in
+        votedListener = documentRef.addSnapshotListener { (documentSnapshot, error) in
             if let error = error {
                 print(error)
                 return
