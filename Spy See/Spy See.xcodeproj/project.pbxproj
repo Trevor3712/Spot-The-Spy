@@ -27,6 +27,7 @@
 		B5D2B0AB2A39C8ED00ED3516 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5D2B0A92A39C8ED00ED3516 /* LaunchScreen.storyboard */; };
 		B5D2B0B42A3A017D00ED3516 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */; };
 		B5D2B0B62A3A98A000ED3516 /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0B52A3A98A000ED3516 /* Prompt.swift */; };
+		B5F20BEA2A4550E900FFECA1 /* WaitForNextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		B5D2B0AC2A39C8ED00ED3516 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5D2B0B52A3A98A000ED3516 /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
+		B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitForNextViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				B59588962A3DDD630058E170 /* KillViewController.swift */,
 				B507CD662A3F39CE00434003 /* VictoryViewController.swift */,
 				B54212ED2A40030200D7C90C /* DiedViewController.swift */,
+				B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */,
 				B522AF182A3C113900FF956C /* PlayerCell.swift */,
 				B5D2B0B52A3A98A000ED3516 /* Prompt.swift */,
 				B5D2B0A42A39C8E800ED3516 /* Main.storyboard */,
@@ -268,6 +271,7 @@
 				B59588952A3D98430058E170 /* VoteViewController.swift in Sources */,
 				B522AF172A3C0F4900FF956C /* WaitingViewController.swift in Sources */,
 				B5D2B0A32A39C8E800ED3516 /* LoginViewController.swift in Sources */,
+				B5F20BEA2A4550E900FFECA1 /* WaitForNextViewController.swift in Sources */,
 				B522AF112A3AB4A000FF956C /* LobbyViewController.swift in Sources */,
 				B522AF1B2A3C5CAF00FF956C /* PassPromptViewController.swift in Sources */,
 				B522AF192A3C113900FF956C /* PlayerCell.swift in Sources */,

@@ -21,15 +21,16 @@ class KillViewController: UIViewController {
     var playersArray: [String] = []
     let players = UserDefaults.standard.stringArray(forKey: "playersArray")
     var votedListener: ListenerRegistration?
+    let currentUser = Auth.auth().currentUser?.email ?? ""
     override func viewDidLoad() {
         super.viewDidLoad()
         playersArray = players ?? [""]
         loadVotedPlayers()
     }
-    override func viewWillDisappear(_ animated: Bool) {
-       super.viewWillDisappear(animated)
-       votedListener?.remove()
-   }
+//    override func viewWillDisappear(_ animated: Bool) {
+//       super.viewWillDisappear(animated)
+//       votedListener?.remove()
+//   }
     func loadVotedPlayers() {
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
@@ -53,6 +54,7 @@ class KillViewController: UIViewController {
             }
             if self.isAllPlayersVote() {
                 self.killWhichPlayer()
+                self.votedListener?.remove()
             }
         }
     }
@@ -113,7 +115,7 @@ class KillViewController: UIViewController {
             print("繼續下一輪")
             let currentUser = Auth.auth().currentUser?.email ?? ""
             if playersArray.contains(currentUser) {
-                performSegue(withIdentifier: "KillToSpeak", sender: self)
+                performSegue(withIdentifier: "KillToNext", sender: self)
             } else {
                 let diedVC = DiedViewController()
                 navigationController?.pushViewController(diedVC, animated: true)
@@ -127,7 +129,8 @@ class KillViewController: UIViewController {
         let data: [String: Any] = [
             "player": playersArray,
             "identities": identitiesArray,
-            "voted": votedArray
+            "voted": votedArray,
+            "playersReady": [currentUser]
         ]
         documentRef.updateData(data) { error in
             if let error = error {
@@ -173,7 +176,7 @@ class KillViewController: UIViewController {
 }
 extension KillViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "KillToSpeak" {
+        if segue.identifier == "KillToNext" {
         }
     }
 }

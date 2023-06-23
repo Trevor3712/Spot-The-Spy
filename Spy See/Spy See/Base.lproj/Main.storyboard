@@ -554,7 +554,7 @@
                         <outlet property="nextRoundButton" destination="csN-89-bh3" id="0Mh-wY-vps"/>
                         <outlet property="votedLabel" destination="wsI-JM-UsA" id="psc-k7-9h7"/>
                         <outlet property="waitLabel" destination="cpl-Nb-6uS" id="Z3B-43-ATU"/>
-                        <segue destination="04L-e8-13C" kind="show" identifier="KillToSpeak" id="qp3-Hr-OcL"/>
+                        <segue destination="zwD-jl-nHE" kind="show" identifier="KillToNext" id="sQA-XS-dcR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="13w-Op-Qcu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -590,7 +590,38 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="II2-Ih-Fyb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10205" y="4"/>
+            <point key="canvasLocation" x="9385" y="-703"/>
+        </scene>
+        <!--Wait For Next View Controller-->
+        <scene sceneID="YUx-DE-mzc">
+            <objects>
+                <viewController id="zwD-jl-nHE" customClass="WaitForNextViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IMh-2M-WaR">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請先等待其他玩家到齊" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5d9-QV-dnM">
+                                <rect key="frame" x="46.666666666666657" y="415.66666666666669" width="300" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="Syb-tW-Yev"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="MBC-oD-HLC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="5d9-QV-dnM" firstAttribute="centerY" secondItem="IMh-2M-WaR" secondAttribute="centerY" id="Add-al-TLG"/>
+                            <constraint firstItem="5d9-QV-dnM" firstAttribute="centerX" secondItem="IMh-2M-WaR" secondAttribute="centerX" id="er3-TL-NgU"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="fQy-Mn-Cw8"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gmT-IP-xdg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9385" y="705"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="QCp-Y1-tva">
@@ -612,7 +643,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="P1c-qy-fgI"/>
         <segue reference="UiY-CT-8kC"/>
     </inferredMetricsTieBreakers>
     <resources>
