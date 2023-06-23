@@ -15,14 +15,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
-    @IBAction func check(_ sender: UIButton) {
-        if let user = Auth.auth().currentUser {
-            print("\(user.uid) login")
-        } else {
-            print("not login")
-        }
-    }
     @IBAction func logIn(_ sender: UIButton) {
         Auth.auth().signIn(withEmail: account.text ?? "", password: password.text ?? "") { _, error in
             guard error == nil else {
@@ -30,6 +22,8 @@ class LoginViewController: UIViewController {
                 return
             }
             print("\(self.account.text ?? "") log in")
+            let lobbyVC = LobbyViewController()
+//            self.navigationController?.pushViewController(lobbyVC, animated: true)
         }
     }
 }

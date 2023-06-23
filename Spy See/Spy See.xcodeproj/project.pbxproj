@@ -29,6 +29,7 @@
 		B5D2B0B62A3A98A000ED3516 /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0B52A3A98A000ED3516 /* Prompt.swift */; };
 		B5F20BEA2A4550E900FFECA1 /* WaitForNextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */; };
 		B5FAE7202A45AD8000C69CAA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */; };
+		B5FAE7282A45C68900C69CAA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAE7272A45C68900C69CAA /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		B5D2B0B52A3A98A000ED3516 /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
 		B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitForNextViewController.swift; sourceTree = "<group>"; };
 		B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		B5FAE7272A45C68900C69CAA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +105,10 @@
 			isa = PBXGroup;
 			children = (
 				B5FAE71E2A45AD3D00C69CAA /* Extensions */,
+				B5FAE7232A45C4A300C69CAA /* Views */,
 				B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */,
 				B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */,
+				B5FAE7272A45C68900C69CAA /* ProfileViewController.swift */,
 				B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */,
 				B522AF102A3AB4A000FF956C /* LobbyViewController.swift */,
 				B522AF122A3AC3CF00FF956C /* SettingViewController.swift */,
@@ -134,6 +138,21 @@
 				B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B5FAE7232A45C4A300C69CAA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B5FAE7242A45C4B600C69CAA /* Base */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B5FAE7242A45C4B600C69CAA /* Base */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		FCB70D36A0458B13BB8F8AA1 /* Frameworks */ = {
@@ -286,6 +305,7 @@
 				B5F20BEA2A4550E900FFECA1 /* WaitForNextViewController.swift in Sources */,
 				B522AF112A3AB4A000FF956C /* LobbyViewController.swift in Sources */,
 				B522AF1B2A3C5CAF00FF956C /* PassPromptViewController.swift in Sources */,
+				B5FAE7282A45C68900C69CAA /* ProfileViewController.swift in Sources */,
 				B522AF192A3C113900FF956C /* PlayerCell.swift in Sources */,
 				B5D2B0B62A3A98A000ED3516 /* Prompt.swift in Sources */,
 				B59588972A3DDD630058E170 /* KillViewController.swift in Sources */,

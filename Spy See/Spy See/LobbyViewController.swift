@@ -16,8 +16,6 @@ class LobbyViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
     }
-    @IBAction func logIn(_ sender: UIButton) {
-    }
     @IBAction func joinRoom(_ sender: UIButton) {
         let room = dataBase.collection("Rooms")
         let documentRef = room.document(invitationCode.text ?? "")
