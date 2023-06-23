@@ -17,6 +17,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="a6g-dh-bS1">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="123456" borderStyle="roundedRect" placeholder="密碼：" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gfQ-w7-B33">
                                 <rect key="frame" x="96.666666666666686" y="409" width="200" height="34"/>
                                 <constraints>
@@ -55,18 +58,22 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="a6g-dh-bS1" secondAttribute="bottom" id="6GJ-tJ-sfF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DL4-f8-W2q" secondAttribute="trailing" constant="159" id="6wN-Oa-ax3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Bv1-MN-1XV" secondAttribute="bottom" constant="207" id="6zQ-IC-Gu0"/>
                             <constraint firstItem="gfQ-w7-B33" firstAttribute="top" secondItem="4ZT-pW-tBe" secondAttribute="bottom" constant="59" id="9VL-fj-uSq"/>
                             <constraint firstItem="DL4-f8-W2q" firstAttribute="top" secondItem="gfQ-w7-B33" secondAttribute="bottom" constant="70" id="B9W-wI-aT3"/>
                             <constraint firstItem="gfQ-w7-B33" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BiQ-Id-7ff"/>
                             <constraint firstItem="4ZT-pW-tBe" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="213" id="Hwk-3m-BKb"/>
+                            <constraint firstItem="a6g-dh-bS1" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Ld5-Jz-Khy"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="gfQ-w7-B33" secondAttribute="bottom" constant="375" id="XJu-VP-rKg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="DL4-f8-W2q" secondAttribute="bottom" constant="270" id="XTu-1e-lsJ"/>
                             <constraint firstItem="Bv1-MN-1XV" firstAttribute="top" secondItem="DL4-f8-W2q" secondAttribute="bottom" constant="28" id="Zgf-ug-fpk"/>
                             <constraint firstItem="Bv1-MN-1XV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="159" id="cyU-bD-sU0"/>
                             <constraint firstItem="DL4-f8-W2q" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="159" id="doM-JC-PES"/>
                             <constraint firstItem="4ZT-pW-tBe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fuU-0o-1cm"/>
+                            <constraint firstItem="a6g-dh-bS1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="gyo-Il-Dc1"/>
+                            <constraint firstItem="a6g-dh-bS1" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="pvA-Va-ThM"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Bv1-MN-1XV" secondAttribute="trailing" constant="159" id="s4p-XH-pUV"/>
                         </constraints>
                     </view>
@@ -139,7 +146,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qcB-8p-SUh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2837" y="4"/>
+            <point key="canvasLocation" x="2835.8778625954196" y="3.5211267605633805"/>
         </scene>
         <!--Setting View Controller-->
         <scene sceneID="F0n-9w-anC">
@@ -597,7 +604,7 @@
             <objects>
                 <viewController id="zwD-jl-nHE" customClass="WaitForNextViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IMh-2M-WaR">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="請先等待其他玩家到齊" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5d9-QV-dnM">
@@ -650,6 +657,7 @@
         <segue reference="UiY-CT-8kC"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="background" width="5162" height="11187"/>
         <image name="paperplane.fill" catalog="system" width="128" height="119"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
