@@ -7,13 +7,13 @@
 
 import UIKit
 import FirebaseAuth
+import SnapKit
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var account: UITextField!
     @IBOutlet weak var password: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
     @IBAction func check(_ sender: UIButton) {

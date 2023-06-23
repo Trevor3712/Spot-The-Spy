@@ -11,5 +11,5 @@ target 'Spy See' do
   pod 'FirebaseAuth'
   pod 'FirebaseFirestore'
   pod 'FirebaseStorage'
-
+  pod 'SnapKit', '~> 5.6.0'
 end
