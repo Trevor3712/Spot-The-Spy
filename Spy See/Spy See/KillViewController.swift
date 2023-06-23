@@ -29,7 +29,7 @@ class KillViewController: UIViewController {
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
-        var votedPlayers: Set<String> = Set(self.votedArray.flatMap { $0.keys })
+        
         documentRef.addSnapshotListener { (documentSnapshot, error) in
             if let error = error {
                 print(error)
@@ -39,13 +39,13 @@ class KillViewController: UIViewController {
                 print("No data available")
                 return
             }
+            if let voted = data["voted"] as? [[String: String]] {
+                self.votedArray = voted
+                print(self.votedArray)
+            }
             if let identities = data["identities"] as? [String] {
                 self.identitiesArray = identities
-            }
-            if let voted = data["voted"] as? [[String: String]] {
-                self.votedArray = []
-                let newVotedPlayers = voted.filter { !votedPlayers.contains($0.keys.first ?? "") }
-                self.votedArray.append(contentsOf: newVotedPlayers)
+                print(self.identitiesArray)
             }
             if self.isAllPlayersVote() {
                 self.killWhichPlayer()
@@ -53,8 +53,6 @@ class KillViewController: UIViewController {
         }
     }
     func isAllPlayersVote() -> Bool {
-        print(self.playersArray.count)
-        print(self.votedArray.count)
         return self.votedArray.count == self.playersArray.count
     }
     func killWhichPlayer() {

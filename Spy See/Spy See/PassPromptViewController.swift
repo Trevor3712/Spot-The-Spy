@@ -85,6 +85,7 @@ class PassPromptViewController: UIViewController {
                 let newPlayers = playersReady.filter { !existingPlayers.contains($0) }
                 self.readyPlayers.append(contentsOf: newPlayers)
                 if self.isAllPlayersReady() {
+                    documentRef.updateData(["playersReady": []])
                     self.performSegue(withIdentifier: "PromptToSpeak", sender: self)
                 }
             }
