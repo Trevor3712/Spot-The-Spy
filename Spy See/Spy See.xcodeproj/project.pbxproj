@@ -28,6 +28,7 @@
 		B5D2B0B42A3A017D00ED3516 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */; };
 		B5D2B0B62A3A98A000ED3516 /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0B52A3A98A000ED3516 /* Prompt.swift */; };
 		B5F20BEA2A4550E900FFECA1 /* WaitForNextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */; };
+		B5FAE7202A45AD8000C69CAA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5D2B0B52A3A98A000ED3516 /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
 		B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitForNextViewController.swift; sourceTree = "<group>"; };
+		B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 		B5D2B09D2A39C8E800ED3516 /* Spy See */ = {
 			isa = PBXGroup;
 			children = (
+				B5FAE71E2A45AD3D00C69CAA /* Extensions */,
 				B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */,
 				B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */,
 				B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */,
@@ -123,6 +126,14 @@
 				B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */,
 			);
 			path = "Spy See";
+			sourceTree = "<group>";
+		};
+		B5FAE71E2A45AD3D00C69CAA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		FCB70D36A0458B13BB8F8AA1 /* Frameworks */ = {
@@ -271,6 +282,7 @@
 				B59588952A3D98430058E170 /* VoteViewController.swift in Sources */,
 				B522AF172A3C0F4900FF956C /* WaitingViewController.swift in Sources */,
 				B5D2B0A32A39C8E800ED3516 /* LoginViewController.swift in Sources */,
+				B5FAE7202A45AD8000C69CAA /* UIColor+Extension.swift in Sources */,
 				B5F20BEA2A4550E900FFECA1 /* WaitForNextViewController.swift in Sources */,
 				B522AF112A3AB4A000FF956C /* LobbyViewController.swift in Sources */,
 				B522AF1B2A3C5CAF00FF956C /* PassPromptViewController.swift in Sources */,
