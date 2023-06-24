@@ -22,7 +22,7 @@ extension UIFont {
         let attributedString = NSAttributedString(string: title, attributes: attributes)
         return attributedString.attribute(.font, at: 0, effectiveRange: nil) as? UIFont
     }
-    
+    // swiftlint:disable identifier_name
     private static func Font(_ font: FontName, size: CGFloat) -> UIFont? {
         return UIFont(name: font.rawValue, size: size)
     }
