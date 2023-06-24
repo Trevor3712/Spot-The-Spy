@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import SnapKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: BaseViewController {
     @IBOutlet weak var account: UITextField!
     @IBOutlet weak var password: UITextField!
     override func viewDidLoad() {

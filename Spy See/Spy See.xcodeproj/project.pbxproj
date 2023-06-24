@@ -30,6 +30,8 @@
 		B5F20BEA2A4550E900FFECA1 /* WaitForNextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */; };
 		B5FAE7202A45AD8000C69CAA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */; };
 		B5FAE7282A45C68900C69CAA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAE7272A45C68900C69CAA /* ProfileViewController.swift */; };
+		B5FAE72A2A46024200C69CAA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAE7292A46024200C69CAA /* BaseViewController.swift */; };
+		B5FAE72C2A46044F00C69CAA /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAE72B2A46044F00C69CAA /* UIImage+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +62,8 @@
 		B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitForNextViewController.swift; sourceTree = "<group>"; };
 		B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		B5FAE7272A45C68900C69CAA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		B5FAE7292A46024200C69CAA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		B5FAE72B2A46044F00C69CAA /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,8 +112,8 @@
 				B5FAE7232A45C4A300C69CAA /* Views */,
 				B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */,
 				B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */,
-				B5FAE7272A45C68900C69CAA /* ProfileViewController.swift */,
 				B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */,
+				B5FAE7272A45C68900C69CAA /* ProfileViewController.swift */,
 				B522AF102A3AB4A000FF956C /* LobbyViewController.swift */,
 				B522AF122A3AC3CF00FF956C /* SettingViewController.swift */,
 				B522AF142A3B67E800FF956C /* InviteViewController.swift */,
@@ -136,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */,
+				B5FAE72B2A46044F00C69CAA /* UIImage+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -151,6 +156,7 @@
 		B5FAE7242A45C4B600C69CAA /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				B5FAE7292A46024200C69CAA /* BaseViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -301,8 +307,10 @@
 				B59588952A3D98430058E170 /* VoteViewController.swift in Sources */,
 				B522AF172A3C0F4900FF956C /* WaitingViewController.swift in Sources */,
 				B5D2B0A32A39C8E800ED3516 /* LoginViewController.swift in Sources */,
+				B5FAE72A2A46024200C69CAA /* BaseViewController.swift in Sources */,
 				B5FAE7202A45AD8000C69CAA /* UIColor+Extension.swift in Sources */,
 				B5F20BEA2A4550E900FFECA1 /* WaitForNextViewController.swift in Sources */,
+				B5FAE72C2A46044F00C69CAA /* UIImage+Extension.swift in Sources */,
 				B522AF112A3AB4A000FF956C /* LobbyViewController.swift in Sources */,
 				B522AF1B2A3C5CAF00FF956C /* PassPromptViewController.swift in Sources */,
 				B5FAE7282A45C68900C69CAA /* ProfileViewController.swift in Sources */,

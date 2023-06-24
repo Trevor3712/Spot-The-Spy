@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class LobbyViewController: UIViewController {
+class LobbyViewController: BaseViewController {
     @IBOutlet weak var invitationCode: UITextField!
     let dataBase = Firestore.firestore()
     override func viewDidLoad() {
