@@ -17,6 +17,8 @@
 		B522AF1B2A3C5CAF00FF956C /* PassPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF1A2A3C5CAF00FF956C /* PassPromptViewController.swift */; };
 		B522AF1D2A3CBF2200FF956C /* SpeakViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF1C2A3CBF2200FF956C /* SpeakViewController.swift */; };
 		B54212EE2A40030200D7C90C /* DiedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54212ED2A40030200D7C90C /* DiedViewController.swift */; };
+		B550132E2A472C0A00FCEFFC /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132D2A472C0A00FCEFFC /* BaseButton.swift */; };
+		B55013302A47320500FCEFFC /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132F2A47320500FCEFFC /* UIFont+Extension.swift */; };
 		B59588952A3D98430058E170 /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588942A3D98430058E170 /* VoteViewController.swift */; };
 		B59588972A3DDD630058E170 /* KillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588962A3DDD630058E170 /* KillViewController.swift */; };
 		B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */; };
@@ -47,6 +49,8 @@
 		B522AF1A2A3C5CAF00FF956C /* PassPromptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassPromptViewController.swift; sourceTree = "<group>"; };
 		B522AF1C2A3CBF2200FF956C /* SpeakViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakViewController.swift; sourceTree = "<group>"; };
 		B54212ED2A40030200D7C90C /* DiedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiedViewController.swift; sourceTree = "<group>"; };
+		B550132D2A472C0A00FCEFFC /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
+		B550132F2A47320500FCEFFC /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		B59588942A3D98430058E170 /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
 		B59588962A3DDD630058E170 /* KillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillViewController.swift; sourceTree = "<group>"; };
 		B5D2B09B2A39C8E800ED3516 /* Spy See.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spy See.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +145,7 @@
 			children = (
 				B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */,
 				B5FAE72B2A46044F00C69CAA /* UIImage+Extension.swift */,
+				B550132F2A47320500FCEFFC /* UIFont+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -157,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				B5FAE7292A46024200C69CAA /* BaseViewController.swift */,
+				B550132D2A472C0A00FCEFFC /* BaseButton.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -313,6 +319,8 @@
 				B5FAE72C2A46044F00C69CAA /* UIImage+Extension.swift in Sources */,
 				B522AF112A3AB4A000FF956C /* LobbyViewController.swift in Sources */,
 				B522AF1B2A3C5CAF00FF956C /* PassPromptViewController.swift in Sources */,
+				B55013302A47320500FCEFFC /* UIFont+Extension.swift in Sources */,
+				B550132E2A472C0A00FCEFFC /* BaseButton.swift in Sources */,
 				B5FAE7282A45C68900C69CAA /* ProfileViewController.swift in Sources */,
 				B522AF192A3C113900FF956C /* PlayerCell.swift in Sources */,
 				B5D2B0B62A3A98A000ED3516 /* Prompt.swift in Sources */,

@@ -34,14 +34,11 @@ class BaseViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         if isHideNavigationBar {
             navigationController?.setNavigationBarHidden(true, animated: true)
         }
-        
         IQKeyboardManager.shared().isEnabled = isEnableIQKeyboard
         IQKeyboardManager.shared().shouldResignOnTouchOutside = true
-        
         setNeedsStatusBarAppearanceUpdate()
     }
 
