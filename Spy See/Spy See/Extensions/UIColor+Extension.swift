@@ -12,6 +12,8 @@ private enum Color: String {
     case B1
     case B2
     case B3
+    case B4
+    case G
     case Y
     case R
 }
@@ -19,6 +21,7 @@ extension UIColor {
     static let B1 = Color(.B1)
     static let B2 = Color(.B2)
     static let B3 = Color(.B3)
+    static let B4 = Color(.B4)
     static let Y = Color(.Y)
     static let R = Color(.R)
     private static func Color(_ color: Color) -> UIColor? {

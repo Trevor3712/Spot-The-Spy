@@ -7,20 +7,22 @@
 
 import UIKit
 
-private enum FontName: String {
+enum FontName: String {
+    case light = "PingFangTC-Ultralight"
     case regular = "PingFangTC-Regular"
+    case semibold = "PingFangTC-Semibold"
+    case boldItalicEN = "AvenirNextCondensed-BoldItalic"
 }
 
 extension UIFont {
-    
-    static func regular(title: String, size: CGFloat, textColor: UIColor, letterSpacing: CGFloat) -> UIFont? {
+    static func fontStyle(font: FontName, title: String, size: CGFloat, textColor: UIColor, letterSpacing: CGFloat) -> NSAttributedString? {
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: Font(.regular, size: size) ?? "",
+            .font: Font(font, size: size) ?? "",
             .foregroundColor: textColor,
             .kern: letterSpacing
         ]
         let attributedString = NSAttributedString(string: title, attributes: attributes)
-        return attributedString.attribute(.font, at: 0, effectiveRange: nil) as? UIFont
+        return attributedString
     }
     // swiftlint:disable identifier_name
     private static func Font(_ font: FontName, size: CGFloat) -> UIFont? {
