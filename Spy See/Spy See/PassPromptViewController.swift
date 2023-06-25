@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class PassPromptViewController: UIViewController {
+class PassPromptViewController: BaseViewController {
     @IBOutlet weak var promptLabel: UILabel!
     var playerPrompt: String?
     let dataBase = Firestore.firestore()

@@ -8,10 +8,21 @@
 import UIKit
 import FirebaseFirestore
 
-class WaitingViewController: UIViewController {
+class WaitingViewController: BaseViewController {
+    lazy var titleLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "遊戲將在玩家到齊後開始...",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 5)
+        return titleLabel
+    }()
     lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(PlayerCell.self, forCellReuseIdentifier: PlayerCell.reuseIdentifier)
@@ -23,7 +34,17 @@ class WaitingViewController: UIViewController {
     var playerNumber: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTableView()
+        [titleLabel, tableView].forEach { view.addSubview($0) }
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view).offset(105)
+            make.centerX.equalTo(view)
+        }
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(24)
+            make.left.equalTo(view).offset(36)
+            make.right.equalTo(view).offset(-36)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-50)
+        }
         players = []
         loadRoomData()
     }
@@ -31,16 +52,6 @@ class WaitingViewController: UIViewController {
         super.viewWillDisappear(animated)
         documentListener?.remove()
         UserDefaults.standard.setValue(players, forKey: "playersArray")
-    }
-    func configureTableView() {
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -200)
-        ])
     }
     func loadRoomData() {
         guard let roomId = UserDefaults.standard.string(forKey: "roomId"), !roomId.isEmpty else {
@@ -67,7 +78,8 @@ class WaitingViewController: UIViewController {
                 self.players.append(contentsOf: newPlayers)
                 self.tableView.reloadData()
                 if self.allPlayersJoined() {
-                    self.performSegue(withIdentifier: "waitingToPrompt", sender: self)
+                    let promptVC = PassPromptViewController()
+                    self.navigationController?.pushViewController(promptVC, animated: true)
                 }
             }
         }
@@ -83,22 +95,19 @@ extension WaitingViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PlayerCell.reuseIdentifier) as? PlayerCell else { fatalError("Can't create cell") }
-        cell.titleLabel.text = players[indexPath.row]
+        cell.titleLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: players[indexPath.row],
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 5)
+        cell.backgroundColor = .clear
+        cell.layer.backgroundColor = UIColor.clear.cgColor
         return cell
     }
 }
 extension WaitingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        40
-    }
-}
-
-extension WaitingViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "waitingToPrompt" {
-//            if let promptVC = segue.destination as? PassPromptViewController {
-//
-//            }
-        }
+        64
     }
 }

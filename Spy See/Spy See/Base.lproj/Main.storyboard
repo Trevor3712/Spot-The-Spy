@@ -96,62 +96,12 @@
             </objects>
             <point key="canvasLocation" x="1056" y="4"/>
         </scene>
-        <!--Invite View Controller-->
-        <scene sceneID="JBj-Qu-VqC">
-            <objects>
-                <viewController storyboardIdentifier="InviteViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Xas-5K-gto" customClass="InviteViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ler-Yt-cJ6">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LVs-uG-ixb">
-                                <rect key="frame" x="96.666666666666686" y="237" width="200" height="65"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="nfA-Et-1ot"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S55-eE-xpD">
-                                <rect key="frame" x="96.666666666666686" y="426" width="200" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="0CA-zP-DYP"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="進入房間"/>
-                                <connections>
-                                    <action selector="joinRoom:" destination="Xas-5K-gto" eventType="touchUpInside" id="Osi-Hd-AtT"/>
-                                    <segue destination="GCJ-8H-c8z" kind="show" id="w66-on-Lkh"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="kmF-wj-8wc"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="kmF-wj-8wc" firstAttribute="bottom" secondItem="S55-eE-xpD" secondAttribute="bottom" constant="357" id="6rp-Lt-zlc"/>
-                            <constraint firstItem="kmF-wj-8wc" firstAttribute="bottom" secondItem="LVs-uG-ixb" secondAttribute="bottom" constant="516" id="PFr-5C-sgO"/>
-                            <constraint firstItem="LVs-uG-ixb" firstAttribute="centerX" secondItem="Ler-Yt-cJ6" secondAttribute="centerX" id="TbG-i4-Di6"/>
-                            <constraint firstItem="S55-eE-xpD" firstAttribute="centerX" secondItem="Ler-Yt-cJ6" secondAttribute="centerX" id="YiF-EW-g7B"/>
-                            <constraint firstItem="S55-eE-xpD" firstAttribute="top" secondItem="LVs-uG-ixb" secondAttribute="bottom" constant="124" id="p22-XO-D7s"/>
-                            <constraint firstItem="LVs-uG-ixb" firstAttribute="top" secondItem="kmF-wj-8wc" secondAttribute="top" constant="178" id="uH0-qT-ns8"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="Do5-HU-eqY"/>
-                    <connections>
-                        <outlet property="inviteLabel" destination="LVs-uG-ixb" id="VvZ-mk-B3l"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mJJ-xN-1KK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4529" y="4"/>
-        </scene>
         <!--Waiting View Controller-->
         <scene sceneID="TBt-BH-A1F">
             <objects>
                 <viewController id="GCJ-8H-c8z" customClass="WaitingViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i0d-pf-cS3">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="yZH-jj-9AU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
