@@ -18,7 +18,7 @@ class LobbyViewController: BaseViewController {
     lazy var createRoomButton: BaseButton = {
         let createRoomButton = BaseButton()
         createRoomButton.setAttributedTitle(UIFont.fontStyle(
-            font: .regular,
+            font: .semibold,
             title: "建立遊戲",
             size: 20,
             textColor: .B2 ?? .black,
@@ -27,25 +27,15 @@ class LobbyViewController: BaseViewController {
         createRoomButton.addTarget(self, action: #selector(createRoomButtonPressed), for: .touchUpInside)
         return createRoomButton
     }()
-    lazy var joinLabel1: UILabel = {
-        let joinLabel1 = UILabel()
-        joinLabel1.attributedText = UIFont.fontStyle(
+    lazy var joinLabel: UILabel = {
+        let joinLabel = UILabel()
+        joinLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
-            title: "加",
+            title: "加入遊戲",
             size: 20,
-            textColor: .B2 ?? .black,
+            textColor: .B4 ?? .black,
             letterSpacing: 10)
-        return joinLabel1
-    }()
-    lazy var joinLabel2: UILabel = {
-        let joinLabel2 = UILabel()
-        joinLabel2.attributedText = UIFont.fontStyle(
-            font: .semibold,
-            title: "入遊戲",
-            size: 20,
-            textColor: .B3 ?? .black,
-            letterSpacing: 10)
-        return joinLabel2
+        return joinLabel
     }()
     lazy var invitationTextFileld: BaseTextField = {
         let invitationTextFileld = BaseTextField()
@@ -56,7 +46,7 @@ class LobbyViewController: BaseViewController {
     lazy var goButton: BaseButton = {
         let goButton = BaseButton()
         goButton.setAttributedTitle(UIFont.fontStyle(
-            font: .regular,
+            font: .semibold,
             title: "GO!",
             size: 20,
             textColor: .B2 ?? .black,
@@ -68,36 +58,37 @@ class LobbyViewController: BaseViewController {
     let dataBase = Firestore.firestore()
     override func viewDidLoad() {
         super.viewDidLoad()
-        [logoImage, createRoomButton, joinLabel1, joinLabel2, invitationTextFileld, goButton].forEach { view.addSubview($0) }
+        [
+            logoImage,
+            createRoomButton,
+            joinLabel,
+            invitationTextFileld,
+            goButton].forEach { view.addSubview($0) }
         logoImage.snp.makeConstraints { make in
             make.top.equalTo(view).offset(200)
-            make.centerX.equalTo(view)
+            make.left.equalTo(view).offset(50)
             make.width.equalTo(130)
             make.height.equalTo(130)
         }
         createRoomButton.snp.makeConstraints { make in
             make.top.equalTo(logoImage.snp.bottom).offset(30)
-            make.centerX.equalTo(view)
+            make.centerX.equalTo(logoImage)
             make.width.equalTo(150)
             make.height.equalTo(40)
         }
-        joinLabel1.snp.makeConstraints { make in
+        joinLabel.snp.makeConstraints { make in
             make.top.equalTo(view.snp.centerY).offset(50)
-            make.right.equalTo(view.snp.centerX).offset(-25)
-        }
-        joinLabel2.snp.makeConstraints { make in
-            make.centerY.equalTo(joinLabel1)
-            make.left.equalTo(joinLabel1.snp.right).offset(2)
+            make.right.equalTo(view).offset(-55)
         }
         invitationTextFileld.snp.makeConstraints { make in
-            make.top.equalTo(joinLabel1.snp.bottom).offset(20)
-            make.centerX.equalTo(view)
+            make.top.equalTo(joinLabel.snp.bottom).offset(20)
+            make.centerX.equalTo(joinLabel)
             make.width.equalTo(150)
             make.height.equalTo(40)
         }
         goButton.snp.makeConstraints { make in
             make.top.equalTo(invitationTextFileld.snp.bottom).offset(30)
-            make.centerX.equalTo(view)
+            make.centerX.equalTo(joinLabel)
             make.width.equalTo(75)
             make.height.equalTo(40)
         }

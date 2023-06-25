@@ -82,7 +82,7 @@ class LoginViewController: BaseViewController {
     lazy var loginButton: BaseButton = {
         let loginButton = BaseButton()
         loginButton.setAttributedTitle(UIFont.fontStyle(
-            font: .regular,
+            font: .semibold,
             title: "登入",
             size: 20,
             textColor: .B2 ?? .black,
@@ -94,7 +94,7 @@ class LoginViewController: BaseViewController {
     lazy var signupButton: BaseButton = {
         let signupButton = BaseButton()
         signupButton.setAttributedTitle(UIFont.fontStyle(
-            font: .regular,
+            font: .semibold,
             title: "註冊",
             size: 20,
             textColor: .B2 ?? .black,
