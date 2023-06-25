@@ -10,7 +10,38 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class PassPromptViewController: BaseViewController {
-    @IBOutlet weak var promptLabel: UILabel!
+    lazy var titleLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "你的題目",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 10)
+        return titleLabel
+    }()
+    lazy var promotLabel: UILabel = {
+        let promotLabel = UILabel()
+        promotLabel.backgroundColor = .white
+        promotLabel.layer.borderWidth = 1
+        promotLabel.layer.borderColor = UIColor.B1?.cgColor
+        promotLabel.layer.cornerRadius = 20
+        promotLabel.clipsToBounds = true
+        promotLabel.textAlignment = .center
+        return promotLabel
+    }()
+    lazy var readyButton: BaseButton = {
+        let readyButton = BaseButton()
+        readyButton.setAttributedTitle(UIFont.fontStyle(
+            font: .semibold,
+            title: "我記住了",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 5), for: .normal)
+        readyButton.titleLabel?.textAlignment = .center
+        readyButton.addTarget(self, action: #selector(readyButtonPressed), for: .touchUpInside)
+        return readyButton
+    }()
     var playerPrompt: String?
     let dataBase = Firestore.firestore()
     var readyPlayers: [String] = []
@@ -18,13 +49,40 @@ class PassPromptViewController: BaseViewController {
     var documentListener: ListenerRegistration?
     override func viewDidLoad() {
         super.viewDidLoad()
+        [titleLabel, promotLabel, readyButton].forEach { view.addSubview($0) }
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(150)
+            make.centerX.equalTo(view)
+        }
+        promotLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel).offset(100)
+            make.centerX.equalTo(view)
+            make.width.equalTo(300)
+            make.height.height.equalTo(80)
+        }
+        readyButton.snp.makeConstraints { make in
+            make.top.equalTo(promotLabel.snp.bottom).offset(100)
+            make.centerX.equalTo(view)
+            make.width.equalTo(150)
+            make.height.equalTo(40)
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             let playerPrompt = UserDefaults.standard.string(forKey: "playerPrompt")
             let hostPrompt = UserDefaults.standard.string(forKey: "hostPrompt")
             if playerPrompt != nil {
-                self.promptLabel.text = playerPrompt
+                self.promotLabel.attributedText = UIFont.fontStyle(
+                    font: .semibold,
+                    title: playerPrompt ?? "",
+                    size: 40,
+                    textColor: .B2 ?? .black,
+                    letterSpacing: 15)
             } else {
-                self.promptLabel.text = hostPrompt
+                self.promotLabel.attributedText = UIFont.fontStyle(
+                    font: .semibold,
+                    title: hostPrompt ?? "",
+                    size: 40,
+                    textColor: .B2 ?? .black,
+                    letterSpacing: 15)
             }
         }
         loadReadyPlayers()
@@ -33,7 +91,7 @@ class PassPromptViewController: BaseViewController {
         super.viewWillDisappear(animated)
         documentListener?.remove()
     }
-    @IBAction func readyButtonPressed(_ sender: UIButton) {
+    @objc func readyButtonPressed() {
         let room = self.dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
@@ -86,7 +144,8 @@ class PassPromptViewController: BaseViewController {
                 self.readyPlayers.append(contentsOf: newPlayers)
                 if self.isAllPlayersReady() {
                     documentRef.updateData(["playersReady": []])
-                    self.performSegue(withIdentifier: "PromptToSpeak", sender: self)
+                    let speakVC = SpeakViewController()
+                    self.navigationController?.pushViewController(speakVC, animated: true)
                 }
             }
         }
@@ -95,12 +154,5 @@ class PassPromptViewController: BaseViewController {
         print("playerNumber\(Int(playerNumber ?? 0))")
         print("readyPlayers:\(self.readyPlayers.count)")
         return self.readyPlayers.count == playerNumber
-    }
-}
-
-extension PassPromptViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "PromptToSpeak" {
-        }
     }
 }
