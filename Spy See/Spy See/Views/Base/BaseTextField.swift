@@ -10,7 +10,7 @@ import UIKit
 class BaseTextField: UITextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .B3
+        backgroundColor = .white
         layer.borderWidth = 1
         layer.borderColor = UIColor.B1?.cgColor
         layer.cornerRadius = 5

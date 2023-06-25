@@ -15,11 +15,12 @@ enum FontName: String {
 }
 
 extension UIFont {
-    static func fontStyle(font: FontName, title: String, size: CGFloat, textColor: UIColor, letterSpacing: CGFloat) -> NSAttributedString? {
+    static func fontStyle(font: FontName, title: String, size: CGFloat, textColor: UIColor, letterSpacing: CGFloat, obliqueness: CGFloat = 0) -> NSAttributedString? {
         let attributes: [NSAttributedString.Key: Any] = [
             .font: Font(font, size: size) ?? "",
             .foregroundColor: textColor,
-            .kern: letterSpacing
+            .kern: letterSpacing,
+            .obliqueness: obliqueness
         ]
         let attributedString = NSAttributedString(string: title, attributes: attributes)
         return attributedString

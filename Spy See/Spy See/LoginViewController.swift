@@ -22,7 +22,8 @@ class LoginViewController: BaseViewController {
             title: "誰是",
             size: 50,
             textColor: .B2 ?? .black,
-            letterSpacing: 15)
+            letterSpacing: 15,
+            obliqueness: 0.2)
         return labelCN1
     }()
     lazy var labelCN2: UILabel = {
@@ -32,7 +33,8 @@ class LoginViewController: BaseViewController {
             title: "臥底",
             size: 50,
             textColor: .B4 ?? .black,
-            letterSpacing: 15)
+            letterSpacing: 15,
+            obliqueness: 0.2 )
         return labelCN2
     }()
     lazy var labelEN1: UILabel = {
@@ -79,14 +81,24 @@ class LoginViewController: BaseViewController {
     }()
     lazy var loginButton: BaseButton = {
         let loginButton = BaseButton()
-        loginButton.setAttributedTitle(UIFont.fontStyle(font: .regular, title: "登入", size: 20, textColor: .B2 ?? .black, letterSpacing: 3), for: .normal)
+        loginButton.setAttributedTitle(UIFont.fontStyle(
+            font: .regular,
+            title: "登入",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 3), for: .normal)
         loginButton.titleLabel?.textAlignment = .center
         loginButton.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
         return loginButton
     }()
     lazy var signupButton: BaseButton = {
         let signupButton = BaseButton()
-        signupButton.setAttributedTitle(UIFont.fontStyle(font: .regular, title: "註冊", size: 20, textColor: .B2 ?? .black, letterSpacing: 3), for: .normal)
+        signupButton.setAttributedTitle(UIFont.fontStyle(
+            font: .regular,
+            title: "註冊",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 3), for: .normal)
         signupButton.titleLabel?.textAlignment = .center
         return signupButton
     }()
@@ -159,8 +171,10 @@ class LoginViewController: BaseViewController {
                 return
             }
             print("\(self.accountTextFileld.text ?? "") log in")
-            let lobbyVC = LobbyViewController()
-            self.navigationController?.pushViewController(lobbyVC, animated: true)
+            guard let tabBarController = self.storyboard?.instantiateViewController(withIdentifier: "TabBarController") as? UITabBarController else {
+                return
+            }
+            self.navigationController?.pushViewController(tabBarController, animated: true)
         }
     }
 }
