@@ -49,6 +49,7 @@ class WaitForNextViewController: UIViewController {
                 self.readyPlayers.append(contentsOf: newPlayers)
                 if self.isAllPlayersReady() {
                     self.readyListener?.remove()
+                    documentRef.updateData(["playersReady": []])
                     self.performSegue(withIdentifier: "NextToSpeak", sender: self)
                 }
             }
