@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class VoteViewController: UIViewController {
+class VoteViewController: BaseViewController {
     @IBOutlet weak var voteButton: UIButton!
     lazy var tableView: UITableView = {
         let tableView = UITableView()
