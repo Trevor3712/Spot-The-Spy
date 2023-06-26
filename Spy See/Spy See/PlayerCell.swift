@@ -17,11 +17,22 @@ class PlayerCell: UITableViewCell {
         titleLabel.backgroundColor = .B3
         return titleLabel
     }()
+    lazy var knifeImageView: UIImageView = {
+        let knifeImageView = UIImageView()
+        knifeImageView.image = .asset(.knife)
+        return knifeImageView
+    }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(titleLabel)
+        [titleLabel, knifeImageView].forEach { contentView.addSubview($0) }
         titleLabel.snp.makeConstraints { make in
             make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12))
+        }
+        knifeImageView.snp.makeConstraints { make in
+            make.centerY.equalTo(titleLabel)
+            make.right.equalTo(contentView).offset(-16)
+            make.width.equalTo(40)
+            make.height.equalTo(40)
         }
     }
     required init?(coder: NSCoder) {

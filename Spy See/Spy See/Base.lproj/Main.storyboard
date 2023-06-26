@@ -470,6 +470,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="ChB-zL-EqZ"/>
         <segue reference="lMZ-cn-lLz"/>
     </inferredMetricsTieBreakers>
     <resources>

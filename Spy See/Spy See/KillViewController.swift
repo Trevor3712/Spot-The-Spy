@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class KillViewController: UIViewController {
+class KillViewController: BaseViewController {
     @IBOutlet weak var votedLabel: UILabel!
     @IBOutlet weak var waitLabel: UILabel!
     @IBOutlet weak var identityLabel: UILabel!

@@ -104,12 +104,10 @@ class LoginViewController: BaseViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        [
-            logoImage,
-            labelCN1, labelCN2, labelEN1, labelEN2, labelEN3,
-            accountTextFileld, passwordTextFileld,
-            loginButton, signupButton
-        ].forEach { view.addSubview($0) }
+        [logoImage,
+         labelCN1, labelCN2, labelEN1, labelEN2, labelEN3,
+         accountTextFileld, passwordTextFileld,
+         loginButton, signupButton].forEach { view.addSubview($0) }
         logoImage.snp.makeConstraints { make in
             make.top.equalTo(view).offset(120)
             make.centerX.equalTo(view)

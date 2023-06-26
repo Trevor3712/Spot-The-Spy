@@ -103,6 +103,7 @@ extension WaitingViewController: UITableViewDataSource {
             letterSpacing: 5)
         cell.backgroundColor = .clear
         cell.layer.backgroundColor = UIColor.clear.cgColor
+        cell.knifeImageView.isHidden = true
         return cell
     }
 }

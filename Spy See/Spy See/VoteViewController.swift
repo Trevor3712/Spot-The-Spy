@@ -10,55 +10,62 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class VoteViewController: BaseViewController {
-    @IBOutlet weak var voteButton: UIButton!
+    lazy var titleLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "你覺得誰是臥底？",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 5)
+        return titleLabel
+    }()
     lazy var tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(PlayerCell.self, forCellReuseIdentifier: PlayerCell.reuseIdentifier)
         return tableView
     }()
+    lazy var voteButton: BaseButton = {
+        let voteButton = BaseButton()
+        voteButton.setAttributedTitle(UIFont.fontStyle(
+            font: .semibold,
+            title: "投票",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 3), for: .normal)
+        voteButton.titleLabel?.textAlignment = .center
+        voteButton.addTarget(self, action: #selector(voteButtonPressed), for: .touchUpInside)
+        return voteButton
+    }()
     var players = UserDefaults.standard.stringArray(forKey: "playersArray")
     let dataBase = Firestore.firestore()
     var votedPlayer: String?
+    var selectedIndexPath: IndexPath?
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureTableView()
-    }
-    func configureTableView() {
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -200)
-        ])
-    }
-}
-
-extension VoteViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        players?.count ?? 0
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlayerCell.reuseIdentifier) as? PlayerCell else { fatalError("Can't create cell") }
-        cell.titleLabel.text = players?[indexPath.row]
-        return cell
-    }
-}
-extension VoteViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        40
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? PlayerCell else {
-            fatalError("Can't create cell")
+        [titleLabel, tableView, voteButton].forEach { view.addSubview($0) }
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view).offset(105)
+            make.centerX.equalTo(view)
         }
-        votedPlayer = cell.titleLabel.text
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(24)
+            make.left.equalTo(view).offset(36)
+            make.right.equalTo(view).offset(-36)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-100)
+        }
+        voteButton.snp.makeConstraints { make in
+            make.top.equalTo(tableView.snp.bottom).offset(30)
+            make.centerX.equalTo(view)
+            make.width.equalTo(115)
+            make.height.equalTo(40)
+        }
     }
-    @IBAction func addVotedPlayer(_ sender: UIButton) {
+    @objc func voteButtonPressed() {
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
@@ -69,8 +76,50 @@ extension VoteViewController: UITableViewDelegate {
                 print("Error updating document: \(error)")
             } else {
                 print("Document updated successfully")
-//                self.voteButton.isEnabled = false
+                let killVC = KillViewController()
+                self.navigationController?.pushViewController(killVC, animated: true)
             }
         }
+    }
+}
+
+extension VoteViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        players?.count ?? 0
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlayerCell.reuseIdentifier) as? PlayerCell else { fatalError("Can't create cell") }
+        cell.titleLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: players?[indexPath.row] ?? "",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 5)
+        cell.backgroundColor = .clear
+        cell.layer.backgroundColor = UIColor.clear.cgColor
+        if let selectedIndexPath = selectedIndexPath, selectedIndexPath == indexPath {
+            cell.knifeImageView.isHidden = false
+        } else {
+            cell.knifeImageView.isHidden = true
+        }
+        return cell
+    }
+}
+extension VoteViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        64
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? PlayerCell else {
+            fatalError("Can't create cell")
+        }
+        votedPlayer = cell.titleLabel.text
+        cell.selectionStyle = .none
+        if let selectedIndexPath = selectedIndexPath, selectedIndexPath == indexPath {
+            self.selectedIndexPath = nil
+        } else {
+            self.selectedIndexPath = indexPath
+        }
+        tableView.reloadData()
     }
 }
