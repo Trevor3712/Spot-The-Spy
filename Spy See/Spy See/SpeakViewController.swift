@@ -183,18 +183,26 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             make.centerY.equalTo(sendButton2)
             make.left.equalTo(sendButton2.snp.right).offset(12)
         }
+//        if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
+//            players = storedPlayers
+//        }
+//        showNextPrompt()
+        showClue()
+        configRecordSession()
+        speechAuth()
+    }
+    override func viewWillAppear(_ animated: Bool) {
         if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
             players = storedPlayers
         }
         showNextPrompt()
-        showClue()
-        configRecordSession()
-        speechAuth()
+        print(players)
     }
     func showNextPrompt() {
         guard currentPlayerIndex < players.count else {
             deleteMessage()
             let voteVC = VoteViewController()
+            currentPlayerIndex = 0
             navigationController?.pushViewController(voteVC, animated: true)
             return
         }

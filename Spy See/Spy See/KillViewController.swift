@@ -201,6 +201,7 @@ class KillViewController: BaseViewController {
         self.votedArray.removeAll()
         UserDefaults.standard.removeObject(forKey: "playersArray")
         UserDefaults.standard.setValue(playersArray, forKey: "playersArray")
+        print(playersArray)
         self.updateData()
         let countCivilian = identitiesArray.filter { $0 == "平民" }.count
         let countSpy = identitiesArray.filter { $0 == "臥底" }.count
