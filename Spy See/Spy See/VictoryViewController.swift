@@ -8,12 +8,19 @@
 import UIKit
 import FirebaseFirestore
 
-class VictoryViewController: UIViewController {
+class VictoryViewController: BaseViewController {
+    lazy var identityImageView = UIImageView()
     lazy var victoryLabel = UILabel()
-    lazy var backToLobbyButton: UIButton = {
-        let backToLobbyButton = UIButton()
-        backToLobbyButton.setTitle("回遊戲大廳", for: .normal)
-        backToLobbyButton.setTitleColor(.black, for: .normal)
+    lazy var backToLobbyButton: BaseButton = {
+        let backToLobbyButton = BaseButton()
+        backToLobbyButton.setAttributedTitle(UIFont.fontStyle(
+            font: .semibold,
+            title: "回到大廳",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 3), for: .normal)
+        backToLobbyButton.titleLabel?.textAlignment = .center
+        backToLobbyButton.addTarget(self, action: #selector(backToLobbyButtonPressed), for: .touchUpInside)
         return backToLobbyButton
     }()
     let dataBase = Firestore.firestore()
@@ -26,26 +33,44 @@ class VictoryViewController: UIViewController {
     }
     func whoWins() {
         if isSpyWin {
-            victoryLabel.text = "臥底獲勝！"
+            victoryLabel.attributedText = UIFont.fontStyle(
+                font: .boldItalicEN,
+                title: "臥底獲勝",
+                size: 45,
+                textColor: .Y ?? .black,
+                letterSpacing: 10)
+            identityImageView.image = .asset(.spy)
         } else {
-            victoryLabel.text = "平民獲勝！"
+            victoryLabel.attributedText = UIFont.fontStyle(
+                font: .boldItalicEN,
+                title: "平民獲勝",
+                size: 45,
+                textColor: .Y ?? .black,
+                letterSpacing: 10)
+            identityImageView.image = .asset(.normalWin)
         }
     }
     func configureLayout() {
-        [victoryLabel, backToLobbyButton].forEach { view.addSubview($0) }
-        [victoryLabel, backToLobbyButton].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-        NSLayoutConstraint.activate([
-            victoryLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
-            victoryLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            backToLobbyButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            backToLobbyButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            backToLobbyButton.widthAnchor.constraint(equalToConstant: 100),
-            backToLobbyButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        backToLobbyButton.addTarget(self, action: #selector(backToLobby), for: .touchUpInside)
+        [identityImageView, victoryLabel, backToLobbyButton].forEach { view.addSubview($0) }
+        victoryLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(view)
+            make.centerY.equalTo(view)
+        }
+        identityImageView.snp.makeConstraints { make in
+            make.bottom.equalTo(victoryLabel.snp.top).offset(-100)
+            make.centerX.equalTo(view)
+            make.width.equalTo(150)
+            make.height.equalTo(150)
+        }
+        backToLobbyButton.snp.makeConstraints { make in
+            make.top.equalTo(victoryLabel.snp.bottom).offset(150)
+            make.centerX.equalTo(view)
+            make.width.equalTo(150)
+            make.height.equalTo(40)
+        }
     }
-    @objc func backToLobby() {
-        if let targetViewController = navigationController?.viewControllers.filter({ $0 is LobbyViewController }).first {
+    @objc func backToLobbyButtonPressed() {
+        if let targetViewController = navigationController?.viewControllers[1] {
             navigationController?.popToViewController(targetViewController, animated: true)
             deleteGameData()
         }
