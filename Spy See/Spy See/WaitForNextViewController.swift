@@ -9,7 +9,23 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class WaitForNextViewController: UIViewController {
+class WaitForNextViewController: BaseViewController {
+    lazy var remindLabel: UILabel = {
+        let remindLabel = UILabel()
+        remindLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "請等待其他玩家到齊",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 5)
+        remindLabel.layer.borderWidth = 1
+        remindLabel.layer.borderColor = UIColor.B1?.cgColor
+        remindLabel.backgroundColor = .white
+        remindLabel.layer.cornerRadius = 10
+        remindLabel.clipsToBounds = true
+        remindLabel.textAlignment = .center
+        return remindLabel
+    }()
     let dataBase = Firestore.firestore()
     var readyListener: ListenerRegistration?
     let currentPlayers = UserDefaults.standard.stringArray(forKey: "playersArray")
@@ -17,6 +33,13 @@ class WaitForNextViewController: UIViewController {
     let currentUser = Auth.auth().currentUser?.email ?? ""
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        view.addSubview(remindLabel)
+        remindLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(view)
+            make.centerY.equalTo(view)
+            make.width.equalTo(250)
+            make.height.equalTo(40)
+        }
         readtToGO()
         loadReadyPlayer()
     }
@@ -50,7 +73,9 @@ class WaitForNextViewController: UIViewController {
                 if self.isAllPlayersReady() {
                     self.readyListener?.remove()
                     documentRef.updateData(["playersReady": []])
-                    self.performSegue(withIdentifier: "NextToSpeak", sender: self)
+                    if let targetViewController = self.navigationController?.viewControllers.filter({ $0 is SpeakViewController }).first {
+                        self.navigationController?.popToViewController(targetViewController, animated: true)
+                    }
                 }
             }
         }
@@ -60,10 +85,4 @@ class WaitForNextViewController: UIViewController {
        print(self.readyPlayers.count)
         return self.readyPlayers.count == self.currentPlayers?.count
    }
-}
-extension WaitForNextViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "NextToSpeak" {
-        }
-    }
 }

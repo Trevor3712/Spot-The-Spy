@@ -58,7 +58,7 @@ class PassPromptViewController: BaseViewController {
             make.top.equalTo(titleLabel).offset(100)
             make.centerX.equalTo(view)
             make.width.equalTo(300)
-            make.height.height.equalTo(80)
+            make.height.equalTo(80)
         }
         readyButton.snp.makeConstraints { make in
             make.top.equalTo(promotLabel.snp.bottom).offset(100)

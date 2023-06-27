@@ -8,20 +8,46 @@
 import UIKit
 import FirebaseFirestore
 
-class DiedViewController: UIViewController {
-    lazy var diedLabel = UILabel()
+class DiedViewController: BaseViewController {
+    lazy var diedImageView = UIImageView()
+    lazy var diedLabel: UILabel = {
+        let diedLabel = UILabel()
+        diedLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "你已經死了",
+            size: 45,
+            textColor: .R ?? .black,
+            letterSpacing: 10)
+        return diedLabel
+    }()
+    lazy var remindLabel: UILabel = {
+        let remindLabel = UILabel()
+        remindLabel.attributedText = UIFont.fontStyle(
+            font: .regular,
+            title: "＊若遊戲結束將自動返回勝利頁面",
+            size: 15,
+            textColor: .B3 ?? .black,
+            letterSpacing: 0)
+        return remindLabel
+    }()
     let dataBase = Firestore.firestore()
-//    var ifEndGame = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        view.addSubview(diedLabel)
-        diedLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            diedLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 300),
-            diedLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        diedLabel.text = "你已經死了！"
+        [diedImageView, diedLabel, remindLabel].forEach { view.addSubview($0) }
+        diedLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(view)
+            make.centerX.equalTo(view)
+        }
+        diedImageView.snp.makeConstraints { make in
+            make.bottom.equalTo(diedLabel.snp.top).offset(-100)
+            make.centerX.equalTo(view)
+            make.width.equalTo(150)
+            make.height.equalTo(150)
+        }
+        remindLabel.snp.makeConstraints { make in
+            make.top.equalTo(diedLabel.snp.bottom).offset(50)
+            make.centerX.equalTo(view)
+        }
         checkIfEndGame()
     }
     func checkIfEndGame() {
