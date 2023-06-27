@@ -10,10 +10,56 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class KillViewController: BaseViewController {
-    @IBOutlet weak var votedLabel: UILabel!
-    @IBOutlet weak var waitLabel: UILabel!
-    @IBOutlet weak var identityLabel: UILabel!
-    @IBOutlet weak var nextRoundButton: UIButton!
+    lazy var waitLabel: UILabel = {
+        let waitLabel = UILabel()
+        waitLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "請等待其他玩家完成投票",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 5)
+        return waitLabel
+    }()
+    lazy var votedLabel: UILabel = {
+        let votedLabel = UILabel()
+        return votedLabel
+    }()
+    lazy var killLabel: UILabel = {
+        let killLabel = UILabel()
+        killLabel.attributedText = UIFont.fontStyle(
+            font: .boldItalicEN,
+            title: "被殺死了！",
+            size: 35,
+            textColor: .R ?? .black,
+            letterSpacing: 10)
+        killLabel.isHidden = true
+        return killLabel
+    }()
+    lazy var identityImageView: UIImageView = {
+        let identityImageView = UIImageView()
+        identityImageView.image = .asset(.normalKilled)
+        identityImageView.isHidden = true
+        return identityImageView
+    }()
+    lazy var identityLabel: UILabel = {
+        let identityLabel = UILabel()
+        return identityLabel
+    }()
+    lazy var nextRoundButton: BaseButton = {
+        let nextRoundButton = BaseButton()
+        nextRoundButton.setAttributedTitle(UIFont.fontStyle(
+            font: .semibold,
+            title: "下一輪",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 3), for: .normal)
+        nextRoundButton.titleLabel?.textAlignment = .center
+        nextRoundButton.isHidden = true
+        nextRoundButton.addTarget(self, action: #selector(nextRoundButtonPressed), for: .touchUpInside)
+        return nextRoundButton
+    }()
+    
+    
     let dataBase = Firestore.firestore()
     var votedArray: [[String: String]] = []
     var identitiesArray: [String] = []
@@ -24,6 +70,35 @@ class KillViewController: BaseViewController {
     let currentUser = Auth.auth().currentUser?.email ?? ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        [waitLabel, votedLabel, killLabel, identityImageView, identityLabel, nextRoundButton].forEach { view.addSubview($0) }
+        waitLabel.snp.makeConstraints { make in
+            make.top.equalTo(view).offset(100)
+            make.centerX.equalTo(view)
+        }
+        identityImageView.snp.makeConstraints { make in
+            make.top.equalTo(view).offset(150)
+            make.centerX.equalTo(view)
+            make.width.equalTo(150)
+            make.height.equalTo(150)
+        }
+        votedLabel.snp.makeConstraints { make in
+            make.top.equalTo(identityImageView.snp.bottom).offset(30)
+            make.centerX.equalTo(view)
+        }
+        killLabel.snp.makeConstraints { make in
+            make.top.equalTo(votedLabel.snp.bottom).offset(10)
+            make.centerX.equalTo(view)
+        }
+        identityLabel.snp.makeConstraints { make in
+            make.top.equalTo(killLabel.snp.bottom).offset(30)
+            make.centerX.equalTo(view)
+        }
+        nextRoundButton.snp.makeConstraints { make in
+            make.top.equalTo(identityLabel.snp.bottom).offset(50)
+            make.centerX.equalTo(view)
+            make.width.equalTo(115)
+            make.height.equalTo(40)
+        }
         playersArray = players ?? [""]
         loadVotedPlayers()
     }
@@ -79,22 +154,48 @@ class KillViewController: BaseViewController {
             let selectedPlayer = playersArray[selectedIndex]
             print("Selected player: \(selectedPlayer), index: \(selectedIndex)")
             self.waitLabel.text = ""
-            self.votedLabel.text = "\(selectedPlayer)被殺死了！"
-            self.identityLabel.text = "他的身份是\(identitiesArray[selectedIndex])"
+            identityImageView.isHidden = false
+            nextRoundButton.isHidden = false
+            killLabel.isHidden = false
+            self.votedLabel.attributedText = UIFont.fontStyle(
+                font: .boldItalicEN,
+                title: selectedPlayer,
+                size: 45,
+                textColor: .R ?? .black,
+                letterSpacing: 10)
+            self.identityLabel.attributedText = UIFont.fontStyle(
+                font: .semibold,
+                title: "他的身份是\(identitiesArray[selectedIndex])",
+                size: 35,
+                textColor: .R ?? .black,
+                letterSpacing: 10)
         } else {
             // 查找出現次數最多的值
             if let (mostFrequentValue, _) = voteCount.max(by: { $0.value < $1.value }) {
                 if let index = players?.firstIndex(of: mostFrequentValue) {
                     arrayIndex = index
                     print("mostFrequentValue: \(mostFrequentValue), index: \(index)")
+                    identityImageView.isHidden = false
+                    nextRoundButton.isHidden = false
+                    killLabel.isHidden = false
                     self.waitLabel.text = ""
-                    self.votedLabel.text = "\(mostFrequentValue)被殺死了！"
-                    self.identityLabel.text = "他的身份是\(identitiesArray[index])"
+                    self.votedLabel.attributedText = UIFont.fontStyle(
+                        font: .boldItalicEN,
+                        title: mostFrequentValue,
+                        size: 45,
+                        textColor: .R ?? .black,
+                        letterSpacing: 10)
+                    self.identityLabel.attributedText = UIFont.fontStyle(
+                        font: .semibold,
+                        title: "他的身份是\(identitiesArray[index])",
+                        size: 35,
+                        textColor: .R ?? .black,
+                        letterSpacing: 10)
                 }
             }
         }
     }
-    @IBAction func nextRound(_ sender: UIButton) {
+    @objc func nextRoundButtonPressed() {
         self.playersArray.remove(at: arrayIndex ?? 0)
         self.identitiesArray.remove(at: arrayIndex ?? 0)
         self.votedArray.removeAll()
@@ -115,7 +216,8 @@ class KillViewController: BaseViewController {
             print("繼續下一輪")
             let currentUser = Auth.auth().currentUser?.email ?? ""
             if playersArray.contains(currentUser) {
-                performSegue(withIdentifier: "KillToNext", sender: self)
+                let waitForNextVC = WaitForNextViewController()
+                navigationController?.pushViewController(waitForNextVC, animated: true)
             } else {
                 let diedVC = DiedViewController()
                 navigationController?.pushViewController(diedVC, animated: true)
@@ -170,12 +272,6 @@ class KillViewController: BaseViewController {
                     print("Document added successfully")
                 }
             }
-        }
-    }
-}
-extension KillViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "KillToNext" {
         }
     }
 }

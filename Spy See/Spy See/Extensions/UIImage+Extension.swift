@@ -11,6 +11,7 @@ enum ImageAsset: String {
     case background
     case spy
     case knife
+    case normalKilled
 }
 extension UIImage {
     static func asset(_ asset: ImageAsset) -> UIImage? {

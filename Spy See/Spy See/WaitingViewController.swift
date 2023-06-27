@@ -111,4 +111,10 @@ extension WaitingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         64
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? PlayerCell else {
+            fatalError("Can't create cell")
+        }
+        cell.selectionStyle = .none
+    }
 }
