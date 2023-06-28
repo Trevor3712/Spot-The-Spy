@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SignupViewController: BaseViewController {
     lazy var signupLabel: UILabel = {
@@ -82,7 +83,7 @@ class SignupViewController: BaseViewController {
         let nameTextField = BaseTextField()
         nameTextField.attributedText = UIFont.fontStyle(
             font: .regular,
-            title: "請輸入至少６位數密碼",
+            title: "暱稱之後可在個人頁面更改",
             size: 15,
             textColor: .B3 ?? .black,
             letterSpacing: 3)
@@ -100,8 +101,10 @@ class SignupViewController: BaseViewController {
                 textColor: .B2 ?? .black,
                 letterSpacing: 3), for: .normal)
         signupButton.titleLabel?.textAlignment = .center
+        signupButton.addTarget(self, action: #selector(signupButtonPressed), for: .touchUpInside)
         return signupButton
     }()
+    let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         [signupLabel,
@@ -149,6 +152,24 @@ class SignupViewController: BaseViewController {
             make.width.equalTo(150)
             make.height.equalTo(40)
         }
+    }
+    @objc func signupButtonPressed() {
+        guard let account = accountTextField.text, !account.isEmpty, account != "請輸入你的e-mail",
+                let password = passwordTextField.text, !password.isEmpty, password != "請輸入至少６位數密碼",
+                let name = nameTextField.text, !name.isEmpty, name != "暱稱之後可在個人頁面更改"
+        else {
+            let alert = alertVC.showAlert(title: "註冊錯誤", message: "請輸入帳號、密碼及暱稱")
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        Auth.auth().createUser(withEmail: account, password: password) { result, error in
+            guard let user = result?.user,
+                  error == nil else {
+                print(error?.localizedDescription)
+                return
+            }
+            print(user.email, user.uid)
+       }
     }
 }
 extension SignupViewController: UITextFieldDelegate {
