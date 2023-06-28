@@ -56,6 +56,7 @@ class LobbyViewController: BaseViewController {
         return goButton
     }()
     let dataBase = Firestore.firestore()
+    var userName: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         [
@@ -92,6 +93,7 @@ class LobbyViewController: BaseViewController {
             make.width.equalTo(75)
             make.height.equalTo(40)
         }
+        getUserName()
     }
     @objc func createRoomButtonPressed() {
         let settingVC = SettingViewController()
@@ -147,8 +149,21 @@ class LobbyViewController: BaseViewController {
         UserDefaults.standard.removeObject(forKey: "hostPrompt")
         UserDefaults.standard.removeObject(forKey: "playerPrompt")
         UserDefaults.standard.setValue(selectedPrompt, forKey: "playerPrompt")
-        print(UserDefaults.standard.string(forKey: "playerPrompt")!)
-        print("Selected plyer prompt: \(selectedPrompt)")
         return selectedPrompt
+    }
+    func getUserName() {
+        let room = dataBase.collection("Users")
+        guard let userId = Auth.auth().currentUser?.email else {
+            return
+        }
+        let documentRef = room.document(userId)
+        documentRef.getDocument { (document, error) in
+            if let document = document, let name = document.data()?["name"] as? String {
+                self.userName = name
+                print(self.userName)
+            } else {
+                print("Failed to retrieve player index: \(error?.localizedDescription ?? "")")
+            }
+        }
     }
 }

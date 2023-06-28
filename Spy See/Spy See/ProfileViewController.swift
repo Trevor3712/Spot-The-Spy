@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class ProfileViewController: BaseViewController {
     lazy var nameLabel: UILabel = {
@@ -20,19 +22,11 @@ class ProfileViewController: BaseViewController {
     }()
     lazy var nameTextField: BaseTextField = {
         let nameTextField = BaseTextField()
-        nameTextField.attributedText = UIFont.fontStyle(
-            font: .semibold,
-            title: "超帥的暱稱",
-            size: 40,
-            textColor: .B2 ?? .black,
-            letterSpacing: 5)
         nameTextField.layer.borderWidth = 1
         nameTextField.layer.borderColor = UIColor.B1?.cgColor
         nameTextField.layer.cornerRadius = 20
         nameTextField.clipsToBounds = true
         nameTextField.textAlignment = .center
-//        nameTextField.adjustsFontSizeToFitWidth = true
-//        nameTextField.minimumFontSize = 20
         nameTextField.delegate = self
         return nameTextField
     }()
@@ -59,13 +53,14 @@ class ProfileViewController: BaseViewController {
 //        loginButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
         return deleteButton
     }()
+    var userName: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         [nameTextField, nameLabel, infoLabel, deleteButton].forEach { view.addSubview($0) }
         nameTextField.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.centerY).offset(-50)
             make.centerX.equalTo(view)
-            make.width.equalTo(300)
+            make.width.equalTo(350)
             make.height.equalTo(100)
         }
         nameLabel.snp.makeConstraints { make in
@@ -83,6 +78,54 @@ class ProfileViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getUserName()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setNameData()
+    }
+    func setNameData() {
+        let user = Firestore.firestore().collection("Users")
+        guard let userId = Auth.auth().currentUser?.email else {
+            return
+        }
+        let documentRef = user.document(userId)
+        let name = nameTextField.text
+        documentRef.setData(["name": name ]) { error in
+            if let error = error {
+                print("Error adding document: \(error)")
+            } else {
+                print("Document added successfully")
+            }
+        }
+    }
+    func getUserName() {
+        let room = Firestore.firestore().collection("Users")
+        guard let userId = Auth.auth().currentUser?.email else {
+            return
+        }
+        let documentRef = room.document(userId)
+        documentRef.getDocument { (document, error) in
+            if let document = document, let name = document.data()?["name"] as? String {
+                self.nameTextField.attributedText = UIFont.fontStyle(
+                    font: .semibold,
+                    title: name,
+                    size: 35,
+                    textColor: .B2 ?? .black,
+                    letterSpacing: 5)
+            } else {
+                print("Failed to retrieve player name")
+                self.nameTextField.attributedText = UIFont.fontStyle(
+                    font: .semibold,
+                    title: "超帥的暱稱",
+                    size: 35,
+                    textColor: .B2 ?? .black,
+                    letterSpacing: 5)
+            }
+        }
+    }
 }
 extension ProfileViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -95,7 +138,7 @@ extension ProfileViewController: UITextFieldDelegate {
         let styledText = UIFont.fontStyle(
             font: .semibold,
             title: enteredText,
-            size: 40,
+            size: 35,
             textColor: .B2 ?? .black,
             letterSpacing: 5)
         nameTextField.attributedText = styledText

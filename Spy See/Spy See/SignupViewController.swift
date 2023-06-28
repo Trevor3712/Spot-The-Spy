@@ -172,7 +172,7 @@ class SignupViewController: BaseViewController {
                 return
             }
             let alert = self.alertVC.showAlert(title: "註冊成功", message: "馬上開始遊戲！") {
-                self.setProfileData()
+                self.setNameData()
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 guard let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarController") as? UITabBarController else {
                     return
@@ -182,7 +182,7 @@ class SignupViewController: BaseViewController {
             self.present(alert, animated: true)
        }
     }
-    func setProfileData() {
+    func setNameData() {
         let user = Firestore.firestore().collection("Users")
         guard let userId = Auth.auth().currentUser?.email else {
             return
