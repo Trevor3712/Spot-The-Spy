@@ -100,6 +100,7 @@ class LoginViewController: BaseViewController {
             textColor: .B2 ?? .black,
             letterSpacing: 3), for: .normal)
         signupButton.titleLabel?.textAlignment = .center
+        signupButton.addTarget(self, action: #selector(signupButtonPressed), for: .touchUpInside)
         return signupButton
     }()
     override func viewDidLoad() {
@@ -174,5 +175,9 @@ class LoginViewController: BaseViewController {
             }
             self.navigationController?.pushViewController(tabBarController, animated: true)
         }
+    }
+    @objc func signupButtonPressed() {
+        let signupVC = SignupViewController()
+        navigationController?.pushViewController(signupVC, animated: true)
     }
 }
