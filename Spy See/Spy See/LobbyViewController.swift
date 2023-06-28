@@ -128,6 +128,8 @@ class LobbyViewController: BaseViewController {
                             documentRef.getDocument { (document, error) in
                                 if let document = document, let playerIndex = document.data()?["playerIndex"] as? Int, let prompts = document.data()?["prompts"] as? [String] {
                                     self.handlePlayerIndex(playerIndex, prompts)
+                                    UserDefaults.standard.removeObject(forKey: "userName")
+                                    UserDefaults.standard.setValue(self.userName, forKey: "userName")
                                 } else {
                                     print("Failed to retrieve player index: \(error?.localizedDescription ?? "")")
                                 }

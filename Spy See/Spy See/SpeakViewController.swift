@@ -97,7 +97,8 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
 //        speakButton2.addTarget(self, action: #selector(speakButton2Pressed), for: .touchUpInside)
         return speakButton2
     }()
-    let currentUser = Auth.auth().currentUser?.email
+//    let currentUser = Auth.auth().currentUser?.email
+    let userName = UserDefaults.standard.string(forKey: "userName")
     var players: [String] = []
     var currentPlayerIndex: Int = 0
     var timer: Timer?
@@ -231,7 +232,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
         let data: [String: Any] = [
-            "clue": FieldValue.arrayUnion(["\(currentUser ?? "") : \(clueTextField.text ?? "")"])
+            "clue": FieldValue.arrayUnion(["\(userName ?? "") : \(clueTextField.text ?? "")"])
         ]
         documentRef.updateData(data) { error in
             if let error = error {
@@ -247,7 +248,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
         let data: [String: Any] = [
-            "message": FieldValue.arrayUnion(["\(currentUser ?? "") : \(messageTextField.text ?? "")"])
+            "message": FieldValue.arrayUnion(["\(userName ?? "") : \(messageTextField.text ?? "")"])
         ]
         documentRef.updateData(data) { error in
             if let error = error {

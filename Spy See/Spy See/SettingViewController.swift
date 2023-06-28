@@ -156,7 +156,9 @@ class SettingViewController: BaseViewController {
                 print("Document added successfully")
                 UserDefaults.standard.removeObject(forKey: "playerPrompt")
                 UserDefaults.standard.removeObject(forKey: "hostPrompt")
+                UserDefaults.standard.removeObject(forKey: "userName")
                 UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
+                UserDefaults.standard.setValue(self.userName, forKey: "userName")
                 let inviteVC = InviteViewController()
                 self.navigationController?.pushViewController(inviteVC, animated: true)
             }
