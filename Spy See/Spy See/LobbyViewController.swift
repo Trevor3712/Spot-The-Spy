@@ -109,10 +109,6 @@ class LobbyViewController: BaseViewController {
         documentRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 if var players = document.data()?["player"] as? [String] {
-//                    guard let email = Auth.auth().currentUser?.email else {
-//                        print("Email is missing")
-//                        return
-//                    }
                     guard let name = self.userName else {
                         print("Name is missing")
                         return

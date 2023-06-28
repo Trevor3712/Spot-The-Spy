@@ -166,6 +166,9 @@ class LoginViewController: BaseViewController {
             password: passwordTextFileld.text ?? "")
         { _, error in
             guard error == nil else {
+                let alertVC = AlertViewController()
+                let alert = alertVC.showAlert(title: "登入錯誤", message: error?.localizedDescription ?? "")
+                self.present(alert, animated: true)
                 print(error?.localizedDescription ?? "")
                 return
             }
