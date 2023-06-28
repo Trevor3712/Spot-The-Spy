@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class SignupViewController: BaseViewController {
     lazy var signupLabel: UILabel = {
@@ -165,11 +166,36 @@ class SignupViewController: BaseViewController {
         Auth.auth().createUser(withEmail: account, password: password) { result, error in
             guard let user = result?.user,
                   error == nil else {
+                let alert = self.alertVC.showAlert(title: "註冊錯誤", message: error?.localizedDescription ?? "")
+                self.present(alert, animated: true, completion: nil)
                 print(error?.localizedDescription)
                 return
             }
-            print(user.email, user.uid)
+            let alert = self.alertVC.showAlert(title: "註冊成功", message: "馬上開始遊戲！") {
+                self.setProfileData()
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                guard let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarController") as? UITabBarController else {
+                    return
+                }
+                self.navigationController?.pushViewController(tabBarController, animated: true)
+            }
+            self.present(alert, animated: true)
        }
+    }
+    func setProfileData() {
+        let user = Firestore.firestore().collection("Users")
+        guard let userId = Auth.auth().currentUser?.email else {
+            return
+        }
+        let documentRef = user.document(userId)
+        let name = nameTextField.text
+        documentRef.setData(["name": name ]) { error in
+            if let error = error {
+                print("Error adding document: \(error)")
+            } else {
+                print("Document added successfully")
+            }
+        }
     }
 }
 extension SignupViewController: UITextFieldDelegate {
@@ -206,7 +232,7 @@ extension SignupViewController: UITextFieldDelegate {
                 letterSpacing: 3)
             passwordTextField.attributedText = styledPassword
         } else {
-            guard let enteredName = passwordTextField.text else {
+            guard let enteredName = nameTextField.text else {
                 return
             }
             let styledName = UIFont.fontStyle(
