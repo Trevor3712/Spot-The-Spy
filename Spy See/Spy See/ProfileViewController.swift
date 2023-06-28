@@ -50,7 +50,7 @@ class ProfileViewController: BaseViewController {
                 textColor: .B2 ?? .black,
                 letterSpacing: 3), for: .normal)
         deleteButton.titleLabel?.textAlignment = .center
-//        loginButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
+        deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
         return deleteButton
     }()
     var userName: String?
@@ -102,11 +102,11 @@ class ProfileViewController: BaseViewController {
         }
     }
     func getUserName() {
-        let room = Firestore.firestore().collection("Users")
+        let user = Firestore.firestore().collection("Users")
         guard let userId = Auth.auth().currentUser?.email else {
             return
         }
-        let documentRef = room.document(userId)
+        let documentRef = user.document(userId)
         documentRef.getDocument { (document, error) in
             if let document = document, let name = document.data()?["name"] as? String {
                 self.nameTextField.attributedText = UIFont.fontStyle(
@@ -123,6 +123,34 @@ class ProfileViewController: BaseViewController {
                     size: 35,
                     textColor: .B2 ?? .black,
                     letterSpacing: 5)
+            }
+        }
+    }
+    @objc func deleteButtonPressed() {
+        deleteAuthData()
+        deleteStoreData()
+        navigationController?.popToRootViewController(animated: true)
+    }
+    func deleteAuthData() {
+        Auth.auth().currentUser?.delete { error in
+            if let error = error {
+                print("Error deleting user: \(error.localizedDescription)")
+            } else {
+                print("Delete user successfully")
+            }
+        }
+    }
+    func deleteStoreData() {
+        let user = Firestore.firestore().collection("Users")
+        guard let userId = Auth.auth().currentUser?.email else {
+            return
+        }
+        let documentRef = user.document(userId)
+        documentRef.delete { error in
+            if let error = error {
+                print("Error deleting user: \(error.localizedDescription)")
+            } else {
+                print("Delete user successfully")
             }
         }
     }
