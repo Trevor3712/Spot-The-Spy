@@ -41,6 +41,18 @@ class ProfileViewController: BaseViewController {
         nameTextField.textAlignment = .center
         return infoLabel
     }()
+    lazy var logoutButton: BaseButton = {
+        let logoutButton = BaseButton()
+        logoutButton.setAttributedTitle(UIFont.fontStyle(
+                font: .semibold,
+                title: "登出帳號",
+                size: 20,
+                textColor: .B2 ?? .black,
+                letterSpacing: 3), for: .normal)
+        logoutButton.titleLabel?.textAlignment = .center
+        logoutButton.addTarget(self, action: #selector(logoutButtonPressed), for: .touchUpInside)
+        return logoutButton
+    }()
     lazy var deleteButton: BaseButton = {
         let deleteButton = BaseButton()
         deleteButton.setAttributedTitle(UIFont.fontStyle(
@@ -56,7 +68,7 @@ class ProfileViewController: BaseViewController {
     var userName: String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        [nameTextField, nameLabel, infoLabel, deleteButton].forEach { view.addSubview($0) }
+        [nameTextField, nameLabel, infoLabel, logoutButton, deleteButton].forEach { view.addSubview($0) }
         nameTextField.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.centerY).offset(-50)
             make.centerX.equalTo(view)
@@ -71,8 +83,14 @@ class ProfileViewController: BaseViewController {
             make.top.equalTo(nameTextField.snp.bottom).offset(20)
             make.centerX.equalTo(view)
         }
+        logoutButton.snp.makeConstraints { make in
+            make.top.equalTo(infoLabel.snp.bottom).offset(150)
+            make.centerX.equalTo(view)
+            make.width.equalTo(150)
+            make.height.equalTo(40)
+        }
         deleteButton.snp.makeConstraints { make in
-            make.top.equalTo(infoLabel.snp.bottom).offset(200)
+            make.top.equalTo(logoutButton.snp.bottom).offset(30)
             make.centerX.equalTo(view)
             make.width.equalTo(150)
             make.height.equalTo(40)
@@ -129,6 +147,10 @@ class ProfileViewController: BaseViewController {
     @objc func deleteButtonPressed() {
         deleteAuthData()
         deleteStoreData()
+        navigationController?.popToRootViewController(animated: true)
+    }
+    @objc func logoutButtonPressed() {
+        UserDefaults.standard.removeObject(forKey: "userEmail")
         navigationController?.popToRootViewController(animated: true)
     }
     func deleteAuthData() {
