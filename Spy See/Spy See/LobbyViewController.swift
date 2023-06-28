@@ -93,6 +93,9 @@ class LobbyViewController: BaseViewController {
             make.width.equalTo(75)
             make.height.equalTo(40)
         }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getUserName()
     }
     @objc func createRoomButtonPressed() {
@@ -106,11 +109,15 @@ class LobbyViewController: BaseViewController {
         documentRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 if var players = document.data()?["player"] as? [String] {
-                    guard let email = Auth.auth().currentUser?.email else {
-                        print("Email is missing")
+//                    guard let email = Auth.auth().currentUser?.email else {
+//                        print("Email is missing")
+//                        return
+//                    }
+                    guard let name = self.userName else {
+                        print("Name is missing")
                         return
                     }
-                    players.append(email)
+                    players.append(name)
                     // 計算玩家的index
                     let playerIndex = players.count - 1
                     documentRef.setData([

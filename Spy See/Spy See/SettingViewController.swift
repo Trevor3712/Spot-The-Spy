@@ -83,6 +83,7 @@ class SettingViewController: BaseViewController {
     var identityArray: [String] = []
     var shuffledIndices: [Int] = []
     var choosedPrompt: ([String], [String]) = ([], [])
+    var userName: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         [
@@ -123,13 +124,21 @@ class SettingViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getUserName()
+    }
     @objc func invitationButtonPressed(_ sender: UIButton) {
         let room = dataBase.collection("Rooms")
         let roomId = generateRoomId()
         UserDefaults.standard.setValue(roomId, forKey: "roomId")
         let documentRef = room.document(roomId)
-        guard let email = Auth.auth().currentUser?.email else {
-            print("Email is missing")
+//        guard let email = Auth.auth().currentUser?.email else {
+//            print("Email is missing")
+//            return
+//        }
+        guard let name = self.userName else {
+            print("Name is missing")
             return
         }
         let prompts = generatePromptArray()
@@ -137,7 +146,7 @@ class SettingViewController: BaseViewController {
         let data: [String: Any] = [
             "prompts": prompts,
             "identities": identities,
-            "player": [email],
+            "player": [name],
             "playerNumber": playersCountTextFileld.text ?? ""
         ]
         documentRef.setData(data) { error in
@@ -184,6 +193,21 @@ class SettingViewController: BaseViewController {
         }
         identityArray = shuffledIndices.map { identityArray[$0] }
         return identityArray
+    }
+    func getUserName() {
+        let room = dataBase.collection("Users")
+        guard let userId = Auth.auth().currentUser?.email else {
+            return
+        }
+        let documentRef = room.document(userId)
+        documentRef.getDocument { (document, error) in
+            if let document = document, let name = document.data()?["name"] as? String {
+                self.userName = name
+                print(self.userName)
+            } else {
+                print("Failed to retrieve player index: \(error?.localizedDescription ?? "")")
+            }
+        }
     }
 }
 extension SettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
