@@ -66,6 +66,7 @@ class ProfileViewController: BaseViewController {
         return deleteButton
     }()
     var userName: String?
+    let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         [nameTextField, nameLabel, infoLabel, logoutButton, deleteButton].forEach { view.addSubview($0) }
@@ -145,13 +146,19 @@ class ProfileViewController: BaseViewController {
         }
     }
     @objc func deleteButtonPressed() {
-        deleteAuthData()
-        deleteStoreData()
-        navigationController?.popToRootViewController(animated: true)
+        let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要刪除帳號嗎？", confirmCompletion: {
+            self.deleteAuthData()
+            self.deleteStoreData()
+            self.navigationController?.popToRootViewController(animated: true)
+        })
+        present(alert, animated: true)
     }
     @objc func logoutButtonPressed() {
-        UserDefaults.standard.removeObject(forKey: "userEmail")
-        navigationController?.popToRootViewController(animated: true)
+        let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要刪除帳號嗎？", confirmCompletion: {
+            UserDefaults.standard.removeObject(forKey: "userEmail")
+            self.navigationController?.popToRootViewController(animated: true)
+        })
+        present(alert, animated: true)
     }
     func deleteAuthData() {
         Auth.auth().currentUser?.delete { error in
