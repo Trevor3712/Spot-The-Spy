@@ -12,6 +12,8 @@ class BaseMessageTableView: UITableView {
         super.init(frame: frame, style: style)
         backgroundColor = .white
         separatorStyle = .none
+        rowHeight = UITableView.automaticDimension
+        estimatedRowHeight = 50
         layer.borderWidth = 1
         layer.borderColor = UIColor.B1?.cgColor
         layer.cornerRadius = 20

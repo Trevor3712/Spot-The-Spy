@@ -204,9 +204,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         messages = []
     }
     func showNextPrompt() {
-        print("=== start showNextPrompt")
         guard currentPlayerIndex < players.count else {
-            print("=== voteVC")
             let voteVC = VoteViewController()
             currentPlayerIndex = 0
             listener?.remove()
@@ -221,16 +219,13 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             letterSpacing: 10)
         countdown = 5
         progressView.setProgress(1, animated: false)
-        print("=== create timer")
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateProgress), userInfo: nil, repeats: true)
     }
     @objc func updateProgress() {
-        print("=== updateProgress")
         countdown -= 1
         let progress = Float(countdown) / Float(5)
         progressView.setProgress(progress, animated: true)
         if countdown <= 0 {
-            print("=== timer invalidate")
             timer?.invalidate()
             currentPlayerIndex += 1
             showNextPrompt()
@@ -288,7 +283,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
                     self.clueTableView.reloadData()
                     let lastRow = self.clueTableView.numberOfRows(inSection: 0) - 1
                     let indexPath = IndexPath(row: lastRow, section: 0)
-                    print("=== scrollToRow, indexPath: \(indexPath)")
                     self.clueTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                 }
             }
@@ -375,7 +369,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             print("Record error:", error.localizedDescription)
         }
     }
-  func playSound() {
+    func playSound() {
         let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName ?? "").m4a")
         let audioFileURL = URL(fileURLWithPath: recordFilePath.path)
             do {
@@ -528,7 +522,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         let data: [String: Any] = [
             "clue": [],
             "message": []
-
         ]
         documentRef.updateData(data)
     }
@@ -545,7 +538,6 @@ extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MessageCell.reuseIdentifier) as? MessageCell else {
             fatalError("Can't create cell")
         }
-        print("=== cellForRowAt: \(indexPath)")
         if tableView.tag == 1 {
             cell.titleLabel.attributedText = UIFont.fontStyle(
                 font: .regular,
@@ -565,6 +557,7 @@ extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        50
+//        50
+        UITableView.automaticDimension
     }
 }

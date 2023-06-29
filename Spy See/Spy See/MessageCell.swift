@@ -11,6 +11,8 @@ class MessageCell: UITableViewCell {
     static let reuseIdentifier = String(describing: MessageCell.self)
     lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
+        titleLabel.numberOfLines = 0
+        titleLabel.lineBreakMode = .byWordWrapping
         return titleLabel
     }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
