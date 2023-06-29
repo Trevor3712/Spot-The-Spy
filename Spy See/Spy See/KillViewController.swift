@@ -215,7 +215,9 @@ class KillViewController: BaseViewController {
             updateWinMessage(true)
         } else {
             print("繼續下一輪")
-            let currentUser = Auth.auth().currentUser?.email ?? ""
+            let currentUser = UserDefaults.standard.string(forKey: "userName") ?? ""
+            print("currentUser:\(currentUser)")
+            print("playersArray: \(playersArray)")
             if playersArray.contains(currentUser) {
                 let waitForNextVC = WaitForNextViewController()
                 navigationController?.pushViewController(waitForNextVC, animated: true)

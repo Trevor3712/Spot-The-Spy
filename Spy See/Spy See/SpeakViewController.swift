@@ -13,6 +13,7 @@ import AVFoundation
 import Speech
 // swiftlint:disable type_body_length
 class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
+    
     lazy var playerLabel: UILabel = {
         let playerLabel = UILabel()
         return playerLabel
@@ -108,9 +109,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     var fileName: String?
     var audioUrl: URL?
     var audioUrlFromFS: URL?
-    var countdown = 10
+    var countdown = 5
     var clues: [String] = []
     var messages: [String] = []
+    var listener: ListenerRegistration?
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "zh-TW"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
@@ -184,11 +186,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             make.centerY.equalTo(sendButton2)
             make.left.equalTo(sendButton2.snp.right).offset(12)
         }
-//        if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
-//            players = storedPlayers
-//        }
-//        showNextPrompt()
-        showClue()
         configRecordSession()
         speechAuth()
     }
@@ -196,14 +193,23 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
             players = storedPlayers
         }
+        showClue()
         showNextPrompt()
         print(players)
     }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        deleteMessage()
+        clues = []
+        messages = []
+    }
     func showNextPrompt() {
+        print("=== start showNextPrompt")
         guard currentPlayerIndex < players.count else {
-            deleteMessage()
+            print("=== voteVC")
             let voteVC = VoteViewController()
             currentPlayerIndex = 0
+            listener?.remove()
             navigationController?.pushViewController(voteVC, animated: true)
             return
         }
@@ -213,15 +219,18 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             size: 35,
             textColor: .B2 ?? .black,
             letterSpacing: 10)
-        countdown = 10
+        countdown = 5
         progressView.setProgress(1, animated: false)
+        print("=== create timer")
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateProgress), userInfo: nil, repeats: true)
     }
     @objc func updateProgress() {
+        print("=== updateProgress")
         countdown -= 1
-        let progress = Float(countdown) / Float(10)
+        let progress = Float(countdown) / Float(5)
         progressView.setProgress(progress, animated: true)
         if countdown <= 0 {
+            print("=== timer invalidate")
             timer?.invalidate()
             currentPlayerIndex += 1
             showNextPrompt()
@@ -263,9 +272,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
-        var existingClues: Set<String> = Set(self.clues)
-        var existingMessages: Set<String> = Set(self.clues)
-        documentRef.addSnapshotListener { (documentSnapshot, error) in
+        listener = documentRef.addSnapshotListener { (documentSnapshot, error) in
             if let error = error {
                 print(error)
                 return
@@ -276,16 +283,24 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             }
             if let clue = data["clue"] as? [String] {
                 self.clues = []
-                let newClues = clue.filter { !existingClues.contains($0) }
-                self.clues.append(contentsOf: newClues)
-                self.clueTableView.reloadData()
+                self.clues.append(contentsOf: clue)
+                if self.clues != [] {
+                    self.clueTableView.reloadData()
+                    let lastRow = self.clueTableView.numberOfRows(inSection: 0) - 1
+                    let indexPath = IndexPath(row: lastRow, section: 0)
+                    print("=== scrollToRow, indexPath: \(indexPath)")
+                    self.clueTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                }
             }
             if let message = data["message"] as? [String] {
                 self.messages = []
-                let newMessages = message.filter { !existingMessages.contains($0) }
-                self.messages.append(contentsOf: newMessages)
-                self.clueTableView.reloadData()
-                self.messageTableView.reloadData()
+                self.messages.append(contentsOf: message)
+                if self.messages != [] {
+                    self.messageTableView.reloadData()
+                    let lastRow = self.messageTableView.numberOfRows(inSection: 0) - 1
+                    let indexPath = IndexPath(row: lastRow, section: 0)
+                    self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                }
             }
             if let audioClueString = data["audioClue"] as? String, let audioClue = URL(string: audioClueString) {
                 print("audio clue:\(audioClue)")
@@ -360,19 +375,19 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             print("Record error:", error.localizedDescription)
         }
     }
-//  func playSound() {
-//        let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName ?? "").m4a")
-//        let audioFileURL = URL(fileURLWithPath: recordFilePath.path)
-//            do {
-//                audioPlayer = try AVAudioPlayer(contentsOf: audioFileURL)
-//                audioPlayer?.volume = 1.0
-//                audioPlayer?.prepareToPlay()
-//                audioPlayer?.play()
-//                print(recordFilePath)
-//        } catch {
-//            print("Play error", error.localizedDescription)
-//        }
-//    }
+  func playSound() {
+        let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName ?? "").m4a")
+        let audioFileURL = URL(fileURLWithPath: recordFilePath.path)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: audioFileURL)
+                audioPlayer?.volume = 1.0
+                audioPlayer?.prepareToPlay()
+                audioPlayer?.play()
+                print(recordFilePath)
+        } catch {
+            print("Play error", error.localizedDescription)
+        }
+    }
     func getDirectoryPath() -> URL {
             let fileDiretoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             return fileDiretoryURL
@@ -530,6 +545,7 @@ extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MessageCell.reuseIdentifier) as? MessageCell else {
             fatalError("Can't create cell")
         }
+        print("=== cellForRowAt: \(indexPath)")
         if tableView.tag == 1 {
             cell.titleLabel.attributedText = UIFont.fontStyle(
                 font: .regular,
