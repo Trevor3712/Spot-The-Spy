@@ -62,14 +62,14 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }()
     lazy var sendButton1: UIButton = {
         let sendButton1 = UIButton()
-        sendButton1.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
-        sendButton1.tintColor = .B3
+        sendButton1.setBackgroundImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        sendButton1.tintColor = .B4
         sendButton1.addTarget(self, action: #selector(sendClue), for: .touchUpInside)
         return sendButton1
     }()
     lazy var sendButton2: UIButton = {
         let sendButton2 = UIButton()
-        sendButton2.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        sendButton2.setBackgroundImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         sendButton2.tintColor = .B4
         sendButton2.addTarget(self, action: #selector(sendMesssge), for: .touchUpInside)
         return sendButton2
@@ -90,9 +90,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }()
     lazy var speakButton1: UIButton = {
         let speakButton1 = UIButton()
-        speakButton1.setImage(UIImage(systemName: "mic.fill"), for: .normal)
-        speakButton1.tintColor = .B3
-        speakButton1.addTarget(self, action: #selector(speakButton1Pressed), for: .touchUpInside)
+        speakButton1.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
+        speakButton1.tintColor = .B4
+        speakButton1.addTarget(self, action: #selector(recordAudioClue), for: .touchUpInside)
+//        speakButton1.addTarget(self, action: #selector(sendClue), for: .touchUpInside)
         return speakButton1
     }()
     lazy var speakButton2: UIButton = {
@@ -112,7 +113,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     var fileName: String?
     var audioUrl: URL?
     var audioUrlFromFS: URL?
-    var countdown = 5
+    var countdown = 10
     var clues: [String] = []
     var messages: [String] = []
     var listener: ListenerRegistration?
@@ -167,6 +168,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             make.centerY.equalTo(messageTextField)
             make.left.equalTo(messageTextField.snp.right).offset(12)
             make.width.height.equalTo(40)
+        }
+        speakButton1.snp.makeConstraints { make in
+            make.centerY.equalTo(sendButton1)
+            make.left.equalTo(sendButton1.snp.right).offset(8)
             make.width.height.equalTo(40)
         }
 //        speakButton2.snp.makeConstraints { make in
@@ -179,15 +184,11 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
 //            make.width.equalTo(250)
 //            make.height.equalTo(40)
 //        }
-        sendButton2.snp.makeConstraints { make in
-            make.centerY.equalTo(sendButton1)
-            make.left.equalTo(sendButton1.snp.right).offset(12)
-        }
-        speakButton1.snp.makeConstraints { make in
-            make.centerY.equalTo(sendButton1).offset(24)
-            make.centerX.equalTo(sendButton1)
-            make.width.height.equalTo(40)
-        }
+//        sendButton2.snp.makeConstraints { make in
+//            make.centerX.equalTo(sendButton1)
+//            make.top.equalTo(sendButton1.snp.right).offset(12)
+//            make.width.height.equalTo(40)
+//        }
         configRecordSession()
         speechAuth()
     }
@@ -215,19 +216,20 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             navigationController?.pushViewController(voteVC, animated: true)
             return
         }
+        toggleButton()
         playerLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "\(players[currentPlayerIndex])",
             size: 35,
             textColor: .B2 ?? .black,
             letterSpacing: 10)
-        countdown = 5
+        countdown = 10
         progressView.setProgress(1, animated: false)
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateProgress), userInfo: nil, repeats: true)
     }
     @objc func updateProgress() {
         countdown -= 1
-        let progress = Float(countdown) / Float(5)
+        let progress = Float(countdown) / Float(10)
         progressView.setProgress(progress, animated: true)
         if countdown <= 0 {
             timer?.invalidate()
@@ -321,12 +323,25 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             }
         }
     }
+    func toggleButton() {
+        if players[currentPlayerIndex] == UserDefaults.standard.string(forKey: "userName") {
+            sendButton1.isHidden = false
+            speakButton1.isHidden = false
+            sendButton2.isHidden = true
+            speakButton2.isHidden = true
+        } else {
+            sendButton2.isHidden = false
+            speakButton2.isHidden = false
+            sendButton1.isHidden = true
+            speakButton1.isHidden = true
+        }
+    }
     // MARK: - Audio Record
-    @objc func speakButton1Pressed() {
+    @objc func recordAudioClue() {
         if audioEngine.isRunning {
             audioEngine.stop()
-           recognitionRequest?.endAudio()
-           speakButton1.isEnabled = false
+            recognitionRequest?.endAudio()
+            speakButton1.isEnabled = false
             messageTextField.text = ""
            uploadAudio(audioURL: audioUrl!) { result in
                switch result {
