@@ -30,6 +30,9 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }()
     lazy var clueTableView: BaseMessageTableView = {
         let clueTableView = BaseMessageTableView()
+        clueTableView.layer.borderColor = UIColor.white.cgColor
+        clueTableView.backgroundColor = .B1
+        clueTableView.register(MessageHeaderView.self, forHeaderFooterViewReuseIdentifier: MessageHeaderView.reuseIdentifier)
         clueTableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseIdentifier)
         clueTableView.dataSource = self
         clueTableView.delegate = self
@@ -38,6 +41,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }()
     lazy var messageTableView: BaseMessageTableView = {
         let messageTableView = BaseMessageTableView()
+        messageTableView.register(MessageHeaderView.self, forHeaderFooterViewReuseIdentifier: MessageHeaderView.reuseIdentifier)
         messageTableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseIdentifier)
         messageTableView.dataSource = self
         messageTableView.delegate = self
@@ -194,13 +198,13 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             players = storedPlayers
         }
         showClue()
-        showNextPrompt()
+        showNextPlayer()
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         deleteMessage()
     }
-    func showNextPrompt() {
+    func showNextPlayer() {
         guard currentPlayerIndex < players.count else {
             let voteVC = VoteViewController()
             currentPlayerIndex = 0
@@ -229,7 +233,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         if countdown <= 0 {
             timer?.invalidate()
             currentPlayerIndex += 1
-            showNextPrompt()
+            showNextPlayer()
         }
     }
     @objc func sendClue() {
@@ -284,7 +288,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             if let clue = data["clue"] as? [String] {
                 self.clues = []
                 self.clues.append(contentsOf: clue)
-                if self.clues != [] {
+                if !self.clues.isEmpty {
                     self.clueTableView.reloadData()
                     let lastRow = self.clueTableView.numberOfRows(inSection: 0) - 1
                     let indexPath = IndexPath(row: lastRow, section: 0)
@@ -294,7 +298,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             if let message = data["message"] as? [String] {
                 self.messages = []
                 self.messages.append(contentsOf: message)
-                if self.messages != [] {
+                if !self.messages.isEmpty {
                     self.messageTableView.reloadData()
                     let lastRow = self.messageTableView.numberOfRows(inSection: 0) - 1
                     let indexPath = IndexPath(row: lastRow, section: 0)
@@ -318,7 +322,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             }
         }
     }
-    //MARK: - Audio Record
+    // MARK: - Audio Record
     @objc func speakButton1Pressed() {
         if audioEngine.isRunning {
             audioEngine.stop()
@@ -544,11 +548,12 @@ extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
             fatalError("Can't create cell")
         }
         if tableView.tag == 1 {
+            cell.backgroundColor = .B1
             cell.titleLabel.attributedText = UIFont.fontStyle(
                 font: .regular,
                 title: clues[indexPath.row],
                 size: 20,
-                textColor: .B2 ?? .black,
+                textColor: .B4 ?? .black,
                 letterSpacing: 0)
             return cell
         } else {
@@ -563,5 +568,33 @@ extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        40
+    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MessageHeaderView.reuseIdentifier) as? MessageHeaderView else {
+            fatalError("Can't create header")
+        }
+        if tableView.tag == 1 {
+            header.titleLabel.attributedText = UIFont.fontStyle(
+                font: .semibold,
+                title: "- 線索 -",
+                size: 20,
+                textColor: .B4 ?? .black,
+                letterSpacing: 10)
+            return header
+        } else {
+            header.titleLabel.attributedText = UIFont.fontStyle(
+                font: .semibold,
+                title: "- 討論 -",
+                size: 20,
+                textColor: .B2 ?? .black,
+                letterSpacing: 10)
+            return header
+        }
     }
 }

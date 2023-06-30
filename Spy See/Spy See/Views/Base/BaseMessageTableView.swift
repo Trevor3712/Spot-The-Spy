@@ -14,7 +14,7 @@ class BaseMessageTableView: UITableView {
         separatorStyle = .none
         rowHeight = UITableView.automaticDimension
         estimatedRowHeight = 50
-        layer.borderWidth = 1
+        layer.borderWidth = 3
         layer.borderColor = UIColor.B1?.cgColor
         layer.cornerRadius = 20
         clipsToBounds = true
