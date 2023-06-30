@@ -93,7 +93,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         let speakButton2 = UIButton()
         speakButton2.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
         speakButton2.tintColor = .B4
-//        speakButton2.addTarget(self, action: #selector(speakButton2Pressed), for: .touchUpInside)
+        speakButton2.addTarget(self, action: #selector(recordAudioClue), for: .touchUpInside)
         return speakButton2
     }()
     lazy var remindLabel: UILabel = {
@@ -120,6 +120,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     var clues: [String] = []
     var messages: [String] = []
     var listener: ListenerRegistration?
+    var isButtonPressed = false
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "zh-TW"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
@@ -190,7 +191,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
         remindLabel.snp.makeConstraints { make in
             make.top.equalTo(messageTextField.snp.bottom).offset(12)
-            make.right.equalTo(messageTextField)
+            make.right.equalTo(speakButton2)
         }
         configRecordSession()
         speechAuth()
@@ -339,14 +340,30 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             speakButton1.isHidden = true
         }
     }
+    func changeButtonStyle() {
+        if isButtonPressed {
+            speakButton1.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
+            speakButton1.tintColor = .B4
+            speakButton2.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
+            speakButton2.tintColor = .B4
+        } else {
+            speakButton1.setBackgroundImage(UIImage(systemName: "record.circle"), for: .normal)
+            speakButton1.tintColor = .R
+            speakButton2.setBackgroundImage(UIImage(systemName: "record.circle"), for: .normal)
+            speakButton2.tintColor = .R
+        }
+        isButtonPressed.toggle()
+    }
     // MARK: - Audio Record
     @objc func recordAudioClue() {
+        changeButtonStyle()
         if audioEngine.isRunning {
             audioEngine.stop()
             recognitionRequest?.endAudio()
             speakButton1.isEnabled = false
+            speakButton2.isEnabled = false
             messageTextField.text = ""
-           uploadAudio(audioURL: audioUrl!) { result in
+            uploadAudio(audioURL: audioUrl!) { result in
                switch result {
                case .success(let url):
                    print(url)
@@ -431,6 +448,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     // MARK: - Speech Recognize
     func speechAuth() {
         speakButton1.isEnabled = false
+        speakButton2.isEnabled = false
 
         speechRecognizer?.delegate = self
 
@@ -457,6 +475,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
 
             OperationQueue.main.addOperation() {
                 self.speakButton1.isEnabled = isButtonEnabled
+                self.speakButton2.isEnabled = isButtonEnabled
             }
         }
     }
@@ -497,6 +516,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
                 self.recognitionTask = nil
 
                 self.speakButton1.isEnabled = true
+                self.speakButton2.isEnabled = true
             }
         })
         let recordingFormat = inputNode.outputFormat(forBus: 0)
@@ -515,8 +535,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
         if available {
             speakButton1.isEnabled = true
+            speakButton2.isEnabled = true
         } else {
             speakButton1.isEnabled = false
+            speakButton2.isEnabled = true
         }
     }
     // MARK: - Upload audio and play
