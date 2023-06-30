@@ -63,7 +63,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     lazy var sendButton1: UIButton = {
         let sendButton1 = UIButton()
         sendButton1.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
-        sendButton1.tintColor = .B4
+        sendButton1.tintColor = .B3
         sendButton1.addTarget(self, action: #selector(sendClue), for: .touchUpInside)
         return sendButton1
     }()
@@ -91,7 +91,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     lazy var speakButton1: UIButton = {
         let speakButton1 = UIButton()
         speakButton1.setImage(UIImage(systemName: "mic.fill"), for: .normal)
-        speakButton1.tintColor = .B4
+        speakButton1.tintColor = .B3
         speakButton1.addTarget(self, action: #selector(speakButton1Pressed), for: .touchUpInside)
         return speakButton1
     }()
@@ -141,53 +141,52 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             make.left.right.equalTo(view).inset(30)
             make.height.equalTo(240)
         }
-        clueTextField.snp.makeConstraints { make in
-            make.top.equalTo(clueTableView.snp.bottom).offset(12)
-            make.left.equalTo(clueTableView)
-            make.width.equalTo(250)
-            make.height.equalTo(40)
-        }
-        sendButton1.snp.makeConstraints { make in
-            make.centerY.equalTo(clueTextField)
-            make.left.equalTo(clueTextField.snp.right).offset(12)
-            make.width.height.equalTo(40)
-        }
-        speakButton1.snp.makeConstraints { make in
-            make.centerY.equalTo(sendButton1)
-            make.left.equalTo(sendButton1.snp.right).offset(12)
-            make.width.height.equalTo(40)
+        messageTableView.snp.makeConstraints { make in
+            make.top.equalTo(clueTableView.snp.bottom).offset(24)
+            make.left.right.equalTo(view).inset(30)
+            make.height.equalTo(240)
         }
         progressView.snp.makeConstraints { make in
-            make.top.equalTo(clueTextField.snp.bottom).offset(24)
-            make.left.equalTo(clueTextField)
+            make.top.equalTo(messageTableView.snp.bottom).offset(24)
+            make.left.equalTo(messageTableView)
             make.width.equalTo(280)
             make.height.equalTo(12)
         }
         timeImageView.snp.makeConstraints { make in
             make.centerY.equalTo(progressView)
-            make.centerX.equalTo(speakButton1)
+            make.centerX.equalTo(sendButton2)
             make.width.height.equalTo(24)
         }
-        messageTableView.snp.makeConstraints { make in
-            make.top.equalTo(progressView.snp.bottom).offset(24)
-            make.left.right.equalTo(view).inset(30)
-            make.height.equalTo(240)
-        }
         messageTextField.snp.makeConstraints { make in
-            make.top.equalTo(messageTableView.snp.bottom).offset(12)
-            make.left.equalTo(messageTableView)
+            make.top.equalTo(progressView.snp.bottom).offset(24)
+            make.left.equalTo(progressView)
             make.width.equalTo(250)
             make.height.equalTo(40)
         }
-        sendButton2.snp.makeConstraints { make in
+        sendButton1.snp.makeConstraints { make in
             make.centerY.equalTo(messageTextField)
             make.left.equalTo(messageTextField.snp.right).offset(12)
             make.width.height.equalTo(40)
             make.width.height.equalTo(40)
         }
-        speakButton2.snp.makeConstraints { make in
-            make.centerY.equalTo(sendButton2)
-            make.left.equalTo(sendButton2.snp.right).offset(12)
+//        speakButton2.snp.makeConstraints { make in
+//            make.centerY.equalTo(sendButton2)
+//            make.left.equalTo(sendButton2.snp.right).offset(12)
+//        }
+//        clueTextField.snp.makeConstraints { make in
+//            make.top.equalTo(speakButton2.snp.bottom).offset(12)
+//            make.left.equalTo(messageTableView)
+//            make.width.equalTo(250)
+//            make.height.equalTo(40)
+//        }
+        sendButton2.snp.makeConstraints { make in
+            make.centerY.equalTo(sendButton1)
+            make.left.equalTo(sendButton1.snp.right).offset(12)
+        }
+        speakButton1.snp.makeConstraints { make in
+            make.centerY.equalTo(sendButton1).offset(24)
+            make.centerX.equalTo(sendButton1)
+            make.width.height.equalTo(40)
         }
         configRecordSession()
         speechAuth()
@@ -241,14 +240,14 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
         let data: [String: Any] = [
-            "clue": FieldValue.arrayUnion(["\(userName ?? "") : \(clueTextField.text ?? "")"])
+            "clue": FieldValue.arrayUnion(["\(userName ?? "") : \(messageTextField.text ?? "")"])
         ]
         documentRef.updateData(data) { error in
             if let error = error {
                 print("Error adding document: \(error)")
             } else {
                 print("Document added successfully")
-                self.clueTextField.text = ""
+                self.messageTextField.text = ""
             }
         }
     }
@@ -328,7 +327,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             audioEngine.stop()
            recognitionRequest?.endAudio()
            speakButton1.isEnabled = false
-            clueTextField.text = ""
+            messageTextField.text = ""
            uploadAudio(audioURL: audioUrl!) { result in
                switch result {
                case .success(let url):
@@ -467,7 +466,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             var isFinal = false
 
             if result != nil {
-                self.clueTextField.text = result?.bestTranscription.formattedString
+                self.messageTextField.text = result?.bestTranscription.formattedString
                 isFinal = (result?.isFinal)!
 //                messageTextField?
             }
