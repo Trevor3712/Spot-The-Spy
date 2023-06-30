@@ -48,12 +48,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         messageTableView.tag = 2
         return messageTableView
     }()
-    lazy var clueTextField: BaseTextField = {
-        let clueTextField = BaseTextField()
-        clueTextField.placeholder = "線索輸入區"
-        clueTextField.backgroundColor = .B3
-        return clueTextField
-    }()
     lazy var messageTextField: BaseTextField = {
         let messageTextField = BaseTextField()
         messageTextField.placeholder = "討論輸入區"
@@ -93,15 +87,24 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         speakButton1.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
         speakButton1.tintColor = .B4
         speakButton1.addTarget(self, action: #selector(recordAudioClue), for: .touchUpInside)
-//        speakButton1.addTarget(self, action: #selector(sendClue), for: .touchUpInside)
         return speakButton1
     }()
     lazy var speakButton2: UIButton = {
         let speakButton2 = UIButton()
-        speakButton2.setImage(UIImage(systemName: "mic.fill"), for: .normal)
+        speakButton2.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
         speakButton2.tintColor = .B4
 //        speakButton2.addTarget(self, action: #selector(speakButton2Pressed), for: .touchUpInside)
         return speakButton2
+    }()
+    lazy var remindLabel: UILabel = {
+        let remindLabel = UILabel()
+        remindLabel.attributedText = UIFont.fontStyle(
+            font: .light,
+            title: "＊點擊麥克風開始語音辨識，再次點擊停止辨識",
+            size: 15,
+            textColor: .B3 ?? .black,
+            letterSpacing: 0)
+        return remindLabel
     }()
     let userName = UserDefaults.standard.string(forKey: "userName")
     var players: [String] = []
@@ -125,10 +128,11 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         super.viewDidLoad()
         [playerLabel, speakLabel,
          clueTableView, messageTableView,
-         clueTextField, messageTextField,
+         messageTextField,
          sendButton1, sendButton2,
          progressView, timeImageView,
-         speakButton1, speakButton2].forEach { view.addSubview($0) }
+         speakButton1, speakButton2,
+        remindLabel].forEach { view.addSubview($0) }
         playerLabel.snp.makeConstraints { make in
             make.top.equalTo(view).offset(60)
             make.centerX.equalTo(view)
@@ -155,7 +159,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
         timeImageView.snp.makeConstraints { make in
             make.centerY.equalTo(progressView)
-            make.centerX.equalTo(sendButton2)
+            make.centerX.equalTo(speakButton1)
             make.width.height.equalTo(24)
         }
         messageTextField.snp.makeConstraints { make in
@@ -174,21 +178,20 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             make.left.equalTo(sendButton1.snp.right).offset(8)
             make.width.height.equalTo(40)
         }
-//        speakButton2.snp.makeConstraints { make in
-//            make.centerY.equalTo(sendButton2)
-//            make.left.equalTo(sendButton2.snp.right).offset(12)
-//        }
-//        clueTextField.snp.makeConstraints { make in
-//            make.top.equalTo(speakButton2.snp.bottom).offset(12)
-//            make.left.equalTo(messageTableView)
-//            make.width.equalTo(250)
-//            make.height.equalTo(40)
-//        }
-//        sendButton2.snp.makeConstraints { make in
-//            make.centerX.equalTo(sendButton1)
-//            make.top.equalTo(sendButton1.snp.right).offset(12)
-//            make.width.height.equalTo(40)
-//        }
+        speakButton2.snp.makeConstraints { make in
+            make.centerY.equalTo(sendButton1)
+            make.left.equalTo(sendButton1.snp.right).offset(8)
+            make.width.height.equalTo(40)
+        }
+        sendButton2.snp.makeConstraints { make in
+            make.centerY.equalTo(messageTextField)
+            make.left.equalTo(messageTextField.snp.right).offset(12)
+            make.width.height.equalTo(40)
+        }
+        remindLabel.snp.makeConstraints { make in
+            make.top.equalTo(messageTextField.snp.bottom).offset(12)
+            make.right.equalTo(messageTextField)
+        }
         configRecordSession()
         speechAuth()
     }
