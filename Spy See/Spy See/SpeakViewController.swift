@@ -98,7 +98,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
 //        speakButton2.addTarget(self, action: #selector(speakButton2Pressed), for: .touchUpInside)
         return speakButton2
     }()
-//    let currentUser = Auth.auth().currentUser?.email
     let userName = UserDefaults.standard.string(forKey: "userName")
     var players: [String] = []
     var currentPlayerIndex: Int = 0
@@ -190,24 +189,26 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         speechAuth()
     }
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
             players = storedPlayers
         }
         showClue()
         showNextPrompt()
-        print(players)
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         deleteMessage()
-        clues = []
-        messages = []
     }
     func showNextPrompt() {
         guard currentPlayerIndex < players.count else {
             let voteVC = VoteViewController()
             currentPlayerIndex = 0
             listener?.remove()
+            clues = []
+            messages = []
+            clueTableView.reloadData()
+            messageTableView.reloadData()
             navigationController?.pushViewController(voteVC, animated: true)
             return
         }
@@ -274,6 +275,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             }
             guard let data = documentSnapshot?.data() else {
                 print("No data available")
+                self.clues = []
+                self.messages = []
+                self.clueTableView.reloadData()
+                self.messageTableView.reloadData()
                 return
             }
             if let clue = data["clue"] as? [String] {
@@ -316,10 +321,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     //MARK: - Audio Record
     @objc func speakButton1Pressed() {
         if audioEngine.isRunning {
-           audioEngine.stop()
+            audioEngine.stop()
            recognitionRequest?.endAudio()
            speakButton1.isEnabled = false
-           clueTextField.text = ""
+            clueTextField.text = ""
            uploadAudio(audioURL: audioUrl!) { result in
                switch result {
                case .success(let url):
@@ -402,7 +407,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             print("Session error:", error.localizedDescription)
         }
     }
-    //MARK: - Speech Recognize
+    // MARK: - Speech Recognize
     func speechAuth() {
         speakButton1.isEnabled = false
 
@@ -493,7 +498,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             speakButton1.isEnabled = false
         }
     }
-    //MARK: - Upload audio and play
+    // MARK: - Upload audio and play
     func uploadAudio(audioURL: URL, completion: @escaping (Result<URL, Error>) -> Void) {
         let fileReference = Storage.storage().reference().child("\(fileName ?? "").m4a")
         if let data = try? Data(contentsOf: audioURL) {
@@ -557,7 +562,6 @@ extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        50
         UITableView.automaticDimension
     }
 }

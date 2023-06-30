@@ -15,6 +15,7 @@ class BaseTextField: UITextField {
         layer.borderColor = UIColor.B1?.cgColor
         layer.cornerRadius = 5
         clipsToBounds = true
+        autocapitalizationType = .none
     }
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.insetBy(dx: 10, dy: 10)
