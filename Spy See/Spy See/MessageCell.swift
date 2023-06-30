@@ -19,7 +19,7 @@ class MessageCell: UITableViewCell {
         super .init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12))
+            make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 3, left: 12, bottom: 3, right: 12))
         }
     }
     required init?(coder: NSCoder) {

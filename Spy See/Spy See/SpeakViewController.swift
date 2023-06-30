@@ -11,6 +11,7 @@ import FirebaseFirestore
 import FirebaseStorage
 import AVFoundation
 import Speech
+import AudioToolbox
 // swiftlint:disable type_body_length
 class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     
@@ -51,7 +52,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     lazy var messageTextField: BaseTextField = {
         let messageTextField = BaseTextField()
         messageTextField.placeholder = "討論輸入區"
-        messageTextField.backgroundColor = .B3
         return messageTextField
     }()
     lazy var sendButton1: UIButton = {
@@ -207,6 +207,9 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         deleteMessage()
+        audioRecoder?.stop()
+        audioEngine.stop()
+        audioPlayer?.stop()
     }
     func showNextPlayer() {
         guard currentPlayerIndex < players.count else {
@@ -220,7 +223,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             navigationController?.pushViewController(voteVC, animated: true)
             return
         }
-        toggleButton()
+        currentUserTurn()
         playerLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "\(players[currentPlayerIndex])",
@@ -327,13 +330,17 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             }
         }
     }
-    func toggleButton() {
+    func currentUserTurn() {
         if players[currentPlayerIndex] == UserDefaults.standard.string(forKey: "userName") {
             sendButton1.isHidden = false
             speakButton1.isHidden = false
             sendButton2.isHidden = true
             speakButton2.isHidden = true
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         } else {
+            let vibrateGenerator = UIImpactFeedbackGenerator(style: .heavy)
+            vibrateGenerator.prepare()
+            vibrateGenerator.impactOccurred()
             sendButton2.isHidden = false
             speakButton2.isHidden = false
             sendButton1.isHidden = true
@@ -391,7 +398,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         guard audioRecoder == nil else {
             audioRecoder?.stop()
             audioRecoder = nil
-//            speakButton.setTitle("Record", for: .normal)
             return
         }
         fileName = UUID().uuidString
@@ -407,7 +413,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         do {
             audioRecoder = try AVAudioRecorder(url: destinationUrl, settings: settings)
             audioRecoder?.record()
-//            speakButton.setTitle("Stop", for: .normal)
         } catch {
             print("Record error:", error.localizedDescription)
         }
@@ -456,7 +461,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
 
             var isButtonEnabled = false
 
-            switch authStatus {  //5
+            switch authStatus {
             case .authorized:
                 isButtonEnabled = true
 
@@ -562,6 +567,18 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
                 }
             }
         }
+    }
+    func playSystemSound() {
+        var soundID: SystemSoundID = 0
+        
+        // 選擇要播放的內建系統音效
+        let soundURL = NSURL(fileURLWithPath: "/System/Library/Audio/UISounds/Tock.caf")
+        
+        // 建立 SystemSoundID
+        AudioServicesCreateSystemSoundID(soundURL, &soundID)
+        
+        // 播放系統音效
+        AudioServicesPlaySystemSound(soundID)
     }
     func deleteMessage() {
         let room = dataBase.collection("Rooms")
