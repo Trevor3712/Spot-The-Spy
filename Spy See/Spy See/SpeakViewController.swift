@@ -113,6 +113,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     let dataBase = Firestore.firestore()
     var audioRecoder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
+    var player: AVPlayer?
     var fileName: String?
     var audioUrl: URL?
     var audioUrlFromFS: URL?
@@ -121,6 +122,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     var messages: [String] = []
     var listener: ListenerRegistration?
     var isButtonPressed = false
+    let storage = Storage.storage()
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "zh-TW"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
@@ -313,18 +315,30 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
                     self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                 }
             }
-            if let audioClueString = data["audioClue"] as? String, let audioClue = URL(string: audioClueString) {
-                print("audio clue:\(audioClue)")
-                DispatchQueue.main.async {
-                    do {
-                        self.audioPlayer = try AVAudioPlayer(contentsOf: audioClue, fileTypeHint: AVFileType.m4a.rawValue)
-                        self.audioPlayer?.volume = 1.0
-                        self.audioPlayer?.prepareToPlay()
-                        self.audioPlayer?.play()
-                        print("play audio")
-                    } catch {
-                        print("Play error", error.localizedDescription)
-                        print("Play error: \(error)")
+            if let audioClueString = data["audioClue"] as? String {
+                print("audio clue:\(audioClueString)")
+                let httpsReference = self.storage.reference(forURL: audioClueString)
+                let fileManager = FileManager.default
+                let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+                let destinationURL = documentsDirectory?.appendingPathComponent("\(audioClueString)")
+                let downloadTask = httpsReference.write(toFile: destinationURL!) { url, error in
+                    if let error = error {
+                        print(error)
+                    } else {
+                        guard let url = url else {
+                            return
+                        }
+                        do {
+                            self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+                            self.audioPlayer?.volume = 1.0
+                            self.audioPlayer?.prepareToPlay()
+                            self.audioPlayer?.play()
+                            print("play audio")
+                            print("url:\(url)")
+                        } catch {
+                            print("Play error", error.localizedDescription)
+                            print("Play error: \(error)")
+                        }
                     }
                 }
             }
@@ -401,14 +415,15 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             return
         }
         fileName = UUID().uuidString
-        let destinationUrl = getDirectoryPath().appendingPathComponent("\(fileName ?? "").m4a")
+        let destinationUrl = getDirectoryPath().appendingPathComponent("\(fileName ?? "").wav")
         audioUrl = destinationUrl
-        let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+        let settings: [String: Any] = [
+            AVFormatIDKey: kAudioFormatLinearPCM,
             AVSampleRateKey: 44100,
             AVNumberOfChannelsKey: 2,
-            AVEncoderBitRateKey: 128000,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            AVLinearPCMBitDepthKey: 16,
+            AVLinearPCMIsBigEndianKey: false,
+            AVLinearPCMIsFloatKey: false
         ]
         do {
             audioRecoder = try AVAudioRecorder(url: destinationUrl, settings: settings)
@@ -417,19 +432,19 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             print("Record error:", error.localizedDescription)
         }
     }
-    func playSound() {
-        let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName ?? "").m4a")
-        let audioFileURL = URL(fileURLWithPath: recordFilePath.path)
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: audioFileURL)
-                audioPlayer?.volume = 1.0
-                audioPlayer?.prepareToPlay()
-                audioPlayer?.play()
-                print(recordFilePath)
-        } catch {
-            print("Play error", error.localizedDescription)
-        }
-    }
+//    func playSound() {
+//        let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName ?? "").m4a")
+//        let audioFileURL = URL(fileURLWithPath: recordFilePath.path)
+//            do {
+//                audioPlayer = try AVAudioPlayer(contentsOf: audioFileURL)
+//                audioPlayer?.volume = 1.0
+//                audioPlayer?.prepareToPlay()
+//                audioPlayer?.play()
+//                print(recordFilePath)
+//        } catch {
+//            print("Play error", error.localizedDescription)
+//        }
+//    }
     func getDirectoryPath() -> URL {
             let fileDiretoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             return fileDiretoryURL
@@ -437,7 +452,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     func configRecordSession() {
         do {
             let recordingSession = AVAudioSession.sharedInstance()
-            try recordingSession.setCategory(AVAudioSession.Category.playAndRecord)
+            try recordingSession.setCategory(
+                .playAndRecord,
+                mode: .default,
+                options: [.defaultToSpeaker, .allowBluetooth])
             try recordingSession.setActive(true)
             recordingSession.requestRecordPermission { permissionAllowed in
                 if permissionAllowed {
@@ -548,7 +566,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }
     // MARK: - Upload audio and play
     func uploadAudio(audioURL: URL, completion: @escaping (Result<URL, Error>) -> Void) {
-        let fileReference = Storage.storage().reference().child("\(fileName ?? "").m4a")
+        let fileReference = Storage.storage().reference().child("\(fileName ?? "").wav")
         if let data = try? Data(contentsOf: audioURL) {
             fileReference.putData(data, metadata: nil) { result in
                 switch result {
@@ -567,18 +585,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
                 }
             }
         }
-    }
-    func playSystemSound() {
-        var soundID: SystemSoundID = 0
-        
-        // 選擇要播放的內建系統音效
-        let soundURL = NSURL(fileURLWithPath: "/System/Library/Audio/UISounds/Tock.caf")
-        
-        // 建立 SystemSoundID
-        AudioServicesCreateSystemSoundID(soundURL, &soundID)
-        
-        // 播放系統音效
-        AudioServicesPlaySystemSound(soundID)
     }
     func deleteMessage() {
         let room = dataBase.collection("Rooms")
