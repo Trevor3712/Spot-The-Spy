@@ -154,7 +154,7 @@ class ProfileViewController: BaseViewController {
         present(alert, animated: true)
     }
     @objc func logoutButtonPressed() {
-        let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要刪除帳號嗎？", confirmCompletion: {
+        let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要登出帳號嗎？", confirmCompletion: {
             UserDefaults.standard.removeObject(forKey: "userEmail")
             self.navigationController?.popToRootViewController(animated: true)
         })

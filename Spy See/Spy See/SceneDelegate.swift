@@ -16,15 +16,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
-//        let userEmail = UserDefaults.standard.string(forKey: "userEmail")
-//        print(userEmail)
-//        if userEmail != nil {
-//            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-//            let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController")
-//            let navigationController = UINavigationController(rootViewController: tabBarVC)
-//            window?.rootViewController = navigationController
-//            self.window?.makeKeyAndVisible()
-//        }
+        let userEmail = UserDefaults.standard.string(forKey: "userEmail")
+        print(userEmail)
+        if userEmail != nil {
+            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+            let loginVC = storyBoard.instantiateViewController(identifier: "LoginViewController")
+            let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController")
+            let navigationController = UINavigationController(rootViewController: loginVC)
+            window?.rootViewController = navigationController
+            navigationController.pushViewController(tabBarVC, animated: true)
+            self.window?.makeKeyAndVisible()
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -55,15 +57,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let loginVC = storyBoard.instantiateViewController(identifier: "LoginViewController")
+        let navigationController = UINavigationController(rootViewController: loginVC)
+        window?.rootViewController = navigationController
         if let url = URLContexts.first?.url {
             let urlString = url.absoluteString
             let component = urlString.components(separatedBy: "=")
             if component.count > 1, let page = component.last {
                 if page == "lobby" {
-                    let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                     let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController")
-                    let navigationController = UINavigationController(rootViewController: tabBarVC)
-                    window?.rootViewController = navigationController
+                    navigationController.pushViewController(tabBarVC, animated: true)
                     window?.makeKeyAndVisible()
                 }
             }
