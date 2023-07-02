@@ -233,7 +233,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             textColor: .B2 ?? .black,
             letterSpacing: 10)
         countdown = 10
-        progressView.setProgress(1, animated: false)
+        progressView.setProgress(1, animated: true)
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateProgress), userInfo: nil, repeats: true)
     }
     @objc func updateProgress() {
