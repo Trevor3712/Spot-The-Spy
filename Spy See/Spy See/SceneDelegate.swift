@@ -24,10 +24,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = navigationController
             if let url = connectionOptions.urlContexts.first?.url {
                 let urlString = url.absoluteString
-                let component = urlString.components(separatedBy: "=")
+                let component = urlString.components(separatedBy: "/")
                 if component.count > 1 {
-                    let page = component.first
+                    let page = component[component.count - 2]
+                    print(page)
                     let roomId = component.last
+                    print(roomId)
                     if page == "lobby" {
                         let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController") as? UITabBarController
                         let lobbyVC = tabBarVC?.viewControllers?.first as? LobbyViewController
