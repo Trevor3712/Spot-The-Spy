@@ -95,9 +95,9 @@ class InviteViewController: BaseViewController {
         navigationController?.pushViewController(waitingVC, animated: true)
     }
     func presentShareSheet() {
-        let url = URL(string: "SpotTheSpyOnline://lobby")
-//        let url = URL(string: "SpotTheSpyOnline://lobby=\(roomId ?? "")")
-        let text = "趕快來跟我玩誰是臥底！"
+//        let url = URL(string: "SpotTheSpyOnline://lobby")
+        let url = URL(string: "SpotTheSpyOnline://lobby/\(roomId ?? "")")
+        let text = "趕快來跟我玩誰是臥底，邀請碼：\(roomId ?? "")"
         let shareSheetVC = UIActivityViewController(activityItems: [text, url], applicationActivities: nil)
         present(shareSheetVC, animated: true)
     }

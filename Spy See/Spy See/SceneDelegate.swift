@@ -22,8 +22,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController")
             let navigationController = UINavigationController(rootViewController: loginVC)
             window?.rootViewController = navigationController
-            navigationController.pushViewController(tabBarVC, animated: true)
-            self.window?.makeKeyAndVisible()
+            if let url = connectionOptions.urlContexts.first?.url {
+                let urlString = url.absoluteString
+                let component = urlString.components(separatedBy: "=")
+                if component.count > 1 {
+                    let page = component.first
+                    let roomId = component.last
+                    if page == "lobby" {
+                        let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController") as? UITabBarController
+                        let lobbyVC = tabBarVC?.viewControllers?.first as? LobbyViewController
+                        lobbyVC?.invitationTextFileld.text = roomId
+                        navigationController.pushViewController(tabBarVC!, animated: true)
+                        window?.makeKeyAndVisible()
+                    }
+                }
+            } else {
+                navigationController.pushViewController(tabBarVC, animated: true)
+                self.window?.makeKeyAndVisible()
+            }
         }
     }
 
@@ -62,10 +78,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if userEmail != nil {
             if let url = URLContexts.first?.url {
                 let urlString = url.absoluteString
-                let component = urlString.components(separatedBy: "=")
+                let component = urlString.components(separatedBy: "/")
                 if component.count > 1 {
-                    let page = component.first
+                    let page = component[component.count - 2]
+                    print(page)
                     let roomId = component.last
+                    print(roomId)
                     if page == "lobby" {
                         let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController") as? UITabBarController
                         let lobbyVC = tabBarVC?.viewControllers?.first as? LobbyViewController
