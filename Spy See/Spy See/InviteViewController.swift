@@ -38,7 +38,7 @@ class InviteViewController: BaseViewController {
         let copyButton = BaseButton()
         copyButton.setAttributedTitle(UIFont.fontStyle(
             font: .semibold,
-            title: "複製邀請碼",
+            title: "分享邀請碼",
             size: 20,
             textColor: .B2 ?? .black,
             letterSpacing: 5), for: .normal)
@@ -96,7 +96,9 @@ class InviteViewController: BaseViewController {
     }
     func presentShareSheet() {
         let url = URL(string: "SpotTheSpyOnline://lobby")
-        let shareSheetVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+//        let url = URL(string: "SpotTheSpyOnline://lobby=\(roomId ?? "")")
+        let text = "趕快來跟我玩誰是臥底！"
+        let shareSheetVC = UIActivityViewController(activityItems: [text, url], applicationActivities: nil)
         present(shareSheetVC, animated: true)
     }
 }
