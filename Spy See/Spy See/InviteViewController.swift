@@ -88,9 +88,15 @@ class InviteViewController: BaseViewController {
     @objc func copyButtonPressed() {
         let copyText = invitationLabel.text
         UIPasteboard.general.string = "我想邀請你來玩誰是臥底，邀請碼：\(copyText ?? "")"
+        presentShareSheet()
     }
     @objc func readyButtonPressed() {
         let waitingVC = WaitingViewController()
         navigationController?.pushViewController(waitingVC, animated: true)
+    }
+    func presentShareSheet() {
+        let url = URL(string: "SpotTheSpyOnline://lobby")
+        let shareSheetVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        present(shareSheetVC, animated: true)
     }
 }
