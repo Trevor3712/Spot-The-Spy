@@ -9,15 +9,13 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-
+    let userEmail = UserDefaults.standard.string(forKey: "userEmail")
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
-        let userEmail = UserDefaults.standard.string(forKey: "userEmail")
-        print(userEmail)
         if userEmail != nil {
             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
             let loginVC = storyBoard.instantiateViewController(identifier: "LoginViewController")
@@ -61,14 +59,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let loginVC = storyBoard.instantiateViewController(identifier: "LoginViewController")
         let navigationController = UINavigationController(rootViewController: loginVC)
         window?.rootViewController = navigationController
-        if let url = URLContexts.first?.url {
-            let urlString = url.absoluteString
-            let component = urlString.components(separatedBy: "=")
-            if component.count > 1, let page = component.last {
-                if page == "lobby" {
-                    let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController")
-                    navigationController.pushViewController(tabBarVC, animated: true)
-                    window?.makeKeyAndVisible()
+        if userEmail != nil {
+            if let url = URLContexts.first?.url {
+                let urlString = url.absoluteString
+                let component = urlString.components(separatedBy: "=")
+                if component.count > 1 {
+                    let page = component.first
+                    let roomId = component.last
+                    if page == "lobby" {
+                        let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController") as? UITabBarController
+                        let lobbyVC = tabBarVC?.viewControllers?.first as? LobbyViewController
+                        lobbyVC?.invitationTextFileld.text = roomId
+                        navigationController.pushViewController(tabBarVC!, animated: true)
+                        window?.makeKeyAndVisible()
+                    }
                 }
             }
         }
