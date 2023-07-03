@@ -20,6 +20,7 @@
 		B550132E2A472C0A00FCEFFC /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132D2A472C0A00FCEFFC /* BaseButton.swift */; };
 		B55013302A47320500FCEFFC /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132F2A47320500FCEFFC /* UIFont+Extension.swift */; };
 		B55013322A47387100FCEFFC /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55013312A47387100FCEFFC /* BaseTextField.swift */; };
+		B55099D52A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav in Resources */ = {isa = PBXBuildFile; fileRef = B55099D42A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav */; };
 		B57DE3B22A496D1D00AEC8EC /* BaseMessageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */; };
 		B57DE3B62A49A63600AEC8EC /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B52A49A63600AEC8EC /* MessageCell.swift */; };
 		B59588952A3D98430058E170 /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588942A3D98430058E170 /* VoteViewController.swift */; };
@@ -58,6 +59,7 @@
 		B550132D2A472C0A00FCEFFC /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		B550132F2A47320500FCEFFC /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		B55013312A47387100FCEFFC /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
+		B55099D42A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav"; sourceTree = "<group>"; };
 		B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMessageTableView.swift; sourceTree = "<group>"; };
 		B57DE3B52A49A63600AEC8EC /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		B59588942A3D98430058E170 /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 		B5D2B0922A39C8E800ED3516 = {
 			isa = PBXGroup;
 			children = (
+				B55099D42A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav */,
 				B5D2B09D2A39C8E800ED3516 /* Spy See */,
 				B5D2B09C2A39C8E800ED3516 /* Products */,
 				9C5F9C7F45BBBBE800D1D379 /* Pods */,
@@ -257,6 +260,7 @@
 				B5D2B0AB2A39C8ED00ED3516 /* LaunchScreen.storyboard in Resources */,
 				B5D2B0B42A3A017D00ED3516 /* GoogleService-Info.plist in Resources */,
 				B5D2B0A82A39C8ED00ED3516 /* Assets.xcassets in Resources */,
+				B55099D52A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav in Resources */,
 				B5D2B0A62A39C8E800ED3516 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

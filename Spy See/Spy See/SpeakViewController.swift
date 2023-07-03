@@ -117,7 +117,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     var fileName: String?
     var audioUrl: URL?
     var audioUrlFromFS: URL?
-    var countdown = 10
+    var countdown = 5
     var clues: [String] = []
     var messages: [String] = []
     var listener: ListenerRegistration?
@@ -232,13 +232,13 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             size: 35,
             textColor: .B2 ?? .black,
             letterSpacing: 10)
-        countdown = 10
+        countdown = 5
         progressView.setProgress(1, animated: true)
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateProgress), userInfo: nil, repeats: true)
     }
     @objc func updateProgress() {
         countdown -= 1
-        let progress = Float(countdown) / Float(10)
+        let progress = Float(countdown) / Float(5)
         progressView.setProgress(progress, animated: true)
         if countdown <= 0 {
             timer?.invalidate()
@@ -317,24 +317,29 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             }
             if let audioClueString = data["audioClue"] as? String {
                 print("audio clue:\(audioClueString)")
-                let httpsReference = self.storage.reference(forURL: audioClueString)
+                let fileReference = Storage.storage().reference().child("\(self.fileName ?? "").wav")
                 let fileManager = FileManager.default
                 let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-                let destinationURL = documentsDirectory?.appendingPathComponent("\(audioClueString)")
-                let downloadTask = httpsReference.write(toFile: destinationURL!) { url, error in
+                let destinationURL = documentsDirectory?.appendingPathComponent("recording.wav")
+                fileReference.write(toFile: destinationURL!) { url, error in
                     if let error = error {
                         print(error)
-                    } else {
-                        guard let url = url else {
-                            return
-                        }
+                    } else if let url = url {
                         do {
+                            print("url:\(url)")
                             self.audioPlayer = try AVAudioPlayer(contentsOf: url)
                             self.audioPlayer?.volume = 1.0
                             self.audioPlayer?.prepareToPlay()
                             self.audioPlayer?.play()
                             print("play audio")
-                            print("url:\(url)")
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                if ((self.audioPlayer?.isPlaying) != nil) {
+                                    let currentTime = self.audioPlayer?.currentTime
+                                    print("目前播放時間：\(currentTime)")
+                                } else {
+                                    print("音檔未在播放")
+                                }
+                            }
                         } catch {
                             print("Play error", error.localizedDescription)
                             print("Play error: \(error)")
@@ -387,7 +392,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             uploadAudio(audioURL: audioUrl!) { result in
                switch result {
                case .success(let url):
-                   print(url)
+                   print("****** Firestore audioClue", url)
                    let room = self.dataBase.collection("Rooms")
                    let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
                    let documentRef = room.document(roomId)
