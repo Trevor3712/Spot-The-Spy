@@ -59,6 +59,7 @@ class ProfileViewController: BaseViewController {
     let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBarController?.navigationItem.hidesBackButton = true
         [nameTextField, nameLabel, infoLabel, logoutButton, deleteButton].forEach { view.addSubview($0) }
         nameTextField.snp.makeConstraints { make in
             make.bottom.equalTo(view.snp.centerY).offset(-50)

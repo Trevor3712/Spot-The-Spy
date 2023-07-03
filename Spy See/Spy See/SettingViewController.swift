@@ -82,6 +82,9 @@ class SettingViewController: BaseViewController {
     let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonPressed))
+        backButton.tintColor = .B1
+        navigationItem.leftBarButtonItem = backButton
         [
             logoImage,
             playersCountLabel, playersCountTextFileld,
@@ -209,6 +212,9 @@ class SettingViewController: BaseViewController {
                 print("Failed to retrieve player index: \(error?.localizedDescription ?? "")")
             }
         }
+    }
+    @objc func backButtonPressed() {
+        navigationController?.popViewController(animated: true)
     }
 }
 extension SettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {

@@ -50,6 +50,7 @@ class LobbyViewController: BaseViewController {
     let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
+        tabBarController?.navigationItem.hidesBackButton = true
         [
             logoImage,
             createRoomButton,
@@ -88,6 +89,10 @@ class LobbyViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getUserName()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationItem.hidesBackButton = false
     }
     @objc func createRoomButtonPressed() {
         vibrate()

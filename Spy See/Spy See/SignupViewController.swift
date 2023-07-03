@@ -148,6 +148,9 @@ class SignupViewController: BaseViewController {
             make.width.equalTo(150)
             make.height.equalTo(40)
         }
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonPressed))
+        backButton.tintColor = .B1
+        navigationItem.leftBarButtonItem = backButton
     }
     @objc func signupButtonPressed() {
         vibrate()
@@ -192,6 +195,9 @@ class SignupViewController: BaseViewController {
                 print("Document added successfully")
             }
         }
+    }
+    @objc func backButtonPressed() {
+        navigationController?.popViewController(animated: true)
     }
 }
 extension SignupViewController: UITextFieldDelegate {
