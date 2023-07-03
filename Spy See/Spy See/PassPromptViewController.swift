@@ -32,12 +32,8 @@ class PassPromptViewController: BaseViewController {
     }()
     lazy var readyButton: BaseButton = {
         let readyButton = BaseButton()
-        readyButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "我記住了",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 5), for: .normal)
+        readyButton.setNormal("我記住了")
+        readyButton.setHighlighted("我記住了")
         readyButton.titleLabel?.textAlignment = .center
         readyButton.addTarget(self, action: #selector(readyButtonPressed), for: .touchUpInside)
         return readyButton
@@ -145,6 +141,7 @@ class PassPromptViewController: BaseViewController {
                 if self.isAllPlayersReady() {
                     documentRef.updateData(["playersReady": []])
                     let speakVC = SpeakViewController()
+                    self.vibrateHard()
                     self.navigationController?.pushViewController(speakVC, animated: true)
                 }
             }

@@ -75,6 +75,7 @@ class DiedViewController: BaseViewController {
     func goToVictoryPage(_ isSpyWin: Bool) {
         let victoryVC = VictoryViewController()
         victoryVC.isSpyWin = isSpyWin
+        vibrateHard()
         navigationController?.pushViewController(victoryVC, animated: true)
     }
 }

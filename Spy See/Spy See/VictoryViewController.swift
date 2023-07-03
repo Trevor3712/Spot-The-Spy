@@ -13,12 +13,8 @@ class VictoryViewController: BaseViewController {
     lazy var victoryLabel = UILabel()
     lazy var backToLobbyButton: BaseButton = {
         let backToLobbyButton = BaseButton()
-        backToLobbyButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "回到大廳",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 3), for: .normal)
+        backToLobbyButton.setNormal("回到大廳")
+        backToLobbyButton.setHighlighted("回到大廳")
         backToLobbyButton.titleLabel?.textAlignment = .center
         backToLobbyButton.addTarget(self, action: #selector(backToLobbyButtonPressed), for: .touchUpInside)
         return backToLobbyButton
@@ -70,6 +66,7 @@ class VictoryViewController: BaseViewController {
         }
     }
     @objc func backToLobbyButtonPressed() {
+        vibrate()
         if let targetViewController = navigationController?.viewControllers[1] {
             navigationController?.popToViewController(targetViewController, animated: true)
             deleteGameData()

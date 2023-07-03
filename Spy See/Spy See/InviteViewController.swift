@@ -34,34 +34,24 @@ class InviteViewController: BaseViewController {
         invitationLabel.textAlignment = .center
         return invitationLabel
     }()
-    lazy var copyButton: BaseButton = {
-        let copyButton = BaseButton()
-        copyButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "分享邀請碼",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 5), for: .normal)
-        copyButton.titleLabel?.textAlignment = .center
-        copyButton.addTarget(self, action: #selector(copyButtonPressed), for: .touchUpInside)
-        return copyButton
+    lazy var shareButton: BaseButton = {
+        let shareButton = BaseButton()
+        shareButton.setNormal("分享邀請碼")
+        shareButton.setHighlighted("分享邀請碼")
+        shareButton.addTarget(self, action: #selector(shareButtonPressed), for: .touchUpInside)
+        return shareButton
     }()
     lazy var readyButton: BaseButton = {
         let readyButton = BaseButton()
-        readyButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "進入房間",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 5), for: .normal)
-        readyButton.titleLabel?.textAlignment = .center
+        readyButton.setNormal("進入房間")
+        readyButton.setHighlighted("進入房間")
         readyButton.addTarget(self, action: #selector(readyButtonPressed), for: .touchUpInside)
         return readyButton
     }()
     let roomId = UserDefaults.standard.string(forKey: "roomId")
     override func viewDidLoad() {
         super.viewDidLoad()
-        [titleLabel, invitationLabel, copyButton, readyButton].forEach { view.addSubview($0) }
+        [titleLabel, invitationLabel, shareButton, readyButton].forEach { view.addSubview($0) }
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(150)
             make.centerX.equalTo(view)
@@ -72,30 +62,31 @@ class InviteViewController: BaseViewController {
             make.width.equalTo(250)
             make.height.height.equalTo(80)
         }
-        copyButton.snp.makeConstraints { make in
+        shareButton.snp.makeConstraints { make in
             make.top.equalTo(invitationLabel.snp.bottom).offset(50)
             make.centerX.equalTo(view)
             make.width.equalTo(150)
             make.height.equalTo(40)
         }
         readyButton.snp.makeConstraints { make in
-            make.top.equalTo(copyButton.snp.bottom).offset(130)
+            make.top.equalTo(shareButton.snp.bottom).offset(130)
             make.centerX.equalTo(view)
             make.width.equalTo(150)
             make.height.equalTo(40)
         }
     }
-    @objc func copyButtonPressed() {
+    @objc func shareButtonPressed() {
+        vibrate()
         let copyText = invitationLabel.text
         UIPasteboard.general.string = "我想邀請你來玩誰是臥底，邀請碼：\(copyText ?? "")"
         presentShareSheet()
     }
     @objc func readyButtonPressed() {
+        vibrate()
         let waitingVC = WaitingViewController()
         navigationController?.pushViewController(waitingVC, animated: true)
     }
     func presentShareSheet() {
-//        let url = URL(string: "SpotTheSpyOnline://lobby")
         let url = URL(string: "SpotTheSpyOnline://lobby/\(roomId ?? "")")
         let text = "趕快來跟我玩誰是臥底，邀請碼：\(roomId ?? "")"
         let shareSheetVC = UIActivityViewController(activityItems: [text, url], applicationActivities: nil)

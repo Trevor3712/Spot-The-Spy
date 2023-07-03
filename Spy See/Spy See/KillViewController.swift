@@ -47,13 +47,8 @@ class KillViewController: BaseViewController {
     }()
     lazy var nextRoundButton: BaseButton = {
         let nextRoundButton = BaseButton()
-        nextRoundButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "下一輪",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 3), for: .normal)
-        nextRoundButton.titleLabel?.textAlignment = .center
+        nextRoundButton.setNormal("下一輪")
+        nextRoundButton.setHighlighted("下一輪")
         nextRoundButton.isHidden = true
         nextRoundButton.addTarget(self, action: #selector(nextRoundButtonPressed), for: .touchUpInside)
         return nextRoundButton
@@ -196,6 +191,7 @@ class KillViewController: BaseViewController {
         }
     }
     @objc func nextRoundButtonPressed() {
+        vibrate()
         self.playersArray.remove(at: arrayIndex ?? 0)
         self.identitiesArray.remove(at: arrayIndex ?? 0)
         self.votedArray.removeAll()

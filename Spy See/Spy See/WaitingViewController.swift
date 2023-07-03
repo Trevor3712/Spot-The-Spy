@@ -79,6 +79,7 @@ class WaitingViewController: BaseViewController {
                 self.tableView.reloadData()
                 if self.allPlayersJoined() {
                     let promptVC = PassPromptViewController()
+                    self.vibrateHard()
                     self.navigationController?.pushViewController(promptVC, animated: true)
                 }
             }

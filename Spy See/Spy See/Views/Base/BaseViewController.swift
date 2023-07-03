@@ -64,4 +64,7 @@ class BaseViewController: UIViewController {
         vibrateGenerator.prepare()
         vibrateGenerator.impactOccurred()
     }
+    func vibrateHard() {
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+    }
 }

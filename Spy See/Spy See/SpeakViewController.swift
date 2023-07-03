@@ -57,6 +57,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     lazy var sendButton1: UIButton = {
         let sendButton1 = UIButton()
         sendButton1.setBackgroundImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        sendButton1.setBackgroundImage(UIImage(systemName: "paperplane"), for: .highlighted)
         sendButton1.tintColor = .B4
         sendButton1.addTarget(self, action: #selector(sendClue), for: .touchUpInside)
         return sendButton1
@@ -64,6 +65,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     lazy var sendButton2: UIButton = {
         let sendButton2 = UIButton()
         sendButton2.setBackgroundImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        sendButton2.setBackgroundImage(UIImage(systemName: "paperplane"), for: .highlighted)
         sendButton2.tintColor = .B4
         sendButton2.addTarget(self, action: #selector(sendMesssge), for: .touchUpInside)
         return sendButton2
@@ -247,6 +249,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     }
     @objc func sendClue() {
+        vibrate()
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
@@ -263,6 +266,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     }
     @objc func sendMesssge() {
+        vibrate()
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
@@ -355,11 +359,9 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             speakButton1.isHidden = false
             sendButton2.isHidden = true
             speakButton2.isHidden = true
-            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            vibrateHard()
         } else {
-            let vibrateGenerator = UIImpactFeedbackGenerator(style: .heavy)
-            vibrateGenerator.prepare()
-            vibrateGenerator.impactOccurred()
+            vibrate()
             sendButton2.isHidden = false
             speakButton2.isHidden = false
             sendButton1.isHidden = true
@@ -382,6 +384,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }
     // MARK: - Audio Record
     @objc func recordAudioClue() {
+        vibrate()
         changeButtonStyle()
         if audioEngine.isRunning {
             audioEngine.stop()
