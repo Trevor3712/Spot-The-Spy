@@ -81,25 +81,16 @@ class LoginViewController: BaseViewController {
     }()
     lazy var loginButton: BaseButton = {
         let loginButton = BaseButton()
-        loginButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "登入",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 3), for: .normal)
-        loginButton.titleLabel?.textAlignment = .center
+        loginButton.setNormal("登入")
+        loginButton.setHighlighted("登入")
+        loginButton.setTitleColor(.B4, for: .highlighted)
         loginButton.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
         return loginButton
     }()
     lazy var signupButton: BaseButton = {
         let signupButton = BaseButton()
-        signupButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "註冊",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 3), for: .normal)
-        signupButton.titleLabel?.textAlignment = .center
+        signupButton.setNormal("註冊")
+        signupButton.setHighlighted("註冊")
         signupButton.addTarget(self, action: #selector(signupButtonPressed), for: .touchUpInside)
         return signupButton
     }()
@@ -161,6 +152,7 @@ class LoginViewController: BaseViewController {
         }
     }
     @objc func logInButtonPressed(_ sender: UIButton) {
+        vibrate()
         Auth.auth().signIn(
             withEmail: accountTextFileld.text ?? "",
             password: passwordTextFileld.text ?? "")
@@ -181,6 +173,7 @@ class LoginViewController: BaseViewController {
         }
     }
     @objc func signupButtonPressed() {
+        vibrate()
         let signupVC = SignupViewController()
         navigationController?.pushViewController(signupVC, animated: true)
     }

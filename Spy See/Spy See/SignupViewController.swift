@@ -95,13 +95,8 @@ class SignupViewController: BaseViewController {
     }()
     lazy var signupButton: BaseButton = {
         let signupButton = BaseButton()
-        signupButton.setAttributedTitle(UIFont.fontStyle(
-                font: .semibold,
-                title: "確定註冊",
-                size: 20,
-                textColor: .B2 ?? .black,
-                letterSpacing: 3), for: .normal)
-        signupButton.titleLabel?.textAlignment = .center
+        signupButton.setNormal("確定註冊")
+        signupButton.setHighlighted("確定註冊")
         signupButton.addTarget(self, action: #selector(signupButtonPressed), for: .touchUpInside)
         return signupButton
     }()
@@ -155,6 +150,7 @@ class SignupViewController: BaseViewController {
         }
     }
     @objc func signupButtonPressed() {
+        vibrate()
         guard let account = accountTextField.text, !account.isEmpty, account != "請輸入你的e-mail",
                 let password = passwordTextField.text, !password.isEmpty, password != "請輸入至少６位數密碼",
                 let name = nameTextField.text, !name.isEmpty, name != "暱稱之後可在個人頁面更改"

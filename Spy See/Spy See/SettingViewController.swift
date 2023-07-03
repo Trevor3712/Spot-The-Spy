@@ -66,13 +66,8 @@ class SettingViewController: BaseViewController {
     }()
     lazy var invitationButton: BaseButton = {
         let invitationButton = BaseButton()
-        invitationButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "取得邀請碼",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 5), for: .normal)
-        invitationButton.titleLabel?.textAlignment = .center
+        invitationButton.setNormal("取得邀請碼")
+        invitationButton.setHighlighted("取得邀請碼")
         invitationButton.addTarget(self, action: #selector(invitationButtonPressed), for: .touchUpInside)
         return invitationButton
     }()
@@ -84,6 +79,7 @@ class SettingViewController: BaseViewController {
     var shuffledIndices: [Int] = []
     var choosedPrompt: ([String], [String]) = ([], [])
     var userName: String?
+    let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         [
@@ -129,14 +125,17 @@ class SettingViewController: BaseViewController {
         getUserName()
     }
     @objc func invitationButtonPressed(_ sender: UIButton) {
+        vibrate()
+        guard let playersCount = playersCountTextFileld.text, !playersCount.isEmpty, playersCount != "玩家人數",
+              let spysCount = spysCountTextFileld.text, !spysCount.isEmpty, spysCount != "臥底人數" else {
+            let alert = alertVC.showAlert(title: "設定錯誤", message: "請選擇玩家人數、臥底人數")
+            present(alert, animated: true, completion: nil)
+            return
+        }
         let room = dataBase.collection("Rooms")
         let roomId = generateRoomId()
         UserDefaults.standard.setValue(roomId, forKey: "roomId")
         let documentRef = room.document(roomId)
-//        guard let email = Auth.auth().currentUser?.email else {
-//            print("Email is missing")
-//            return
-//        }
         guard let name = self.userName else {
             print("Name is missing")
             return

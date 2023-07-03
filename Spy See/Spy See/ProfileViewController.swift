@@ -43,25 +43,15 @@ class ProfileViewController: BaseViewController {
     }()
     lazy var logoutButton: BaseButton = {
         let logoutButton = BaseButton()
-        logoutButton.setAttributedTitle(UIFont.fontStyle(
-                font: .semibold,
-                title: "登出帳號",
-                size: 20,
-                textColor: .B2 ?? .black,
-                letterSpacing: 3), for: .normal)
-        logoutButton.titleLabel?.textAlignment = .center
+        logoutButton.setNormal("登出帳號")
+        logoutButton.setHighlighted("登出帳號")
         logoutButton.addTarget(self, action: #selector(logoutButtonPressed), for: .touchUpInside)
         return logoutButton
     }()
     lazy var deleteButton: BaseButton = {
         let deleteButton = BaseButton()
-        deleteButton.setAttributedTitle(UIFont.fontStyle(
-                font: .semibold,
-                title: "刪除帳號",
-                size: 20,
-                textColor: .B2 ?? .black,
-                letterSpacing: 3), for: .normal)
-        deleteButton.titleLabel?.textAlignment = .center
+        deleteButton.setNormal("刪除帳號")
+        deleteButton.setHighlighted("刪除帳號")
         deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
         return deleteButton
     }()
@@ -146,6 +136,7 @@ class ProfileViewController: BaseViewController {
         }
     }
     @objc func deleteButtonPressed() {
+        vibrate()
         let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要刪除帳號嗎？", confirmCompletion: {
             self.deleteAuthData()
             self.deleteStoreData()
@@ -154,6 +145,7 @@ class ProfileViewController: BaseViewController {
         present(alert, animated: true)
     }
     @objc func logoutButtonPressed() {
+        vibrate()
         let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要登出帳號嗎？", confirmCompletion: {
             UserDefaults.standard.removeObject(forKey: "userEmail")
             self.navigationController?.popToRootViewController(animated: true)

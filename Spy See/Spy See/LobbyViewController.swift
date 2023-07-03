@@ -17,13 +17,8 @@ class LobbyViewController: BaseViewController {
     }()
     lazy var createRoomButton: BaseButton = {
         let createRoomButton = BaseButton()
-        createRoomButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "建立遊戲",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 5), for: .normal)
-        createRoomButton.titleLabel?.textAlignment = .center
+        createRoomButton.setNormal("建立遊戲")
+        createRoomButton.setHighlighted("建立遊戲")
         createRoomButton.addTarget(self, action: #selector(createRoomButtonPressed), for: .touchUpInside)
         return createRoomButton
     }()
@@ -45,18 +40,14 @@ class LobbyViewController: BaseViewController {
     }()
     lazy var goButton: BaseButton = {
         let goButton = BaseButton()
-        goButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "GO!",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 5), for: .normal)
-        goButton.titleLabel?.textAlignment = .center
+        goButton.setNormal("GO!")
+        goButton.setHighlighted("GO!")
         goButton.addTarget(self, action: #selector(goButtonPressed), for: .touchUpInside)
         return goButton
     }()
     let dataBase = Firestore.firestore()
     var userName: String?
+    let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         [
@@ -99,10 +90,17 @@ class LobbyViewController: BaseViewController {
         getUserName()
     }
     @objc func createRoomButtonPressed() {
+        vibrate()
         let settingVC = SettingViewController()
         navigationController?.pushViewController(settingVC, animated: true)
     }
     @objc func goButtonPressed() {
+        vibrate()
+        guard let invitationText = invitationTextFileld.text, !invitationText.isEmpty, invitationText != "請輸入邀請碼" else {
+            let alert = alertVC.showAlert(title: "輸入錯誤", message: "請輸入邀請碼")
+            present(alert, animated: true)
+            return
+        }
         let room = dataBase.collection("Rooms")
         let documentRef = room.document(invitationTextFileld.text ?? "")
         UserDefaults.standard.setValue(invitationTextFileld.text, forKey: "roomId")
@@ -141,6 +139,8 @@ class LobbyViewController: BaseViewController {
                     }
                 }
             } else {
+                let alert = self.alertVC.showAlert(title: "輸入錯誤", message: "查無此邀請碼")
+                self.present(alert, animated: true)
                 print("Document does not exist or there was an error: \(error?.localizedDescription ?? "")")
             }
         }

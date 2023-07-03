@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import IQKeyboardManager
+import AudioToolbox
 
 class BaseViewController: UIViewController {
     var isHideNavigationBar: Bool {
@@ -57,5 +58,10 @@ class BaseViewController: UIViewController {
         backgroundImageView.snp.makeConstraints { make in
             make.edges.equalTo(view).inset(UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         }
+    }
+    func vibrate() {
+        let vibrateGenerator = UIImpactFeedbackGenerator(style: .heavy)
+        vibrateGenerator.prepare()
+        vibrateGenerator.impactOccurred()
     }
 }
