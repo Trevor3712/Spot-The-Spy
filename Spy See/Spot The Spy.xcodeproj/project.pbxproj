@@ -510,7 +510,7 @@
 				DEVELOPMENT_TEAM = TC57AN3V9C;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Spy See/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "誰是臥底線上版 - Spot The Spy";
+				INFOPLIST_KEY_CFBundleDisplayName = "Spot The Spy";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.role-playing-games";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "當你按下「Speak」，我們將使用麥克風進行錄音。";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "當你對著麥克風說話時，我們將進行語音識別。";
@@ -544,7 +544,7 @@
 				DEVELOPMENT_TEAM = TC57AN3V9C;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Spy See/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "誰是臥底線上版 - Spot The Spy";
+				INFOPLIST_KEY_CFBundleDisplayName = "Spot The Spy";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.role-playing-games";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "當你按下「Speak」，我們將使用麥克風進行錄音。";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "當你對著麥克風說話時，我們將進行語音識別。";

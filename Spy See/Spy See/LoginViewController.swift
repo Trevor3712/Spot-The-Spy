@@ -15,6 +15,7 @@ class LoginViewController: BaseViewController {
         logoImage.image = .asset(.spy)
         return logoImage
     }()
+    lazy var titleContainerView = UIView()
     lazy var labelCN1: UILabel = {
         let labelCN1 = UILabel()
         labelCN1.attributedText = UIFont.fontStyle(
@@ -67,6 +68,7 @@ class LoginViewController: BaseViewController {
             letterSpacing: 10)
         return labelEN3
     }()
+    lazy var accountContainerView = UIView()
     lazy var accountTextField: BaseTextField = {
         let accountTextField = BaseTextField()
         accountTextField.placeholder = "請輸入帳號"
@@ -104,38 +106,47 @@ class LoginViewController: BaseViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        [logoImage,
-         labelCN1, labelCN2, labelEN1, labelEN2, labelEN3,
-         accountTextField, passwordTextField,
-         loginButton, signupButton].forEach { view.addSubview($0) }
+        [logoImage,titleContainerView, accountContainerView].forEach { view.addSubview($0) }
+        [labelCN1, labelCN2, labelEN1, labelEN2, labelEN3].forEach { titleContainerView.addSubview($0) }
+        [accountTextField, passwordTextField,
+         loginButton, signupButton].forEach { accountContainerView.addSubview($0) }
         logoImage.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(120)
+            make.bottom.equalTo(titleContainerView.snp.top).offset(-50)
             make.centerX.equalTo(view)
-            make.width.equalTo(130)
-            make.height.equalTo(130)
+            make.width.equalTo(150)
+            make.height.equalTo(150)
+        }
+        titleContainerView.snp.makeConstraints { make in
+            make.centerX.centerY.left.right.equalTo(view)
+            make.height.equalTo(200)
         }
         labelCN1.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(300)
-            make.left.equalTo(view).offset(125)
+            make.top.equalTo(titleContainerView)
+            make.right.equalTo(titleContainerView.snp.centerX).offset(12)
         }
         labelCN2.snp.makeConstraints { make in
             make.top.equalTo(labelCN1.snp.bottom)
-            make.right.equalTo(view).offset(-30)
+            make.left.equalTo(titleContainerView.snp.centerX).offset(24)
         }
         labelEN1.snp.makeConstraints { make in
             make.top.equalTo(labelCN1.snp.bottom)
-            make.left.equalTo(view).offset(80)
+            make.right.equalTo(titleContainerView.snp.centerX).offset(-12)
         }
         labelEN2.snp.makeConstraints { make in
             make.top.equalTo(labelEN1.snp.bottom)
-            make.left.equalTo(view).offset(125)
+            make.right.equalTo(titleContainerView.snp.centerX).offset(-36)
         }
         labelEN3.snp.makeConstraints { make in
             make.top.equalTo(labelCN2.snp.bottom)
-            make.right.equalTo(view).offset(-90)
+            make.left.equalTo(titleContainerView.snp.centerX)
+        }
+        accountContainerView.snp.makeConstraints { make in
+            make.left.right.equalTo(view)
+            make.top.lessThanOrEqualTo(titleContainerView.snp.bottom).offset(50)
+            make.height.equalTo(200)
         }
         accountTextField.snp.makeConstraints { make in
-            make.top.equalTo(labelEN3.snp.bottom).offset(12)
+            make.top.equalTo(accountContainerView)
             make.centerX.equalTo(view)
             make.width.equalTo(260)
             make.height.equalTo(40)
