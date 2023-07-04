@@ -33,7 +33,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     if page == "lobby" {
                         let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController") as? UITabBarController
                         let lobbyVC = tabBarVC?.viewControllers?.first as? LobbyViewController
-                        lobbyVC?.invitationTextFileld.text = roomId
+                        lobbyVC?.invitationTextFileld.attributedText = UIFont.fontStyle(
+                            font: .regular,
+                            title: roomId ?? "",
+                            size: 20,
+                            textColor: .B2 ?? .black,
+                            letterSpacing: 3)
                         navigationController.pushViewController(tabBarVC!, animated: true)
                         window?.makeKeyAndVisible()
                     }

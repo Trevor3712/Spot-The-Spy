@@ -202,6 +202,7 @@ class SignupViewController: BaseViewController {
 }
 extension SignupViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        vibrate()
         if textField.tag == 1 {
             accountTextField.text = ""
         } else if textField.tag == 2 {

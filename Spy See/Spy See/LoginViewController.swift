@@ -71,12 +71,17 @@ class LoginViewController: BaseViewController {
         let accountTextFileld = BaseTextField()
         accountTextFileld.placeholder = "請輸入帳號"
         accountTextFileld.text = "1@1.com"
+        accountTextFileld.delegate = self
+        accountTextFileld.tag = 1
         return accountTextFileld
     }()
     lazy var passwordTextFileld: BaseTextField = {
         let passwordTextFileld = BaseTextField()
         passwordTextFileld.placeholder = "請輸入密碼"
         passwordTextFileld.text = "123456"
+        passwordTextFileld.isSecureTextEntry = true
+        passwordTextFileld.delegate = self
+        passwordTextFileld.tag = 2
         return passwordTextFileld
     }()
     lazy var loginButton: BaseButton = {
@@ -155,8 +160,7 @@ class LoginViewController: BaseViewController {
         vibrate()
         Auth.auth().signIn(
             withEmail: accountTextFileld.text ?? "",
-            password: passwordTextFileld.text ?? "")
-        { _, error in
+            password: passwordTextFileld.text ?? "") { _, error in
             guard error == nil else {
                 let alertVC = AlertViewController()
                 let alert = alertVC.showAlert(title: "登入錯誤", message: error?.localizedDescription ?? "")
@@ -176,5 +180,36 @@ class LoginViewController: BaseViewController {
         vibrate()
         let signupVC = SignupViewController()
         navigationController?.pushViewController(signupVC, animated: true)
+    }
+}
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        vibrate()
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.tag == 1 {
+            guard let enteredText = accountTextFileld.text else {
+                return
+            }
+            let styledText = UIFont.fontStyle(
+                font: .regular,
+                title: enteredText,
+                size: 15,
+                textColor: .B2 ?? .black,
+                letterSpacing: 3)
+            accountTextFileld.attributedText = styledText
+        } else {
+            guard let enteredText = passwordTextFileld.text else {
+                return
+            }
+            let styledText = UIFont.fontStyle(
+                font: .regular,
+                title: enteredText,
+                size: 15,
+                textColor: .B2 ?? .black,
+                letterSpacing: 3)
+            passwordTextFileld.attributedText = styledText
+        }
+        
     }
 }

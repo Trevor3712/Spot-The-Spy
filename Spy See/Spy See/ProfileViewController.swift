@@ -179,6 +179,7 @@ class ProfileViewController: BaseViewController {
 }
 extension ProfileViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        vibrate()
         nameTextField.text = ""
     }
     func textFieldDidEndEditing(_ textField: UITextField) {

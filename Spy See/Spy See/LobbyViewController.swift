@@ -36,6 +36,7 @@ class LobbyViewController: BaseViewController {
         let invitationTextFileld = BaseTextField()
         invitationTextFileld.placeholder = "請輸入邀請碼"
         invitationTextFileld.textAlignment = .center
+        invitationTextFileld.delegate = self
         return invitationTextFileld
     }()
     lazy var goButton: BaseButton = {
@@ -51,12 +52,11 @@ class LobbyViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.navigationItem.hidesBackButton = true
-        [
-            logoImage,
-            createRoomButton,
-            joinLabel,
-            invitationTextFileld,
-            goButton].forEach { view.addSubview($0) }
+        [logoImage,
+         createRoomButton,
+         joinLabel,
+         invitationTextFileld,
+         goButton].forEach { view.addSubview($0) }
         logoImage.snp.makeConstraints { make in
             make.top.equalTo(view).offset(200)
             make.left.equalTo(view).offset(50)
@@ -175,5 +175,22 @@ class LobbyViewController: BaseViewController {
                 print("Failed to retrieve player index: \(error?.localizedDescription ?? "")")
             }
         }
+    }
+}
+extension LobbyViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        vibrate()
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let enteredText = invitationTextFileld.text else {
+            return
+        }
+        let styledText = UIFont.fontStyle(
+            font: .regular,
+            title: enteredText,
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 3)
+        invitationTextFileld.attributedText = styledText
     }
 }
