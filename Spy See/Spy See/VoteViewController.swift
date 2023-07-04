@@ -64,6 +64,12 @@ class VoteViewController: BaseViewController {
     }
     @objc func voteButtonPressed() {
         vibrate()
+        guard let voted = votedPlayer else {
+            let alertVC = AlertViewController()
+            let alert = alertVC.showAlert(title: "投票錯誤", message: "請選擇你想殺死的玩家")
+            present(alert, animated: true)
+            return
+        }
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
