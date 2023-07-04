@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Spy See.xcodeproj">
+      location = "group:/Users/yangchewei/Documents/0_AppWorksSchool/Spy-See/Spy See/Spot The Spy.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

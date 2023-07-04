@@ -67,22 +67,25 @@ class LoginViewController: BaseViewController {
             letterSpacing: 10)
         return labelEN3
     }()
-    lazy var accountTextFileld: BaseTextField = {
-        let accountTextFileld = BaseTextField()
-        accountTextFileld.placeholder = "請輸入帳號"
-        accountTextFileld.text = "1@1.com"
-        accountTextFileld.delegate = self
-        accountTextFileld.tag = 1
-        return accountTextFileld
+    lazy var accountTextField: BaseTextField = {
+        let accountTextField = BaseTextField()
+        accountTextField.placeholder = "請輸入帳號"
+        accountTextField.text = "1@1.com"
+        accountTextField.keyboardType = .emailAddress
+        accountTextField.autocorrectionType = .no
+        accountTextField.delegate = self
+        accountTextField.tag = 1
+        return accountTextField
     }()
-    lazy var passwordTextFileld: BaseTextField = {
-        let passwordTextFileld = BaseTextField()
-        passwordTextFileld.placeholder = "請輸入密碼"
-        passwordTextFileld.text = "123456"
-        passwordTextFileld.isSecureTextEntry = true
-        passwordTextFileld.delegate = self
-        passwordTextFileld.tag = 2
-        return passwordTextFileld
+    lazy var passwordTextField: BaseTextField = {
+        let passwordTextField = BaseTextField()
+        passwordTextField.placeholder = "請輸入密碼"
+        passwordTextField.text = "123456"
+        passwordTextField.isSecureTextEntry = true
+        passwordTextField.autocorrectionType = .no
+        passwordTextField.delegate = self
+        passwordTextField.tag = 2
+        return passwordTextField
     }()
     lazy var loginButton: BaseButton = {
         let loginButton = BaseButton()
@@ -103,7 +106,7 @@ class LoginViewController: BaseViewController {
         super.viewDidLoad()
         [logoImage,
          labelCN1, labelCN2, labelEN1, labelEN2, labelEN3,
-         accountTextFileld, passwordTextFileld,
+         accountTextField, passwordTextField,
          loginButton, signupButton].forEach { view.addSubview($0) }
         logoImage.snp.makeConstraints { make in
             make.top.equalTo(view).offset(120)
@@ -131,27 +134,27 @@ class LoginViewController: BaseViewController {
             make.top.equalTo(labelCN2.snp.bottom)
             make.right.equalTo(view).offset(-90)
         }
-        accountTextFileld.snp.makeConstraints { make in
+        accountTextField.snp.makeConstraints { make in
             make.top.equalTo(labelEN3.snp.bottom).offset(12)
             make.centerX.equalTo(view)
             make.width.equalTo(260)
             make.height.equalTo(40)
         }
-        passwordTextFileld.snp.makeConstraints { make in
-            make.top.equalTo(accountTextFileld.snp.bottom).offset(30)
+        passwordTextField.snp.makeConstraints { make in
+            make.top.equalTo(accountTextField.snp.bottom).offset(30)
             make.centerX.equalTo(view)
             make.width.equalTo(260)
             make.height.equalTo(40)
         }
         loginButton.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextFileld.snp.bottom).offset(30)
-            make.left.equalTo(passwordTextFileld)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(30)
+            make.left.equalTo(passwordTextField)
             make.width.equalTo(115)
             make.height.equalTo(40)
         }
         signupButton.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextFileld.snp.bottom).offset(30)
-            make.right.equalTo(passwordTextFileld)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(30)
+            make.right.equalTo(passwordTextField)
             make.width.equalTo(115)
             make.height.equalTo(40)
         }
@@ -159,8 +162,8 @@ class LoginViewController: BaseViewController {
     @objc func logInButtonPressed(_ sender: UIButton) {
         vibrate()
         Auth.auth().signIn(
-            withEmail: accountTextFileld.text ?? "",
-            password: passwordTextFileld.text ?? "") { _, error in
+            withEmail: accountTextField.text ?? "",
+            password: passwordTextField.text ?? "") { _, error in
             guard error == nil else {
                 let alertVC = AlertViewController()
                 let alert = alertVC.showAlert(title: "登入錯誤", message: error?.localizedDescription ?? "")
@@ -168,7 +171,6 @@ class LoginViewController: BaseViewController {
                 print(error?.localizedDescription ?? "")
                 return
             }
-            print("\(self.accountTextFileld.text ?? "") log in")
             guard let tabBarController = self.storyboard?.instantiateViewController(withIdentifier: "TabBarController") as? UITabBarController else {
                 return
             }
@@ -188,7 +190,7 @@ extension LoginViewController: UITextFieldDelegate {
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.tag == 1 {
-            guard let enteredText = accountTextFileld.text else {
+            guard let enteredText = accountTextField.text else {
                 return
             }
             let styledText = UIFont.fontStyle(
@@ -197,9 +199,9 @@ extension LoginViewController: UITextFieldDelegate {
                 size: 15,
                 textColor: .B2 ?? .black,
                 letterSpacing: 3)
-            accountTextFileld.attributedText = styledText
+            accountTextField.attributedText = styledText
         } else {
-            guard let enteredText = passwordTextFileld.text else {
+            guard let enteredText = passwordTextField.text else {
                 return
             }
             let styledText = UIFont.fontStyle(
@@ -208,8 +210,7 @@ extension LoginViewController: UITextFieldDelegate {
                 size: 15,
                 textColor: .B2 ?? .black,
                 letterSpacing: 3)
-            passwordTextFileld.attributedText = styledText
+            passwordTextField.attributedText = styledText
         }
-        
     }
 }

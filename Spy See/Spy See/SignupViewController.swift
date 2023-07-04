@@ -41,6 +41,8 @@ class SignupViewController: BaseViewController {
             textColor: .B3 ?? .black,
             letterSpacing: 3)
         accountTextField.textAlignment = .center
+        accountTextField.keyboardType = .emailAddress
+        accountTextField.autocorrectionType = .no
         accountTextField.delegate = self
         accountTextField.tag = 1
         return accountTextField
@@ -65,6 +67,8 @@ class SignupViewController: BaseViewController {
             textColor: .B3 ?? .black,
             letterSpacing: 3)
         passwordTextField.textAlignment = .center
+        passwordTextField.keyboardType = .emailAddress
+        passwordTextField.autocorrectionType = .no
         passwordTextField.delegate = self
         passwordTextField.tag = 2
         return passwordTextField

@@ -35,6 +35,8 @@ class LobbyViewController: BaseViewController {
     lazy var invitationTextFileld: BaseTextField = {
         let invitationTextFileld = BaseTextField()
         invitationTextFileld.placeholder = "請輸入邀請碼"
+        invitationTextFileld.keyboardType = .asciiCapable
+        invitationTextFileld.autocorrectionType = .no
         invitationTextFileld.textAlignment = .center
         invitationTextFileld.delegate = self
         return invitationTextFileld

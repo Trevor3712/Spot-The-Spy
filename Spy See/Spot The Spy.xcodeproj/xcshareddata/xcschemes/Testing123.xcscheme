@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B5D2B09A2A39C8E800ED3516"
-               BuildableName = "Spy See.app"
-               BlueprintName = "Spy See"
-               ReferencedContainer = "container:Spy See.xcodeproj">
+               BuildableName = "Spot The Spy.app"
+               BlueprintName = "Spot The Spy"
+               ReferencedContainer = "container:Spot The Spy.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B5D2B09A2A39C8E800ED3516"
-            BuildableName = "Spy See.app"
-            BlueprintName = "Spy See"
-            ReferencedContainer = "container:Spy See.xcodeproj">
+            BuildableName = "Spot The Spy.app"
+            BlueprintName = "Spot The Spy"
+            ReferencedContainer = "container:Spot The Spy.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B5D2B09A2A39C8E800ED3516"
-            BuildableName = "Spy See.app"
-            BlueprintName = "Spy See"
-            ReferencedContainer = "container:Spy See.xcodeproj">
+            BuildableName = "Spot The Spy.app"
+            BlueprintName = "Spot The Spy"
+            ReferencedContainer = "container:Spot The Spy.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
