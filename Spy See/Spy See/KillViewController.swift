@@ -20,6 +20,16 @@ class KillViewController: BaseViewController {
             letterSpacing: 5)
         return waitLabel
     }()
+    lazy var containerView: UIView = {
+        let containerView = UIView()
+        containerView.backgroundColor = .white
+        containerView.layer.borderWidth = 1
+        containerView.layer.borderColor = UIColor.B1?.cgColor
+        containerView.layer.cornerRadius = 20
+        containerView.clipsToBounds = true
+        containerView.isHidden = true
+        return containerView
+    }()
     lazy var votedLabel: UILabel = {
         let votedLabel = UILabel()
         return votedLabel
@@ -47,19 +57,12 @@ class KillViewController: BaseViewController {
     }()
     lazy var nextRoundButton: BaseButton = {
         let nextRoundButton = BaseButton()
-        nextRoundButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "下一輪",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 3), for: .normal)
-        nextRoundButton.titleLabel?.textAlignment = .center
+        nextRoundButton.setNormal("下一輪")
+        nextRoundButton.setHighlighted("下一輪")
         nextRoundButton.isHidden = true
         nextRoundButton.addTarget(self, action: #selector(nextRoundButtonPressed), for: .touchUpInside)
         return nextRoundButton
     }()
-    
-    
     let dataBase = Firestore.firestore()
     var votedArray: [[String: String]] = []
     var identitiesArray: [String] = []
@@ -70,7 +73,8 @@ class KillViewController: BaseViewController {
     let currentUser = Auth.auth().currentUser?.email ?? ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        [waitLabel, votedLabel, killLabel, identityImageView, identityLabel, nextRoundButton].forEach { view.addSubview($0) }
+        [waitLabel, containerView, identityImageView, nextRoundButton].forEach { view.addSubview($0) }
+        [votedLabel, killLabel, identityLabel].forEach { containerView.addSubview($0) }
         waitLabel.snp.makeConstraints { make in
             make.top.equalTo(view).offset(100)
             make.centerX.equalTo(view)
@@ -81,20 +85,26 @@ class KillViewController: BaseViewController {
             make.width.equalTo(150)
             make.height.equalTo(150)
         }
-        votedLabel.snp.makeConstraints { make in
+        containerView.snp.makeConstraints { make in
             make.top.equalTo(identityImageView.snp.bottom).offset(30)
             make.centerX.equalTo(view)
+            make.width.equalTo(350)
+            make.height.equalTo(220)
+        }
+        votedLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(killLabel.snp.top).offset(-12)
+            make.centerX.equalTo(containerView)
         }
         killLabel.snp.makeConstraints { make in
-            make.top.equalTo(votedLabel.snp.bottom).offset(10)
-            make.centerX.equalTo(view)
+            make.centerY.equalTo(containerView)
+            make.centerX.equalTo(containerView)
         }
         identityLabel.snp.makeConstraints { make in
-            make.top.equalTo(killLabel.snp.bottom).offset(30)
-            make.centerX.equalTo(view)
+            make.top.equalTo(killLabel.snp.bottom).offset(12)
+            make.centerX.equalTo(containerView)
         }
         nextRoundButton.snp.makeConstraints { make in
-            make.top.equalTo(identityLabel.snp.bottom).offset(50)
+            make.top.equalTo(containerView.snp.bottom).offset(50)
             make.centerX.equalTo(view)
             make.width.equalTo(115)
             make.height.equalTo(40)
@@ -175,6 +185,7 @@ class KillViewController: BaseViewController {
                 if let index = players?.firstIndex(of: mostFrequentValue) {
                     arrayIndex = index
                     print("mostFrequentValue: \(mostFrequentValue), index: \(index)")
+                    containerView.isHidden = false
                     identityImageView.isHidden = false
                     nextRoundButton.isHidden = false
                     killLabel.isHidden = false
@@ -196,6 +207,7 @@ class KillViewController: BaseViewController {
         }
     }
     @objc func nextRoundButtonPressed() {
+        vibrate()
         self.playersArray.remove(at: arrayIndex ?? 0)
         self.identitiesArray.remove(at: arrayIndex ?? 0)
         self.votedArray.removeAll()
@@ -215,7 +227,9 @@ class KillViewController: BaseViewController {
             updateWinMessage(true)
         } else {
             print("繼續下一輪")
-            let currentUser = Auth.auth().currentUser?.email ?? ""
+            let currentUser = UserDefaults.standard.string(forKey: "userName") ?? ""
+            print("currentUser:\(currentUser)")
+            print("playersArray: \(playersArray)")
             if playersArray.contains(currentUser) {
                 let waitForNextVC = WaitForNextViewController()
                 navigationController?.pushViewController(waitForNextVC, animated: true)

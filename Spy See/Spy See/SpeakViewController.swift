@@ -11,6 +11,7 @@ import FirebaseFirestore
 import FirebaseStorage
 import AVFoundation
 import Speech
+import AudioToolbox
 // swiftlint:disable type_body_length
 class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     lazy var playerLabel: UILabel = {
@@ -29,6 +30,9 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }()
     lazy var clueTableView: BaseMessageTableView = {
         let clueTableView = BaseMessageTableView()
+        clueTableView.layer.borderColor = UIColor.white.cgColor
+        clueTableView.backgroundColor = .B1
+        clueTableView.register(MessageHeaderView.self, forHeaderFooterViewReuseIdentifier: MessageHeaderView.reuseIdentifier)
         clueTableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseIdentifier)
         clueTableView.dataSource = self
         clueTableView.delegate = self
@@ -37,34 +41,30 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }()
     lazy var messageTableView: BaseMessageTableView = {
         let messageTableView = BaseMessageTableView()
+        messageTableView.register(MessageHeaderView.self, forHeaderFooterViewReuseIdentifier: MessageHeaderView.reuseIdentifier)
         messageTableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseIdentifier)
         messageTableView.dataSource = self
         messageTableView.delegate = self
         messageTableView.tag = 2
         return messageTableView
     }()
-    lazy var clueTextField: BaseTextField = {
-        let clueTextField = BaseTextField()
-        clueTextField.placeholder = "線索輸入區"
-        clueTextField.backgroundColor = .B3
-        return clueTextField
-    }()
     lazy var messageTextField: BaseTextField = {
         let messageTextField = BaseTextField()
         messageTextField.placeholder = "討論輸入區"
-        messageTextField.backgroundColor = .B3
         return messageTextField
     }()
     lazy var sendButton1: UIButton = {
         let sendButton1 = UIButton()
-        sendButton1.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        sendButton1.setBackgroundImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        sendButton1.setBackgroundImage(UIImage(systemName: "paperplane"), for: .highlighted)
         sendButton1.tintColor = .B4
         sendButton1.addTarget(self, action: #selector(sendClue), for: .touchUpInside)
         return sendButton1
     }()
     lazy var sendButton2: UIButton = {
         let sendButton2 = UIButton()
-        sendButton2.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        sendButton2.setBackgroundImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        sendButton2.setBackgroundImage(UIImage(systemName: "paperplane"), for: .highlighted)
         sendButton2.tintColor = .B4
         sendButton2.addTarget(self, action: #selector(sendMesssge), for: .touchUpInside)
         return sendButton2
@@ -85,31 +85,45 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }()
     lazy var speakButton1: UIButton = {
         let speakButton1 = UIButton()
-        speakButton1.setImage(UIImage(systemName: "mic.fill"), for: .normal)
+        speakButton1.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
         speakButton1.tintColor = .B4
-        speakButton1.addTarget(self, action: #selector(speakButton1Pressed), for: .touchUpInside)
+        speakButton1.addTarget(self, action: #selector(recordAudioClue), for: .touchUpInside)
         return speakButton1
     }()
     lazy var speakButton2: UIButton = {
         let speakButton2 = UIButton()
-        speakButton2.setImage(UIImage(systemName: "mic.fill"), for: .normal)
+        speakButton2.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
         speakButton2.tintColor = .B4
-//        speakButton2.addTarget(self, action: #selector(speakButton2Pressed), for: .touchUpInside)
+        speakButton2.addTarget(self, action: #selector(recordAudioClue), for: .touchUpInside)
         return speakButton2
     }()
-    let currentUser = Auth.auth().currentUser?.email
+    lazy var remindLabel: UILabel = {
+        let remindLabel = UILabel()
+        remindLabel.attributedText = UIFont.fontStyle(
+            font: .light,
+            title: "＊點擊麥克風開始語音辨識，再次點擊停止辨識",
+            size: 15,
+            textColor: .B3 ?? .black,
+            letterSpacing: 0)
+        return remindLabel
+    }()
+    let userName = UserDefaults.standard.string(forKey: "userName")
     var players: [String] = []
     var currentPlayerIndex: Int = 0
     var timer: Timer?
     let dataBase = Firestore.firestore()
     var audioRecoder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
+    var player: AVPlayer?
     var fileName: String?
     var audioUrl: URL?
     var audioUrlFromFS: URL?
     var countdown = 10
     var clues: [String] = []
     var messages: [String] = []
+    var listener: ListenerRegistration?
+    var isButtonPressed = false
+    let storage = Storage.storage()
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "zh-TW"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
@@ -118,10 +132,11 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         super.viewDidLoad()
         [playerLabel, speakLabel,
          clueTableView, messageTableView,
-         clueTextField, messageTextField,
+         messageTextField,
          sendButton1, sendButton2,
          progressView, timeImageView,
-         speakButton1, speakButton2].forEach { view.addSubview($0) }
+         speakButton1, speakButton2,
+        remindLabel].forEach { view.addSubview($0) }
         playerLabel.snp.makeConstraints { make in
             make.top.equalTo(view).offset(60)
             make.centerX.equalTo(view)
@@ -135,25 +150,14 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             make.left.right.equalTo(view).inset(30)
             make.height.equalTo(240)
         }
-        clueTextField.snp.makeConstraints { make in
-            make.top.equalTo(clueTableView.snp.bottom).offset(12)
-            make.left.equalTo(clueTableView)
-            make.width.equalTo(250)
-            make.height.equalTo(40)
-        }
-        sendButton1.snp.makeConstraints { make in
-            make.centerY.equalTo(clueTextField)
-            make.left.equalTo(clueTextField.snp.right).offset(12)
-            make.width.height.equalTo(40)
-        }
-        speakButton1.snp.makeConstraints { make in
-            make.centerY.equalTo(sendButton1)
-            make.left.equalTo(sendButton1.snp.right).offset(12)
-            make.width.height.equalTo(40)
+        messageTableView.snp.makeConstraints { make in
+            make.top.equalTo(clueTableView.snp.bottom).offset(24)
+            make.left.right.equalTo(view).inset(30)
+            make.height.equalTo(240)
         }
         progressView.snp.makeConstraints { make in
-            make.top.equalTo(clueTextField.snp.bottom).offset(24)
-            make.left.equalTo(clueTextField)
+            make.top.equalTo(messageTableView.snp.bottom).offset(24)
+            make.left.equalTo(messageTableView)
             make.width.equalTo(280)
             make.height.equalTo(12)
         }
@@ -162,50 +166,67 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             make.centerX.equalTo(speakButton1)
             make.width.height.equalTo(24)
         }
-        messageTableView.snp.makeConstraints { make in
-            make.top.equalTo(progressView.snp.bottom).offset(24)
-            make.left.right.equalTo(view).inset(30)
-            make.height.equalTo(240)
-        }
         messageTextField.snp.makeConstraints { make in
-            make.top.equalTo(messageTableView.snp.bottom).offset(12)
-            make.left.equalTo(messageTableView)
+            make.top.equalTo(progressView.snp.bottom).offset(24)
+            make.left.equalTo(progressView)
             make.width.equalTo(250)
             make.height.equalTo(40)
+        }
+        sendButton1.snp.makeConstraints { make in
+            make.centerY.equalTo(messageTextField)
+            make.left.equalTo(messageTextField.snp.right).offset(12)
+            make.width.height.equalTo(40)
+        }
+        speakButton1.snp.makeConstraints { make in
+            make.centerY.equalTo(sendButton1)
+            make.left.equalTo(sendButton1.snp.right).offset(8)
+            make.width.height.equalTo(40)
+        }
+        speakButton2.snp.makeConstraints { make in
+            make.centerY.equalTo(sendButton1)
+            make.left.equalTo(sendButton1.snp.right).offset(8)
+            make.width.height.equalTo(40)
         }
         sendButton2.snp.makeConstraints { make in
             make.centerY.equalTo(messageTextField)
             make.left.equalTo(messageTextField.snp.right).offset(12)
             make.width.height.equalTo(40)
-            make.width.height.equalTo(40)
         }
-        speakButton2.snp.makeConstraints { make in
-            make.centerY.equalTo(sendButton2)
-            make.left.equalTo(sendButton2.snp.right).offset(12)
+        remindLabel.snp.makeConstraints { make in
+            make.top.equalTo(messageTextField.snp.bottom).offset(12)
+            make.right.equalTo(speakButton2)
         }
-//        if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
-//            players = storedPlayers
-//        }
-//        showNextPrompt()
-        showClue()
         configRecordSession()
         speechAuth()
     }
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
             players = storedPlayers
         }
-        showNextPrompt()
-        print(players)
+        showClue()
+        showNextPlayer()
     }
-    func showNextPrompt() {
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        deleteMessage()
+        audioRecoder?.stop()
+        audioEngine.stop()
+        audioPlayer?.stop()
+    }
+    func showNextPlayer() {
         guard currentPlayerIndex < players.count else {
-            deleteMessage()
-            let voteVC = VoteViewController()
             currentPlayerIndex = 0
+            listener?.remove()
+            clues = []
+            messages = []
+            clueTableView.reloadData()
+            messageTableView.reloadData()
+            let voteVC = VoteViewController()
             navigationController?.pushViewController(voteVC, animated: true)
             return
         }
+        currentUserTurn()
         playerLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "\(players[currentPlayerIndex])",
@@ -213,7 +234,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             textColor: .B2 ?? .black,
             letterSpacing: 10)
         countdown = 10
-        progressView.setProgress(1, animated: false)
+        progressView.setProgress(1, animated: true)
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateProgress), userInfo: nil, repeats: true)
     }
     @objc func updateProgress() {
@@ -223,31 +244,33 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         if countdown <= 0 {
             timer?.invalidate()
             currentPlayerIndex += 1
-            showNextPrompt()
+            showNextPlayer()
         }
     }
     @objc func sendClue() {
+        vibrate()
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
         let data: [String: Any] = [
-            "clue": FieldValue.arrayUnion(["\(currentUser ?? "") : \(clueTextField.text ?? "")"])
+            "clue": FieldValue.arrayUnion(["\(userName ?? "") : \(messageTextField.text ?? "")"])
         ]
         documentRef.updateData(data) { error in
             if let error = error {
                 print("Error adding document: \(error)")
             } else {
                 print("Document added successfully")
-                self.clueTextField.text = ""
+                self.messageTextField.text = ""
             }
         }
     }
     @objc func sendMesssge() {
+        vibrate()
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
         let data: [String: Any] = [
-            "message": FieldValue.arrayUnion(["\(currentUser ?? "") : \(messageTextField.text ?? "")"])
+            "message": FieldValue.arrayUnion(["\(userName ?? "") : \(messageTextField.text ?? "")"])
         ]
         documentRef.updateData(data) { error in
             if let error = error {
@@ -262,58 +285,116 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
-        var existingClues: Set<String> = Set(self.clues)
-        var existingMessages: Set<String> = Set(self.clues)
-        documentRef.addSnapshotListener { (documentSnapshot, error) in
+        listener = documentRef.addSnapshotListener { (documentSnapshot, error) in
             if let error = error {
                 print(error)
                 return
             }
             guard let data = documentSnapshot?.data() else {
                 print("No data available")
+                self.clues = []
+                self.messages = []
+                self.clueTableView.reloadData()
+                self.messageTableView.reloadData()
                 return
             }
             if let clue = data["clue"] as? [String] {
                 self.clues = []
-                let newClues = clue.filter { !existingClues.contains($0) }
-                self.clues.append(contentsOf: newClues)
-                self.clueTableView.reloadData()
+                self.clues.append(contentsOf: clue)
+                if !self.clues.isEmpty {
+                    self.clueTableView.reloadData()
+                    let lastRow = self.clueTableView.numberOfRows(inSection: 0) - 1
+                    let indexPath = IndexPath(row: lastRow, section: 0)
+                    self.clueTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                }
             }
             if let message = data["message"] as? [String] {
                 self.messages = []
-                let newMessages = message.filter { !existingMessages.contains($0) }
-                self.messages.append(contentsOf: newMessages)
-                self.clueTableView.reloadData()
-                self.messageTableView.reloadData()
+                self.messages.append(contentsOf: message)
+                if !self.messages.isEmpty {
+                    self.messageTableView.reloadData()
+                    let lastRow = self.messageTableView.numberOfRows(inSection: 0) - 1
+                    let indexPath = IndexPath(row: lastRow, section: 0)
+                    self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                }
             }
-            if let audioClueString = data["audioClue"] as? String, let audioClue = URL(string: audioClueString) {
-                print("audio clue:\(audioClue)")
-                DispatchQueue.main.async {
-                    do {
-                        self.audioPlayer = try AVAudioPlayer(contentsOf: audioClue, fileTypeHint: AVFileType.m4a.rawValue)
-                        self.audioPlayer?.volume = 1.0
-                        self.audioPlayer?.prepareToPlay()
-                        self.audioPlayer?.play()
-                        print("play audio")
-                    } catch {
-                        print("Play error", error.localizedDescription)
-                        print("Play error: \(error)")
+            if let audioClueString = data["audioClue"] as? String {
+                print("audio clue:\(audioClueString)")
+                let fileReference = Storage.storage().reference().child("\(self.fileName ?? "").wav")
+                let fileManager = FileManager.default
+                let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+                let destinationURL = documentsDirectory?.appendingPathComponent("recording.wav")
+                fileReference.write(toFile: destinationURL!) { url, error in
+                    if let error = error {
+                        print(error)
+                    } else if let url = url {
+                        do {
+                            print("url:\(url)")
+                            self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+                            self.audioPlayer?.volume = 1.0
+                            self.audioPlayer?.prepareToPlay()
+                            self.audioPlayer?.play()
+                            print("play audio")
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                if ((self.audioPlayer?.isPlaying) != nil) {
+                                    let currentTime = self.audioPlayer?.currentTime
+                                    print("目前播放時間：\(currentTime)")
+                                } else {
+                                    print("音檔未在播放")
+                                }
+                            }
+                        } catch {
+                            print("Play error", error.localizedDescription)
+                            print("Play error: \(error)")
+                        }
                     }
                 }
             }
         }
     }
-    //MARK: - Audio Record
-    @objc func speakButton1Pressed() {
+    func currentUserTurn() {
+        if players[currentPlayerIndex] == UserDefaults.standard.string(forKey: "userName") {
+            sendButton1.isHidden = false
+            speakButton1.isHidden = false
+            sendButton2.isHidden = true
+            speakButton2.isHidden = true
+            vibrateHard()
+        } else {
+            vibrate()
+            sendButton2.isHidden = false
+            speakButton2.isHidden = false
+            sendButton1.isHidden = true
+            speakButton1.isHidden = true
+        }
+    }
+    func changeButtonStyle() {
+        if isButtonPressed {
+            speakButton1.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
+            speakButton1.tintColor = .B4
+            speakButton2.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
+            speakButton2.tintColor = .B4
+        } else {
+            speakButton1.setBackgroundImage(UIImage(systemName: "record.circle"), for: .normal)
+            speakButton1.tintColor = .R
+            speakButton2.setBackgroundImage(UIImage(systemName: "record.circle"), for: .normal)
+            speakButton2.tintColor = .R
+        }
+        isButtonPressed.toggle()
+    }
+    // MARK: - Audio Record
+    @objc func recordAudioClue() {
+        vibrate()
+        changeButtonStyle()
         if audioEngine.isRunning {
-           audioEngine.stop()
-           recognitionRequest?.endAudio()
-           speakButton1.isEnabled = false
-           clueTextField.text = ""
-           uploadAudio(audioURL: audioUrl!) { result in
+            audioEngine.stop()
+            recognitionRequest?.endAudio()
+            speakButton1.isEnabled = false
+            speakButton2.isEnabled = false
+            messageTextField.text = ""
+            uploadAudio(audioURL: audioUrl!) { result in
                switch result {
                case .success(let url):
-                   print(url)
+                   print("****** Firestore audioClue", url)
                    let room = self.dataBase.collection("Rooms")
                    let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
                    let documentRef = room.document(roomId)
@@ -338,40 +419,26 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         guard audioRecoder == nil else {
             audioRecoder?.stop()
             audioRecoder = nil
-//            speakButton.setTitle("Record", for: .normal)
             return
         }
         fileName = UUID().uuidString
-        let destinationUrl = getDirectoryPath().appendingPathComponent("\(fileName ?? "").m4a")
+        let destinationUrl = getDirectoryPath().appendingPathComponent("\(fileName ?? "").wav")
         audioUrl = destinationUrl
-        let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+        let settings: [String: Any] = [
+            AVFormatIDKey: kAudioFormatLinearPCM,
             AVSampleRateKey: 44100,
             AVNumberOfChannelsKey: 2,
-            AVEncoderBitRateKey: 128000,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            AVLinearPCMBitDepthKey: 16,
+            AVLinearPCMIsBigEndianKey: false,
+            AVLinearPCMIsFloatKey: false
         ]
         do {
             audioRecoder = try AVAudioRecorder(url: destinationUrl, settings: settings)
             audioRecoder?.record()
-//            speakButton.setTitle("Stop", for: .normal)
         } catch {
             print("Record error:", error.localizedDescription)
         }
     }
-//  func playSound() {
-//        let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName ?? "").m4a")
-//        let audioFileURL = URL(fileURLWithPath: recordFilePath.path)
-//            do {
-//                audioPlayer = try AVAudioPlayer(contentsOf: audioFileURL)
-//                audioPlayer?.volume = 1.0
-//                audioPlayer?.prepareToPlay()
-//                audioPlayer?.play()
-//                print(recordFilePath)
-//        } catch {
-//            print("Play error", error.localizedDescription)
-//        }
-//    }
     func getDirectoryPath() -> URL {
             let fileDiretoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             return fileDiretoryURL
@@ -379,7 +446,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     func configRecordSession() {
         do {
             let recordingSession = AVAudioSession.sharedInstance()
-            try recordingSession.setCategory(AVAudioSession.Category.playAndRecord)
+            try recordingSession.setCategory(
+                .playAndRecord,
+                mode: .default,
+                options: [.defaultToSpeaker, .allowBluetooth])
             try recordingSession.setActive(true)
             recordingSession.requestRecordPermission { permissionAllowed in
                 if permissionAllowed {
@@ -392,9 +462,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             print("Session error:", error.localizedDescription)
         }
     }
-    //MARK: - Speech Recognize
+    // MARK: - Speech Recognize
     func speechAuth() {
         speakButton1.isEnabled = false
+        speakButton2.isEnabled = false
 
         speechRecognizer?.delegate = self
 
@@ -402,7 +473,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
 
             var isButtonEnabled = false
 
-            switch authStatus {  //5
+            switch authStatus {
             case .authorized:
                 isButtonEnabled = true
 
@@ -421,6 +492,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
 
             OperationQueue.main.addOperation() {
                 self.speakButton1.isEnabled = isButtonEnabled
+                self.speakButton2.isEnabled = isButtonEnabled
             }
         }
     }
@@ -448,9 +520,8 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             var isFinal = false
 
             if result != nil {
-                self.clueTextField.text = result?.bestTranscription.formattedString
+                self.messageTextField.text = result?.bestTranscription.formattedString
                 isFinal = (result?.isFinal)!
-//                messageTextField?
             }
 
             if error != nil || isFinal {
@@ -461,6 +532,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
                 self.recognitionTask = nil
 
                 self.speakButton1.isEnabled = true
+                self.speakButton2.isEnabled = true
             }
         })
         let recordingFormat = inputNode.outputFormat(forBus: 0)
@@ -479,13 +551,15 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
         if available {
             speakButton1.isEnabled = true
+            speakButton2.isEnabled = true
         } else {
             speakButton1.isEnabled = false
+            speakButton2.isEnabled = true
         }
     }
-    //MARK: - Upload audio and play
+    // MARK: - Upload audio and play
     func uploadAudio(audioURL: URL, completion: @escaping (Result<URL, Error>) -> Void) {
-        let fileReference = Storage.storage().reference().child("\(fileName ?? "").m4a")
+        let fileReference = Storage.storage().reference().child("\(fileName ?? "").wav")
         if let data = try? Data(contentsOf: audioURL) {
             fileReference.putData(data, metadata: nil) { result in
                 switch result {
@@ -512,7 +586,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         let data: [String: Any] = [
             "clue": [],
             "message": []
-
         ]
         documentRef.updateData(data)
     }
@@ -530,11 +603,12 @@ extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
             fatalError("Can't create cell")
         }
         if tableView.tag == 1 {
+            cell.backgroundColor = .B1
             cell.titleLabel.attributedText = UIFont.fontStyle(
                 font: .regular,
                 title: clues[indexPath.row],
                 size: 20,
-                textColor: .B2 ?? .black,
+                textColor: .B4 ?? .black,
                 letterSpacing: 0)
             return cell
         } else {
@@ -548,6 +622,34 @@ extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        50
+        UITableView.automaticDimension
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        40
+    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MessageHeaderView.reuseIdentifier) as? MessageHeaderView else {
+            fatalError("Can't create header")
+        }
+        if tableView.tag == 1 {
+            header.titleLabel.attributedText = UIFont.fontStyle(
+                font: .semibold,
+                title: "- 線索 -",
+                size: 20,
+                textColor: .B4 ?? .black,
+                letterSpacing: 10)
+            return header
+        } else {
+            header.titleLabel.attributedText = UIFont.fontStyle(
+                font: .semibold,
+                title: "- 討論 -",
+                size: 20,
+                textColor: .B2 ?? .black,
+                letterSpacing: 10)
+            return header
+        }
     }
 }

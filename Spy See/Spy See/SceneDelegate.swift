@@ -9,13 +9,45 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-
+    let userEmail = UserDefaults.standard.string(forKey: "userEmail")
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        if userEmail != nil {
+            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+            let loginVC = storyBoard.instantiateViewController(identifier: "LoginViewController")
+            let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController")
+            let navigationController = UINavigationController(rootViewController: loginVC)
+            window?.rootViewController = navigationController
+            if let url = connectionOptions.urlContexts.first?.url {
+                let urlString = url.absoluteString
+                let component = urlString.components(separatedBy: "/")
+                if component.count > 1 {
+                    let page = component[component.count - 2]
+                    print(page)
+                    let roomId = component.last
+                    print(roomId)
+                    if page == "lobby" {
+                        let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController") as? UITabBarController
+                        let lobbyVC = tabBarVC?.viewControllers?.first as? LobbyViewController
+                        lobbyVC?.invitationTextFileld.attributedText = UIFont.fontStyle(
+                            font: .regular,
+                            title: roomId ?? "",
+                            size: 20,
+                            textColor: .B2 ?? .black,
+                            letterSpacing: 3)
+                        navigationController.pushViewController(tabBarVC!, animated: true)
+                        window?.makeKeyAndVisible()
+                    }
+                }
+            } else {
+                navigationController.pushViewController(tabBarVC, animated: true)
+                self.window?.makeKeyAndVisible()
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -45,5 +77,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let loginVC = storyBoard.instantiateViewController(identifier: "LoginViewController")
+        let navigationController = UINavigationController(rootViewController: loginVC)
+        window?.rootViewController = navigationController
+        if userEmail != nil {
+            if let url = URLContexts.first?.url {
+                let urlString = url.absoluteString
+                let component = urlString.components(separatedBy: "/")
+                if component.count > 1 {
+                    let page = component[component.count - 2]
+                    print(page)
+                    let roomId = component.last
+                    print(roomId)
+                    if page == "lobby" {
+                        let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController") as? UITabBarController
+                        let lobbyVC = tabBarVC?.viewControllers?.first as? LobbyViewController
+                        lobbyVC?.invitationTextFileld.text = roomId
+                        navigationController.pushViewController(tabBarVC!, animated: true)
+                        window?.makeKeyAndVisible()
+                    }
+                }
+            }
+        }
+    }
 }

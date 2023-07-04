@@ -17,13 +17,8 @@ class LobbyViewController: BaseViewController {
     }()
     lazy var createRoomButton: BaseButton = {
         let createRoomButton = BaseButton()
-        createRoomButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "建立遊戲",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 5), for: .normal)
-        createRoomButton.titleLabel?.textAlignment = .center
+        createRoomButton.setNormal("建立遊戲")
+        createRoomButton.setHighlighted("建立遊戲")
         createRoomButton.addTarget(self, action: #selector(createRoomButtonPressed), for: .touchUpInside)
         return createRoomButton
     }()
@@ -40,30 +35,30 @@ class LobbyViewController: BaseViewController {
     lazy var invitationTextFileld: BaseTextField = {
         let invitationTextFileld = BaseTextField()
         invitationTextFileld.placeholder = "請輸入邀請碼"
+        invitationTextFileld.keyboardType = .asciiCapable
+        invitationTextFileld.autocorrectionType = .no
         invitationTextFileld.textAlignment = .center
+        invitationTextFileld.delegate = self
         return invitationTextFileld
     }()
     lazy var goButton: BaseButton = {
         let goButton = BaseButton()
-        goButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "GO!",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 5), for: .normal)
-        goButton.titleLabel?.textAlignment = .center
+        goButton.setNormal("GO!")
+        goButton.setHighlighted("GO!")
         goButton.addTarget(self, action: #selector(goButtonPressed), for: .touchUpInside)
         return goButton
     }()
     let dataBase = Firestore.firestore()
+    var userName: String?
+    let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
-        [
-            logoImage,
-            createRoomButton,
-            joinLabel,
-            invitationTextFileld,
-            goButton].forEach { view.addSubview($0) }
+        tabBarController?.navigationItem.hidesBackButton = true
+        [logoImage,
+         createRoomButton,
+         joinLabel,
+         invitationTextFileld,
+         goButton].forEach { view.addSubview($0) }
         logoImage.snp.makeConstraints { make in
             make.top.equalTo(view).offset(200)
             make.left.equalTo(view).offset(50)
@@ -93,22 +88,37 @@ class LobbyViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getUserName()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationItem.hidesBackButton = false
+    }
     @objc func createRoomButtonPressed() {
+        vibrate()
         let settingVC = SettingViewController()
         navigationController?.pushViewController(settingVC, animated: true)
     }
     @objc func goButtonPressed() {
+        vibrate()
+        guard let invitationText = invitationTextFileld.text, !invitationText.isEmpty, invitationText != "請輸入邀請碼" else {
+            let alert = alertVC.showAlert(title: "輸入錯誤", message: "請輸入邀請碼")
+            present(alert, animated: true)
+            return
+        }
         let room = dataBase.collection("Rooms")
         let documentRef = room.document(invitationTextFileld.text ?? "")
         UserDefaults.standard.setValue(invitationTextFileld.text, forKey: "roomId")
         documentRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 if var players = document.data()?["player"] as? [String] {
-                    guard let email = Auth.auth().currentUser?.email else {
-                        print("Email is missing")
+                    guard let name = self.userName else {
+                        print("Name is missing")
                         return
                     }
-                    players.append(email)
+                    players.append(name)
                     // 計算玩家的index
                     let playerIndex = players.count - 1
                     documentRef.setData([
@@ -123,6 +133,8 @@ class LobbyViewController: BaseViewController {
                             documentRef.getDocument { (document, error) in
                                 if let document = document, let playerIndex = document.data()?["playerIndex"] as? Int, let prompts = document.data()?["prompts"] as? [String] {
                                     self.handlePlayerIndex(playerIndex, prompts)
+                                    UserDefaults.standard.removeObject(forKey: "userName")
+                                    UserDefaults.standard.setValue(self.userName, forKey: "userName")
                                 } else {
                                     print("Failed to retrieve player index: \(error?.localizedDescription ?? "")")
                                 }
@@ -134,6 +146,8 @@ class LobbyViewController: BaseViewController {
                     }
                 }
             } else {
+                let alert = self.alertVC.showAlert(title: "輸入錯誤", message: "查無此邀請碼")
+                self.present(alert, animated: true)
                 print("Document does not exist or there was an error: \(error?.localizedDescription ?? "")")
             }
         }
@@ -147,8 +161,38 @@ class LobbyViewController: BaseViewController {
         UserDefaults.standard.removeObject(forKey: "hostPrompt")
         UserDefaults.standard.removeObject(forKey: "playerPrompt")
         UserDefaults.standard.setValue(selectedPrompt, forKey: "playerPrompt")
-        print(UserDefaults.standard.string(forKey: "playerPrompt")!)
-        print("Selected plyer prompt: \(selectedPrompt)")
         return selectedPrompt
+    }
+    func getUserName() {
+        let room = dataBase.collection("Users")
+        guard let userId = Auth.auth().currentUser?.email else {
+            return
+        }
+        let documentRef = room.document(userId)
+        documentRef.getDocument { (document, error) in
+            if let document = document, let name = document.data()?["name"] as? String {
+                self.userName = name
+                print(self.userName)
+            } else {
+                print("Failed to retrieve player index: \(error?.localizedDescription ?? "")")
+            }
+        }
+    }
+}
+extension LobbyViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        vibrate()
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let enteredText = invitationTextFileld.text else {
+            return
+        }
+        let styledText = UIFont.fontStyle(
+            font: .regular,
+            title: enteredText,
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 3)
+        invitationTextFileld.attributedText = styledText
     }
 }

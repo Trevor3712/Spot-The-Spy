@@ -74,6 +74,8 @@ class WaitForNextViewController: BaseViewController {
                     self.readyListener?.remove()
                     documentRef.updateData(["playersReady": []])
                     if let targetViewController = self.navigationController?.viewControllers.filter({ $0 is SpeakViewController }).first {
+                        print("========next round")
+                        self.vibrateHard()
                         self.navigationController?.popToViewController(targetViewController, animated: true)
                     }
                 }

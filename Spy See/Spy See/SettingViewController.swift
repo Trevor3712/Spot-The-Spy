@@ -66,13 +66,8 @@ class SettingViewController: BaseViewController {
     }()
     lazy var invitationButton: BaseButton = {
         let invitationButton = BaseButton()
-        invitationButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "取得邀請碼",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 5), for: .normal)
-        invitationButton.titleLabel?.textAlignment = .center
+        invitationButton.setNormal("取得邀請碼")
+        invitationButton.setHighlighted("取得邀請碼")
         invitationButton.addTarget(self, action: #selector(invitationButtonPressed), for: .touchUpInside)
         return invitationButton
     }()
@@ -83,8 +78,13 @@ class SettingViewController: BaseViewController {
     var identityArray: [String] = []
     var shuffledIndices: [Int] = []
     var choosedPrompt: ([String], [String]) = ([], [])
+    var userName: String?
+    let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonPressed))
+        backButton.tintColor = .B1
+        navigationItem.leftBarButtonItem = backButton
         [
             logoImage,
             playersCountLabel, playersCountTextFileld,
@@ -123,13 +123,24 @@ class SettingViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getUserName()
+    }
     @objc func invitationButtonPressed(_ sender: UIButton) {
+        vibrate()
+        guard let playersCount = playersCountTextFileld.text, !playersCount.isEmpty, playersCount != "玩家人數",
+              let spysCount = spysCountTextFileld.text, !spysCount.isEmpty, spysCount != "臥底人數" else {
+            let alert = alertVC.showAlert(title: "設定錯誤", message: "請選擇玩家人數、臥底人數")
+            present(alert, animated: true, completion: nil)
+            return
+        }
         let room = dataBase.collection("Rooms")
         let roomId = generateRoomId()
         UserDefaults.standard.setValue(roomId, forKey: "roomId")
         let documentRef = room.document(roomId)
-        guard let email = Auth.auth().currentUser?.email else {
-            print("Email is missing")
+        guard let name = self.userName else {
+            print("Name is missing")
             return
         }
         let prompts = generatePromptArray()
@@ -137,7 +148,7 @@ class SettingViewController: BaseViewController {
         let data: [String: Any] = [
             "prompts": prompts,
             "identities": identities,
-            "player": [email],
+            "player": [name],
             "playerNumber": playersCountTextFileld.text ?? ""
         ]
         documentRef.setData(data) { error in
@@ -147,7 +158,9 @@ class SettingViewController: BaseViewController {
                 print("Document added successfully")
                 UserDefaults.standard.removeObject(forKey: "playerPrompt")
                 UserDefaults.standard.removeObject(forKey: "hostPrompt")
+                UserDefaults.standard.removeObject(forKey: "userName")
                 UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
+                UserDefaults.standard.setValue(self.userName, forKey: "userName")
                 let inviteVC = InviteViewController()
                 self.navigationController?.pushViewController(inviteVC, animated: true)
             }
@@ -184,6 +197,24 @@ class SettingViewController: BaseViewController {
         }
         identityArray = shuffledIndices.map { identityArray[$0] }
         return identityArray
+    }
+    func getUserName() {
+        let room = dataBase.collection("Users")
+        guard let userId = Auth.auth().currentUser?.email else {
+            return
+        }
+        let documentRef = room.document(userId)
+        documentRef.getDocument { (document, error) in
+            if let document = document, let name = document.data()?["name"] as? String {
+                self.userName = name
+                print(self.userName)
+            } else {
+                print("Failed to retrieve player index: \(error?.localizedDescription ?? "")")
+            }
+        }
+    }
+    @objc func backButtonPressed() {
+        navigationController?.popViewController(animated: true)
     }
 }
 extension SettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {

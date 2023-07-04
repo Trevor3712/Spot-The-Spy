@@ -20,10 +20,14 @@
 		B550132E2A472C0A00FCEFFC /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132D2A472C0A00FCEFFC /* BaseButton.swift */; };
 		B55013302A47320500FCEFFC /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132F2A47320500FCEFFC /* UIFont+Extension.swift */; };
 		B55013322A47387100FCEFFC /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55013312A47387100FCEFFC /* BaseTextField.swift */; };
+		B55099D52A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav in Resources */ = {isa = PBXBuildFile; fileRef = B55099D42A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav */; };
 		B57DE3B22A496D1D00AEC8EC /* BaseMessageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */; };
 		B57DE3B62A49A63600AEC8EC /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B52A49A63600AEC8EC /* MessageCell.swift */; };
 		B59588952A3D98430058E170 /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588942A3D98430058E170 /* VoteViewController.swift */; };
 		B59588972A3DDD630058E170 /* KillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588962A3DDD630058E170 /* KillViewController.swift */; };
+		B5BAAB9A2A4BF06500C1A770 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BAAB992A4BF06500C1A770 /* SignupViewController.swift */; };
+		B5BAAB9C2A4C2A6600C1A770 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BAAB9B2A4C2A6600C1A770 /* AlertViewController.swift */; };
+		B5C6732C2A4EAAF100D9BBF5 /* MessageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C6732B2A4EAAF100D9BBF5 /* MessageHeaderView.swift */; };
 		B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */; };
 		B5D2B0A12A39C8E800ED3516 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */; };
 		B5D2B0A32A39C8E800ED3516 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */; };
@@ -55,11 +59,15 @@
 		B550132D2A472C0A00FCEFFC /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		B550132F2A47320500FCEFFC /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		B55013312A47387100FCEFFC /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
+		B55099D42A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav"; sourceTree = "<group>"; };
 		B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMessageTableView.swift; sourceTree = "<group>"; };
 		B57DE3B52A49A63600AEC8EC /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		B59588942A3D98430058E170 /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
 		B59588962A3DDD630058E170 /* KillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillViewController.swift; sourceTree = "<group>"; };
-		B5D2B09B2A39C8E800ED3516 /* Spy See.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spy See.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5BAAB992A4BF06500C1A770 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		B5BAAB9B2A4C2A6600C1A770 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
+		B5C6732B2A4EAAF100D9BBF5 /* MessageHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHeaderView.swift; sourceTree = "<group>"; };
+		B5D2B09B2A39C8E800ED3516 /* Spot The Spy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Spot The Spy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +108,7 @@
 		B5D2B0922A39C8E800ED3516 = {
 			isa = PBXGroup;
 			children = (
+				B55099D42A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav */,
 				B5D2B09D2A39C8E800ED3516 /* Spy See */,
 				B5D2B09C2A39C8E800ED3516 /* Products */,
 				9C5F9C7F45BBBBE800D1D379 /* Pods */,
@@ -110,7 +119,7 @@
 		B5D2B09C2A39C8E800ED3516 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B5D2B09B2A39C8E800ED3516 /* Spy See.app */,
+				B5D2B09B2A39C8E800ED3516 /* Spot The Spy.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,6 +133,7 @@
 				B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */,
 				B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */,
 				B5FAE7272A45C68900C69CAA /* ProfileViewController.swift */,
+				B5BAAB992A4BF06500C1A770 /* SignupViewController.swift */,
 				B522AF102A3AB4A000FF956C /* LobbyViewController.swift */,
 				B522AF122A3AC3CF00FF956C /* SettingViewController.swift */,
 				B522AF142A3B67E800FF956C /* InviteViewController.swift */,
@@ -136,6 +146,7 @@
 				B54212ED2A40030200D7C90C /* DiedViewController.swift */,
 				B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */,
 				B522AF182A3C113900FF956C /* PlayerCell.swift */,
+				B5C6732B2A4EAAF100D9BBF5 /* MessageHeaderView.swift */,
 				B57DE3B52A49A63600AEC8EC /* MessageCell.swift */,
 				B5D2B0B52A3A98A000ED3516 /* Prompt.swift */,
 				B5D2B0A42A39C8E800ED3516 /* Main.storyboard */,
@@ -172,6 +183,7 @@
 				B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */,
 				B550132D2A472C0A00FCEFFC /* BaseButton.swift */,
 				B55013312A47387100FCEFFC /* BaseTextField.swift */,
+				B5BAAB9B2A4C2A6600C1A770 /* AlertViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -187,9 +199,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B5D2B09A2A39C8E800ED3516 /* Spy See */ = {
+		B5D2B09A2A39C8E800ED3516 /* Spot The Spy */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B5D2B0AF2A39C8ED00ED3516 /* Build configuration list for PBXNativeTarget "Spy See" */;
+			buildConfigurationList = B5D2B0AF2A39C8ED00ED3516 /* Build configuration list for PBXNativeTarget "Spot The Spy" */;
 			buildPhases = (
 				23743ACE8A6263FE3F33DA38 /* [CP] Check Pods Manifest.lock */,
 				B5D2B0972A39C8E800ED3516 /* Sources */,
@@ -202,9 +214,9 @@
 			);
 			dependencies = (
 			);
-			name = "Spy See";
+			name = "Spot The Spy";
 			productName = "Spy See";
-			productReference = B5D2B09B2A39C8E800ED3516 /* Spy See.app */;
+			productReference = B5D2B09B2A39C8E800ED3516 /* Spot The Spy.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -222,7 +234,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B5D2B0962A39C8E800ED3516 /* Build configuration list for PBXProject "Spy See" */;
+			buildConfigurationList = B5D2B0962A39C8E800ED3516 /* Build configuration list for PBXProject "Spot The Spy" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -235,7 +247,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B5D2B09A2A39C8E800ED3516 /* Spy See */,
+				B5D2B09A2A39C8E800ED3516 /* Spot The Spy */,
 			);
 		};
 /* End PBXProject section */
@@ -248,6 +260,7 @@
 				B5D2B0AB2A39C8ED00ED3516 /* LaunchScreen.storyboard in Resources */,
 				B5D2B0B42A3A017D00ED3516 /* GoogleService-Info.plist in Resources */,
 				B5D2B0A82A39C8ED00ED3516 /* Assets.xcassets in Resources */,
+				B55099D52A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav in Resources */,
 				B5D2B0A62A39C8E800ED3516 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,6 +335,7 @@
 				B59588952A3D98430058E170 /* VoteViewController.swift in Sources */,
 				B522AF172A3C0F4900FF956C /* WaitingViewController.swift in Sources */,
 				B5D2B0A32A39C8E800ED3516 /* LoginViewController.swift in Sources */,
+				B5C6732C2A4EAAF100D9BBF5 /* MessageHeaderView.swift in Sources */,
 				B5FAE72A2A46024200C69CAA /* BaseViewController.swift in Sources */,
 				B5FAE7202A45AD8000C69CAA /* UIColor+Extension.swift in Sources */,
 				B5F20BEA2A4550E900FFECA1 /* WaitForNextViewController.swift in Sources */,
@@ -340,6 +354,8 @@
 				B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */,
 				B507CD672A3F39CE00434003 /* VictoryViewController.swift in Sources */,
 				B5D2B0A12A39C8E800ED3516 /* SceneDelegate.swift in Sources */,
+				B5BAAB9C2A4C2A6600C1A770 /* AlertViewController.swift in Sources */,
+				B5BAAB9A2A4BF06500C1A770 /* SignupViewController.swift in Sources */,
 				B522AF152A3B67E800FF956C /* InviteViewController.swift in Sources */,
 				B522AF132A3AC3CF00FF956C /* SettingViewController.swift in Sources */,
 				B522AF1D2A3CBF2200FF956C /* SpeakViewController.swift in Sources */,
@@ -494,7 +510,10 @@
 				DEVELOPMENT_TEAM = TC57AN3V9C;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Spy See/Info.plist";
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_CFBundleDisplayName = "Spot The Spy";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.role-playing-games";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "當你按下「Speak」，我們將使用麥克風進行錄音。";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "當你對著麥克風說話時，我們將進行語音識別。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -525,7 +544,10 @@
 				DEVELOPMENT_TEAM = TC57AN3V9C;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Spy See/Info.plist";
-				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_CFBundleDisplayName = "Spot The Spy";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.role-playing-games";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "當你按下「Speak」，我們將使用麥克風進行錄音。";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "當你對著麥克風說話時，我們將進行語音識別。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -547,7 +569,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B5D2B0962A39C8E800ED3516 /* Build configuration list for PBXProject "Spy See" */ = {
+		B5D2B0962A39C8E800ED3516 /* Build configuration list for PBXProject "Spot The Spy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B5D2B0AD2A39C8ED00ED3516 /* Debug */,
@@ -556,7 +578,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B5D2B0AF2A39C8ED00ED3516 /* Build configuration list for PBXNativeTarget "Spy See" */ = {
+		B5D2B0AF2A39C8ED00ED3516 /* Build configuration list for PBXNativeTarget "Spot The Spy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B5D2B0B02A39C8ED00ED3516 /* Debug */,

@@ -16,9 +16,26 @@ class BaseButton: UIButton {
         layer.borderColor = UIColor.B1?.cgColor
         layer.cornerRadius = 5
         clipsToBounds = true
+        titleLabel?.textAlignment = .center
         contentEdgeInsets = UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    func setNormal(_ text: String) {
+        setAttributedTitle(UIFont.fontStyle(
+            font: .semibold,
+            title: text,
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 5), for: .normal)
+    }
+    func setHighlighted(_ text: String) {
+        setAttributedTitle(UIFont.fontStyle(
+            font: .semibold,
+            title: text,
+            size: 20,
+            textColor: .B4 ?? .black,
+            letterSpacing: 5), for: .highlighted)
     }
 }

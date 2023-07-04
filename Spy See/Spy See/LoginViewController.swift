@@ -15,6 +15,7 @@ class LoginViewController: BaseViewController {
         logoImage.image = .asset(.spy)
         return logoImage
     }()
+    lazy var titleContainerView = UIView()
     lazy var labelCN1: UILabel = {
         let labelCN1 = UILabel()
         labelCN1.attributedText = UIFont.fontStyle(
@@ -67,112 +68,160 @@ class LoginViewController: BaseViewController {
             letterSpacing: 10)
         return labelEN3
     }()
-    lazy var accountTextFileld: BaseTextField = {
-        let accountTextFileld = BaseTextField()
-        accountTextFileld.placeholder = "請輸入帳號"
-        accountTextFileld.text = "1@1.com"
-        return accountTextFileld
+    lazy var accountContainerView = UIView()
+    lazy var accountTextField: BaseTextField = {
+        let accountTextField = BaseTextField()
+        accountTextField.placeholder = "請輸入帳號"
+        accountTextField.text = "1@1.com"
+        accountTextField.keyboardType = .emailAddress
+        accountTextField.autocorrectionType = .no
+        accountTextField.delegate = self
+        accountTextField.tag = 1
+        return accountTextField
     }()
-    lazy var passwordTextFileld: BaseTextField = {
-        let passwordTextFileld = BaseTextField()
-        passwordTextFileld.placeholder = "請輸入密碼"
-        passwordTextFileld.text = "123456"
-        return passwordTextFileld
+    lazy var passwordTextField: BaseTextField = {
+        let passwordTextField = BaseTextField()
+        passwordTextField.placeholder = "請輸入密碼"
+        passwordTextField.text = "123456"
+        passwordTextField.isSecureTextEntry = true
+        passwordTextField.autocorrectionType = .no
+        passwordTextField.delegate = self
+        passwordTextField.tag = 2
+        return passwordTextField
     }()
     lazy var loginButton: BaseButton = {
         let loginButton = BaseButton()
-        loginButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "登入",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 3), for: .normal)
-        loginButton.titleLabel?.textAlignment = .center
+        loginButton.setNormal("登入")
+        loginButton.setHighlighted("登入")
+        loginButton.setTitleColor(.B4, for: .highlighted)
         loginButton.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
         return loginButton
     }()
     lazy var signupButton: BaseButton = {
         let signupButton = BaseButton()
-        signupButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "註冊",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 3), for: .normal)
-        signupButton.titleLabel?.textAlignment = .center
+        signupButton.setNormal("註冊")
+        signupButton.setHighlighted("註冊")
+        signupButton.addTarget(self, action: #selector(signupButtonPressed), for: .touchUpInside)
         return signupButton
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        [logoImage,
-         labelCN1, labelCN2, labelEN1, labelEN2, labelEN3,
-         accountTextFileld, passwordTextFileld,
-         loginButton, signupButton].forEach { view.addSubview($0) }
+        [logoImage,titleContainerView, accountContainerView].forEach { view.addSubview($0) }
+        [labelCN1, labelCN2, labelEN1, labelEN2, labelEN3].forEach { titleContainerView.addSubview($0) }
+        [accountTextField, passwordTextField,
+         loginButton, signupButton].forEach { accountContainerView.addSubview($0) }
         logoImage.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(120)
+            make.bottom.equalTo(titleContainerView.snp.top).offset(-50)
             make.centerX.equalTo(view)
-            make.width.equalTo(130)
-            make.height.equalTo(130)
+            make.width.equalTo(150)
+            make.height.equalTo(150)
+        }
+        titleContainerView.snp.makeConstraints { make in
+            make.centerX.centerY.left.right.equalTo(view)
+            make.height.equalTo(200)
         }
         labelCN1.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(300)
-            make.left.equalTo(view).offset(125)
+            make.top.equalTo(titleContainerView)
+            make.right.equalTo(titleContainerView.snp.centerX).offset(12)
         }
         labelCN2.snp.makeConstraints { make in
             make.top.equalTo(labelCN1.snp.bottom)
-            make.right.equalTo(view).offset(-30)
+            make.left.equalTo(titleContainerView.snp.centerX).offset(24)
         }
         labelEN1.snp.makeConstraints { make in
             make.top.equalTo(labelCN1.snp.bottom)
-            make.left.equalTo(view).offset(80)
+            make.right.equalTo(titleContainerView.snp.centerX).offset(-12)
         }
         labelEN2.snp.makeConstraints { make in
             make.top.equalTo(labelEN1.snp.bottom)
-            make.left.equalTo(view).offset(125)
+            make.right.equalTo(titleContainerView.snp.centerX).offset(-36)
         }
         labelEN3.snp.makeConstraints { make in
             make.top.equalTo(labelCN2.snp.bottom)
-            make.right.equalTo(view).offset(-90)
+            make.left.equalTo(titleContainerView.snp.centerX)
         }
-        accountTextFileld.snp.makeConstraints { make in
-            make.top.equalTo(labelEN3.snp.bottom).offset(12)
+        accountContainerView.snp.makeConstraints { make in
+            make.left.right.equalTo(view)
+            make.top.lessThanOrEqualTo(titleContainerView.snp.bottom).offset(50)
+            make.height.equalTo(200)
+        }
+        accountTextField.snp.makeConstraints { make in
+            make.top.equalTo(accountContainerView)
             make.centerX.equalTo(view)
             make.width.equalTo(260)
             make.height.equalTo(40)
         }
-        passwordTextFileld.snp.makeConstraints { make in
-            make.top.equalTo(accountTextFileld.snp.bottom).offset(30)
+        passwordTextField.snp.makeConstraints { make in
+            make.top.equalTo(accountTextField.snp.bottom).offset(30)
             make.centerX.equalTo(view)
             make.width.equalTo(260)
             make.height.equalTo(40)
         }
         loginButton.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextFileld.snp.bottom).offset(30)
-            make.left.equalTo(passwordTextFileld)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(30)
+            make.left.equalTo(passwordTextField)
             make.width.equalTo(115)
             make.height.equalTo(40)
         }
         signupButton.snp.makeConstraints { make in
-            make.top.equalTo(passwordTextFileld.snp.bottom).offset(30)
-            make.right.equalTo(passwordTextFileld)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(30)
+            make.right.equalTo(passwordTextField)
             make.width.equalTo(115)
             make.height.equalTo(40)
         }
     }
     @objc func logInButtonPressed(_ sender: UIButton) {
+        vibrate()
         Auth.auth().signIn(
-            withEmail: accountTextFileld.text ?? "",
-            password: passwordTextFileld.text ?? "")
-        { _, error in
+            withEmail: accountTextField.text ?? "",
+            password: passwordTextField.text ?? "") { _, error in
             guard error == nil else {
+                let alertVC = AlertViewController()
+                let alert = alertVC.showAlert(title: "登入錯誤", message: error?.localizedDescription ?? "")
+                self.present(alert, animated: true)
                 print(error?.localizedDescription ?? "")
                 return
             }
-            print("\(self.accountTextFileld.text ?? "") log in")
             guard let tabBarController = self.storyboard?.instantiateViewController(withIdentifier: "TabBarController") as? UITabBarController else {
                 return
             }
             self.navigationController?.pushViewController(tabBarController, animated: true)
+            UserDefaults.standard.setValue(Auth.auth().currentUser?.email, forKey: "userEmail")
+        }
+    }
+    @objc func signupButtonPressed() {
+        vibrate()
+        let signupVC = SignupViewController()
+        navigationController?.pushViewController(signupVC, animated: true)
+    }
+}
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        vibrate()
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.tag == 1 {
+            guard let enteredText = accountTextField.text else {
+                return
+            }
+            let styledText = UIFont.fontStyle(
+                font: .regular,
+                title: enteredText,
+                size: 15,
+                textColor: .B2 ?? .black,
+                letterSpacing: 3)
+            accountTextField.attributedText = styledText
+        } else {
+            guard let enteredText = passwordTextField.text else {
+                return
+            }
+            let styledText = UIFont.fontStyle(
+                font: .regular,
+                title: enteredText,
+                size: 15,
+                textColor: .B2 ?? .black,
+                letterSpacing: 3)
+            passwordTextField.attributedText = styledText
         }
     }
 }

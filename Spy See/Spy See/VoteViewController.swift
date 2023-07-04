@@ -31,13 +31,8 @@ class VoteViewController: BaseViewController {
     }()
     lazy var voteButton: BaseButton = {
         let voteButton = BaseButton()
-        voteButton.setAttributedTitle(UIFont.fontStyle(
-            font: .semibold,
-            title: "投票",
-            size: 20,
-            textColor: .B2 ?? .black,
-            letterSpacing: 3), for: .normal)
-        voteButton.titleLabel?.textAlignment = .center
+        voteButton.setNormal("投票")
+        voteButton.setHighlighted("投票")
         voteButton.addTarget(self, action: #selector(voteButtonPressed), for: .touchUpInside)
         return voteButton
     }()
@@ -47,6 +42,8 @@ class VoteViewController: BaseViewController {
     var selectedIndexPath: IndexPath?
     override func viewDidLoad() {
         super.viewDidLoad()
+        let currentUser = UserDefaults.standard.string(forKey: "userName")
+        players?.removeAll { $0 == currentUser }
         [titleLabel, tableView, voteButton].forEach { view.addSubview($0) }
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view).offset(105)
@@ -66,6 +63,13 @@ class VoteViewController: BaseViewController {
         }
     }
     @objc func voteButtonPressed() {
+        vibrate()
+        guard let voted = votedPlayer else {
+            let alertVC = AlertViewController()
+            let alert = alertVC.showAlert(title: "投票錯誤", message: "請選擇你想殺死的玩家")
+            present(alert, animated: true)
+            return
+        }
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
