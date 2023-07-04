@@ -42,6 +42,8 @@ class VoteViewController: BaseViewController {
     var selectedIndexPath: IndexPath?
     override func viewDidLoad() {
         super.viewDidLoad()
+        let currentUser = UserDefaults.standard.string(forKey: "userName")
+        players?.removeAll { $0 == currentUser }
         [titleLabel, tableView, voteButton].forEach { view.addSubview($0) }
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view).offset(105)

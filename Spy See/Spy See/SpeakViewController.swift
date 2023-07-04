@@ -14,7 +14,6 @@ import Speech
 import AudioToolbox
 // swiftlint:disable type_body_length
 class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
-    
     lazy var playerLabel: UILabel = {
         let playerLabel = UILabel()
         return playerLabel
@@ -217,13 +216,13 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }
     func showNextPlayer() {
         guard currentPlayerIndex < players.count else {
-            let voteVC = VoteViewController()
             currentPlayerIndex = 0
             listener?.remove()
             clues = []
             messages = []
             clueTableView.reloadData()
             messageTableView.reloadData()
+            let voteVC = VoteViewController()
             navigationController?.pushViewController(voteVC, animated: true)
             return
         }
@@ -440,19 +439,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             print("Record error:", error.localizedDescription)
         }
     }
-//    func playSound() {
-//        let recordFilePath = getDirectoryPath().appendingPathComponent("\(fileName ?? "").m4a")
-//        let audioFileURL = URL(fileURLWithPath: recordFilePath.path)
-//            do {
-//                audioPlayer = try AVAudioPlayer(contentsOf: audioFileURL)
-//                audioPlayer?.volume = 1.0
-//                audioPlayer?.prepareToPlay()
-//                audioPlayer?.play()
-//                print(recordFilePath)
-//        } catch {
-//            print("Play error", error.localizedDescription)
-//        }
-//    }
     func getDirectoryPath() -> URL {
             let fileDiretoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             return fileDiretoryURL
@@ -536,7 +522,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             if result != nil {
                 self.messageTextField.text = result?.bestTranscription.formattedString
                 isFinal = (result?.isFinal)!
-//                messageTextField?
             }
 
             if error != nil || isFinal {
