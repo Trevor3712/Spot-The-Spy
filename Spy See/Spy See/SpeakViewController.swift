@@ -150,15 +150,14 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-       // Container View
-        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-        contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        contentView.heightAnchor.constraint(equalToConstant: 750)
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentView.heightAnchor.constraint(equalToConstant: 750)
         ])
         playerLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView)
