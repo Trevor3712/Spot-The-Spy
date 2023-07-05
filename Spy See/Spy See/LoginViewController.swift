@@ -12,8 +12,7 @@ import SnapKit
 class LoginViewController: BaseViewController {
     lazy var logoImage: UIImageView = {
         let logoImage = UIImageView()
-//        logoImage.image = .asset(.spy)
-        logoImage.image = UIImage(named: "SpyIcon")
+        logoImage.image = .asset(.spy)
         return logoImage
     }()
     lazy var titleContainerView = UIView()
@@ -107,6 +106,11 @@ class LoginViewController: BaseViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
+//        let button = UIButton(type: .roundedRect)
+//              button.frame = CGRect(x: 20, y: 250, width: 100, height: 30)
+//              button.setTitle("Test Crash", for: [])
+//              button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
+//              view.addSubview(button)
         [logoImage,titleContainerView, accountContainerView].forEach { view.addSubview($0) }
         [labelCN1, labelCN2, labelEN1, labelEN2, labelEN3].forEach { titleContainerView.addSubview($0) }
         [accountTextField, passwordTextField,
@@ -171,6 +175,10 @@ class LoginViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
+//    @IBAction func crashButtonTapped(_ sender: AnyObject) {
+//          let numbers = [0]
+//          let _ = numbers[1]
+//      }
     @objc func logInButtonPressed(_ sender: UIButton) {
         vibrate()
         Auth.auth().signIn(

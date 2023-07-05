@@ -180,9 +180,9 @@ class KillViewController: BaseViewController {
                 textColor: .R ?? .black,
                 letterSpacing: 10)
             if identitiesArray[selectedIndex] == "平民" {
-                identityImageView.image = UIImage(named: "NormalCry")
+                identityImageView.image = .asset(.normalKilled)
             } else {
-                identityImageView.image = UIImage(named: "SpyCry")
+                identityImageView.image = .asset(.normalKilled)
             }
         } else {
             // 查找出現次數最多的值

@@ -44,8 +44,7 @@ class VictoryViewController: BaseViewController {
                 size: 45,
                 textColor: .B2 ?? .black,
                 letterSpacing: 15)
-//            identityImageView.image = .asset(.spy)
-                identityImageView.image = UIImage(named: "SpyWin")
+            identityImageView.image = .asset(.spy)
         } else {
             victoryLabel.attributedText = UIFont.fontStyle(
                 font: .boldItalicEN,
@@ -53,8 +52,7 @@ class VictoryViewController: BaseViewController {
                 size: 45,
                 textColor: .B2 ?? .black,
                 letterSpacing: 15)
-//            identityImageView.image = .asset(.normalWin)
-            identityImageView.image = UIImage(named: "NormalWin")
+            identityImageView.image = .asset(.normalWin)
         }
     }
     func configureLayout() {
