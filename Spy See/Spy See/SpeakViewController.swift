@@ -14,6 +14,14 @@ import Speech
 import AudioToolbox
 // swiftlint:disable type_body_length
 class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.isScrollEnabled = true
+        scrollView.contentSize.width = 0
+        scrollView.contentSize.height = 750
+        return scrollView
+    }()
+    lazy var contentView = UIView()
     lazy var playerLabel: UILabel = {
         let playerLabel = UILabel()
         return playerLabel
@@ -130,29 +138,44 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     private let audioEngine = AVAudioEngine()
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
         [playerLabel, speakLabel,
          clueTableView, messageTableView,
          messageTextField,
          sendButton1, sendButton2,
          progressView, timeImageView,
          speakButton1, speakButton2,
-        remindLabel].forEach { view.addSubview($0) }
+        remindLabel].forEach { contentView.addSubview($0) }
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+       // Container View
+        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+        contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        contentView.heightAnchor.constraint(equalToConstant: 750)
+        ])
         playerLabel.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(60)
-            make.centerX.equalTo(view)
+            make.top.equalTo(contentView)
+            make.centerX.equalTo(contentView)
         }
         speakLabel.snp.makeConstraints { make in
             make.top.equalTo(playerLabel.snp.bottom)
-            make.centerX.equalTo(view)
+            make.centerX.equalTo(contentView)
         }
         clueTableView.snp.makeConstraints { make in
             make.top.equalTo(speakLabel.snp.bottom).offset(20)
-            make.left.right.equalTo(view).inset(30)
+            make.left.right.equalTo(contentView).inset(30)
             make.height.equalTo(240)
         }
         messageTableView.snp.makeConstraints { make in
             make.top.equalTo(clueTableView.snp.bottom).offset(24)
-            make.left.right.equalTo(view).inset(30)
+            make.left.right.equalTo(contentView).inset(30)
             make.height.equalTo(240)
         }
         progressView.snp.makeConstraints { make in

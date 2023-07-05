@@ -179,6 +179,11 @@ class KillViewController: BaseViewController {
                 size: 35,
                 textColor: .R ?? .black,
                 letterSpacing: 10)
+            if identitiesArray[selectedIndex] == "平民" {
+                identityImageView.image = UIImage(named: "NormalCry")
+            } else {
+                identityImageView.image = UIImage(named: "SpyCry")
+            }
         } else {
             // 查找出現次數最多的值
             if let (mostFrequentValue, _) = voteCount.max(by: { $0.value < $1.value }) {
@@ -202,6 +207,11 @@ class KillViewController: BaseViewController {
                         size: 35,
                         textColor: .R ?? .black,
                         letterSpacing: 10)
+                    if identitiesArray[index] == "平民" {
+                        identityImageView.image = UIImage(named: "NormalCry")
+                    } else {
+                        identityImageView.image = UIImage(named: "SpyCry")
+                    }
                 }
             }
         }

@@ -12,7 +12,8 @@ import SnapKit
 class LoginViewController: BaseViewController {
     lazy var logoImage: UIImageView = {
         let logoImage = UIImageView()
-        logoImage.image = .asset(.spy)
+//        logoImage.image = .asset(.spy)
+        logoImage.image = UIImage(named: "SpyIcon")
         return logoImage
     }()
     lazy var titleContainerView = UIView()
