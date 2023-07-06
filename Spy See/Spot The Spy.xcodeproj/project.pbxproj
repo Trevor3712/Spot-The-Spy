@@ -21,6 +21,7 @@
 		B55013302A47320500FCEFFC /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132F2A47320500FCEFFC /* UIFont+Extension.swift */; };
 		B55013322A47387100FCEFFC /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55013312A47387100FCEFFC /* BaseTextField.swift */; };
 		B55099D52A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav in Resources */ = {isa = PBXBuildFile; fileRef = B55099D42A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav */; };
+		B571FE5C2A56BF32007EADE2 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571FE5B2A56BF32007EADE2 /* RecordsViewController.swift */; };
 		B57DE3B22A496D1D00AEC8EC /* BaseMessageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */; };
 		B57DE3B62A49A63600AEC8EC /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B52A49A63600AEC8EC /* MessageCell.swift */; };
 		B59588952A3D98430058E170 /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588942A3D98430058E170 /* VoteViewController.swift */; };
@@ -58,6 +59,7 @@
 		B550132F2A47320500FCEFFC /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		B55013312A47387100FCEFFC /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
 		B55099D42A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav"; sourceTree = "<group>"; };
+		B571FE5B2A56BF32007EADE2 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
 		B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMessageTableView.swift; sourceTree = "<group>"; };
 		B57DE3B52A49A63600AEC8EC /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		B59588942A3D98430058E170 /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				B507CD662A3F39CE00434003 /* VictoryViewController.swift */,
 				B54212ED2A40030200D7C90C /* DiedViewController.swift */,
 				B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */,
+				B571FE5B2A56BF32007EADE2 /* RecordsViewController.swift */,
 				B522AF182A3C113900FF956C /* PlayerCell.swift */,
 				B5C6732B2A4EAAF100D9BBF5 /* MessageHeaderView.swift */,
 				B57DE3B52A49A63600AEC8EC /* MessageCell.swift */,
@@ -375,6 +378,7 @@
 				B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */,
 				B507CD672A3F39CE00434003 /* VictoryViewController.swift in Sources */,
 				B5D2B0A12A39C8E800ED3516 /* SceneDelegate.swift in Sources */,
+				B571FE5C2A56BF32007EADE2 /* RecordsViewController.swift in Sources */,
 				B5BAAB9C2A4C2A6600C1A770 /* AlertViewController.swift in Sources */,
 				B5BAAB9A2A4BF06500C1A770 /* SignupViewController.swift in Sources */,
 				B522AF152A3B67E800FF956C /* InviteViewController.swift in Sources */,
@@ -547,9 +551,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.trevory.Spy-See";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -581,9 +588,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.trevory.Spy-See";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

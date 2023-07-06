@@ -14,7 +14,7 @@
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="Spot_The_Spy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,7 +30,7 @@
         <!--Signup View Controller-->
         <scene sceneID="Z3p-fR-VMr">
             <objects>
-                <viewController id="zD0-sl-S5s" customClass="SignupViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="zD0-sl-S5s" customClass="SignupViewController" customModule="Spot_The_Spy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="m09-7a-UAI">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -45,7 +45,7 @@
         <!--Profile View Controller-->
         <scene sceneID="4Z1-pE-bsg">
             <objects>
-                <viewController id="hyL-ob-bcd" customClass="ProfileViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="hyL-ob-bcd" customClass="ProfileViewController" customModule="Spot_The_Spy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VEF-NA-R7D">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -66,10 +66,34 @@
             </objects>
             <point key="canvasLocation" x="2097" y="427"/>
         </scene>
+        <!--Records View Controller-->
+        <scene sceneID="D3G-5N-I7N">
+            <objects>
+                <viewController id="CWb-05-bql" customClass="RecordsViewController" customModule="Spot_The_Spy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CLt-8b-iv3">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="JXv-WZ-SOB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" image="list.clipboard" catalog="system" id="Ar4-z3-F4J">
+                        <imageReference key="selectedImage" image="list.clipboard.fill" catalog="system" renderingMode="hierarchical-single">
+                            <hierarchicalColors>
+                                <color name="B3"/>
+                                <color systemColor="secondaryLabelColor"/>
+                                <color systemColor="tertiaryLabelColor"/>
+                            </hierarchicalColors>
+                        </imageReference>
+                    </tabBarItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="15s-GH-M9D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2097" y="1122"/>
+        </scene>
         <!--Lobby View Controller-->
         <scene sceneID="rjH-TA-dGu">
             <objects>
-                <viewController storyboardIdentifier="LobbyViewController" id="rUb-fj-2jp" customClass="LobbyViewController" customModule="Spy_See" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LobbyViewController" id="rUb-fj-2jp" customClass="LobbyViewController" customModule="Spot_The_Spy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="BSv-iR-VmR">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -105,6 +129,7 @@
                     <connections>
                         <segue destination="rUb-fj-2jp" kind="relationship" relationship="viewControllers" id="yHG-8Q-nq4"/>
                         <segue destination="hyL-ob-bcd" kind="relationship" relationship="viewControllers" id="zUG-y0-AEs"/>
+                        <segue destination="CWb-05-bql" kind="relationship" relationship="viewControllers" id="qjS-kT-jdg"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="169-XI-oIU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -114,7 +139,6 @@
         <!--Navigation Controller-->
         <scene sceneID="QCp-Y1-tva">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="15V-6w-wY6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Xzi-5v-EgE" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jau-l3-y5E">
@@ -126,6 +150,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="dcD-Fy-riq"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="15V-6w-wY6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-824" y="4"/>
         </scene>
@@ -133,10 +158,12 @@
     <resources>
         <image name="gamecontroller" catalog="system" width="128" height="79"/>
         <image name="gamecontroller.fill" catalog="system" width="128" height="79"/>
+        <image name="list.clipboard" catalog="system" width="103" height="128"/>
+        <image name="list.clipboard.fill" catalog="system" width="103" height="128"/>
         <image name="person" catalog="system" width="128" height="121"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <namedColor name="B3">
-            <color red="0.73333333333333328" green="0.74901960784313726" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.73299998044967651" green="0.74900001287460327" blue="0.79199999570846558" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
