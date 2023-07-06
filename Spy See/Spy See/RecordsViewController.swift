@@ -15,12 +15,21 @@ class RecordsViewController: BaseViewController {
         titleLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "你的戰績",
-            size: 30,
+            size: 20,
             textColor: .B2 ?? .black,
             letterSpacing: 10)
         return titleLabel
     }()
-    lazy var totalRecordsLabel = UILabel()
+    lazy var totalRecordsLabel: UILabel = {
+        let totalRecordsLabel = UILabel()
+        totalRecordsLabel.backgroundColor = .white
+        totalRecordsLabel.layer.borderWidth = 1
+        totalRecordsLabel.layer.borderColor = UIColor.B1?.cgColor
+        totalRecordsLabel.layer.cornerRadius = 20
+        totalRecordsLabel.clipsToBounds = true
+        totalRecordsLabel.textAlignment = .center
+        return totalRecordsLabel
+    }()
     lazy var winRateLabel: UILabel = {
         let winRateLabel = UILabel()
         winRateLabel.attributedText = UIFont.fontStyle(
@@ -31,32 +40,55 @@ class RecordsViewController: BaseViewController {
             letterSpacing: 10)
         return winRateLabel
     }()
-    lazy var totalWinRateLabel = UILabel()
+    lazy var totalWinRateLabel: UILabel = {
+        let totalWinRateLabel = UILabel()
+        totalWinRateLabel.backgroundColor = .Y
+        totalWinRateLabel.layer.borderWidth = 1
+        totalWinRateLabel.layer.borderColor = UIColor.B1?.cgColor
+        totalWinRateLabel.layer.cornerRadius = 20
+        totalWinRateLabel.clipsToBounds = true
+        totalWinRateLabel.textAlignment = .center
+        return totalWinRateLabel
+    }()
     lazy var chartView = UIView()
     lazy var normalLabel: UILabel = {
         let normalLabel = UILabel()
+        normalLabel.backgroundColor = .white
+        normalLabel.layer.borderWidth = 1
+        normalLabel.layer.borderColor = UIColor.B1?.cgColor
+        normalLabel.layer.cornerRadius = 20
+        normalLabel.clipsToBounds = true
+        normalLabel.textAlignment = .center
         normalLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "平民",
             size: 30,
             textColor: .B2 ?? .black,
-            letterSpacing: 10)
+            letterSpacing: 5)
         return normalLabel
     }()
     lazy var spyLabel: UILabel = {
         let spyLabel = UILabel()
+        spyLabel.backgroundColor = .white
+        spyLabel.layer.borderWidth = 1
+        spyLabel.layer.borderColor = UIColor.B1?.cgColor
+        spyLabel.layer.cornerRadius = 20
+        spyLabel.clipsToBounds = true
+        spyLabel.textAlignment = .center
         spyLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "臥底",
             size: 30,
             textColor: .B2 ?? .black,
-            letterSpacing: 10)
+            letterSpacing: 5)
         return spyLabel
     }()
     lazy var normalRecordsLabel = UILabel()
     lazy var spyRecordsLabel = UILabel()
     lazy var normalWinRateLabel = UILabel()
     lazy var spyWinRateLabel = UILabel()
+    lazy var normalContainerView = UIView()
+    lazy var spyContainerViwe = UIView()
     var spyWin = 0
     var spyLose = 0
     var normalWin = 0
@@ -65,65 +97,77 @@ class RecordsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         [titleLabel, totalRecordsLabel, winRateLabel, totalWinRateLabel,
-         chartView,
-         normalLabel, spyLabel,
-         normalRecordsLabel, spyRecordsLabel,
-         normalWinRateLabel, spyWinRateLabel].forEach { view.addSubview($0) }
+         chartView, normalContainerView, spyContainerViwe].forEach { view.addSubview($0) }
+        [normalLabel, normalRecordsLabel, normalWinRateLabel].forEach { normalContainerView.addSubview($0) }
+        [spyLabel, spyRecordsLabel, spyWinRateLabel].forEach { spyContainerViwe.addSubview($0) }
         chartView.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.centerY.equalTo(view)
-            make.width.equalTo(320)
+            make.width.equalTo(350)
             make.height.equalTo(250)
         }
         chartView.backgroundColor = .white
         winRateLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(chartView.snp.top).offset(-50)
-            make.left.equalTo(chartView)
+            make.bottom.equalTo(chartView.snp.top).offset(-30)
+            make.right.equalTo(view.snp.centerX).offset(-20)
         }
         totalWinRateLabel.snp.makeConstraints { make in
-            make.left.equalTo(winRateLabel.snp.right).offset(100)
+            make.left.equalTo(view.snp.centerX).offset(20)
             make.centerY.equalTo(winRateLabel)
+            make.width.equalTo(130)
+            make.height.equalTo(50)
         }
-        totalWinRateLabel.text = "70%"
         totalRecordsLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(winRateLabel.snp.top).offset(-30)
+            make.bottom.equalTo(winRateLabel.snp.top).offset(-20)
+            make.centerX.equalTo(view)
+            make.width.equalTo(chartView)
+            make.height.equalTo(50)
+        }
+        titleLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(totalRecordsLabel.snp.top).offset(-30)
             make.centerX.equalTo(view)
         }
-        totalRecordsLabel.text = "15W  6L"
-        titleLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(totalRecordsLabel.snp.top).offset(-50)
+        normalContainerView.snp.makeConstraints { make in
+            make.top.equalTo(chartView.snp.bottom).offset(20)
             make.centerX.equalTo(view)
+            make.width.equalTo(350)
+            make.height.equalTo(50)
         }
         normalLabel.snp.makeConstraints { make in
-            make.top.equalTo(chartView.snp.bottom).offset(30)
-            make.left.equalTo(chartView)
+            make.top.equalTo(normalContainerView)
+            make.left.equalTo(normalContainerView)
+            make.width.equalTo(90)
+            make.height.equalTo(50)
         }
         normalRecordsLabel.snp.makeConstraints { make in
-            make.left.equalTo(normalLabel.snp.right).offset(50)
+            make.left.equalTo(normalLabel.snp.right).offset(30)
             make.centerY.equalTo(normalLabel)
         }
-        normalRecordsLabel.text = "10W  2L"
         normalWinRateLabel.snp.makeConstraints { make in
-            make.left.equalTo(normalRecordsLabel.snp.right).offset(50)
+            make.left.equalTo(normalRecordsLabel.snp.right).offset(30)
             make.centerY.equalTo(normalLabel)
         }
-        normalWinRateLabel.text = "60%"
+        spyContainerViwe.snp.makeConstraints { make in
+            make.top.equalTo(normalContainerView.snp.bottom).offset(30)
+            make.centerX.equalTo(view)
+            make.width.equalTo(350)
+            make.height.equalTo(50)
+        }
         spyLabel.snp.makeConstraints { make in
-            make.top.equalTo(normalWinRateLabel.snp.bottom).offset(50)
-            make.left.equalTo(normalLabel)
+            make.top.equalTo(spyContainerViwe)
+            make.left.equalTo(spyContainerViwe)
+            make.width.equalTo(90)
+            make.height.equalTo(50)
         }
         spyRecordsLabel.snp.makeConstraints { make in
-            make.left.equalTo(spyLabel.snp.right).offset(50)
+            make.left.equalTo(spyLabel.snp.right).offset(30)
             make.centerY.equalTo(spyLabel)
         }
-        spyRecordsLabel.text = "5W  3L"
         spyWinRateLabel.snp.makeConstraints { make in
-            make.left.equalTo(spyRecordsLabel.snp.right).offset(50)
+            make.left.equalTo(spyRecordsLabel.snp.right).offset(30)
             make.centerY.equalTo(spyLabel)
         }
-        spyWinRateLabel.text = "50%"
         getRecords()
-//        showRecords()
     }
     func getRecords() {
         let room = dataBase.collection("Users")
@@ -153,28 +197,32 @@ class RecordsViewController: BaseViewController {
     func showRecords() {
         normalRecordsLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
-            title: "\(normalWin)W  \(normalLose)L",
+            title: "\(normalWin)W \(normalLose)L",
             size: 30,
             textColor: .white,
-            letterSpacing: 10)
+            letterSpacing: 5)
         spyRecordsLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "\(spyWin)W \(spyLose)L",
             size: 30,
             textColor: .white,
-            letterSpacing: 10)
+            letterSpacing: 5)
+        let normalWinRate = Float(normalWin) / (Float(normalWin) + Float(normalLose)) * 100
+        let roundedNormalWinRate = String(format: "%.0f", normalWinRate)
         normalWinRateLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
-            title: "\((Float(normalWin) / (Float(normalWin) + Float(normalLose)) * 100))%",
+            title: roundedNormalWinRate + "%",
             size: 30,
-            textColor: .white,
-            letterSpacing: 10)
+            textColor: .Y ?? .black,
+            letterSpacing: 5)
+        let spyWinRate = Float(spyWin) / (Float(spyWin) + Float(spyLose)) * 100
+        let roundedSpyWinRate = String(format: "%.0f", spyWinRate)
         spyWinRateLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
-            title: "\((Float(spyWin) / (Float(spyWin) + Float(spyLose)) * 100))%",
+            title: roundedSpyWinRate + "%",
             size: 30,
-            textColor: .white,
-            letterSpacing: 10)
+            textColor: .Y ?? .black,
+            letterSpacing: 5)
         let totalWin = normalWin + spyWin
         let totalLose = normalLose + spyLose
         totalRecordsLabel.attributedText = UIFont.fontStyle(
@@ -184,9 +232,11 @@ class RecordsViewController: BaseViewController {
             textColor: .B2 ?? .black,
             letterSpacing: 10)
         let totalGames = totalWin + totalLose
+        let totalRecords = (Float(totalWin) / Float(totalGames) * 100)
+        let roundedTotalRecords = String(format: "%.0f", totalRecords)
         totalWinRateLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
-            title: "\(Float(totalWin) / Float(totalGames) * 100)%",
+            title: roundedTotalRecords + "%",
             size: 30,
             textColor: .B2 ?? .black,
             letterSpacing: 10)
