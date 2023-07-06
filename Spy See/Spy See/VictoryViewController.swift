@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 import FirebaseFirestore
 
 class VictoryViewController: BaseViewController {
@@ -30,11 +31,19 @@ class VictoryViewController: BaseViewController {
     }()
     let dataBase = Firestore.firestore()
     var isSpyWin = true
+    let playerIdentity = UserDefaults.standard.string(forKey: "playerIdentity")
+    var spyWin: Int?
+    var spyLose: Int?
+    var normalWin: Int?
+    var normalLose: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         whoWins()
         configureLayout()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        getRecords()
     }
     func whoWins() {
         if isSpyWin {
@@ -81,6 +90,7 @@ class VictoryViewController: BaseViewController {
         if let targetViewController = navigationController?.viewControllers[1] {
             navigationController?.popToViewController(targetViewController, animated: true)
             deleteGameData()
+            updateRecords()
         }
     }
     func deleteGameData() {
@@ -92,6 +102,66 @@ class VictoryViewController: BaseViewController {
                 print("Delete error：\(error.localizedDescription)")
             } else {
                 print("Delete successfully")
+            }
+        }
+    }
+    func getRecords() {
+        let room = dataBase.collection("Users")
+        guard let userId = Auth.auth().currentUser?.email else {
+            return
+        }
+        let documentRef = room.document(userId)
+        documentRef.getDocument { (document, error) in
+            guard let document = document else {
+                return
+            }
+            if let normalWin = document.data()?["normalWin"] as? String {
+                self.normalWin = Int(normalWin)
+            }
+            if let normalLose = document.data()?["normalLose"] as? String {
+                self.normalLose = Int(normalLose)
+            }
+            if let spyWin = document.data()?["spyWin"] as? String {
+                self.spyWin = Int(spyWin)
+            }
+            if let spyLose = document.data()?["spyLose"] as? String {
+                self.spyLose = Int(spyLose)
+            }
+        }
+    }
+    func updateRecords() {
+        if isSpyWin {
+            if playerIdentity == "臥底" {
+                updateRecord("spyWin", spyWin ?? 0)
+//                臥底勝場數＋１
+            } else {
+                updateRecord("normalLose", normalLose ?? 0)
+//                平民敗場數＋１
+            }
+        } else {
+            if playerIdentity == "平民" {
+                updateRecord("normalWin", normalWin ?? 0)
+//                平民勝場數＋１
+            } else {
+                updateRecord("spyLose", spyLose ?? 0)
+//                臥底敗場數＋１
+            }
+        }
+    }
+    func updateRecord(_ string: String, _ int: Int) {
+        let room = dataBase.collection("Users")
+        guard let userId = Auth.auth().currentUser?.email else {
+            return
+        }
+        let documentRef = room.document(userId)
+        let data: [String: Any] = [
+            string: String(int + 1)
+        ]
+        documentRef.updateData(data) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Document updated successfully")
             }
         }
     }

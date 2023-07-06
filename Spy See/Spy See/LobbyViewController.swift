@@ -131,8 +131,12 @@ class LobbyViewController: BaseViewController {
                             print("Document updated successfully")
                             // 取回自己的index及對應的題目
                             documentRef.getDocument { (document, error) in
-                                if let document = document, let playerIndex = document.data()?["playerIndex"] as? Int, let prompts = document.data()?["prompts"] as? [String] {
-                                    self.handlePlayerIndex(playerIndex, prompts)
+                                if let document = document,
+                                    let playerIndex = document.data()?["playerIndex"] as? Int,
+                                    let prompts = document.data()?["prompts"] as? [String],
+                                    let identities = document.data()?["identities"] as? [String]
+                                {
+                                    self.handlePlayerIndex(playerIndex, prompts, identities)
                                     UserDefaults.standard.removeObject(forKey: "userName")
                                     UserDefaults.standard.setValue(self.userName, forKey: "userName")
                                 } else {
@@ -152,11 +156,15 @@ class LobbyViewController: BaseViewController {
             }
         }
     }
-    func handlePlayerIndex(_ playerIndex: Int, _ prompts: [String]) -> String? {
+    func handlePlayerIndex(_ playerIndex: Int, _ prompts: [String], _ identities: [String]) -> String? {
         guard playerIndex >= 0 && playerIndex < prompts.count else {
             print("Invalid player index")
             return nil
         }
+        let playerIdentity = identities[playerIndex]
+        UserDefaults.standard.removeObject(forKey: "playerIdentity")
+        UserDefaults.standard.setValue(playerIdentity, forKey: "playerIdentity")
+        print("===playerIdentity:\(playerIdentity)")
         let selectedPrompt = prompts[playerIndex]
         UserDefaults.standard.removeObject(forKey: "hostPrompt")
         UserDefaults.standard.removeObject(forKey: "playerPrompt")

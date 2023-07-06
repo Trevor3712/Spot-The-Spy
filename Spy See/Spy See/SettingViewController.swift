@@ -159,8 +159,11 @@ class SettingViewController: BaseViewController {
                 UserDefaults.standard.removeObject(forKey: "playerPrompt")
                 UserDefaults.standard.removeObject(forKey: "hostPrompt")
                 UserDefaults.standard.removeObject(forKey: "userName")
+                UserDefaults.standard.removeObject(forKey: "playerIdentity")
                 UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
                 UserDefaults.standard.setValue(self.userName, forKey: "userName")
+                UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
+                print("===playerIdentity:\(self.identityArray[0])")
                 let inviteVC = InviteViewController()
                 self.navigationController?.pushViewController(inviteVC, animated: true)
             }
@@ -209,7 +212,7 @@ class SettingViewController: BaseViewController {
                 self.userName = name
                 print(self.userName)
             } else {
-                print("Failed to retrieve player index: \(error?.localizedDescription ?? "")")
+                print(error?.localizedDescription)
             }
         }
     }
