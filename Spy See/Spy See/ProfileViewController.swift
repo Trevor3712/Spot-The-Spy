@@ -103,7 +103,7 @@ class ProfileViewController: BaseViewController {
         }
         let documentRef = user.document(userId)
         let name = nameTextField.text
-        documentRef.setData(["name": name ]) { error in
+        documentRef.updateData(["name": name ]) { error in
             if let error = error {
                 print("Error adding document: \(error)")
             } else {

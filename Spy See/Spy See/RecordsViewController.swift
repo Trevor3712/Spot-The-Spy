@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class RecordsViewController: BaseViewController {
     lazy var titleLabel: UILabel = {
@@ -55,6 +57,11 @@ class RecordsViewController: BaseViewController {
     lazy var spyRecordsLabel = UILabel()
     lazy var normalWinRateLabel = UILabel()
     lazy var spyWinRateLabel = UILabel()
+    var spyWin = 0
+    var spyLose = 0
+    var normalWin = 0
+    var normalLose = 0
+    let dataBase = Firestore.firestore()
     override func viewDidLoad() {
         super.viewDidLoad()
         [titleLabel, totalRecordsLabel, winRateLabel, totalWinRateLabel,
@@ -115,5 +122,73 @@ class RecordsViewController: BaseViewController {
             make.centerY.equalTo(spyLabel)
         }
         spyWinRateLabel.text = "50%"
+        getRecords()
+//        showRecords()
+    }
+    func getRecords() {
+        let room = dataBase.collection("Users")
+        guard let userId = Auth.auth().currentUser?.email else {
+            return
+        }
+        let documentRef = room.document(userId)
+        documentRef.getDocument { (document, error) in
+            guard let document = document else {
+                return
+            }
+            if let normalWin = document.data()?["normalWin"] as? String {
+                self.normalWin = Int(normalWin) ?? 0
+            }
+            if let normalLose = document.data()?["normalLose"] as? String {
+                self.normalLose = Int(normalLose) ?? 0
+            }
+            if let spyWin = document.data()?["spyWin"] as? String {
+                self.spyWin = Int(spyWin) ?? 0
+            }
+            if let spyLose = document.data()?["spyLose"] as? String {
+                self.spyLose = Int(spyLose) ?? 0
+            }
+            self.showRecords()
+        }
+    }
+    func showRecords() {
+        normalRecordsLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "\(normalWin)W  \(normalLose)L",
+            size: 30,
+            textColor: .white,
+            letterSpacing: 10)
+        spyRecordsLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "\(spyWin)W \(spyLose)L",
+            size: 30,
+            textColor: .white,
+            letterSpacing: 10)
+        normalWinRateLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "\((Float(normalWin) / (Float(normalWin) + Float(normalLose)) * 100))%",
+            size: 30,
+            textColor: .white,
+            letterSpacing: 10)
+        spyWinRateLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "\((Float(spyWin) / (Float(spyWin) + Float(spyLose)) * 100))%",
+            size: 30,
+            textColor: .white,
+            letterSpacing: 10)
+        let totalWin = normalWin + spyWin
+        let totalLose = normalLose + spyLose
+        totalRecordsLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "\(totalWin)W \(totalLose)L",
+            size: 30,
+            textColor: .B2 ?? .black,
+            letterSpacing: 10)
+        let totalGames = totalWin + totalLose
+        totalWinRateLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "\(Float(totalWin) / Float(totalGames) * 100)%",
+            size: 30,
+            textColor: .B2 ?? .black,
+            letterSpacing: 10)
     }
 }
