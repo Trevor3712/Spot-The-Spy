@@ -72,7 +72,7 @@ class LoginViewController: BaseViewController {
     lazy var accountTextField: BaseTextField = {
         let accountTextField = BaseTextField()
         accountTextField.placeholder = "請輸入帳號"
-        accountTextField.text = "1@1.com"
+//        accountTextField.text = "1@1.com"
         accountTextField.keyboardType = .emailAddress
         accountTextField.autocorrectionType = .no
         accountTextField.delegate = self
@@ -82,7 +82,7 @@ class LoginViewController: BaseViewController {
     lazy var passwordTextField: BaseTextField = {
         let passwordTextField = BaseTextField()
         passwordTextField.placeholder = "請輸入密碼"
-        passwordTextField.text = "123456"
+//        passwordTextField.text = "123456"
         passwordTextField.isSecureTextEntry = true
         passwordTextField.autocorrectionType = .no
         passwordTextField.delegate = self
@@ -106,11 +106,11 @@ class LoginViewController: BaseViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let button = UIButton(type: .roundedRect)
-//              button.frame = CGRect(x: 20, y: 250, width: 100, height: 30)
-//              button.setTitle("Test Crash", for: [])
-//              button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
-//              view.addSubview(button)
+        let button = UIButton(type: .roundedRect)
+              button.frame = CGRect(x: 20, y: 250, width: 100, height: 30)
+              button.setTitle("Test Crash", for: [])
+              button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
+              view.addSubview(button)
         [logoImage,titleContainerView, accountContainerView].forEach { view.addSubview($0) }
         [labelCN1, labelCN2, labelEN1, labelEN2, labelEN3].forEach { titleContainerView.addSubview($0) }
         [accountTextField, passwordTextField,
@@ -175,10 +175,10 @@ class LoginViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
-//    @IBAction func crashButtonTapped(_ sender: AnyObject) {
-//          let numbers = [0]
-//          let _ = numbers[1]
-//      }
+    @IBAction func crashButtonTapped(_ sender: AnyObject) {
+          let numbers = [0]
+          let _ = numbers[1]
+      }
     @objc func logInButtonPressed(_ sender: UIButton) {
         vibrate()
         Auth.auth().signIn(
