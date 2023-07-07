@@ -53,7 +53,7 @@ class VictoryViewController: BaseViewController {
                 size: 45,
                 textColor: .B2 ?? .black,
                 letterSpacing: 15)
-            identityImageView.image = .asset(.spy)
+            identityImageView.image = .asset(.spyWin)
         } else {
             victoryLabel.attributedText = UIFont.fontStyle(
                 font: .boldItalicEN,
@@ -73,10 +73,10 @@ class VictoryViewController: BaseViewController {
             make.height.equalTo(80)
         }
         identityImageView.snp.makeConstraints { make in
-            make.bottom.equalTo(victoryLabel.snp.top).offset(-100)
+            make.bottom.equalTo(victoryLabel.snp.top).offset(-80)
             make.centerX.equalTo(view)
-            make.width.equalTo(150)
-            make.height.equalTo(150)
+            make.width.equalTo(200)
+            make.height.equalTo(200)
         }
         backToLobbyButton.snp.makeConstraints { make in
             make.top.equalTo(victoryLabel.snp.bottom).offset(150)

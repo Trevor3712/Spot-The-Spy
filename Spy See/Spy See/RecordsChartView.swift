@@ -44,7 +44,6 @@ struct RecordsChartView: View {
                     y: .value("場數", $0.count)
                 )
                 .foregroundStyle(by: .value("身份", records.type))
-                
                 .annotation(position: .overlay, alignment: .top, spacing: 5) {
                     Text("\(count)")
                         .font(.footnote)

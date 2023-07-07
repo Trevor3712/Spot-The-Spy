@@ -107,7 +107,6 @@ class RecordsViewController: BaseViewController, ObservableObject {
     private var hostingController: UIHostingController<RecordsChartView>?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         hostingController = UIHostingController(rootView: recordsChartView)
         self.addChild(hostingController!)
         hostingController!.didMove(toParent: self)
@@ -185,6 +184,9 @@ class RecordsViewController: BaseViewController, ObservableObject {
             make.right.equalTo(chartView)
             make.centerY.equalTo(spyLabel)
         }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         getRecords()
     }
     func getRecords() {

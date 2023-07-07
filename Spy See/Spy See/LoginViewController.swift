@@ -45,7 +45,8 @@ class LoginViewController: BaseViewController {
             title: "SPOT",
             size: 45,
             textColor: .B2 ?? .black,
-            letterSpacing: 10)
+            letterSpacing: 10,
+            obliqueness: 0.1)
         return labelEN1
     }()
     lazy var labelEN2: UILabel = {
@@ -55,7 +56,8 @@ class LoginViewController: BaseViewController {
             title: "THE",
             size: 25,
             textColor: .B2 ?? .black,
-            letterSpacing: 10)
+            letterSpacing: 10,
+            obliqueness: 0.1)
         return labelEN2
     }()
     lazy var labelEN3: UILabel = {
@@ -65,7 +67,8 @@ class LoginViewController: BaseViewController {
             title: "SPY",
             size: 45,
             textColor: .B4 ?? .black,
-            letterSpacing: 10)
+            letterSpacing: 10,
+            obliqueness: 0.1)
         return labelEN3
     }()
     lazy var accountContainerView = UIView()
@@ -111,10 +114,10 @@ class LoginViewController: BaseViewController {
         [accountTextField, passwordTextField,
          loginButton, signupButton].forEach { accountContainerView.addSubview($0) }
         logoImage.snp.makeConstraints { make in
-            make.bottom.equalTo(titleContainerView.snp.top).offset(-50)
+            make.bottom.equalTo(titleContainerView.snp.top).offset(-30)
             make.centerX.equalTo(view)
-            make.width.equalTo(150)
-            make.height.equalTo(150)
+            make.width.equalTo(200)
+            make.height.equalTo(200)
         }
         titleContainerView.snp.makeConstraints { make in
             make.centerX.centerY.left.right.equalTo(view)

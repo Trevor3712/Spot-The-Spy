@@ -62,8 +62,8 @@ class LobbyViewController: BaseViewController {
         logoImage.snp.makeConstraints { make in
             make.top.equalTo(view).offset(200)
             make.left.equalTo(view).offset(50)
-            make.width.equalTo(130)
-            make.height.equalTo(130)
+            make.width.equalTo(150)
+            make.height.equalTo(150)
         }
         createRoomButton.snp.makeConstraints { make in
             make.top.equalTo(logoImage.snp.bottom).offset(30)
