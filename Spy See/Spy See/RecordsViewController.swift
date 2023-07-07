@@ -10,7 +10,7 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 
-class RecordsViewController: BaseViewController {
+class RecordsViewController: BaseViewController, ObservableObject {
     lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.attributedText = UIFont.fontStyle(
@@ -103,28 +103,30 @@ class RecordsViewController: BaseViewController {
     var normalWin = 0
     var normalLose = 0
     let dataBase = Firestore.firestore()
+    var recordsChartView = RecordsChartView()
+    private var hostingController: UIHostingController<RecordsChartView>?
     override func viewDidLoad() {
         super.viewDidLoad()
-        let recordsChartView = RecordsChartView()
-        let hostingController = UIHostingController(rootView: recordsChartView)
-        self.addChild(hostingController)
-        hostingController.didMove(toParent: self)
+        
+        hostingController = UIHostingController(rootView: recordsChartView)
+        self.addChild(hostingController!)
+        hostingController!.didMove(toParent: self)
         [titleLabel, totalRecordsLabel, winRateLabel, totalWinRateLabel,
          chartView, normalContainerView, spyContainerViwe].forEach { view.addSubview($0) }
         [normalLabel, normalRecordsLabel, normalWinRateLabel].forEach { normalContainerView.addSubview($0) }
         [spyLabel, spyRecordsLabel, spyWinRateLabel].forEach { spyContainerViwe.addSubview($0) }
-        chartView.addSubview(hostingController.view)
+        chartView.addSubview(hostingController!.view)
         chartView.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.centerY.equalTo(view)
             make.width.equalTo(350)
             make.height.equalTo(250)
         }
-        hostingController.view.snp.makeConstraints { make in
+        hostingController?.view.snp.makeConstraints { make in
             make.edges.equalTo(chartView).inset(5)
         }
         winRateLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(hostingController.view.snp.top).offset(-30)
+            make.bottom.equalTo(hostingController!.view.snp.top).offset(-30)
             make.right.equalTo(view.snp.centerX).offset(-20)
         }
         totalWinRateLabel.snp.makeConstraints { make in
@@ -136,7 +138,7 @@ class RecordsViewController: BaseViewController {
         totalRecordsLabel.snp.makeConstraints { make in
             make.bottom.equalTo(winRateLabel.snp.top).offset(-20)
             make.centerX.equalTo(view)
-            make.width.equalTo(hostingController.view)
+            make.width.equalTo(hostingController!.view)
             make.height.equalTo(50)
         }
         titleLabel.snp.makeConstraints { make in
@@ -144,7 +146,7 @@ class RecordsViewController: BaseViewController {
             make.centerX.equalTo(view)
         }
         normalContainerView.snp.makeConstraints { make in
-            make.top.equalTo(hostingController.view.snp.bottom).offset(30)
+            make.top.equalTo(hostingController!.view.snp.bottom).offset(30)
             make.centerX.equalTo(view)
             make.width.equalTo(350)
             make.height.equalTo(50)
@@ -191,7 +193,7 @@ class RecordsViewController: BaseViewController {
             return
         }
         let documentRef = room.document(userId)
-        documentRef.getDocument { (document, error) in
+        documentRef.getDocument { [self] (document, error) in
             guard let document = document else {
                 return
             }
@@ -208,6 +210,10 @@ class RecordsViewController: BaseViewController {
                 self.spyLose = Int(spyLose) ?? 0
             }
             self.showRecords()
+            self.hostingController?.rootView.spyWin = self.spyWin
+            self.hostingController?.rootView.spyLose = self.spyLose
+            self.hostingController?.rootView.normalWin = self.normalWin
+            self.hostingController?.rootView.normalLose = self.normalLose
         }
     }
     func showRecords() {

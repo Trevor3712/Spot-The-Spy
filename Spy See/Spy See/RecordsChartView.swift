@@ -18,16 +18,19 @@ struct RecordsData: Identifiable {
     var data: [RecordsCount]
     var id = UUID()
 }
-
 struct RecordsChartView: View {
+    var spyWin: Int?
+    var spyLose: Int?
+    var normalWin: Int?
+    var normalLose: Int?
     var body: some View {
         var winData = [
-            RecordsCount(type: "平民", count: 20),
-            RecordsCount(type: "臥底", count: 15)
+            RecordsCount(type: "平民", count: normalWin ?? 0),
+            RecordsCount(type: "臥底", count: spyWin ?? 0)
         ]
         var loseData = [
-            RecordsCount(type: "平民", count: 16),
-            RecordsCount(type: "臥底", count: 14)
+            RecordsCount(type: "平民", count: normalLose ?? 0),
+            RecordsCount(type: "臥底", count: spyLose ?? 0)
         ]
         let recordsData = [
             RecordsData(type: "Win", data: winData),
