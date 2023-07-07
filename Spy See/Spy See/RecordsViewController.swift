@@ -51,7 +51,15 @@ class RecordsViewController: BaseViewController {
         totalWinRateLabel.textAlignment = .center
         return totalWinRateLabel
     }()
-    lazy var chartView = UIView()
+    lazy var chartView: UIView = {
+        let chartView = UIView()
+        chartView.backgroundColor = .white
+        chartView.layer.borderWidth = 1
+        chartView.layer.borderColor = UIColor.B1?.cgColor
+        chartView.layer.cornerRadius = 20
+        chartView.clipsToBounds = true
+        return chartView
+    }()
     lazy var normalLabel: UILabel = {
         let normalLabel = UILabel()
         normalLabel.backgroundColor = .white
@@ -101,23 +109,20 @@ class RecordsViewController: BaseViewController {
         let hostingController = UIHostingController(rootView: recordsChartView)
         self.addChild(hostingController)
         hostingController.didMove(toParent: self)
-        [hostingController.view, titleLabel, totalRecordsLabel, winRateLabel, totalWinRateLabel,
+        [titleLabel, totalRecordsLabel, winRateLabel, totalWinRateLabel,
          chartView, normalContainerView, spyContainerViwe].forEach { view.addSubview($0) }
         [normalLabel, normalRecordsLabel, normalWinRateLabel].forEach { normalContainerView.addSubview($0) }
         [spyLabel, spyRecordsLabel, spyWinRateLabel].forEach { spyContainerViwe.addSubview($0) }
-        hostingController.view.snp.makeConstraints { make in
+        chartView.addSubview(hostingController.view)
+        chartView.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.centerY.equalTo(view)
             make.width.equalTo(350)
             make.height.equalTo(250)
         }
-//        chartView.snp.makeConstraints { make in
-//            make.centerX.equalTo(view)
-//            make.centerY.equalTo(view)
-//            make.width.equalTo(350)
-//            make.height.equalTo(250)
-//        }
-//        chartView.backgroundColor = .white
+        hostingController.view.snp.makeConstraints { make in
+            make.edges.equalTo(chartView).inset(5)
+        }
         winRateLabel.snp.makeConstraints { make in
             make.bottom.equalTo(hostingController.view.snp.top).offset(-30)
             make.right.equalTo(view.snp.centerX).offset(-20)
@@ -139,7 +144,7 @@ class RecordsViewController: BaseViewController {
             make.centerX.equalTo(view)
         }
         normalContainerView.snp.makeConstraints { make in
-            make.top.equalTo(hostingController.view.snp.bottom).offset(20)
+            make.top.equalTo(hostingController.view.snp.bottom).offset(30)
             make.centerX.equalTo(view)
             make.width.equalTo(350)
             make.height.equalTo(50)
@@ -151,11 +156,11 @@ class RecordsViewController: BaseViewController {
             make.height.equalTo(50)
         }
         normalRecordsLabel.snp.makeConstraints { make in
-            make.left.equalTo(normalLabel.snp.right).offset(30)
+            make.centerX.equalTo(normalContainerView)
             make.centerY.equalTo(normalLabel)
         }
         normalWinRateLabel.snp.makeConstraints { make in
-            make.left.equalTo(normalRecordsLabel.snp.right).offset(30)
+            make.right.equalTo(chartView)
             make.centerY.equalTo(normalLabel)
         }
         spyContainerViwe.snp.makeConstraints { make in
@@ -171,11 +176,11 @@ class RecordsViewController: BaseViewController {
             make.height.equalTo(50)
         }
         spyRecordsLabel.snp.makeConstraints { make in
-            make.left.equalTo(spyLabel.snp.right).offset(30)
+            make.centerX.equalTo(normalContainerView)
             make.centerY.equalTo(spyLabel)
         }
         spyWinRateLabel.snp.makeConstraints { make in
-            make.left.equalTo(spyRecordsLabel.snp.right).offset(30)
+            make.right.equalTo(chartView)
             make.centerY.equalTo(spyLabel)
         }
         getRecords()

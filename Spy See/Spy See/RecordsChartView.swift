@@ -22,12 +22,12 @@ struct RecordsData: Identifiable {
 struct RecordsChartView: View {
     var body: some View {
         var winData = [
-            RecordsCount(type: "平民", count: 10),
-            RecordsCount(type: "臥底", count: 6)
+            RecordsCount(type: "平民", count: 20),
+            RecordsCount(type: "臥底", count: 15)
         ]
         var loseData = [
-            RecordsCount(type: "平民", count: 4),
-            RecordsCount(type: "臥底", count: 3)
+            RecordsCount(type: "平民", count: 16),
+            RecordsCount(type: "臥底", count: 14)
         ]
         let recordsData = [
             RecordsData(type: "Win", data: winData),
@@ -41,6 +41,7 @@ struct RecordsChartView: View {
                     y: .value("場數", $0.count)
                 )
                 .foregroundStyle(by: .value("身份", records.type))
+                
                 .annotation(position: .overlay, alignment: .top, spacing: 5) {
                     Text("\(count)")
                         .font(.footnote)
@@ -50,18 +51,13 @@ struct RecordsChartView: View {
                 .position(by: .value("身份", records.type))
             }
         }
-        .chartYAxis{
+        .chartYAxis {
             AxisMarks(position: .trailing)
         }
         .chartForegroundStyleScale([
-            "Win": Color(hue: 0.10, saturation: 0.70, brightness: 0.90),
-            "Lose": Color(hue: 0.80, saturation: 0.70, brightness: 0.80)
+            "Win": Color(UIColor.Y ?? .black),
+            "Lose": Color(UIColor.R ?? .black)
         ])
+        .padding()
     }
 }
-
-//struct RecordsChartView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        RecordsChartView()
-//    }
-//}
