@@ -164,6 +164,7 @@ class KillViewController: BaseViewController {
             let selectedPlayer = playersArray[selectedIndex]
             print("Selected player: \(selectedPlayer), index: \(selectedIndex)")
             self.waitLabel.text = ""
+            containerView.isHidden = false
             identityImageView.isHidden = false
             nextRoundButton.isHidden = false
             killLabel.isHidden = false

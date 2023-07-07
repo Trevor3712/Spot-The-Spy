@@ -114,7 +114,7 @@ class LoginViewController: BaseViewController {
         [accountTextField, passwordTextField,
          loginButton, signupButton].forEach { accountContainerView.addSubview($0) }
         logoImage.snp.makeConstraints { make in
-            make.bottom.equalTo(titleContainerView.snp.top).offset(-30)
+            make.bottom.equalTo(titleContainerView.snp.top).offset(-40)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
             make.height.equalTo(200)
