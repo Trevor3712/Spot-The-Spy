@@ -170,6 +170,11 @@ class LoginViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        accountTextField.text = ""
+        passwordTextField.text = ""
+    }
     @objc func logInButtonPressed(_ sender: UIButton) {
         vibrate()
         Auth.auth().signIn(

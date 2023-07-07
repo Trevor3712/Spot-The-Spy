@@ -13,6 +13,5 @@ target 'Spot The Spy' do
   pod 'FirebaseStorage'
   pod 'SnapKit', '~> 5.6.0'
   pod 'FirebaseCrashlytics'
-  pod 'FirebaseAnalytics'
 
 end
