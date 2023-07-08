@@ -36,7 +36,7 @@ class RecordsViewController: BaseViewController, ObservableObject {
         winRateLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "勝率",
-            size: 30,
+            size: 25,
             textColor: .B2 ?? .black,
             letterSpacing: 10)
         return winRateLabel
@@ -71,7 +71,7 @@ class RecordsViewController: BaseViewController, ObservableObject {
         normalLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "平民",
-            size: 30,
+            size: 25,
             textColor: .B2 ?? .black,
             letterSpacing: 5)
         return normalLabel
@@ -87,7 +87,7 @@ class RecordsViewController: BaseViewController, ObservableObject {
         spyLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "臥底",
-            size: 30,
+            size: 25,
             textColor: .B2 ?? .black,
             letterSpacing: 5)
         return spyLabel
@@ -222,13 +222,13 @@ class RecordsViewController: BaseViewController, ObservableObject {
         normalRecordsLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "\(normalWin)勝 \(normalLose)敗",
-            size: 30,
+            size: 25,
             textColor: .white,
             letterSpacing: 5)
         spyRecordsLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "\(spyWin)勝 \(spyLose)敗",
-            size: 30,
+            size: 25,
             textColor: .white,
             letterSpacing: 5)
         if normalWin != 0 && normalLose != 0 {
@@ -237,14 +237,14 @@ class RecordsViewController: BaseViewController, ObservableObject {
             normalWinRateLabel.attributedText = UIFont.fontStyle(
                 font: .semibold,
                 title: roundedNormalWinRate + "%",
-                size: 30,
+                size: 25,
                 textColor: .Y ?? .black,
                 letterSpacing: 5)
         } else {
             normalWinRateLabel.attributedText = UIFont.fontStyle(
                 font: .semibold,
                 title: "-",
-                size: 30,
+                size: 25,
                 textColor: .Y ?? .black,
                 letterSpacing: 5)
         }
@@ -254,14 +254,14 @@ class RecordsViewController: BaseViewController, ObservableObject {
             spyWinRateLabel.attributedText = UIFont.fontStyle(
                 font: .semibold,
                 title: roundedSpyWinRate + "%",
-                size: 30,
+                size: 25,
                 textColor: .Y ?? .black,
                 letterSpacing: 5)
         } else {
             spyWinRateLabel.attributedText = UIFont.fontStyle(
                 font: .semibold,
                 title: "-",
-                size: 30,
+                size: 25,
                 textColor: .Y ?? .black,
                 letterSpacing: 5)
         }
@@ -270,7 +270,7 @@ class RecordsViewController: BaseViewController, ObservableObject {
         totalRecordsLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "\(totalWin)勝 \(totalLose)敗",
-            size: 30,
+            size: 25,
             textColor: .B2 ?? .black,
             letterSpacing: 10)
         let totalGames = totalWin + totalLose
@@ -280,14 +280,14 @@ class RecordsViewController: BaseViewController, ObservableObject {
             totalWinRateLabel.attributedText = UIFont.fontStyle(
                 font: .semibold,
                 title: roundedTotalRecords + "%",
-                size: 30,
+                size: 25,
                 textColor: .B2 ?? .black,
                 letterSpacing: 10)
         } else {
             totalWinRateLabel.attributedText = UIFont.fontStyle(
                 font: .semibold,
                 title: "-",
-                size: 30,
+                size: 25,
                 textColor: .B2 ?? .black,
                 letterSpacing: 10)
         }
