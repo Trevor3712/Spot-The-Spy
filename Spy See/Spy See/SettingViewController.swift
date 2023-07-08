@@ -31,6 +31,8 @@ class SettingViewController: BaseViewController {
         playersCountTextFileld.placeholder = "請選擇人數"
         playersCountTextFileld.textAlignment = .center
         playersCountTextFileld.inputView = playersCountPickerView
+        playersCountTextFileld.delegate = self
+        playersCountTextFileld.tag = 1
         return playersCountTextFileld
     }()
     lazy var playersCountPickerView: UIPickerView = {
@@ -55,6 +57,8 @@ class SettingViewController: BaseViewController {
         spysCountTextFileld.placeholder = "請選擇人數"
         spysCountTextFileld.textAlignment = .center
         spysCountTextFileld.inputView = spysCountPickerView
+        spysCountTextFileld.delegate = self
+        spysCountTextFileld.tag = 2
         return spysCountTextFileld
     }()
     lazy var spysCountPickerView: UIPickerView = {
@@ -253,6 +257,29 @@ extension SettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
                 size: 20,
                 textColor: .B2 ?? .black,
                 letterSpacing: 5)
+        }
+    }
+}
+extension SettingViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.tag == 1 {
+            if playersCountTextFileld.text == "" {
+                playersCountTextFileld.attributedText = UIFont.fontStyle(
+                    font: .regular,
+                    title: "\(String(playersCount[0]))",
+                    size: 20,
+                    textColor: .B2 ?? .black,
+                    letterSpacing: 5)
+            }
+        } else {
+            if spysCountTextFileld.text == "" {
+                spysCountTextFileld.attributedText = UIFont.fontStyle(
+                    font: .regular,
+                    title: "\(String(spysCount[0]))",
+                    size: 20,
+                    textColor: .B2 ?? .black,
+                    letterSpacing: 5)
+            }
         }
     }
 }
