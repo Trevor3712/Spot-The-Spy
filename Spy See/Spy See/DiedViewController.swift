@@ -12,6 +12,12 @@ class DiedViewController: BaseViewController {
     lazy var diedImageView = UIImageView()
     lazy var diedLabel: UILabel = {
         let diedLabel = UILabel()
+        diedLabel.backgroundColor = .white
+        diedLabel.layer.borderWidth = 1
+        diedLabel.layer.borderColor = UIColor.B1?.cgColor
+        diedLabel.layer.cornerRadius = 20
+        diedLabel.clipsToBounds = true
+        diedLabel.textAlignment = .center
         diedLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "你已經死了",
@@ -35,17 +41,19 @@ class DiedViewController: BaseViewController {
         super.viewDidLoad()
         [diedImageView, diedLabel, remindLabel].forEach { view.addSubview($0) }
         diedLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(view).offset(-30)
+            make.centerY.equalTo(view).offset(30)
             make.centerX.equalTo(view)
+            make.width.equalTo(300)
+            make.height.equalTo(80)
         }
         diedImageView.snp.makeConstraints { make in
-            make.bottom.equalTo(diedLabel.snp.top).offset(-50)
+            make.bottom.equalTo(diedLabel.snp.top).offset(-80)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
             make.height.equalTo(200)
         }
         remindLabel.snp.makeConstraints { make in
-            make.top.equalTo(diedLabel.snp.bottom).offset(50)
+            make.top.equalTo(diedLabel.snp.bottom).offset(80)
             make.centerX.equalTo(view)
         }
         checkIfEndGame()
@@ -53,7 +61,6 @@ class DiedViewController: BaseViewController {
     }
     func showImage() {
         let playerIdentity = UserDefaults.standard.string(forKey: "playerIdentity")
-        print(playerIdentity)
         if playerIdentity == "平民" {
             diedImageView.image = .asset(.normalKilled)
         } else {
