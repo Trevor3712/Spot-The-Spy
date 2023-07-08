@@ -36,6 +36,8 @@ struct RecordsChartView: View {
             RecordsData(type: "Win", data: winData),
             RecordsData(type: "Lose", data: loseData)
         ]
+        let maxValue = max(winData.max(by: { $0.count < $1.count })?.count ?? 0,
+                                   loseData.max(by: { $0.count < $1.count })?.count ?? 0)
         Chart(recordsData, id: \.type) { records in
             ForEach(records.data) {
                 let count = $0.count
@@ -60,6 +62,7 @@ struct RecordsChartView: View {
             "Win": Color(UIColor.Y ?? .black),
             "Lose": Color(UIColor.R ?? .black)
         ])
+        .chartYScale(domain: 0...maxValue)
         .padding()
     }
 }
