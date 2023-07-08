@@ -231,22 +231,40 @@ class RecordsViewController: BaseViewController, ObservableObject {
             size: 30,
             textColor: .white,
             letterSpacing: 5)
-        let normalWinRate = Float(normalWin) / (Float(normalWin) + Float(normalLose)) * 100
-        let roundedNormalWinRate = String(format: "%.0f", normalWinRate)
-        normalWinRateLabel.attributedText = UIFont.fontStyle(
-            font: .semibold,
-            title: roundedNormalWinRate + "%",
-            size: 30,
-            textColor: .Y ?? .black,
-            letterSpacing: 5)
-        let spyWinRate = Float(spyWin) / (Float(spyWin) + Float(spyLose)) * 100
-        let roundedSpyWinRate = String(format: "%.0f", spyWinRate)
-        spyWinRateLabel.attributedText = UIFont.fontStyle(
-            font: .semibold,
-            title: roundedSpyWinRate + "%",
-            size: 30,
-            textColor: .Y ?? .black,
-            letterSpacing: 5)
+        if normalWin != 0 && normalLose != 0 {
+            let normalWinRate = Float(normalWin) / (Float(normalWin) + Float(normalLose)) * 100
+            let roundedNormalWinRate = String(format: "%.0f", normalWinRate)
+            normalWinRateLabel.attributedText = UIFont.fontStyle(
+                font: .semibold,
+                title: roundedNormalWinRate + "%",
+                size: 30,
+                textColor: .Y ?? .black,
+                letterSpacing: 5)
+        } else {
+            normalWinRateLabel.attributedText = UIFont.fontStyle(
+                font: .semibold,
+                title: "-",
+                size: 30,
+                textColor: .Y ?? .black,
+                letterSpacing: 5)
+        }
+        if spyWin != 0 && spyLose != 0 {
+            let spyWinRate = Float(spyWin) / (Float(spyWin) + Float(spyLose)) * 100
+            let roundedSpyWinRate = String(format: "%.0f", spyWinRate)
+            spyWinRateLabel.attributedText = UIFont.fontStyle(
+                font: .semibold,
+                title: roundedSpyWinRate + "%",
+                size: 30,
+                textColor: .Y ?? .black,
+                letterSpacing: 5)
+        } else {
+            spyWinRateLabel.attributedText = UIFont.fontStyle(
+                font: .semibold,
+                title: "-",
+                size: 30,
+                textColor: .Y ?? .black,
+                letterSpacing: 5)
+        }
         let totalWin = normalWin + spyWin
         let totalLose = normalLose + spyLose
         totalRecordsLabel.attributedText = UIFont.fontStyle(
@@ -256,13 +274,22 @@ class RecordsViewController: BaseViewController, ObservableObject {
             textColor: .B2 ?? .black,
             letterSpacing: 10)
         let totalGames = totalWin + totalLose
-        let totalRecords = (Float(totalWin) / Float(totalGames) * 100)
-        let roundedTotalRecords = String(format: "%.0f", totalRecords)
-        totalWinRateLabel.attributedText = UIFont.fontStyle(
-            font: .semibold,
-            title: roundedTotalRecords + "%",
-            size: 30,
-            textColor: .B2 ?? .black,
-            letterSpacing: 10)
+        if totalGames != 0 {
+            let totalRecords = (Float(totalWin) / Float(totalGames) * 100)
+            let roundedTotalRecords = String(format: "%.0f", totalRecords)
+            totalWinRateLabel.attributedText = UIFont.fontStyle(
+                font: .semibold,
+                title: roundedTotalRecords + "%",
+                size: 30,
+                textColor: .B2 ?? .black,
+                letterSpacing: 10)
+        } else {
+            totalWinRateLabel.attributedText = UIFont.fontStyle(
+                font: .semibold,
+                title: "-",
+                size: 30,
+                textColor: .B2 ?? .black,
+                letterSpacing: 10)
+        }
     }
 }
