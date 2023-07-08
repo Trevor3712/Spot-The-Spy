@@ -35,20 +35,30 @@ class DiedViewController: BaseViewController {
         super.viewDidLoad()
         [diedImageView, diedLabel, remindLabel].forEach { view.addSubview($0) }
         diedLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(view)
+            make.centerY.equalTo(view).offset(-30)
             make.centerX.equalTo(view)
         }
         diedImageView.snp.makeConstraints { make in
-            make.bottom.equalTo(diedLabel.snp.top).offset(-100)
+            make.bottom.equalTo(diedLabel.snp.top).offset(-50)
             make.centerX.equalTo(view)
-            make.width.equalTo(150)
-            make.height.equalTo(150)
+            make.width.equalTo(200)
+            make.height.equalTo(200)
         }
         remindLabel.snp.makeConstraints { make in
             make.top.equalTo(diedLabel.snp.bottom).offset(50)
             make.centerX.equalTo(view)
         }
         checkIfEndGame()
+        showImage()
+    }
+    func showImage() {
+        let playerIdentity = UserDefaults.standard.string(forKey: "playerIdentity")
+        print(playerIdentity)
+        if playerIdentity == "平民" {
+            diedImageView.image = .asset(.normalKilled)
+        } else {
+            diedImageView.image = .asset(.spyKilled)
+        }
     }
     func checkIfEndGame() {
         let room = dataBase.collection("Rooms")

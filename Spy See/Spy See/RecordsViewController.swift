@@ -221,13 +221,13 @@ class RecordsViewController: BaseViewController, ObservableObject {
     func showRecords() {
         normalRecordsLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
-            title: "\(normalWin)W \(normalLose)L",
+            title: "\(normalWin)勝 \(normalLose)敗",
             size: 30,
             textColor: .white,
             letterSpacing: 5)
         spyRecordsLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
-            title: "\(spyWin)W \(spyLose)L",
+            title: "\(spyWin)勝 \(spyLose)敗",
             size: 30,
             textColor: .white,
             letterSpacing: 5)
@@ -251,7 +251,7 @@ class RecordsViewController: BaseViewController, ObservableObject {
         let totalLose = normalLose + spyLose
         totalRecordsLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
-            title: "\(totalWin)W \(totalLose)L",
+            title: "\(totalWin)勝 \(totalLose)敗",
             size: 30,
             textColor: .B2 ?? .black,
             letterSpacing: 10)
