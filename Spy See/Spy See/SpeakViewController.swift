@@ -59,6 +59,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     lazy var messageTextField: BaseTextField = {
         let messageTextField = BaseTextField()
         messageTextField.placeholder = "討論輸入區"
+        messageTextField.delegate = self
         return messageTextField
     }()
     lazy var sendButton1: UIButton = {
@@ -270,6 +271,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     }
     @objc func sendClue() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
@@ -287,6 +289,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     }
     @objc func sendMesssge() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
@@ -403,6 +406,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }
     // MARK: - Audio Record
     @objc func recordAudioClue() {
+        playSeAudio(from: playUrl!)
         vibrate()
         changeButtonStyle()
         if audioEngine.isRunning {
@@ -673,5 +677,10 @@ extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
                 letterSpacing: 10)
             return header
         }
+    }
+}
+extension SpeakViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        playSeAudio(from: editingUrl!)
     }
 }

@@ -132,6 +132,7 @@ class SettingViewController: BaseViewController {
         getUserName()
     }
     @objc func invitationButtonPressed(_ sender: UIButton) {
+        playSeAudio(from: clickUrl!)
         vibrate()
         guard let playersCount = playersCountTextFileld.text, !playersCount.isEmpty, playersCount != "玩家人數",
               let spysCount = spysCountTextFileld.text, !spysCount.isEmpty, spysCount != "臥底人數" else {
@@ -261,6 +262,9 @@ extension SettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
 }
 extension SettingViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        playSeAudio(from: editingUrl!)
+    }
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.tag == 1 {
             if playersCountTextFileld.text == "" {

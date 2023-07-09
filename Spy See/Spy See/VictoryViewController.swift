@@ -93,6 +93,7 @@ class VictoryViewController: BaseViewController {
         }
     }
     @objc func backToLobbyButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         if let targetViewController = navigationController?.viewControllers[1] {
             navigationController?.popToViewController(targetViewController, animated: true)
@@ -140,18 +141,14 @@ class VictoryViewController: BaseViewController {
         if isSpyWin {
             if playerIdentity == "臥底" {
                 updateRecord("spyWin", spyWin ?? 0)
-//                臥底勝場數＋１
             } else {
                 updateRecord("normalLose", normalLose ?? 0)
-//                平民敗場數＋１
             }
         } else {
             if playerIdentity == "平民" {
                 updateRecord("normalWin", normalWin ?? 0)
-//                平民勝場數＋１
             } else {
                 updateRecord("spyLose", spyLose ?? 0)
-//                臥底敗場數＋１
             }
         }
     }

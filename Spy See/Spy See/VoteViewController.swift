@@ -94,6 +94,7 @@ class VoteViewController: BaseViewController {
 //        AudioPlayer.shared.stopAudio()
 //    }
     @objc func voteButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         guard let voted = votedPlayer else {
             let alertVC = AlertViewController()
@@ -142,16 +143,6 @@ extension VoteViewController: UITableViewDataSource {
         }
         return cell
     }
-//    func playAudio(from url: URL, loop: Bool = false) {
-//        do {
-//            gunLoadedAudioPlayer.audioPlayer = try AVAudioPlayer(contentsOf: url)
-//            gunLoadedAudioPlayer.audioPlayer?.numberOfLoops = loop ? -1 : 0
-//            gunLoadedAudioPlayer.audioPlayer?.prepareToPlay()
-//            gunLoadedAudioPlayer.audioPlayer?.play()
-//        } catch {
-//            print("Failed to play audio: \(error.localizedDescription)")
-//        }
-//    }
 }
 extension VoteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

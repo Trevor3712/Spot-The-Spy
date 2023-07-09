@@ -183,6 +183,7 @@ class LoginViewController: BaseViewController {
         passwordTextField.text = ""
     }
     @objc func logInButtonPressed(_ sender: UIButton) {
+        playSeAudio(from: clickUrl!)
         vibrate()
         Auth.auth().signIn(
             withEmail: accountTextField.text ?? "",
@@ -202,6 +203,7 @@ class LoginViewController: BaseViewController {
         }
     }
     @objc func signupButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         let signupVC = SignupViewController()
         navigationController?.pushViewController(signupVC, animated: true)
@@ -209,6 +211,7 @@ class LoginViewController: BaseViewController {
 }
 extension LoginViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        playSeAudio(from: editingUrl!)
         vibrate()
     }
     func textFieldDidEndEditing(_ textField: UITextField) {

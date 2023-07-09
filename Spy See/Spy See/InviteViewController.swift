@@ -76,12 +76,14 @@ class InviteViewController: BaseViewController {
         }
     }
     @objc func shareButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         let copyText = invitationLabel.text
         UIPasteboard.general.string = "我想邀請你來玩誰是臥底，邀請碼：\(copyText ?? "")"
         presentShareSheet()
     }
     @objc func readyButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         let waitingVC = WaitingViewController()
         navigationController?.pushViewController(waitingVC, animated: true)

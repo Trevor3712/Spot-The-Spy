@@ -101,11 +101,13 @@ class LobbyViewController: BaseViewController {
         navigationItem.hidesBackButton = false
     }
     @objc func createRoomButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         let settingVC = SettingViewController()
         navigationController?.pushViewController(settingVC, animated: true)
     }
     @objc func goButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         guard let invitationText = invitationTextFileld.text, !invitationText.isEmpty, invitationText != "請輸入邀請碼" else {
             let alert = alertVC.showAlert(title: "輸入錯誤", message: "請輸入邀請碼")
@@ -193,6 +195,7 @@ class LobbyViewController: BaseViewController {
 }
 extension LobbyViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        playSeAudio(from: editingUrl!)
         vibrate()
     }
     func textFieldDidEndEditing(_ textField: UITextField) {

@@ -89,6 +89,8 @@ class PassPromptViewController: BaseViewController {
         documentListener?.remove()
     }
     @objc func readyButtonPressed() {
+        playSeAudio(from: clickUrl!)
+        vibrate()
         let room = self.dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)

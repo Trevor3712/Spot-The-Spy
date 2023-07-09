@@ -227,6 +227,7 @@ class KillViewController: BaseViewController {
         }
     }
     @objc func nextRoundButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         self.playersArray.remove(at: arrayIndex ?? 0)
         self.identitiesArray.remove(at: arrayIndex ?? 0)
