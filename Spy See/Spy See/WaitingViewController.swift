@@ -80,6 +80,7 @@ class WaitingViewController: BaseViewController {
                 if self.allPlayersJoined() {
                     let promptVC = PassPromptViewController()
                     self.vibrateHard()
+                    AudioPlayer.shared.stopAudio()
                     self.navigationController?.pushViewController(promptVC, animated: true)
                 }
             }
@@ -88,17 +89,6 @@ class WaitingViewController: BaseViewController {
     func allPlayersJoined() -> Bool {
         return self.players.count == playerNumber
     }
-//    func pushNotification() {
-//        let content = UNMutableNotificationContent()
-//        content.title = "趕快回到誰是臥底！"
-//        content.subtitle = "本場遊戲玩家皆已到齊"
-//        content.body = "請點擊通知後回到遊戲"
-//        content.badge = 1
-//        content.sound = UNNotificationSound.defaultCritical
-//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
-//        let request = UNNotificationRequest(identifier: "gameStart", content: content, trigger: trigger)
-//        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-//    }
 }
 
 extension WaitingViewController: UITableViewDataSource {
