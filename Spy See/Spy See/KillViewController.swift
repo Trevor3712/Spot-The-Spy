@@ -112,6 +112,10 @@ class KillViewController: BaseViewController {
         playersArray = players ?? [""]
         loadVotedPlayers()
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AudioPlayer.shared.stopAudio()
+    }
 //    override func viewWillDisappear(_ animated: Bool) {
 //       super.viewWillDisappear(animated)
 //       votedListener?.remove()
