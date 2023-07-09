@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import AVFoundation
 
 class VoteViewController: BaseViewController {
     lazy var scrollView: UIScrollView = {
@@ -133,11 +134,24 @@ extension VoteViewController: UITableViewDataSource {
         cell.layer.backgroundColor = UIColor.clear.cgColor
         if let selectedIndexPath = selectedIndexPath, selectedIndexPath == indexPath {
             cell.knifeImageView.isHidden = false
+            vibrate()
+            let url = Bundle.main.url(forResource: "gunLoaded_se", withExtension: "wav")
+            playSeAudio(from: url!)
         } else {
             cell.knifeImageView.isHidden = true
         }
         return cell
     }
+//    func playAudio(from url: URL, loop: Bool = false) {
+//        do {
+//            gunLoadedAudioPlayer.audioPlayer = try AVAudioPlayer(contentsOf: url)
+//            gunLoadedAudioPlayer.audioPlayer?.numberOfLoops = loop ? -1 : 0
+//            gunLoadedAudioPlayer.audioPlayer?.prepareToPlay()
+//            gunLoadedAudioPlayer.audioPlayer?.play()
+//        } catch {
+//            print("Failed to play audio: \(error.localizedDescription)")
+//        }
+//    }
 }
 extension VoteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import AVFoundation
 
 class KillViewController: BaseViewController {
     lazy var waitLabel: UILabel = {
@@ -189,6 +190,8 @@ class KillViewController: BaseViewController {
             } else {
                 identityImageView.image = .asset(.spyKilled)
             }
+            let url = Bundle.main.url(forResource: "gunShot_se", withExtension: "wav")
+            playSeAudio(from: url!)
         } else {
             // 查找出現次數最多的值
             if let (mostFrequentValue, _) = voteCount.max(by: { $0.value < $1.value }) {
@@ -217,6 +220,8 @@ class KillViewController: BaseViewController {
                     } else {
                         identityImageView.image = .asset(.spyKilled)
                     }
+                    let url = Bundle.main.url(forResource: "gunShot_se", withExtension: "wav")
+                    playSeAudio(from: url!)
                 }
             }
         }
@@ -304,4 +309,14 @@ class KillViewController: BaseViewController {
             }
         }
     }
+//    func playAudio(from url: URL, loop: Bool = false) {
+//        do {
+//            gunShotAudioPlayer.audioPlayer = try AVAudioPlayer(contentsOf: url)
+//            gunShotAudioPlayer.audioPlayer?.numberOfLoops = loop ? -1 : 0
+//            gunShotAudioPlayer.audioPlayer?.prepareToPlay()
+//            gunShotAudioPlayer.audioPlayer?.play()
+//        } catch {
+//            print("Failed to play audio: \(error.localizedDescription)")
+//        }
+//    }
 }

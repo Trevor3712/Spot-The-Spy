@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import IQKeyboardManager
 import AudioToolbox
+import AVFoundation
 
 class BaseViewController: UIViewController {
     var isEnableIQKeyboard: Bool {
@@ -19,6 +20,7 @@ class BaseViewController: UIViewController {
         backgroundImageView.image = .asset(.background)
         return backgroundImageView
     }()
+    var seAudioPlayer: AVAudioPlayer?
     override func viewDidLoad() {
         super.viewDidLoad()
         configBackground()
@@ -49,5 +51,14 @@ class BaseViewController: UIViewController {
     }
     func vibrateHard() {
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+    }
+    func playSeAudio(from url: URL) {
+        do {
+            seAudioPlayer = try AVAudioPlayer(contentsOf: url)
+            seAudioPlayer?.prepareToPlay()
+            seAudioPlayer?.play()
+        } catch {
+            print("Failed to play audio: \(error.localizedDescription)")
+        }
     }
 }
