@@ -343,10 +343,8 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             if let audioClueString = data["audioClue"] as? String {
                 print("audio clue:\(audioClueString)")
                 let fileReference = Storage.storage().reference().child("\(self.fileName ?? "").wav")
-                let fileManager = FileManager.default
-                let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-                let destinationURL = documentsDirectory?.appendingPathComponent("recording.wav")
-                fileReference.write(toFile: destinationURL!) { url, error in
+                let destinationURL = self.getDirectoryPath().appendingPathComponent("\(self.fileName ?? "").wav")
+                fileReference.write(toFile: destinationURL) { url, error in
                     if let error = error {
                         print(error)
                     } else if let url = url {
@@ -582,8 +580,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     // MARK: - Upload audio and play
     func uploadAudio(audioURL: URL, completion: @escaping (Result<URL, Error>) -> Void) {
         let fileReference = Storage.storage().reference().child("\(fileName ?? "").wav")
+        let metaData = StorageMetadata()
+        metaData.contentType = "audio/wav"
         if let data = try? Data(contentsOf: audioURL) {
-            fileReference.putData(data, metadata: nil) { result in
+            fileReference.putData(data, metadata: metaData) { result in
                 switch result {
                 case .success(_):
                     fileReference.downloadURL { url, error in
