@@ -16,6 +16,7 @@ enum ImageAsset: String {
     case die
     case spyWin
     case spyKilled
+    case gun
 }
 extension UIImage {
     static func asset(_ asset: ImageAsset) -> UIImage? {

@@ -23,7 +23,7 @@
 		B571FE5C2A56BF32007EADE2 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571FE5B2A56BF32007EADE2 /* RecordsViewController.swift */; };
 		B571FE5E2A57BE88007EADE2 /* RecordsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571FE5D2A57BE88007EADE2 /* RecordsChartView.swift */; };
 		B571FE642A5A835B007EADE2 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571FE632A5A835B007EADE2 /* AudioPlayer.swift */; };
-		B571FE732A5A9388007EADE2 /* OG SoundFX - Shoot - Plasma Gun Shot Double Burst.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6A2A5A937E007EADE2 /* OG SoundFX - Shoot - Plasma Gun Shot Double Burst.wav */; };
+		B571FE732A5A9388007EADE2 /* gunShot_sf.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6A2A5A937E007EADE2 /* gunShot_sf.wav */; };
 		B571FE752A5A9388007EADE2 /* main_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6C2A5A9382007EADE2 /* main_bgm.wav */; };
 		B571FE782A5A9388007EADE2 /* dfMG Signature Series - Marine Pistols - Glock 19 Cocking Gun.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6F2A5A9388007EADE2 /* dfMG Signature Series - Marine Pistols - Glock 19 Cocking Gun.wav */; };
 		B571FE7F2A5A93B5007EADE2 /* Matching Sound Effects - Vintage Electronics - Stereo Cassette Deck Button Push Play.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE792A5A93B0007EADE2 /* Matching Sound Effects - Vintage Electronics - Stereo Cassette Deck Button Push Play.wav */; };
@@ -74,7 +74,7 @@
 		B571FE5B2A56BF32007EADE2 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
 		B571FE5D2A57BE88007EADE2 /* RecordsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsChartView.swift; sourceTree = "<group>"; };
 		B571FE632A5A835B007EADE2 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
-		B571FE6A2A5A937E007EADE2 /* OG SoundFX - Shoot - Plasma Gun Shot Double Burst.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "OG SoundFX - Shoot - Plasma Gun Shot Double Burst.wav"; sourceTree = "<group>"; };
+		B571FE6A2A5A937E007EADE2 /* gunShot_sf.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gunShot_sf.wav; sourceTree = "<group>"; };
 		B571FE6C2A5A9382007EADE2 /* main_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = main_bgm.wav; sourceTree = "<group>"; };
 		B571FE6F2A5A9388007EADE2 /* dfMG Signature Series - Marine Pistols - Glock 19 Cocking Gun.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "dfMG Signature Series - Marine Pistols - Glock 19 Cocking Gun.wav"; sourceTree = "<group>"; };
 		B571FE792A5A93B0007EADE2 /* Matching Sound Effects - Vintage Electronics - Stereo Cassette Deck Button Push Play.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Matching Sound Effects - Vintage Electronics - Stereo Cassette Deck Button Push Play.wav"; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 				B571FE8A2A5AAED2007EADE2 /* victory_bgm.wav */,
 				B571FE8F2A5AB54E007EADE2 /* vote_long_bgm.wav */,
 				B571FE892A5AAED0007EADE2 /* vote_bgm.wav */,
-				B571FE6A2A5A937E007EADE2 /* OG SoundFX - Shoot - Plasma Gun Shot Double Burst.wav */,
+				B571FE6A2A5A937E007EADE2 /* gunShot_sf.wav */,
 			);
 			path = "Sound Effect";
 			sourceTree = "<group>";
@@ -325,7 +325,7 @@
 				B571FE782A5A9388007EADE2 /* dfMG Signature Series - Marine Pistols - Glock 19 Cocking Gun.wav in Resources */,
 				B571FE802A5A93B5007EADE2 /* Artlist Original - Youtubers Kit Vol 1 - Best Mouse Click Ever.wav in Resources */,
 				B5D2B0A82A39C8ED00ED3516 /* Assets.xcassets in Resources */,
-				B571FE732A5A9388007EADE2 /* OG SoundFX - Shoot - Plasma Gun Shot Double Burst.wav in Resources */,
+				B571FE732A5A9388007EADE2 /* gunShot_sf.wav in Resources */,
 				B571FE752A5A9388007EADE2 /* main_bgm.wav in Resources */,
 				B571FE7F2A5A93B5007EADE2 /* Matching Sound Effects - Vintage Electronics - Stereo Cassette Deck Button Push Play.wav in Resources */,
 				B5D2B0A62A39C8E800ED3516 /* Main.storyboard in Resources */,
