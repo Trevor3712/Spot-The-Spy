@@ -175,7 +175,7 @@ class LoginViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let url = Bundle.main.url(forResource: "Jakub Pietras - Breaking into a Secret Government Facility", withExtension: "wav")
+        let url = Bundle.main.url(forResource: "main_bgm", withExtension: "wav")
         if ((AudioPlayer.shared.audioPlayer?.isPlaying) == nil) {
             AudioPlayer.shared.playAudio(from: url!, loop: true)
         }

@@ -23,14 +23,8 @@
 		B571FE5C2A56BF32007EADE2 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571FE5B2A56BF32007EADE2 /* RecordsViewController.swift */; };
 		B571FE5E2A57BE88007EADE2 /* RecordsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571FE5D2A57BE88007EADE2 /* RecordsChartView.swift */; };
 		B571FE642A5A835B007EADE2 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571FE632A5A835B007EADE2 /* AudioPlayer.swift */; };
-		B571FE702A5A9388007EADE2 /* Jakub Pietras - The Improbable Heist.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE672A5A937A007EADE2 /* Jakub Pietras - The Improbable Heist.wav */; };
-		B571FE712A5A9388007EADE2 /* Jakub Pietras - Following the Suspect.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE682A5A937C007EADE2 /* Jakub Pietras - Following the Suspect.wav */; };
-		B571FE722A5A9388007EADE2 /* BOOM Library - Transitions - Impact Shotgun Sharp Shot.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE692A5A937D007EADE2 /* BOOM Library - Transitions - Impact Shotgun Sharp Shot.wav */; };
 		B571FE732A5A9388007EADE2 /* OG SoundFX - Shoot - Plasma Gun Shot Double Burst.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6A2A5A937E007EADE2 /* OG SoundFX - Shoot - Plasma Gun Shot Double Burst.wav */; };
-		B571FE742A5A9388007EADE2 /* Jakub Pietras - Operation Encierro.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6B2A5A937F007EADE2 /* Jakub Pietras - Operation Encierro.wav */; };
-		B571FE752A5A9388007EADE2 /* Jakub Pietras - Breaking into a Secret Government Facility.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6C2A5A9382007EADE2 /* Jakub Pietras - Breaking into a Secret Government Facility.wav */; };
-		B571FE762A5A9388007EADE2 /* Jakub Pietras - On the Run.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6D2A5A9384007EADE2 /* Jakub Pietras - On the Run.wav */; };
-		B571FE772A5A9388007EADE2 /* Jakub Pietras - Bank Robbery Escape.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6E2A5A9387007EADE2 /* Jakub Pietras - Bank Robbery Escape.wav */; };
+		B571FE752A5A9388007EADE2 /* main_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6C2A5A9382007EADE2 /* main_bgm.wav */; };
 		B571FE782A5A9388007EADE2 /* dfMG Signature Series - Marine Pistols - Glock 19 Cocking Gun.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6F2A5A9388007EADE2 /* dfMG Signature Series - Marine Pistols - Glock 19 Cocking Gun.wav */; };
 		B571FE7F2A5A93B5007EADE2 /* Matching Sound Effects - Vintage Electronics - Stereo Cassette Deck Button Push Play.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE792A5A93B0007EADE2 /* Matching Sound Effects - Vintage Electronics - Stereo Cassette Deck Button Push Play.wav */; };
 		B571FE802A5A93B5007EADE2 /* Artlist Original - Youtubers Kit Vol 1 - Best Mouse Click Ever.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE7A2A5A93B1007EADE2 /* Artlist Original - Youtubers Kit Vol 1 - Best Mouse Click Ever.wav */; };
@@ -38,6 +32,8 @@
 		B571FE822A5A93B5007EADE2 /* Ni Sound - Interfacing - 8-Bit Dingy Boing Pitching up Rapidly.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE7C2A5A93B3007EADE2 /* Ni Sound - Interfacing - 8-Bit Dingy Boing Pitching up Rapidly.wav */; };
 		B571FE832A5A93B5007EADE2 /* Mechanical Wave - Paper - Newspaper Turning Page.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE7D2A5A93B4007EADE2 /* Mechanical Wave - Paper - Newspaper Turning Page.wav */; };
 		B571FE842A5A93B5007EADE2 /* Soundkrampf - Retro Devices - Camera Shutter KMZ Zenit 122  .wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE7E2A5A93B5007EADE2 /* Soundkrampf - Retro Devices - Camera Shutter KMZ Zenit 122  .wav */; };
+		B571FE8B2A5AAED2007EADE2 /* vote_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE892A5AAED0007EADE2 /* vote_bgm.wav */; };
+		B571FE8C2A5AAED2007EADE2 /* victory_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE8A2A5AAED2007EADE2 /* victory_bgm.wav */; };
 		B57DE3B22A496D1D00AEC8EC /* BaseMessageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */; };
 		B57DE3B62A49A63600AEC8EC /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B52A49A63600AEC8EC /* MessageCell.swift */; };
 		B59588952A3D98430058E170 /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588942A3D98430058E170 /* VoteViewController.swift */; };
@@ -77,14 +73,8 @@
 		B571FE5B2A56BF32007EADE2 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
 		B571FE5D2A57BE88007EADE2 /* RecordsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsChartView.swift; sourceTree = "<group>"; };
 		B571FE632A5A835B007EADE2 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
-		B571FE672A5A937A007EADE2 /* Jakub Pietras - The Improbable Heist.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Jakub Pietras - The Improbable Heist.wav"; sourceTree = "<group>"; };
-		B571FE682A5A937C007EADE2 /* Jakub Pietras - Following the Suspect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Jakub Pietras - Following the Suspect.wav"; sourceTree = "<group>"; };
-		B571FE692A5A937D007EADE2 /* BOOM Library - Transitions - Impact Shotgun Sharp Shot.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "BOOM Library - Transitions - Impact Shotgun Sharp Shot.wav"; sourceTree = "<group>"; };
 		B571FE6A2A5A937E007EADE2 /* OG SoundFX - Shoot - Plasma Gun Shot Double Burst.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "OG SoundFX - Shoot - Plasma Gun Shot Double Burst.wav"; sourceTree = "<group>"; };
-		B571FE6B2A5A937F007EADE2 /* Jakub Pietras - Operation Encierro.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Jakub Pietras - Operation Encierro.wav"; sourceTree = "<group>"; };
-		B571FE6C2A5A9382007EADE2 /* Jakub Pietras - Breaking into a Secret Government Facility.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Jakub Pietras - Breaking into a Secret Government Facility.wav"; sourceTree = "<group>"; };
-		B571FE6D2A5A9384007EADE2 /* Jakub Pietras - On the Run.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Jakub Pietras - On the Run.wav"; sourceTree = "<group>"; };
-		B571FE6E2A5A9387007EADE2 /* Jakub Pietras - Bank Robbery Escape.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Jakub Pietras - Bank Robbery Escape.wav"; sourceTree = "<group>"; };
+		B571FE6C2A5A9382007EADE2 /* main_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = main_bgm.wav; sourceTree = "<group>"; };
 		B571FE6F2A5A9388007EADE2 /* dfMG Signature Series - Marine Pistols - Glock 19 Cocking Gun.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "dfMG Signature Series - Marine Pistols - Glock 19 Cocking Gun.wav"; sourceTree = "<group>"; };
 		B571FE792A5A93B0007EADE2 /* Matching Sound Effects - Vintage Electronics - Stereo Cassette Deck Button Push Play.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Matching Sound Effects - Vintage Electronics - Stereo Cassette Deck Button Push Play.wav"; sourceTree = "<group>"; };
 		B571FE7A2A5A93B1007EADE2 /* Artlist Original - Youtubers Kit Vol 1 - Best Mouse Click Ever.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Artlist Original - Youtubers Kit Vol 1 - Best Mouse Click Ever.wav"; sourceTree = "<group>"; };
@@ -92,6 +82,8 @@
 		B571FE7C2A5A93B3007EADE2 /* Ni Sound - Interfacing - 8-Bit Dingy Boing Pitching up Rapidly.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Ni Sound - Interfacing - 8-Bit Dingy Boing Pitching up Rapidly.wav"; sourceTree = "<group>"; };
 		B571FE7D2A5A93B4007EADE2 /* Mechanical Wave - Paper - Newspaper Turning Page.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Mechanical Wave - Paper - Newspaper Turning Page.wav"; sourceTree = "<group>"; };
 		B571FE7E2A5A93B5007EADE2 /* Soundkrampf - Retro Devices - Camera Shutter KMZ Zenit 122  .wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Soundkrampf - Retro Devices - Camera Shutter KMZ Zenit 122  .wav"; sourceTree = "<group>"; };
+		B571FE892A5AAED0007EADE2 /* vote_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = vote_bgm.wav; sourceTree = "<group>"; };
+		B571FE8A2A5AAED2007EADE2 /* victory_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = victory_bgm.wav; sourceTree = "<group>"; };
 		B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMessageTableView.swift; sourceTree = "<group>"; };
 		B57DE3B52A49A63600AEC8EC /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		B59588942A3D98430058E170 /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
@@ -156,14 +148,10 @@
 				B571FE7D2A5A93B4007EADE2 /* Mechanical Wave - Paper - Newspaper Turning Page.wav */,
 				B571FE7C2A5A93B3007EADE2 /* Ni Sound - Interfacing - 8-Bit Dingy Boing Pitching up Rapidly.wav */,
 				B571FE7E2A5A93B5007EADE2 /* Soundkrampf - Retro Devices - Camera Shutter KMZ Zenit 122  .wav */,
-				B571FE692A5A937D007EADE2 /* BOOM Library - Transitions - Impact Shotgun Sharp Shot.wav */,
 				B571FE6F2A5A9388007EADE2 /* dfMG Signature Series - Marine Pistols - Glock 19 Cocking Gun.wav */,
-				B571FE6E2A5A9387007EADE2 /* Jakub Pietras - Bank Robbery Escape.wav */,
-				B571FE6C2A5A9382007EADE2 /* Jakub Pietras - Breaking into a Secret Government Facility.wav */,
-				B571FE682A5A937C007EADE2 /* Jakub Pietras - Following the Suspect.wav */,
-				B571FE6D2A5A9384007EADE2 /* Jakub Pietras - On the Run.wav */,
-				B571FE6B2A5A937F007EADE2 /* Jakub Pietras - Operation Encierro.wav */,
-				B571FE672A5A937A007EADE2 /* Jakub Pietras - The Improbable Heist.wav */,
+				B571FE6C2A5A9382007EADE2 /* main_bgm.wav */,
+				B571FE8A2A5AAED2007EADE2 /* victory_bgm.wav */,
+				B571FE892A5AAED0007EADE2 /* vote_bgm.wav */,
 				B571FE6A2A5A937E007EADE2 /* OG SoundFX - Shoot - Plasma Gun Shot Double Burst.wav */,
 			);
 			path = "Sound Effect";
@@ -328,22 +316,18 @@
 				B5D2B0AB2A39C8ED00ED3516 /* LaunchScreen.storyboard in Resources */,
 				B571FE832A5A93B5007EADE2 /* Mechanical Wave - Paper - Newspaper Turning Page.wav in Resources */,
 				B571FE812A5A93B5007EADE2 /* Dauzkobza - Domestic - Mouse Double Click Slowly.wav in Resources */,
+				B571FE8C2A5AAED2007EADE2 /* victory_bgm.wav in Resources */,
 				B571FE822A5A93B5007EADE2 /* Ni Sound - Interfacing - 8-Bit Dingy Boing Pitching up Rapidly.wav in Resources */,
-				B571FE742A5A9388007EADE2 /* Jakub Pietras - Operation Encierro.wav in Resources */,
 				B5D2B0B42A3A017D00ED3516 /* GoogleService-Info.plist in Resources */,
-				B571FE772A5A9388007EADE2 /* Jakub Pietras - Bank Robbery Escape.wav in Resources */,
-				B571FE712A5A9388007EADE2 /* Jakub Pietras - Following the Suspect.wav in Resources */,
-				B571FE702A5A9388007EADE2 /* Jakub Pietras - The Improbable Heist.wav in Resources */,
-				B571FE762A5A9388007EADE2 /* Jakub Pietras - On the Run.wav in Resources */,
 				B571FE782A5A9388007EADE2 /* dfMG Signature Series - Marine Pistols - Glock 19 Cocking Gun.wav in Resources */,
 				B571FE802A5A93B5007EADE2 /* Artlist Original - Youtubers Kit Vol 1 - Best Mouse Click Ever.wav in Resources */,
-				B571FE722A5A9388007EADE2 /* BOOM Library - Transitions - Impact Shotgun Sharp Shot.wav in Resources */,
 				B5D2B0A82A39C8ED00ED3516 /* Assets.xcassets in Resources */,
 				B571FE732A5A9388007EADE2 /* OG SoundFX - Shoot - Plasma Gun Shot Double Burst.wav in Resources */,
-				B571FE752A5A9388007EADE2 /* Jakub Pietras - Breaking into a Secret Government Facility.wav in Resources */,
+				B571FE752A5A9388007EADE2 /* main_bgm.wav in Resources */,
 				B571FE7F2A5A93B5007EADE2 /* Matching Sound Effects - Vintage Electronics - Stereo Cassette Deck Button Push Play.wav in Resources */,
 				B5D2B0A62A39C8E800ED3516 /* Main.storyboard in Resources */,
 				B571FE842A5A93B5007EADE2 /* Soundkrampf - Retro Devices - Camera Shutter KMZ Zenit 122  .wav in Resources */,
+				B571FE8B2A5AAED2007EADE2 /* vote_bgm.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

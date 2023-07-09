@@ -85,6 +85,7 @@ class PassPromptViewController: BaseViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        AudioPlayer.shared.stopAudio()
         documentListener?.remove()
     }
     @objc func readyButtonPressed() {

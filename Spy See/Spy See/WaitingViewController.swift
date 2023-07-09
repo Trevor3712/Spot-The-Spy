@@ -80,7 +80,6 @@ class WaitingViewController: BaseViewController {
                 if self.allPlayersJoined() {
                     let promptVC = PassPromptViewController()
                     self.vibrateHard()
-                    AudioPlayer.shared.stopAudio()
                     self.navigationController?.pushViewController(promptVC, animated: true)
                 }
             }

@@ -43,7 +43,14 @@ class VictoryViewController: BaseViewController {
         configureLayout()
     }
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let url = Bundle.main.url(forResource: "victory_bgm", withExtension: "wav")
+        AudioPlayer.shared.playAudio(from: url!, loop: true)
         getRecords()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AudioPlayer.shared.stopAudio()
     }
     func whoWins() {
         if isSpyWin {
