@@ -136,7 +136,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "zh-TW"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
-    private let audioEngine = AVAudioEngine()
+    private var audioEngine = AVAudioEngine()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(scrollView)
@@ -411,6 +411,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         changeButtonStyle()
         if audioEngine.isRunning {
             audioEngine.stop()
+            audioEngine.reset()
             recognitionRequest?.endAudio()
             speakButton1.isEnabled = false
             speakButton2.isEnabled = false

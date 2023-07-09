@@ -21,6 +21,7 @@ class BaseViewController: UIViewController {
         return backgroundImageView
     }()
     var seAudioPlayer: AVAudioPlayer?
+    let seAudioEngine = AVAudioEngine()
     let clickUrl = Bundle.main.url(forResource: "click_se", withExtension: "wav")
     let editingUrl = Bundle.main.url(forResource: "editing_se", withExtension: "wav")
     let playUrl = Bundle.main.url(forResource: "play_se", withExtension: "wav")
@@ -54,11 +55,36 @@ class BaseViewController: UIViewController {
     func vibrateHard() {
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
+//    func playSeAudio(from url: URL) {
+//        do {
+//            seAudioPlayer = try AVAudioPlayer(contentsOf: url)
+//            seAudioPlayer?.prepareToPlay()
+//            seAudioPlayer?.play()
+//        } catch {
+//            print("Failed to play audio: \(error.localizedDescription)")
+//        }
+//    }
     func playSeAudio(from url: URL) {
         do {
-            seAudioPlayer = try AVAudioPlayer(contentsOf: url)
-            seAudioPlayer?.prepareToPlay()
-            seAudioPlayer?.play()
+            let audioFile = try AVAudioFile(forReading: url)
+            let audioPlayerNode = AVAudioPlayerNode()
+            seAudioEngine.attach(audioPlayerNode)
+
+            // 開啟AVAudioSession
+            try AVAudioSession.sharedInstance().setCategory(.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
+
+            // 將節點連接到引擎的輸出節點
+            let mainMixer = seAudioEngine.mainMixerNode
+            seAudioEngine.connect(audioPlayerNode, to: mainMixer, format: audioFile.processingFormat)
+
+            // 播放音頻文件
+            audioPlayerNode.scheduleFile(audioFile, at: nil, completionHandler: nil)
+            seAudioEngine.prepare()
+            try seAudioEngine.start()
+
+            // 開始播放音頻
+            audioPlayerNode.play()
         } catch {
             print("Failed to play audio: \(error.localizedDescription)")
         }
