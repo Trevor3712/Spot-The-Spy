@@ -31,6 +31,8 @@ class SettingViewController: BaseViewController {
         playersCountTextFileld.placeholder = "請選擇人數"
         playersCountTextFileld.textAlignment = .center
         playersCountTextFileld.inputView = playersCountPickerView
+        playersCountTextFileld.delegate = self
+        playersCountTextFileld.tag = 1
         return playersCountTextFileld
     }()
     lazy var playersCountPickerView: UIPickerView = {
@@ -55,6 +57,8 @@ class SettingViewController: BaseViewController {
         spysCountTextFileld.placeholder = "請選擇人數"
         spysCountTextFileld.textAlignment = .center
         spysCountTextFileld.inputView = spysCountPickerView
+        spysCountTextFileld.delegate = self
+        spysCountTextFileld.tag = 2
         return spysCountTextFileld
     }()
     lazy var spysCountPickerView: UIPickerView = {
@@ -128,6 +132,7 @@ class SettingViewController: BaseViewController {
         getUserName()
     }
     @objc func invitationButtonPressed(_ sender: UIButton) {
+        playSeAudio(from: clickUrl!)
         vibrate()
         guard let playersCount = playersCountTextFileld.text, !playersCount.isEmpty, playersCount != "玩家人數",
               let spysCount = spysCountTextFileld.text, !spysCount.isEmpty, spysCount != "臥底人數" else {
@@ -159,8 +164,10 @@ class SettingViewController: BaseViewController {
                 UserDefaults.standard.removeObject(forKey: "playerPrompt")
                 UserDefaults.standard.removeObject(forKey: "hostPrompt")
                 UserDefaults.standard.removeObject(forKey: "userName")
+                UserDefaults.standard.removeObject(forKey: "playerIdentity")
                 UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
                 UserDefaults.standard.setValue(self.userName, forKey: "userName")
+                UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
                 let inviteVC = InviteViewController()
                 self.navigationController?.pushViewController(inviteVC, animated: true)
             }
@@ -209,7 +216,7 @@ class SettingViewController: BaseViewController {
                 self.userName = name
                 print(self.userName)
             } else {
-                print("Failed to retrieve player index: \(error?.localizedDescription ?? "")")
+                print(error?.localizedDescription)
             }
         }
     }
@@ -250,6 +257,32 @@ extension SettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
                 size: 20,
                 textColor: .B2 ?? .black,
                 letterSpacing: 5)
+        }
+    }
+}
+extension SettingViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        playSeAudio(from: editingUrl!)
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.tag == 1 {
+            if playersCountTextFileld.text == "" {
+                playersCountTextFileld.attributedText = UIFont.fontStyle(
+                    font: .regular,
+                    title: "\(String(playersCount[0]))",
+                    size: 20,
+                    textColor: .B2 ?? .black,
+                    letterSpacing: 5)
+            }
+        } else {
+            if spysCountTextFileld.text == "" {
+                spysCountTextFileld.attributedText = UIFont.fontStyle(
+                    font: .regular,
+                    title: "\(String(spysCount[0]))",
+                    size: 20,
+                    textColor: .B2 ?? .black,
+                    letterSpacing: 5)
+            }
         }
     }
 }

@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import AVFoundation
 
 class KillViewController: BaseViewController {
     lazy var waitLabel: UILabel = {
@@ -82,8 +83,8 @@ class KillViewController: BaseViewController {
         identityImageView.snp.makeConstraints { make in
             make.top.equalTo(view).offset(150)
             make.centerX.equalTo(view)
-            make.width.equalTo(150)
-            make.height.equalTo(150)
+            make.width.equalTo(200)
+            make.height.equalTo(200)
         }
         containerView.snp.makeConstraints { make in
             make.top.equalTo(identityImageView.snp.bottom).offset(30)
@@ -111,6 +112,10 @@ class KillViewController: BaseViewController {
         }
         playersArray = players ?? [""]
         loadVotedPlayers()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AudioPlayer.shared.stopAudio()
     }
 //    override func viewWillDisappear(_ animated: Bool) {
 //       super.viewWillDisappear(animated)
@@ -164,6 +169,7 @@ class KillViewController: BaseViewController {
             let selectedPlayer = playersArray[selectedIndex]
             print("Selected player: \(selectedPlayer), index: \(selectedIndex)")
             self.waitLabel.text = ""
+            containerView.isHidden = false
             identityImageView.isHidden = false
             nextRoundButton.isHidden = false
             killLabel.isHidden = false
@@ -179,6 +185,13 @@ class KillViewController: BaseViewController {
                 size: 35,
                 textColor: .R ?? .black,
                 letterSpacing: 10)
+            if identitiesArray[selectedIndex] == "平民" {
+                identityImageView.image = .asset(.normalKilled)
+            } else {
+                identityImageView.image = .asset(.spyKilled)
+            }
+            let url = Bundle.main.url(forResource: "gunShot_se", withExtension: "wav")
+            playSeAudio(from: url!)
         } else {
             // 查找出現次數最多的值
             if let (mostFrequentValue, _) = voteCount.max(by: { $0.value < $1.value }) {
@@ -202,11 +215,19 @@ class KillViewController: BaseViewController {
                         size: 35,
                         textColor: .R ?? .black,
                         letterSpacing: 10)
+                    if identitiesArray[index] == "平民" {
+                        identityImageView.image = .asset(.normalKilled)
+                    } else {
+                        identityImageView.image = .asset(.spyKilled)
+                    }
+                    let url = Bundle.main.url(forResource: "gunShot_se", withExtension: "wav")
+                    playSeAudio(from: url!)
                 }
             }
         }
     }
     @objc func nextRoundButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         self.playersArray.remove(at: arrayIndex ?? 0)
         self.identitiesArray.remove(at: arrayIndex ?? 0)
@@ -289,4 +310,14 @@ class KillViewController: BaseViewController {
             }
         }
     }
+//    func playAudio(from url: URL, loop: Bool = false) {
+//        do {
+//            gunShotAudioPlayer.audioPlayer = try AVAudioPlayer(contentsOf: url)
+//            gunShotAudioPlayer.audioPlayer?.numberOfLoops = loop ? -1 : 0
+//            gunShotAudioPlayer.audioPlayer?.prepareToPlay()
+//            gunShotAudioPlayer.audioPlayer?.play()
+//        } catch {
+//            print("Failed to play audio: \(error.localizedDescription)")
+//        }
+//    }
 }

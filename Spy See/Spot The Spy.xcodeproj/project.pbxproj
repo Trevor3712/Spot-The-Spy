@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2A999499F0A07CF74D53E358 /* Pods_Spy_See.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CC0AB13E4E3C18858E4941B /* Pods_Spy_See.framework */; };
+		1E355CC6341D1D9CC8C5EFD9 /* Pods_Spot_The_Spy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08498A8BD867359E36ADCB88 /* Pods_Spot_The_Spy.framework */; };
 		B507CD672A3F39CE00434003 /* VictoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B507CD662A3F39CE00434003 /* VictoryViewController.swift */; };
 		B522AF112A3AB4A000FF956C /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF102A3AB4A000FF956C /* LobbyViewController.swift */; };
 		B522AF132A3AC3CF00FF956C /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF122A3AC3CF00FF956C /* SettingViewController.swift */; };
@@ -20,7 +20,20 @@
 		B550132E2A472C0A00FCEFFC /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132D2A472C0A00FCEFFC /* BaseButton.swift */; };
 		B55013302A47320500FCEFFC /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132F2A47320500FCEFFC /* UIFont+Extension.swift */; };
 		B55013322A47387100FCEFFC /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55013312A47387100FCEFFC /* BaseTextField.swift */; };
-		B55099D52A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav in Resources */ = {isa = PBXBuildFile; fileRef = B55099D42A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav */; };
+		B571FE5C2A56BF32007EADE2 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571FE5B2A56BF32007EADE2 /* RecordsViewController.swift */; };
+		B571FE5E2A57BE88007EADE2 /* RecordsChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571FE5D2A57BE88007EADE2 /* RecordsChartView.swift */; };
+		B571FE642A5A835B007EADE2 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571FE632A5A835B007EADE2 /* AudioPlayer.swift */; };
+		B571FE732A5A9388007EADE2 /* gunShot_se.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6A2A5A937E007EADE2 /* gunShot_se.wav */; };
+		B571FE752A5A9388007EADE2 /* main_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6C2A5A9382007EADE2 /* main_bgm.wav */; };
+		B571FE782A5A9388007EADE2 /* gunLoaded_se.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE6F2A5A9388007EADE2 /* gunLoaded_se.wav */; };
+		B571FE7F2A5A93B5007EADE2 /* play_se.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE792A5A93B0007EADE2 /* play_se.wav */; };
+		B571FE802A5A93B5007EADE2 /* click_se.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE7A2A5A93B1007EADE2 /* click_se.wav */; };
+		B571FE812A5A93B5007EADE2 /* profile_se.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE7B2A5A93B2007EADE2 /* profile_se.wav */; };
+		B571FE832A5A93B5007EADE2 /* record_se.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE7D2A5A93B4007EADE2 /* record_se.wav */; };
+		B571FE8B2A5AAED2007EADE2 /* vote_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE892A5AAED0007EADE2 /* vote_bgm.wav */; };
+		B571FE8C2A5AAED2007EADE2 /* victory_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE8A2A5AAED2007EADE2 /* victory_bgm.wav */; };
+		B571FE902A5AB54E007EADE2 /* vote_long_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE8F2A5AB54E007EADE2 /* vote_long_bgm.wav */; };
+		B571FE942A5AF4CC007EADE2 /* editing_se.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE932A5AF4CC007EADE2 /* editing_se.wav */; };
 		B57DE3B22A496D1D00AEC8EC /* BaseMessageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */; };
 		B57DE3B62A49A63600AEC8EC /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B52A49A63600AEC8EC /* MessageCell.swift */; };
 		B59588952A3D98430058E170 /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588942A3D98430058E170 /* VoteViewController.swift */; };
@@ -36,6 +49,7 @@
 		B5D2B0AB2A39C8ED00ED3516 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5D2B0A92A39C8ED00ED3516 /* LaunchScreen.storyboard */; };
 		B5D2B0B42A3A017D00ED3516 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */; };
 		B5D2B0B62A3A98A000ED3516 /* Prompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D2B0B52A3A98A000ED3516 /* Prompt.swift */; };
+		B5DD1EB92A5BD0ED00A2B520 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DD1EB82A5BD0ED00A2B520 /* TabBarController.swift */; };
 		B5F20BEA2A4550E900FFECA1 /* WaitForNextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */; };
 		B5FAE7202A45AD8000C69CAA /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */; };
 		B5FAE7282A45C68900C69CAA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAE7272A45C68900C69CAA /* ProfileViewController.swift */; };
@@ -44,9 +58,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		07696FC57C387E2A3AD5BB2E /* Pods-Spy See.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spy See.release.xcconfig"; path = "Target Support Files/Pods-Spy See/Pods-Spy See.release.xcconfig"; sourceTree = "<group>"; };
-		1CC0AB13E4E3C18858E4941B /* Pods_Spy_See.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spy_See.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		85F7C80141FC1BA96FBC07A8 /* Pods-Spy See.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spy See.debug.xcconfig"; path = "Target Support Files/Pods-Spy See/Pods-Spy See.debug.xcconfig"; sourceTree = "<group>"; };
+		08498A8BD867359E36ADCB88 /* Pods_Spot_The_Spy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spot_The_Spy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B507CD662A3F39CE00434003 /* VictoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VictoryViewController.swift; sourceTree = "<group>"; };
 		B522AF102A3AB4A000FF956C /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
 		B522AF122A3AC3CF00FF956C /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
@@ -59,7 +71,20 @@
 		B550132D2A472C0A00FCEFFC /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		B550132F2A47320500FCEFFC /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		B55013312A47387100FCEFFC /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
-		B55099D42A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav"; sourceTree = "<group>"; };
+		B571FE5B2A56BF32007EADE2 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
+		B571FE5D2A57BE88007EADE2 /* RecordsChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsChartView.swift; sourceTree = "<group>"; };
+		B571FE632A5A835B007EADE2 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
+		B571FE6A2A5A937E007EADE2 /* gunShot_se.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gunShot_se.wav; sourceTree = "<group>"; };
+		B571FE6C2A5A9382007EADE2 /* main_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = main_bgm.wav; sourceTree = "<group>"; };
+		B571FE6F2A5A9388007EADE2 /* gunLoaded_se.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gunLoaded_se.wav; sourceTree = "<group>"; };
+		B571FE792A5A93B0007EADE2 /* play_se.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = play_se.wav; sourceTree = "<group>"; };
+		B571FE7A2A5A93B1007EADE2 /* click_se.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click_se.wav; sourceTree = "<group>"; };
+		B571FE7B2A5A93B2007EADE2 /* profile_se.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = profile_se.wav; sourceTree = "<group>"; };
+		B571FE7D2A5A93B4007EADE2 /* record_se.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = record_se.wav; sourceTree = "<group>"; };
+		B571FE892A5AAED0007EADE2 /* vote_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = vote_bgm.wav; sourceTree = "<group>"; };
+		B571FE8A2A5AAED2007EADE2 /* victory_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = victory_bgm.wav; sourceTree = "<group>"; };
+		B571FE8F2A5AB54E007EADE2 /* vote_long_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = vote_long_bgm.wav; sourceTree = "<group>"; };
+		B571FE932A5AF4CC007EADE2 /* editing_se.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = editing_se.wav; sourceTree = "<group>"; };
 		B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMessageTableView.swift; sourceTree = "<group>"; };
 		B57DE3B52A49A63600AEC8EC /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		B59588942A3D98430058E170 /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
@@ -77,11 +102,14 @@
 		B5D2B0AC2A39C8ED00ED3516 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5D2B0B52A3A98A000ED3516 /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
+		B5DD1EB82A5BD0ED00A2B520 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitForNextViewController.swift; sourceTree = "<group>"; };
 		B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		B5FAE7272A45C68900C69CAA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		B5FAE7292A46024200C69CAA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B5FAE72B2A46044F00C69CAA /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		BAFE789899A540FC389CCEE9 /* Pods-Spot The Spy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spot The Spy.debug.xcconfig"; path = "Target Support Files/Pods-Spot The Spy/Pods-Spot The Spy.debug.xcconfig"; sourceTree = "<group>"; };
+		EF8827DB5C8210EFD4D362F4 /* Pods-Spot The Spy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spot The Spy.release.xcconfig"; path = "Target Support Files/Pods-Spot The Spy/Pods-Spot The Spy.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A999499F0A07CF74D53E358 /* Pods_Spy_See.framework in Frameworks */,
+				1E355CC6341D1D9CC8C5EFD9 /* Pods_Spot_The_Spy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,20 +127,45 @@
 		9C5F9C7F45BBBBE800D1D379 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				85F7C80141FC1BA96FBC07A8 /* Pods-Spy See.debug.xcconfig */,
-				07696FC57C387E2A3AD5BB2E /* Pods-Spy See.release.xcconfig */,
+				BAFE789899A540FC389CCEE9 /* Pods-Spot The Spy.debug.xcconfig */,
+				EF8827DB5C8210EFD4D362F4 /* Pods-Spot The Spy.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		B571FE652A5A9328007EADE2 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				B571FE662A5A9339007EADE2 /* Sound Effect */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		B571FE662A5A9339007EADE2 /* Sound Effect */ = {
+			isa = PBXGroup;
+			children = (
+				B571FE7A2A5A93B1007EADE2 /* click_se.wav */,
+				B571FE7B2A5A93B2007EADE2 /* profile_se.wav */,
+				B571FE792A5A93B0007EADE2 /* play_se.wav */,
+				B571FE7D2A5A93B4007EADE2 /* record_se.wav */,
+				B571FE932A5AF4CC007EADE2 /* editing_se.wav */,
+				B571FE6F2A5A9388007EADE2 /* gunLoaded_se.wav */,
+				B571FE6C2A5A9382007EADE2 /* main_bgm.wav */,
+				B571FE8A2A5AAED2007EADE2 /* victory_bgm.wav */,
+				B571FE8F2A5AB54E007EADE2 /* vote_long_bgm.wav */,
+				B571FE892A5AAED0007EADE2 /* vote_bgm.wav */,
+				B571FE6A2A5A937E007EADE2 /* gunShot_se.wav */,
+			);
+			path = "Sound Effect";
 			sourceTree = "<group>";
 		};
 		B5D2B0922A39C8E800ED3516 = {
 			isa = PBXGroup;
 			children = (
-				B55099D42A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav */,
 				B5D2B09D2A39C8E800ED3516 /* Spy See */,
 				B5D2B09C2A39C8E800ED3516 /* Products */,
 				9C5F9C7F45BBBBE800D1D379 /* Pods */,
-				FCB70D36A0458B13BB8F8AA1 /* Frameworks */,
+				BB5679EE6E7291CAFEF3E28E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,12 +180,15 @@
 		B5D2B09D2A39C8E800ED3516 /* Spy See */ = {
 			isa = PBXGroup;
 			children = (
+				B571FE652A5A9328007EADE2 /* Resource */,
 				B5FAE71E2A45AD3D00C69CAA /* Extensions */,
 				B5FAE7232A45C4A300C69CAA /* Views */,
 				B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */,
 				B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */,
 				B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */,
 				B5FAE7272A45C68900C69CAA /* ProfileViewController.swift */,
+				B571FE5B2A56BF32007EADE2 /* RecordsViewController.swift */,
+				B571FE5D2A57BE88007EADE2 /* RecordsChartView.swift */,
 				B5BAAB992A4BF06500C1A770 /* SignupViewController.swift */,
 				B522AF102A3AB4A000FF956C /* LobbyViewController.swift */,
 				B522AF122A3AC3CF00FF956C /* SettingViewController.swift */,
@@ -184,14 +240,16 @@
 				B550132D2A472C0A00FCEFFC /* BaseButton.swift */,
 				B55013312A47387100FCEFFC /* BaseTextField.swift */,
 				B5BAAB9B2A4C2A6600C1A770 /* AlertViewController.swift */,
+				B571FE632A5A835B007EADE2 /* AudioPlayer.swift */,
+				B5DD1EB82A5BD0ED00A2B520 /* TabBarController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
 		};
-		FCB70D36A0458B13BB8F8AA1 /* Frameworks */ = {
+		BB5679EE6E7291CAFEF3E28E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1CC0AB13E4E3C18858E4941B /* Pods_Spy_See.framework */,
+				08498A8BD867359E36ADCB88 /* Pods_Spot_The_Spy.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -203,12 +261,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B5D2B0AF2A39C8ED00ED3516 /* Build configuration list for PBXNativeTarget "Spot The Spy" */;
 			buildPhases = (
-				23743ACE8A6263FE3F33DA38 /* [CP] Check Pods Manifest.lock */,
+				F2C4448E002E7ED21703FED8 /* [CP] Check Pods Manifest.lock */,
+				B59E71082A565699001BFEE8 /* ShellScript */,
 				B5D2B0972A39C8E800ED3516 /* Sources */,
 				B5D2B0982A39C8E800ED3516 /* Frameworks */,
 				B5D2B0992A39C8E800ED3516 /* Resources */,
-				1F5BA08529DC41458C548DD8 /* [CP] Embed Pods Frameworks */,
-				B5D2B0B22A39EFE300ED3516 /* ShellScript */,
+				55EB881633CE96297E795CF4 /* [CP] Embed Pods Frameworks */,
+				B5D2B0B22A39EFE300ED3516 /* FirebaseCrashlytics */,
 			);
 			buildRules = (
 			);
@@ -258,56 +317,44 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5D2B0AB2A39C8ED00ED3516 /* LaunchScreen.storyboard in Resources */,
+				B571FE832A5A93B5007EADE2 /* record_se.wav in Resources */,
+				B571FE812A5A93B5007EADE2 /* profile_se.wav in Resources */,
+				B571FE8C2A5AAED2007EADE2 /* victory_bgm.wav in Resources */,
+				B571FE942A5AF4CC007EADE2 /* editing_se.wav in Resources */,
 				B5D2B0B42A3A017D00ED3516 /* GoogleService-Info.plist in Resources */,
+				B571FE782A5A9388007EADE2 /* gunLoaded_se.wav in Resources */,
+				B571FE802A5A93B5007EADE2 /* click_se.wav in Resources */,
 				B5D2B0A82A39C8ED00ED3516 /* Assets.xcassets in Resources */,
-				B55099D52A52A5040035EC35 /* 705E0F74-2B44-4840-8D5C-73CEB719E5E5.wav in Resources */,
+				B571FE732A5A9388007EADE2 /* gunShot_se.wav in Resources */,
+				B571FE752A5A9388007EADE2 /* main_bgm.wav in Resources */,
+				B571FE7F2A5A93B5007EADE2 /* play_se.wav in Resources */,
 				B5D2B0A62A39C8E800ED3516 /* Main.storyboard in Resources */,
+				B571FE8B2A5AAED2007EADE2 /* vote_bgm.wav in Resources */,
+				B571FE902A5AB54E007EADE2 /* vote_long_bgm.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1F5BA08529DC41458C548DD8 /* [CP] Embed Pods Frameworks */ = {
+		55EB881633CE96297E795CF4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spy See/Pods-Spy See-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Spot The Spy/Pods-Spot The Spy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Spy See/Pods-Spy See-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Spot The Spy/Pods-Spot The Spy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spy See/Pods-Spy See-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Spot The Spy/Pods-Spot The Spy-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		23743ACE8A6263FE3F33DA38 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Spy See-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B5D2B0B22A39EFE300ED3516 /* ShellScript */ = {
+		B59E71082A565699001BFEE8 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -324,6 +371,48 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
+		B5D2B0B22A39EFE300ED3516 /* FirebaseCrashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = FirebaseCrashlytics;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo \"${PODS_ROOT}/FirebaseCrashlytics/run\"\n\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
+		F2C4448E002E7ED21703FED8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Spot The Spy-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -332,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B54212EE2A40030200D7C90C /* DiedViewController.swift in Sources */,
+				B5DD1EB92A5BD0ED00A2B520 /* TabBarController.swift in Sources */,
 				B59588952A3D98430058E170 /* VoteViewController.swift in Sources */,
 				B522AF172A3C0F4900FF956C /* WaitingViewController.swift in Sources */,
 				B5D2B0A32A39C8E800ED3516 /* LoginViewController.swift in Sources */,
@@ -341,6 +431,7 @@
 				B5F20BEA2A4550E900FFECA1 /* WaitForNextViewController.swift in Sources */,
 				B5FAE72C2A46044F00C69CAA /* UIImage+Extension.swift in Sources */,
 				B57DE3B22A496D1D00AEC8EC /* BaseMessageTableView.swift in Sources */,
+				B571FE642A5A835B007EADE2 /* AudioPlayer.swift in Sources */,
 				B522AF112A3AB4A000FF956C /* LobbyViewController.swift in Sources */,
 				B522AF1B2A3C5CAF00FF956C /* PassPromptViewController.swift in Sources */,
 				B57DE3B62A49A63600AEC8EC /* MessageCell.swift in Sources */,
@@ -354,8 +445,10 @@
 				B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */,
 				B507CD672A3F39CE00434003 /* VictoryViewController.swift in Sources */,
 				B5D2B0A12A39C8E800ED3516 /* SceneDelegate.swift in Sources */,
+				B571FE5C2A56BF32007EADE2 /* RecordsViewController.swift in Sources */,
 				B5BAAB9C2A4C2A6600C1A770 /* AlertViewController.swift in Sources */,
 				B5BAAB9A2A4BF06500C1A770 /* SignupViewController.swift in Sources */,
+				B571FE5E2A57BE88007EADE2 /* RecordsChartView.swift in Sources */,
 				B522AF152A3B67E800FF956C /* InviteViewController.swift in Sources */,
 				B522AF132A3AC3CF00FF956C /* SettingViewController.swift in Sources */,
 				B522AF1D2A3CBF2200FF956C /* SpeakViewController.swift in Sources */,
@@ -417,7 +510,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -500,7 +593,7 @@
 		};
 		B5D2B0B02A39C8ED00ED3516 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 85F7C80141FC1BA96FBC07A8 /* Pods-Spy See.debug.xcconfig */;
+			baseConfigurationReference = BAFE789899A540FC389CCEE9 /* Pods-Spot The Spy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -512,13 +605,14 @@
 				INFOPLIST_FILE = "Spy See/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Spot The Spy";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.role-playing-games";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "當你按下「Speak」，我們將使用麥克風進行錄音。";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "當你按下麥克風圖示，我們將使用麥克風進行錄音。";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "當你對著麥克風說話時，我們將進行語音識別。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -526,15 +620,18 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.trevory.Spy-See";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		B5D2B0B12A39C8ED00ED3516 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 07696FC57C387E2A3AD5BB2E /* Pods-Spy See.release.xcconfig */;
+			baseConfigurationReference = EF8827DB5C8210EFD4D362F4 /* Pods-Spot The Spy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -546,13 +643,14 @@
 				INFOPLIST_FILE = "Spy See/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Spot The Spy";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.role-playing-games";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "當你按下「Speak」，我們將使用麥克風進行錄音。";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "當你按下麥克風圖示，我們將使用麥克風進行錄音。";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "當你對著麥克風說話時，我們將進行語音識別。";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -560,9 +658,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.trevory.Spy-See";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

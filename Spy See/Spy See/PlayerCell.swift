@@ -19,7 +19,7 @@ class PlayerCell: UITableViewCell {
     }()
     lazy var knifeImageView: UIImageView = {
         let knifeImageView = UIImageView()
-        knifeImageView.image = .asset(.knife)
+        knifeImageView.image = .asset(.gun)
         return knifeImageView
     }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

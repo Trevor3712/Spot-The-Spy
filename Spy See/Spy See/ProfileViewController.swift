@@ -103,7 +103,7 @@ class ProfileViewController: BaseViewController {
         }
         let documentRef = user.document(userId)
         let name = nameTextField.text
-        documentRef.setData(["name": name ]) { error in
+        documentRef.updateData(["name": name ]) { error in
             if let error = error {
                 print("Error adding document: \(error)")
             } else {
@@ -137,6 +137,7 @@ class ProfileViewController: BaseViewController {
         }
     }
     @objc func deleteButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要刪除帳號嗎？", confirmCompletion: {
             self.deleteAuthData()
@@ -146,6 +147,7 @@ class ProfileViewController: BaseViewController {
         present(alert, animated: true)
     }
     @objc func logoutButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要登出帳號嗎？", confirmCompletion: {
             UserDefaults.standard.removeObject(forKey: "userEmail")
@@ -179,6 +181,7 @@ class ProfileViewController: BaseViewController {
 }
 extension ProfileViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        playSeAudio(from: editingUrl!)
         vibrate()
         nameTextField.text = ""
     }

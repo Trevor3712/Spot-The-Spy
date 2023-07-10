@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 import FirebaseFirestore
 
 class VictoryViewController: BaseViewController {
@@ -30,11 +31,26 @@ class VictoryViewController: BaseViewController {
     }()
     let dataBase = Firestore.firestore()
     var isSpyWin = true
+    let playerIdentity = UserDefaults.standard.string(forKey: "playerIdentity")
+    var spyWin: Int?
+    var spyLose: Int?
+    var normalWin: Int?
+    var normalLose: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         whoWins()
         configureLayout()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let url = Bundle.main.url(forResource: "victory_bgm", withExtension: "wav")
+        AudioPlayer.shared.playAudio(from: url!, loop: true)
+        getRecords()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AudioPlayer.shared.stopAudio()
     }
     func whoWins() {
         if isSpyWin {
@@ -44,7 +60,7 @@ class VictoryViewController: BaseViewController {
                 size: 45,
                 textColor: .B2 ?? .black,
                 letterSpacing: 15)
-            identityImageView.image = .asset(.spy)
+            identityImageView.image = .asset(.spyWin)
         } else {
             victoryLabel.attributedText = UIFont.fontStyle(
                 font: .boldItalicEN,
@@ -64,10 +80,10 @@ class VictoryViewController: BaseViewController {
             make.height.equalTo(80)
         }
         identityImageView.snp.makeConstraints { make in
-            make.bottom.equalTo(victoryLabel.snp.top).offset(-100)
+            make.bottom.equalTo(victoryLabel.snp.top).offset(-80)
             make.centerX.equalTo(view)
-            make.width.equalTo(150)
-            make.height.equalTo(150)
+            make.width.equalTo(200)
+            make.height.equalTo(200)
         }
         backToLobbyButton.snp.makeConstraints { make in
             make.top.equalTo(victoryLabel.snp.bottom).offset(150)
@@ -77,10 +93,12 @@ class VictoryViewController: BaseViewController {
         }
     }
     @objc func backToLobbyButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         if let targetViewController = navigationController?.viewControllers[1] {
             navigationController?.popToViewController(targetViewController, animated: true)
             deleteGameData()
+            updateRecords()
         }
     }
     func deleteGameData() {
@@ -92,6 +110,62 @@ class VictoryViewController: BaseViewController {
                 print("Delete error：\(error.localizedDescription)")
             } else {
                 print("Delete successfully")
+            }
+        }
+    }
+    func getRecords() {
+        let room = dataBase.collection("Users")
+        guard let userId = Auth.auth().currentUser?.email else {
+            return
+        }
+        let documentRef = room.document(userId)
+        documentRef.getDocument { (document, error) in
+            guard let document = document else {
+                return
+            }
+            if let normalWin = document.data()?["normalWin"] as? String {
+                self.normalWin = Int(normalWin)
+            }
+            if let normalLose = document.data()?["normalLose"] as? String {
+                self.normalLose = Int(normalLose)
+            }
+            if let spyWin = document.data()?["spyWin"] as? String {
+                self.spyWin = Int(spyWin)
+            }
+            if let spyLose = document.data()?["spyLose"] as? String {
+                self.spyLose = Int(spyLose)
+            }
+        }
+    }
+    func updateRecords() {
+        if isSpyWin {
+            if playerIdentity == "臥底" {
+                updateRecord("spyWin", spyWin ?? 0)
+            } else {
+                updateRecord("normalLose", normalLose ?? 0)
+            }
+        } else {
+            if playerIdentity == "平民" {
+                updateRecord("normalWin", normalWin ?? 0)
+            } else {
+                updateRecord("spyLose", spyLose ?? 0)
+            }
+        }
+    }
+    func updateRecord(_ string: String, _ int: Int) {
+        let room = dataBase.collection("Users")
+        guard let userId = Auth.auth().currentUser?.email else {
+            return
+        }
+        let documentRef = room.document(userId)
+        let data: [String: Any] = [
+            string: String(int + 1)
+        ]
+        documentRef.updateData(data) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Document updated successfully")
             }
         }
     }

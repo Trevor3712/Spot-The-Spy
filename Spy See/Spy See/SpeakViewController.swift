@@ -14,6 +14,14 @@ import Speech
 import AudioToolbox
 // swiftlint:disable type_body_length
 class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.isScrollEnabled = true
+        scrollView.contentSize.width = 0
+        scrollView.contentSize.height = 750
+        return scrollView
+    }()
+    lazy var contentView = UIView()
     lazy var playerLabel: UILabel = {
         let playerLabel = UILabel()
         return playerLabel
@@ -51,6 +59,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     lazy var messageTextField: BaseTextField = {
         let messageTextField = BaseTextField()
         messageTextField.placeholder = "討論輸入區"
+        messageTextField.delegate = self
         return messageTextField
     }()
     lazy var sendButton1: UIButton = {
@@ -124,35 +133,50 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     var listener: ListenerRegistration?
     var isButtonPressed = false
     let storage = Storage.storage()
+    let audioSession = AVAudioSession.sharedInstance()
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "zh-TW"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
-    private let audioEngine = AVAudioEngine()
+    private var audioEngine = AVAudioEngine()
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
         [playerLabel, speakLabel,
          clueTableView, messageTableView,
          messageTextField,
          sendButton1, sendButton2,
          progressView, timeImageView,
          speakButton1, speakButton2,
-        remindLabel].forEach { view.addSubview($0) }
+        remindLabel].forEach { contentView.addSubview($0) }
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentView.heightAnchor.constraint(equalToConstant: 750)
+        ])
         playerLabel.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(60)
-            make.centerX.equalTo(view)
+            make.top.equalTo(contentView)
+            make.centerX.equalTo(contentView)
         }
         speakLabel.snp.makeConstraints { make in
             make.top.equalTo(playerLabel.snp.bottom)
-            make.centerX.equalTo(view)
+            make.centerX.equalTo(contentView)
         }
         clueTableView.snp.makeConstraints { make in
             make.top.equalTo(speakLabel.snp.bottom).offset(20)
-            make.left.right.equalTo(view).inset(30)
+            make.left.right.equalTo(contentView).inset(30)
             make.height.equalTo(240)
         }
         messageTableView.snp.makeConstraints { make in
             make.top.equalTo(clueTableView.snp.bottom).offset(24)
-            make.left.right.equalTo(view).inset(30)
+            make.left.right.equalTo(contentView).inset(30)
             make.height.equalTo(240)
         }
         progressView.snp.makeConstraints { make in
@@ -204,6 +228,8 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
             players = storedPlayers
         }
+        let url = Bundle.main.url(forResource: "vote_long_bgm", withExtension: "wav")
+        AudioPlayer.shared.playAudio(from: url!, loop: true)
         showClue()
         showNextPlayer()
     }
@@ -213,6 +239,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         audioRecoder?.stop()
         audioEngine.stop()
         audioPlayer?.stop()
+        configPlaySession()
     }
     func showNextPlayer() {
         guard currentPlayerIndex < players.count else {
@@ -248,6 +275,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     }
     @objc func sendClue() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
@@ -265,6 +293,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     }
     @objc func sendMesssge() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         let room = dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
@@ -321,32 +350,24 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             if let audioClueString = data["audioClue"] as? String {
                 print("audio clue:\(audioClueString)")
                 let fileReference = Storage.storage().reference().child("\(self.fileName ?? "").wav")
-                let fileManager = FileManager.default
-                let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-                let destinationURL = documentsDirectory?.appendingPathComponent("recording.wav")
-                fileReference.write(toFile: destinationURL!) { url, error in
+                let destinationURL = self.getDirectoryPath().appendingPathComponent("\(self.fileName ?? "").wav")
+                fileReference.write(toFile: destinationURL) { url, error in
                     if let error = error {
                         print(error)
                     } else if let url = url {
-                        do {
-                            print("url:\(url)")
-                            self.audioPlayer = try AVAudioPlayer(contentsOf: url)
-                            self.audioPlayer?.volume = 1.0
-                            self.audioPlayer?.prepareToPlay()
-                            self.audioPlayer?.play()
-                            print("play audio")
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                if ((self.audioPlayer?.isPlaying) != nil) {
-                                    let currentTime = self.audioPlayer?.currentTime
-                                    print("目前播放時間：\(currentTime)")
-                                } else {
-                                    print("音檔未在播放")
-                                }
-                            }
-                        } catch {
-                            print("Play error", error.localizedDescription)
-                            print("Play error: \(error)")
-                        }
+                        print("===url:\(url)")
+                        self.playSeAudio(from: url)
+//                        do {
+//                            print("url:\(url)")
+//                            self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+//                            self.audioPlayer?.volume = 1.0
+//                            self.audioPlayer?.prepareToPlay()
+//                            self.audioPlayer?.play()
+//                            print("play audio")
+//                        } catch {
+//                            print("Play error", error.localizedDescription)
+//                            print("Play error: \(error)")
+//                        }
                     }
                 }
             }
@@ -387,6 +408,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         changeButtonStyle()
         if audioEngine.isRunning {
             audioEngine.stop()
+            audioEngine.reset()
             recognitionRequest?.endAudio()
             speakButton1.isEnabled = false
             speakButton2.isEnabled = false
@@ -438,6 +460,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         } catch {
             print("Record error:", error.localizedDescription)
         }
+        configPlaySession()
     }
     func getDirectoryPath() -> URL {
             let fileDiretoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -445,19 +468,19 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     func configRecordSession() {
         do {
-            let recordingSession = AVAudioSession.sharedInstance()
-            try recordingSession.setCategory(
+            try audioSession.setCategory(
                 .playAndRecord,
                 mode: .default,
                 options: [.defaultToSpeaker, .allowBluetooth])
-            try recordingSession.setActive(true)
-            recordingSession.requestRecordPermission { permissionAllowed in
-                if permissionAllowed {
-                    // 可以開始錄音
-                } else {
-                    // 無法錄音，處理錯誤情況
-                }
-            }
+            try audioSession.setActive(true)
+        } catch {
+            print("Session error:", error.localizedDescription)
+        }
+    }
+    func configPlaySession() {
+        do {
+            try audioSession.setCategory(.playback)
+            try audioSession.setActive(true)
         } catch {
             print("Session error:", error.localizedDescription)
         }
@@ -560,8 +583,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     // MARK: - Upload audio and play
     func uploadAudio(audioURL: URL, completion: @escaping (Result<URL, Error>) -> Void) {
         let fileReference = Storage.storage().reference().child("\(fileName ?? "").wav")
+        let metaData = StorageMetadata()
+        metaData.contentType = "audio/wav"
         if let data = try? Data(contentsOf: audioURL) {
-            fileReference.putData(data, metadata: nil) { result in
+            fileReference.putData(data, metadata: metaData) { result in
                 switch result {
                 case .success(_):
                     fileReference.downloadURL { url, error in
@@ -651,5 +676,10 @@ extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
                 letterSpacing: 10)
             return header
         }
+    }
+}
+extension SpeakViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        playSeAudio(from: editingUrl!)
     }
 }

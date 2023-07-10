@@ -62,8 +62,8 @@ class LobbyViewController: BaseViewController {
         logoImage.snp.makeConstraints { make in
             make.top.equalTo(view).offset(200)
             make.left.equalTo(view).offset(50)
-            make.width.equalTo(130)
-            make.height.equalTo(130)
+            make.width.equalTo(150)
+            make.height.equalTo(150)
         }
         createRoomButton.snp.makeConstraints { make in
             make.top.equalTo(logoImage.snp.bottom).offset(30)
@@ -90,6 +90,10 @@ class LobbyViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let url = Bundle.main.url(forResource: "main_bgm", withExtension: "wav")
+        if ((AudioPlayer.shared.audioPlayer?.isPlaying) == nil) {
+            AudioPlayer.shared.playAudio(from: url!, loop: true)
+        }
         getUserName()
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -97,11 +101,13 @@ class LobbyViewController: BaseViewController {
         navigationItem.hidesBackButton = false
     }
     @objc func createRoomButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         let settingVC = SettingViewController()
         navigationController?.pushViewController(settingVC, animated: true)
     }
     @objc func goButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         guard let invitationText = invitationTextFileld.text, !invitationText.isEmpty, invitationText != "請輸入邀請碼" else {
             let alert = alertVC.showAlert(title: "輸入錯誤", message: "請輸入邀請碼")
@@ -131,8 +137,12 @@ class LobbyViewController: BaseViewController {
                             print("Document updated successfully")
                             // 取回自己的index及對應的題目
                             documentRef.getDocument { (document, error) in
-                                if let document = document, let playerIndex = document.data()?["playerIndex"] as? Int, let prompts = document.data()?["prompts"] as? [String] {
-                                    self.handlePlayerIndex(playerIndex, prompts)
+                                if let document = document,
+                                    let playerIndex = document.data()?["playerIndex"] as? Int,
+                                    let prompts = document.data()?["prompts"] as? [String],
+                                    let identities = document.data()?["identities"] as? [String]
+                                {
+                                    self.handlePlayerIndex(playerIndex, prompts, identities)
                                     UserDefaults.standard.removeObject(forKey: "userName")
                                     UserDefaults.standard.setValue(self.userName, forKey: "userName")
                                 } else {
@@ -152,11 +162,15 @@ class LobbyViewController: BaseViewController {
             }
         }
     }
-    func handlePlayerIndex(_ playerIndex: Int, _ prompts: [String]) -> String? {
+    func handlePlayerIndex(_ playerIndex: Int, _ prompts: [String], _ identities: [String]) -> String? {
         guard playerIndex >= 0 && playerIndex < prompts.count else {
             print("Invalid player index")
             return nil
         }
+        let playerIdentity = identities[playerIndex]
+        UserDefaults.standard.removeObject(forKey: "playerIdentity")
+        UserDefaults.standard.setValue(playerIdentity, forKey: "playerIdentity")
+        print("===playerIdentity:\(playerIdentity)")
         let selectedPrompt = prompts[playerIndex]
         UserDefaults.standard.removeObject(forKey: "hostPrompt")
         UserDefaults.standard.removeObject(forKey: "playerPrompt")
@@ -181,6 +195,7 @@ class LobbyViewController: BaseViewController {
 }
 extension LobbyViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        playSeAudio(from: editingUrl!)
         vibrate()
     }
     func textFieldDidEndEditing(_ textField: UITextField) {

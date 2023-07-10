@@ -157,6 +157,7 @@ class SignupViewController: BaseViewController {
         navigationItem.leftBarButtonItem = backButton
     }
     @objc func signupButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         guard let account = accountTextField.text, !account.isEmpty, account != "請輸入你的e-mail",
                 let password = passwordTextField.text, !password.isEmpty, password != "請輸入至少６位數密碼",
@@ -206,6 +207,7 @@ class SignupViewController: BaseViewController {
 }
 extension SignupViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        playSeAudio(from: editingUrl!)
         vibrate()
         if textField.tag == 1 {
             accountTextField.text = ""

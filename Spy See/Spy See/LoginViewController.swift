@@ -45,7 +45,8 @@ class LoginViewController: BaseViewController {
             title: "SPOT",
             size: 45,
             textColor: .B2 ?? .black,
-            letterSpacing: 10)
+            letterSpacing: 10,
+            obliqueness: 0.1)
         return labelEN1
     }()
     lazy var labelEN2: UILabel = {
@@ -55,7 +56,8 @@ class LoginViewController: BaseViewController {
             title: "THE",
             size: 25,
             textColor: .B2 ?? .black,
-            letterSpacing: 10)
+            letterSpacing: 10,
+            obliqueness: 0.1)
         return labelEN2
     }()
     lazy var labelEN3: UILabel = {
@@ -65,14 +67,15 @@ class LoginViewController: BaseViewController {
             title: "SPY",
             size: 45,
             textColor: .B4 ?? .black,
-            letterSpacing: 10)
+            letterSpacing: 10,
+            obliqueness: 0.1)
         return labelEN3
     }()
     lazy var accountContainerView = UIView()
     lazy var accountTextField: BaseTextField = {
         let accountTextField = BaseTextField()
         accountTextField.placeholder = "請輸入帳號"
-        accountTextField.text = "1@1.com"
+//        accountTextField.text = "1@1.com"
         accountTextField.keyboardType = .emailAddress
         accountTextField.autocorrectionType = .no
         accountTextField.delegate = self
@@ -82,7 +85,7 @@ class LoginViewController: BaseViewController {
     lazy var passwordTextField: BaseTextField = {
         let passwordTextField = BaseTextField()
         passwordTextField.placeholder = "請輸入密碼"
-        passwordTextField.text = "123456"
+//        passwordTextField.text = "123456"
         passwordTextField.isSecureTextEntry = true
         passwordTextField.autocorrectionType = .no
         passwordTextField.delegate = self
@@ -111,10 +114,10 @@ class LoginViewController: BaseViewController {
         [accountTextField, passwordTextField,
          loginButton, signupButton].forEach { accountContainerView.addSubview($0) }
         logoImage.snp.makeConstraints { make in
-            make.bottom.equalTo(titleContainerView.snp.top).offset(-50)
+            make.bottom.equalTo(titleContainerView.snp.top).offset(-40)
             make.centerX.equalTo(view)
-            make.width.equalTo(150)
-            make.height.equalTo(150)
+            make.width.equalTo(200)
+            make.height.equalTo(200)
         }
         titleContainerView.snp.makeConstraints { make in
             make.centerX.centerY.left.right.equalTo(view)
@@ -170,7 +173,17 @@ class LoginViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let url = Bundle.main.url(forResource: "main_bgm", withExtension: "wav")
+        if ((AudioPlayer.shared.audioPlayer?.isPlaying) == nil) {
+            AudioPlayer.shared.playAudio(from: url!, loop: true)
+        }
+        accountTextField.text = ""
+        passwordTextField.text = ""
+    }
     @objc func logInButtonPressed(_ sender: UIButton) {
+        playSeAudio(from: clickUrl!)
         vibrate()
         Auth.auth().signIn(
             withEmail: accountTextField.text ?? "",
@@ -190,6 +203,7 @@ class LoginViewController: BaseViewController {
         }
     }
     @objc func signupButtonPressed() {
+        playSeAudio(from: clickUrl!)
         vibrate()
         let signupVC = SignupViewController()
         navigationController?.pushViewController(signupVC, animated: true)
@@ -197,6 +211,7 @@ class LoginViewController: BaseViewController {
 }
 extension LoginViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        playSeAudio(from: editingUrl!)
         vibrate()
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
