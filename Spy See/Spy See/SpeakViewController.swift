@@ -460,6 +460,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         } catch {
             print("Record error:", error.localizedDescription)
         }
+        configPlaySession()
     }
     func getDirectoryPath() -> URL {
             let fileDiretoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
