@@ -220,7 +220,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             make.top.equalTo(messageTextField.snp.bottom).offset(12)
             make.right.equalTo(speakButton2)
         }
-        configRecordSession()
+//        configRecordSession()
         speechAuth()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -405,6 +405,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     // MARK: - Audio Record
     @objc func recordAudioClue() {
         vibrate()
+        configRecordSession()
         changeButtonStyle()
         if audioEngine.isRunning {
             audioEngine.stop()
