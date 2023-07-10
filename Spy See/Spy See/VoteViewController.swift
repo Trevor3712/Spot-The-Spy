@@ -86,8 +86,8 @@ class VoteViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let url = Bundle.main.url(forResource: "vote_long_bgm", withExtension: "wav")
-        AudioPlayer.shared.playAudio(from: url!, loop: true)
+//        let url = Bundle.main.url(forResource: "vote_long_bgm", withExtension: "wav")
+//        AudioPlayer.shared.playAudio(from: url!, loop: true)
     }
 //    override func viewWillDisappear(_ animated: Bool) {
 //        super.viewWillDisappear(animated)

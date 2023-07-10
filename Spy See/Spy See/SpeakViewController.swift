@@ -127,12 +127,13 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     var fileName: String?
     var audioUrl: URL?
     var audioUrlFromFS: URL?
-    var countdown = 5
+    var countdown = 10
     var clues: [String] = []
     var messages: [String] = []
     var listener: ListenerRegistration?
     var isButtonPressed = false
     let storage = Storage.storage()
+    let audioSession = AVAudioSession.sharedInstance()
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "zh-TW"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
@@ -219,7 +220,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             make.top.equalTo(messageTextField.snp.bottom).offset(12)
             make.right.equalTo(speakButton2)
         }
-        configRecordSession()
+//        configRecordSession()
         speechAuth()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -227,6 +228,8 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
             players = storedPlayers
         }
+        let url = Bundle.main.url(forResource: "vote_long_bgm", withExtension: "wav")
+        AudioPlayer.shared.playAudio(from: url!, loop: true)
         showClue()
         showNextPlayer()
     }
@@ -256,13 +259,13 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             size: 35,
             textColor: .B2 ?? .black,
             letterSpacing: 10)
-        countdown = 5
+        countdown = 10
         progressView.setProgress(1, animated: true)
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateProgress), userInfo: nil, repeats: true)
     }
     @objc func updateProgress() {
         countdown -= 1
-        let progress = Float(countdown) / Float(5)
+        let progress = Float(countdown) / Float(10)
         progressView.setProgress(progress, animated: true)
         if countdown <= 0 {
             timer?.invalidate()
@@ -351,25 +354,19 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
                     if let error = error {
                         print(error)
                     } else if let url = url {
-                        do {
-                            print("url:\(url)")
-                            self.audioPlayer = try AVAudioPlayer(contentsOf: url)
-                            self.audioPlayer?.volume = 1.0
-                            self.audioPlayer?.prepareToPlay()
-                            self.audioPlayer?.play()
-                            print("play audio")
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                if ((self.audioPlayer?.isPlaying) != nil) {
-                                    let currentTime = self.audioPlayer?.currentTime
-                                    print("目前播放時間：\(currentTime)")
-                                } else {
-                                    print("音檔未在播放")
-                                }
-                            }
-                        } catch {
-                            print("Play error", error.localizedDescription)
-                            print("Play error: \(error)")
-                        }
+                        print("===url:\(url)")
+                        self.playSeAudio(from: url)
+//                        do {
+//                            print("url:\(url)")
+//                            self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+//                            self.audioPlayer?.volume = 1.0
+//                            self.audioPlayer?.prepareToPlay()
+//                            self.audioPlayer?.play()
+//                            print("play audio")
+//                        } catch {
+//                            print("Play error", error.localizedDescription)
+//                            print("Play error: \(error)")
+//                        }
                     }
                 }
             }
@@ -406,6 +403,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }
     // MARK: - Audio Record
     @objc func recordAudioClue() {
+        configRecordSession()
         playSeAudio(from: playUrl!)
         vibrate()
         changeButtonStyle()
@@ -463,6 +461,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         } catch {
             print("Record error:", error.localizedDescription)
         }
+        configPlaySession()
     }
     func getDirectoryPath() -> URL {
             let fileDiretoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -470,19 +469,19 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     func configRecordSession() {
         do {
-            let recordingSession = AVAudioSession.sharedInstance()
-            try recordingSession.setCategory(
+            try audioSession.setCategory(
                 .playAndRecord,
                 mode: .default,
                 options: [.defaultToSpeaker, .allowBluetooth])
-            try recordingSession.setActive(true)
-            recordingSession.requestRecordPermission { permissionAllowed in
-                if permissionAllowed {
-                    // 可以開始錄音
-                } else {
-                    // 無法錄音，處理錯誤情況
-                }
-            }
+            try audioSession.setActive(true)
+        } catch {
+            print("Session error:", error.localizedDescription)
+        }
+    }
+    func configPlaySession() {
+        do {
+            try audioSession.setCategory(.playback)
+            try audioSession.setActive(true)
         } catch {
             print("Session error:", error.localizedDescription)
         }

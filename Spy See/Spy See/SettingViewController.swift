@@ -168,7 +168,6 @@ class SettingViewController: BaseViewController {
                 UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
                 UserDefaults.standard.setValue(self.userName, forKey: "userName")
                 UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
-                print("===playerIdentity:\(self.identityArray[0])")
                 let inviteVC = InviteViewController()
                 self.navigationController?.pushViewController(inviteVC, animated: true)
             }
