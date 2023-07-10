@@ -239,6 +239,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         audioRecoder?.stop()
         audioEngine.stop()
         audioPlayer?.stop()
+        configPlaySession()
     }
     func showNextPlayer() {
         guard currentPlayerIndex < players.count else {
@@ -403,9 +404,9 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }
     // MARK: - Audio Record
     @objc func recordAudioClue() {
-        configRecordSession()
-        playSeAudio(from: playUrl!)
         vibrate()
+        playSeAudio(from: playUrl!)
+        configRecordSession()
         changeButtonStyle()
         if audioEngine.isRunning {
             audioEngine.stop()
