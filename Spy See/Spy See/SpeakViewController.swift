@@ -347,16 +347,16 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
                     self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                 }
             }
-            if let audioClueString = data["audioClue"] as? String {
-                print("audio clue:\(audioClueString)")
-                let fileReference = Storage.storage().reference().child("\(self.fileName ?? "").wav")
-                let destinationURL = self.getDirectoryPath().appendingPathComponent("\(self.fileName ?? "").wav")
-                fileReference.write(toFile: destinationURL) { url, error in
-                    if let error = error {
-                        print(error)
-                    } else if let url = url {
-                        print("===url:\(url)")
-                        self.playSeAudio(from: url)
+//            if let audioClueString = data["audioClue"] as? String {
+//                print("audio clue:\(audioClueString)")
+//                let fileReference = Storage.storage().reference().child("\(self.fileName ?? "").wav")
+//                let destinationURL = self.getDirectoryPath().appendingPathComponent("\(self.fileName ?? "").wav")
+//                fileReference.write(toFile: destinationURL) { url, error in
+//                    if let error = error {
+//                        print(error)
+//                    } else if let url = url {
+//                        print("===url:\(url)")
+//                        self.playSeAudio(from: url)
 //                        do {
 //                            print("url:\(url)")
 //                            self.audioPlayer = try AVAudioPlayer(contentsOf: url)
@@ -368,9 +368,9 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
 //                            print("Play error", error.localizedDescription)
 //                            print("Play error: \(error)")
 //                        }
-                    }
-                }
-            }
+//                    }
+//                }
+//            }
         }
     }
     func currentUserTurn() {

@@ -148,8 +148,10 @@ class SettingViewController: BaseViewController {
             print("Name is missing")
             return
         }
-        let prompts = generatePromptArray()
-        let identities = generateIdentityArray()
+//        let prompts = generatePromptArray()
+        let prompts = ["蝙蝠俠", "蜘蛛人", "蜘蛛人", "蜘蛛人"]
+        let identities = ["臥底", "平民", "平民", "平民"]
+//        let identities = generateIdentityArray()
         let data: [String: Any] = [
             "prompts": prompts,
             "identities": identities,
@@ -165,9 +167,11 @@ class SettingViewController: BaseViewController {
                 UserDefaults.standard.removeObject(forKey: "hostPrompt")
                 UserDefaults.standard.removeObject(forKey: "userName")
                 UserDefaults.standard.removeObject(forKey: "playerIdentity")
-                UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
+                UserDefaults.standard.setValue("蝙蝠俠", forKey: "hostPrompt")
+//                UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
                 UserDefaults.standard.setValue(self.userName, forKey: "userName")
-                UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
+                UserDefaults.standard.set("臥底", forKey: "playerIdentity")
+//                UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
                 let inviteVC = InviteViewController()
                 self.navigationController?.pushViewController(inviteVC, animated: true)
             }
@@ -181,30 +185,30 @@ class SettingViewController: BaseViewController {
         let roomId = String(hashedString.prefix(inviteCodeLength))
         return roomId
     }
-    func generatePromptArray() -> [String] {
-        promptArray = []
-        choosedPrompt = prompt.randomElement() ?? ([""], [""])
-        for _ in 0...(Int(playersCountTextFileld.text ?? "") ?? 0) - (Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
-            promptArray.append(choosedPrompt.0[1])
-        }
-        for _ in 0...(Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
-            promptArray.append(choosedPrompt.1[1])
-        }
-        shuffledIndices = Array(promptArray.indices).shuffled()
-        promptArray = shuffledIndices.map { promptArray[$0] }
-        return promptArray
-    }
-    func generateIdentityArray() -> [String] {
-        identityArray = []
-        for _ in 0...(Int(playersCountTextFileld.text ?? "") ?? 0) - (Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
-            identityArray.append(choosedPrompt.0[0])
-        }
-        for _ in 0...(Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
-            identityArray.append(choosedPrompt.1[0])
-        }
-        identityArray = shuffledIndices.map { identityArray[$0] }
-        return identityArray
-    }
+//    func generatePromptArray() -> [String] {
+//        promptArray = []
+//        choosedPrompt = prompt.randomElement() ?? ([""], [""])
+//        for _ in 0...(Int(playersCountTextFileld.text ?? "") ?? 0) - (Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
+//            promptArray.append(choosedPrompt.0[1])
+//        }
+//        for _ in 0...(Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
+//            promptArray.append(choosedPrompt.1[1])
+//        }
+//        shuffledIndices = Array(promptArray.indices).shuffled()
+//        promptArray = shuffledIndices.map { promptArray[$0] }
+//        return promptArray
+//    }
+//    func generateIdentityArray() -> [String] {
+//        identityArray = []
+//        for _ in 0...(Int(playersCountTextFileld.text ?? "") ?? 0) - (Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
+//            identityArray.append(choosedPrompt.0[0])
+//        }
+//        for _ in 0...(Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
+//            identityArray.append(choosedPrompt.1[0])
+//        }
+//        identityArray = shuffledIndices.map { identityArray[$0] }
+//        return identityArray
+//    }
     func getUserName() {
         let room = dataBase.collection("Users")
         guard let userId = Auth.auth().currentUser?.email else {
