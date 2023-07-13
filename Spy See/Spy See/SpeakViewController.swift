@@ -218,7 +218,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
         remindLabel.snp.makeConstraints { make in
             make.top.equalTo(messageTextField.snp.bottom).offset(12)
-            make.right.equalTo(speakButton2)
+            make.right.equalTo(speakButton2).offset(-5)
         }
 //        configRecordSession()
         speechAuth()
