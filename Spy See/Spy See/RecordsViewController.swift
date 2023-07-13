@@ -216,6 +216,10 @@ class RecordsViewController: BaseViewController, ObservableObject {
             self.hostingController?.rootView.spyLose = self.spyLose
             self.hostingController?.rootView.normalWin = self.normalWin
             self.hostingController?.rootView.normalLose = self.normalLose
+            spyWin = self.spyWin
+            spyLose = self.spyLose
+            normalWin = self.normalWin
+            normalLose = self.normalLose
         }
     }
     func showRecords() {

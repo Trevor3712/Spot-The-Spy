@@ -23,6 +23,7 @@ struct RecordsChartView: View {
     var spyLose: Int?
     var normalWin: Int?
     var normalLose: Int?
+//    @State private var animatedRecordsData: [RecordsData] = recordsData
     var body: some View {
         var winData = [
             RecordsCount(type: "平民", count: normalWin ?? 0),
@@ -59,10 +60,19 @@ struct RecordsChartView: View {
             AxisMarks(position: .trailing)
         }
         .chartForegroundStyleScale([
-            "Win": Color(UIColor.Y ?? .black),
-            "Lose": Color(UIColor.R ?? .black)
+            "Win": Color(UIColor.Y ?? .black).gradient,
+            "Lose": Color(UIColor.R ?? .black).gradient
         ])
         .chartYScale(domain: 0...maxValue)
+//        .onAppear {
+//            for (index,_) in animatedRecordsData[0].data.enumerated() {
+//                DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.05) {
+//                    withAnimation(.interactiveSpring(response: 0.8, dampingFraction: 0.8, blendDuration: 0.8)) {
+//                        animatedRecordsData[index].data[0].animate = true
+//                    }
+//                }
+//            }
+//        }
         .padding()
     }
 }
