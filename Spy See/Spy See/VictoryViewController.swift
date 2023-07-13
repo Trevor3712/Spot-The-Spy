@@ -62,6 +62,7 @@ class VictoryViewController: BaseViewController {
         whoWins()
         configureLayout()
         getPrompt()
+        showPrompt(normalPrompt: "工程師", spyPrompt: "工具人")
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -100,7 +101,7 @@ class VictoryViewController: BaseViewController {
             if let document = document,
                let normalPrompt = document.data()?["normalPrompt"] as? String,
                let spyPrompt = document.data()?["spyPrompt"] as? String {
-                self.showPrompt(normalPrompt: normalPrompt, spyPrompt: spyPrompt)
+//                self.showPrompt(normalPrompt: normalPrompt, spyPrompt: spyPrompt)
             } else {
                 print("Failed to retrieve player name")
             }
@@ -109,15 +110,13 @@ class VictoryViewController: BaseViewController {
     func showPrompt(normalPrompt: String, spyPrompt: String) {
         self.normalPromptLabel.attributedText = UIFont.fontStyle(
             font: .regular,
-            title: "平民題目：工程師",
-//            title: "平民題目：\(normalPrompt)",
+            title: "平民題目：\(normalPrompt)",
             size: 20,
             textColor: .B2 ?? .black,
             letterSpacing: 5)
         self.spyPromptLabel.attributedText = UIFont.fontStyle(
             font: .regular,
-            title: "臥底題目：工具人",
-//            title: "臥底題目：\(spyPrompt)",
+            title: "臥底題目：\(spyPrompt)",
             size: 20,
             textColor: .B2 ?? .black,
             letterSpacing: 5)

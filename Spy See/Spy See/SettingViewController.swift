@@ -157,8 +157,8 @@ class SettingViewController: BaseViewController {
             "identities": identities,
             "player": [name],
             "playerNumber": playersCountTextFileld.text ?? "",
-            "normalPrompt": "\(choosedPrompt.0[1])",
-            "spyPrompt": "\(choosedPrompt.1[1])"
+//            "normalPrompt": "\(choosedPrompt.0[1])",
+//            "spyPrompt": "\(choosedPrompt.1[1])"
         ]
         documentRef.setData(data) { error in
             if let error = error {
