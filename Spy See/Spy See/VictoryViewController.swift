@@ -29,6 +29,26 @@ class VictoryViewController: BaseViewController {
         backToLobbyButton.addTarget(self, action: #selector(backToLobbyButtonPressed), for: .touchUpInside)
         return backToLobbyButton
     }()
+    lazy var normalPromptLabel: UILabel = {
+        let normalPromptLabel = UILabel()
+        normalPromptLabel.backgroundColor = .white
+        normalPromptLabel.layer.borderWidth = 1
+        normalPromptLabel.layer.borderColor = UIColor.B1?.cgColor
+        normalPromptLabel.layer.cornerRadius = 20
+        normalPromptLabel.clipsToBounds = true
+        normalPromptLabel.textAlignment = .center
+        return normalPromptLabel
+    }()
+    lazy var spyPromptLabel: UILabel = {
+        let spyPromptLabel = UILabel()
+        spyPromptLabel.backgroundColor = .white
+        spyPromptLabel.layer.borderWidth = 1
+        spyPromptLabel.layer.borderColor = UIColor.B1?.cgColor
+        spyPromptLabel.layer.cornerRadius = 20
+        spyPromptLabel.clipsToBounds = true
+        spyPromptLabel.textAlignment = .center
+        return spyPromptLabel
+    }()
     let dataBase = Firestore.firestore()
     var isSpyWin = true
     let playerIdentity = UserDefaults.standard.string(forKey: "playerIdentity")
@@ -41,6 +61,7 @@ class VictoryViewController: BaseViewController {
         view.backgroundColor = .white
         whoWins()
         configureLayout()
+        getPrompt()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -71,9 +92,39 @@ class VictoryViewController: BaseViewController {
             identityImageView.image = .asset(.normalWin)
         }
     }
+    func getPrompt() {
+        let room = self.dataBase.collection("Rooms")
+        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
+        let documentRef = room.document(roomId)
+        documentRef.getDocument { (document, error) in
+            if let document = document,
+               let normalPrompt = document.data()?["normalPrompt"] as? String,
+               let spyPrompt = document.data()?["spyPrompt"] as? String {
+                self.showPrompt(normalPrompt: normalPrompt, spyPrompt: spyPrompt)
+            } else {
+                print("Failed to retrieve player name")
+            }
+        }
+    }
+    func showPrompt(normalPrompt: String, spyPrompt: String) {
+        self.normalPromptLabel.attributedText = UIFont.fontStyle(
+            font: .regular,
+            title: "平民題目：工程師",
+//            title: "平民題目：\(normalPrompt)",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 5)
+        self.spyPromptLabel.attributedText = UIFont.fontStyle(
+            font: .regular,
+            title: "臥底題目：工具人",
+//            title: "臥底題目：\(spyPrompt)",
+            size: 20,
+            textColor: .B2 ?? .black,
+            letterSpacing: 5)
+    }
     func configureLayout() {
-        [identityImageView, victoryLabel, backToLobbyButton].forEach { view.addSubview($0) }
-        victoryLabel.snp.makeConstraints { make in
+        [identityImageView, victoryLabel, normalPromptLabel, spyPromptLabel, backToLobbyButton].forEach { view.addSubview($0) }
+        self.victoryLabel.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.centerY.equalTo(view)
             make.width.equalTo(300)
@@ -85,8 +136,20 @@ class VictoryViewController: BaseViewController {
             make.width.equalTo(200)
             make.height.equalTo(200)
         }
+        normalPromptLabel.snp.makeConstraints { make in
+            make.top.equalTo(victoryLabel.snp.bottom).offset(30)
+            make.centerX.equalTo(view)
+            make.width.equalTo(300)
+            make.height.equalTo(40)
+        }
+        spyPromptLabel.snp.makeConstraints { make in
+            make.top.equalTo(normalPromptLabel.snp.bottom).offset(10)
+            make.centerX.equalTo(view)
+            make.width.equalTo(300)
+            make.height.equalTo(40)
+        }
         backToLobbyButton.snp.makeConstraints { make in
-            make.top.equalTo(victoryLabel.snp.bottom).offset(150)
+            make.top.equalTo(spyPromptLabel.snp.bottom).offset(100)
             make.centerX.equalTo(view)
             make.width.equalTo(150)
             make.height.equalTo(40)
