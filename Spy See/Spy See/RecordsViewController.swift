@@ -190,36 +190,39 @@ class RecordsViewController: BaseViewController, ObservableObject {
         getRecords()
     }
     func getRecords() {
-        let room = dataBase.collection("Users")
         guard let userId = Auth.auth().currentUser?.email else {
             return
         }
-        let documentRef = room.document(userId)
-        documentRef.getDocument { [self] (document, error) in
-            guard let document = document else {
-                return
+        FirestoreManager.shared.getDocument(collection: "Users", document: userId) { result in
+            switch result {
+            case .success(let document):
+                guard let document = document else {
+                    return
+                }
+                if let normalWin = document.data()?["normalWin"] as? String {
+                    self.normalWin = Int(normalWin) ?? 0
+                }
+                if let normalLose = document.data()?["normalLose"] as? String {
+                    self.normalLose = Int(normalLose) ?? 0
+                }
+                if let spyWin = document.data()?["spyWin"] as? String {
+                    self.spyWin = Int(spyWin) ?? 0
+                }
+                if let spyLose = document.data()?["spyLose"] as? String {
+                    self.spyLose = Int(spyLose) ?? 0
+                }
+                self.showRecords()
+                self.hostingController?.rootView.spyWin = self.spyWin
+                self.hostingController?.rootView.spyLose = self.spyLose
+                self.hostingController?.rootView.normalWin = self.normalWin
+                self.hostingController?.rootView.normalLose = self.normalLose
+                self.spyWin = self.spyWin
+                self.spyLose = self.spyLose
+                self.normalWin = self.normalWin
+                self.normalLose = self.normalLose
+            case .failure(let error):
+                print("Error getting document:\(error)")
             }
-            if let normalWin = document.data()?["normalWin"] as? String {
-                self.normalWin = Int(normalWin) ?? 0
-            }
-            if let normalLose = document.data()?["normalLose"] as? String {
-                self.normalLose = Int(normalLose) ?? 0
-            }
-            if let spyWin = document.data()?["spyWin"] as? String {
-                self.spyWin = Int(spyWin) ?? 0
-            }
-            if let spyLose = document.data()?["spyLose"] as? String {
-                self.spyLose = Int(spyLose) ?? 0
-            }
-            self.showRecords()
-            self.hostingController?.rootView.spyWin = self.spyWin
-            self.hostingController?.rootView.spyLose = self.spyLose
-            self.hostingController?.rootView.normalWin = self.normalWin
-            self.hostingController?.rootView.normalLose = self.normalLose
-            spyWin = self.spyWin
-            spyLose = self.spyLose
-            normalWin = self.normalWin
-            normalLose = self.normalLose
         }
     }
     func showRecords() {
