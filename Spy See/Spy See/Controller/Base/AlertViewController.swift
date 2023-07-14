@@ -26,7 +26,6 @@ class AlertViewController: UIViewController {
             cancelCompletion?()
         }
         alertController.addAction(cancelAction)
-        
         return alertController
     }
 }

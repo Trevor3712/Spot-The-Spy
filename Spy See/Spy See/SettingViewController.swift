@@ -86,14 +86,19 @@ class SettingViewController: BaseViewController {
     let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
-        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonPressed))
+        let backButton = UIBarButtonItem(image: UIImage(
+            systemName: "chevron.left"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonPressed))
         backButton.tintColor = .B1
         navigationItem.leftBarButtonItem = backButton
         [
             logoImage,
             playersCountLabel, playersCountTextFileld,
             spysCountLabel, spysCountTextFileld,
-            invitationButton].forEach { view.addSubview($0) }
+            invitationButton
+        ].forEach { view.addSubview($0) }
         logoImage.snp.makeConstraints { make in
             make.top.equalTo(view).offset(200)
             make.left.equalTo(view).offset(50)
@@ -140,10 +145,8 @@ class SettingViewController: BaseViewController {
             present(alert, animated: true, completion: nil)
             return
         }
-        let room = dataBase.collection("Rooms")
         let roomId = generateRoomId()
         UserDefaults.standard.setValue(roomId, forKey: "roomId")
-        let documentRef = room.document(roomId)
         guard let name = self.userName else {
             print("Name is missing")
             return
@@ -160,23 +163,10 @@ class SettingViewController: BaseViewController {
 //            "normalPrompt": "\(choosedPrompt.0[1])",
 //            "spyPrompt": "\(choosedPrompt.1[1])"
         ]
-        documentRef.setData(data) { error in
-            if let error = error {
-                print("Error adding document: \(error)")
-            } else {
-                print("Document added successfully")
-                UserDefaults.standard.removeObject(forKey: "playerPrompt")
-                UserDefaults.standard.removeObject(forKey: "hostPrompt")
-                UserDefaults.standard.removeObject(forKey: "userName")
-                UserDefaults.standard.removeObject(forKey: "playerIdentity")
-                UserDefaults.standard.setValue("工程師", forKey: "hostPrompt")
-//                UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
-                UserDefaults.standard.setValue(self.userName, forKey: "userName")
-                UserDefaults.standard.set("平民", forKey: "playerIdentity")
-//                UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
-                let inviteVC = InviteViewController()
-                self.navigationController?.pushViewController(inviteVC, animated: true)
-            }
+        FirestoreManager.shared.setData(collection: "Rooms", document: roomId, data: data) {
+            self.updateUserDefaults()
+            let inviteVC = InviteViewController()
+            self.navigationController?.pushViewController(inviteVC, animated: true)
         }
     }
     func generateRoomId() -> String {
@@ -228,6 +218,17 @@ class SettingViewController: BaseViewController {
     }
     @objc func backButtonPressed() {
         navigationController?.popViewController(animated: true)
+    }
+    func updateUserDefaults() {
+        UserDefaults.standard.removeObject(forKey: "playerPrompt")
+        UserDefaults.standard.removeObject(forKey: "hostPrompt")
+        UserDefaults.standard.removeObject(forKey: "userName")
+        UserDefaults.standard.removeObject(forKey: "playerIdentity")
+        UserDefaults.standard.setValue("工程師", forKey: "hostPrompt")
+//                UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
+        UserDefaults.standard.setValue(self.userName, forKey: "userName")
+        UserDefaults.standard.set("平民", forKey: "playerIdentity")
+//                UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
     }
 }
 extension SettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
