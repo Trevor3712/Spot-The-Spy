@@ -22,4 +22,14 @@ class FirestoreManager {
             }
         }
     }
+    func getDocument(collection: String, document: String, completion: @escaping (Result<DocumentSnapshot?, Error>) -> Void) {
+        let documentRef = dataBase.collection(collection).document(document)
+        documentRef.getDocument { (document, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(document))
+            }
+        }
+    }
 }

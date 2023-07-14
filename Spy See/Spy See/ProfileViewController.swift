@@ -103,7 +103,7 @@ class ProfileViewController: BaseViewController {
         }
         let documentRef = user.document(userId)
         let name = nameTextField.text
-        documentRef.updateData(["name": name ]) { error in
+        documentRef.updateData(["name": name]) { error in
             if let error = error {
                 print("Error adding document: \(error)")
             } else {
@@ -112,27 +112,31 @@ class ProfileViewController: BaseViewController {
         }
     }
     func getUserName() {
-        let user = Firestore.firestore().collection("Users")
         guard let userId = Auth.auth().currentUser?.email else {
             return
         }
-        let documentRef = user.document(userId)
-        documentRef.getDocument { (document, error) in
-            if let document = document, let name = document.data()?["name"] as? String {
-                self.nameTextField.attributedText = UIFont.fontStyle(
-                    font: .semibold,
-                    title: name,
-                    size: 35,
-                    textColor: .B2 ?? .black,
-                    letterSpacing: 5)
-            } else {
-                print("Failed to retrieve player name")
-                self.nameTextField.attributedText = UIFont.fontStyle(
-                    font: .semibold,
-                    title: "超帥的暱稱",
-                    size: 35,
-                    textColor: .B2 ?? .black,
-                    letterSpacing: 5)
+        FirestoreManager.shared.getDocument(collection: "Users", document: userId) { result in
+            switch result {
+            case .success(let document):
+                if let document = document,
+                   let name = document.data()?["name"] as? String, !name.isEmpty {
+                    self.nameTextField.attributedText = UIFont.fontStyle(
+                        font: .semibold,
+                        title: name,
+                        size: 35,
+                        textColor: .B2 ?? .black,
+                        letterSpacing: 5)
+                } else {
+                    print("Failed to retrieve player name")
+                    self.nameTextField.attributedText = UIFont.fontStyle(
+                        font: .semibold,
+                        title: "超帥的暱稱",
+                        size: 35,
+                        textColor: .B2 ?? .black,
+                        letterSpacing: 5)
+                }
+            case .failure(let error):
+                print("Error getting document:\(error)")
             }
         }
     }
