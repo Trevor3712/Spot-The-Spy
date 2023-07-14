@@ -149,8 +149,8 @@ class SettingViewController: BaseViewController {
             return
         }
 //        let prompts = generatePromptArray()
-        let prompts = ["蝙蝠俠", "蜘蛛人", "蜘蛛人", "蜘蛛人"]
-        let identities = ["臥底", "平民", "平民", "平民"]
+        let prompts = ["工程師", "工程師", "工具人", "工程師"]
+        let identities = ["平民", "平民", "臥底", "平民"]
 //        let identities = generateIdentityArray()
         let data: [String: Any] = [
             "prompts": prompts,
@@ -169,10 +169,10 @@ class SettingViewController: BaseViewController {
                 UserDefaults.standard.removeObject(forKey: "hostPrompt")
                 UserDefaults.standard.removeObject(forKey: "userName")
                 UserDefaults.standard.removeObject(forKey: "playerIdentity")
-                UserDefaults.standard.setValue("蝙蝠俠", forKey: "hostPrompt")
+                UserDefaults.standard.setValue("工程師", forKey: "hostPrompt")
 //                UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
                 UserDefaults.standard.setValue(self.userName, forKey: "userName")
-                UserDefaults.standard.set("臥底", forKey: "playerIdentity")
+                UserDefaults.standard.set("平民", forKey: "playerIdentity")
 //                UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
                 let inviteVC = InviteViewController()
                 self.navigationController?.pushViewController(inviteVC, animated: true)
