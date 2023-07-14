@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseFirestore
 
 class SignupViewController: BaseViewController {
     lazy var signupLabel: UILabel = {
@@ -187,19 +186,12 @@ class SignupViewController: BaseViewController {
        }
     }
     func setNameData() {
-        let user = Firestore.firestore().collection("Users")
         guard let userId = Auth.auth().currentUser?.email else {
             return
         }
-        let documentRef = user.document(userId)
         let name = nameTextField.text
-        documentRef.setData(["name": name ]) { error in
-            if let error = error {
-                print("Error adding document: \(error)")
-            } else {
-                print("Document added successfully")
-            }
-        }
+        let data: [String: Any] = ["name": name as Any]
+        FirestoreManager.shared.setData(collection: "Users", document: userId, data: data)
     }
     @objc func backButtonPressed() {
         navigationController?.popViewController(animated: true)

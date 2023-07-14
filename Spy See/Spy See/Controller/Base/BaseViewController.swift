@@ -55,15 +55,6 @@ class BaseViewController: UIViewController {
     func vibrateHard() {
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
-//    func playSeAudio(from url: URL) {
-//        do {
-//            seAudioPlayer = try AVAudioPlayer(contentsOf: url)
-//            seAudioPlayer?.prepareToPlay()
-//            seAudioPlayer?.play()
-//        } catch {
-//            print("Failed to play audio: \(error.localizedDescription)")
-//        }
-//    }
     func playSeAudio(from url: URL) {
         do {
             let audioFile = try AVAudioFile(forReading: url)

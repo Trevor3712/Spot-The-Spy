@@ -17,6 +17,7 @@
 		B522AF1B2A3C5CAF00FF956C /* PassPromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF1A2A3C5CAF00FF956C /* PassPromptViewController.swift */; };
 		B522AF1D2A3CBF2200FF956C /* SpeakViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF1C2A3CBF2200FF956C /* SpeakViewController.swift */; };
 		B54212EE2A40030200D7C90C /* DiedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54212ED2A40030200D7C90C /* DiedViewController.swift */; };
+		B5437B862A618F6E003986C9 /* FirestoreMananger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5437B852A618F6E003986C9 /* FirestoreMananger.swift */; };
 		B550132E2A472C0A00FCEFFC /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132D2A472C0A00FCEFFC /* BaseButton.swift */; };
 		B55013302A47320500FCEFFC /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132F2A47320500FCEFFC /* UIFont+Extension.swift */; };
 		B55013322A47387100FCEFFC /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55013312A47387100FCEFFC /* BaseTextField.swift */; };
@@ -69,6 +70,7 @@
 		B522AF1A2A3C5CAF00FF956C /* PassPromptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassPromptViewController.swift; sourceTree = "<group>"; };
 		B522AF1C2A3CBF2200FF956C /* SpeakViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakViewController.swift; sourceTree = "<group>"; };
 		B54212ED2A40030200D7C90C /* DiedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiedViewController.swift; sourceTree = "<group>"; };
+		B5437B852A618F6E003986C9 /* FirestoreMananger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreMananger.swift; sourceTree = "<group>"; };
 		B550132D2A472C0A00FCEFFC /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		B550132F2A47320500FCEFFC /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		B55013312A47387100FCEFFC /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
@@ -135,6 +137,22 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		B5437B812A615528003986C9 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		B5437B822A6155F3003986C9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B5D2B0A42A39C8E800ED3516 /* Main.storyboard */,
+				B5D2B0A92A39C8ED00ED3516 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		B571FE652A5A9328007EADE2 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				B58B763E2A5EDB5200228500 /* RecordsData.swift */,
+				B5437B852A618F6E003986C9 /* FirestoreMananger.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -193,7 +212,9 @@
 				B571FE652A5A9328007EADE2 /* Resource */,
 				B5FAE71E2A45AD3D00C69CAA /* Extensions */,
 				B58B763D2A5EDB3500228500 /* Model */,
-				B5FAE7232A45C4A300C69CAA /* Views */,
+				B5437B822A6155F3003986C9 /* View */,
+				B5437B812A615528003986C9 /* View Model */,
+				B5FAE7232A45C4A300C69CAA /* Controller */,
 				B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */,
 				B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */,
 				B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */,
@@ -216,9 +237,7 @@
 				B5C6732B2A4EAAF100D9BBF5 /* MessageHeaderView.swift */,
 				B57DE3B52A49A63600AEC8EC /* MessageCell.swift */,
 				B5D2B0B52A3A98A000ED3516 /* Prompt.swift */,
-				B5D2B0A42A39C8E800ED3516 /* Main.storyboard */,
 				B5D2B0A72A39C8ED00ED3516 /* Assets.xcassets */,
-				B5D2B0A92A39C8ED00ED3516 /* LaunchScreen.storyboard */,
 				B5D2B0AC2A39C8ED00ED3516 /* Info.plist */,
 				B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */,
 			);
@@ -235,12 +254,12 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		B5FAE7232A45C4A300C69CAA /* Views */ = {
+		B5FAE7232A45C4A300C69CAA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				B5FAE7242A45C4B600C69CAA /* Base */,
 			);
-			path = Views;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		B5FAE7242A45C4B600C69CAA /* Base */ = {
@@ -439,6 +458,7 @@
 				B5C6732C2A4EAAF100D9BBF5 /* MessageHeaderView.swift in Sources */,
 				B5FAE72A2A46024200C69CAA /* BaseViewController.swift in Sources */,
 				B5FAE7202A45AD8000C69CAA /* UIColor+Extension.swift in Sources */,
+				B5437B862A618F6E003986C9 /* FirestoreMananger.swift in Sources */,
 				B5F20BEA2A4550E900FFECA1 /* WaitForNextViewController.swift in Sources */,
 				B5FAE72C2A46044F00C69CAA /* UIImage+Extension.swift in Sources */,
 				B57DE3B22A496D1D00AEC8EC /* BaseMessageTableView.swift in Sources */,
