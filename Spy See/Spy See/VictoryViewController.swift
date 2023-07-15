@@ -233,20 +233,21 @@ class VictoryViewController: BaseViewController {
         }
     }
     func updateRecord(_ string: String, _ int: Int) {
-        let room = dataBase.collection("Users")
+//        let room = dataBase.collection("Users")
         guard let userId = Auth.auth().currentUser?.email else {
             return
         }
-        let documentRef = room.document(userId)
+//        let documentRef = room.document(userId)
         let data: [String: Any] = [
             string: String(int + 1)
         ]
-        documentRef.updateData(data) { error in
-            if let error = error {
-                print("Error updating document: \(error)")
-            } else {
-                print("Document updated successfully")
-            }
-        }
+        FirestoreManager.shared.updateData(collection: "Users", document: userId, data: data)
+//        documentRef.updateData(data) { error in
+//            if let error = error {
+//                print("Error updating document: \(error)")
+//            } else {
+//                print("Document updated successfully")
+//            }
+//        }
     }
 }

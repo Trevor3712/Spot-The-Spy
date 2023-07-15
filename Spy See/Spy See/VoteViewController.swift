@@ -86,13 +86,7 @@ class VoteViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        let url = Bundle.main.url(forResource: "vote_long_bgm", withExtension: "wav")
-//        AudioPlayer.shared.playAudio(from: url!, loop: true)
     }
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        AudioPlayer.shared.stopAudio()
-//    }
     @objc func voteButtonPressed() {
         playSeAudio(from: clickUrl!)
         vibrate()
@@ -102,19 +96,11 @@ class VoteViewController: BaseViewController {
             present(alert, animated: true)
             return
         }
-        let room = dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
         let email = Auth.auth().currentUser?.email
-
-        documentRef.updateData(["voted": FieldValue.arrayUnion([["\(email ?? "")": votedPlayer ?? ""]])]) { error in
-            if let error = error {
-                print("Error updating document: \(error)")
-            } else {
-                print("Document updated successfully")
-                let killVC = KillViewController()
-                self.navigationController?.pushViewController(killVC, animated: true)
-            }
+        let data = ["voted": FieldValue.arrayUnion([["\(email ?? "")": votedPlayer ?? ""]])]
+        FirestoreManager.shared.updateData(data: data) {
+            let killVC = KillViewController()
+            self.navigationController?.pushViewController(killVC, animated: true)
         }
     }
 }

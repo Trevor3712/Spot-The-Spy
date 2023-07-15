@@ -40,10 +40,10 @@ class WaitForNextViewController: BaseViewController {
             make.width.equalTo(250)
             make.height.equalTo(40)
         }
-        readtToGO()
+        readyToGO()
         loadReadyPlayer()
     }
-    func readtToGO() {
+    func readyToGO() {
         let room = self.dataBase.collection("Rooms")
         let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
         let documentRef = room.document(roomId)
