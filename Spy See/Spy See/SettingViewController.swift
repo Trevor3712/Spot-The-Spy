@@ -202,17 +202,20 @@ class SettingViewController: BaseViewController {
 //        return identityArray
 //    }
     func getUserName() {
-        let room = dataBase.collection("Users")
         guard let userId = Auth.auth().currentUser?.email else {
             return
         }
-        let documentRef = room.document(userId)
-        documentRef.getDocument { (document, error) in
-            if let document = document, let name = document.data()?["name"] as? String {
-                self.userName = name
-                print(self.userName)
-            } else {
-                print(error?.localizedDescription)
+        FirestoreManager.shared.getDocument(collection: "Users", document: userId) { result in
+            switch result {
+            case .success(let document):
+                guard let document = document else {
+                    return
+                }
+                if let name = document.data()?["name"] as? String {
+                    self.userName = name
+                }
+            case .failure(let error):
+                print("Error getting document:\(error)")
             }
         }
     }

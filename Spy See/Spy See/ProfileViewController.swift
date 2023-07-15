@@ -118,8 +118,10 @@ class ProfileViewController: BaseViewController {
         FirestoreManager.shared.getDocument(collection: "Users", document: userId) { result in
             switch result {
             case .success(let document):
-                if let document = document,
-                   let name = document.data()?["name"] as? String, !name.isEmpty {
+                guard let document = document else {
+                    return
+                }
+                if let name = document.data()?["name"] as? String, !name.isEmpty {
                     self.nameTextField.attributedText = UIFont.fontStyle(
                         font: .semibold,
                         title: name,
