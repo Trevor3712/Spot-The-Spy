@@ -111,41 +111,11 @@ class PassPromptViewController: BaseViewController {
                 let data: [String: Any] = [
                     "playersReady": playersReady
                 ]
-                documentRef.updateData(data) { error in
-                    if let error = error {
-                        print("Error updating document: \(error)")
-                    } else {
-                        print("Document updated successfully")
-                    }
-                }
+                FirestoreManager.shared.updateData(data: data)
             case .failure(let error):
                 print("Error getting document:\(error)")
             }
         }
-//        documentRef.getDocument { (documentSnapshot, error) in
-//            if let error = error {
-//                print("Error retrieving document: \(error)")
-//                return
-//            }
-////            guard let document = documentSnapshot, document.exists else {
-////                print("Document does not exist")
-////                return
-////            }
-//            var playersReady = document.data()?["playersReady"] as? [String] ?? []
-//            if !playersReady.contains(email) {
-//                playersReady.append(email)
-//            }
-//            let data: [String: Any] = [
-//                "playersReady": playersReady
-//            ]
-//            documentRef.updateData(data) { error in
-//                if let error = error {
-//                    print("Error updating document: \(error)")
-//                } else {
-//                    print("Document updated successfully")
-//                }
-//            }
-//        }
     }
     func loadReadyPlayers() {
         let room = self.dataBase.collection("Rooms")
@@ -166,7 +136,7 @@ class PassPromptViewController: BaseViewController {
                 let newPlayers = playersReady.filter { !existingPlayers.contains($0) }
                 self.readyPlayers.append(contentsOf: newPlayers)
                 if self.isAllPlayersReady() {
-                    documentRef.updateData(["playersReady": []])
+                    FirestoreManager.shared.updateData(data: ["playersReady": []])
                     let speakVC = SpeakViewController()
                     self.vibrateHard()
                     self.navigationController?.pushViewController(speakVC, animated: true)

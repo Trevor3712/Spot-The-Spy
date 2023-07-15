@@ -34,4 +34,15 @@ class FirestoreManager {
             }
         }
     }
+    func updateData(collection: String = "Rooms", document: String = roomId ?? "", data: [String: Any], completion: (() -> Void)? = nil) {
+        let documentRef = dataBase.collection(collection).document(document)
+        documentRef.updateData(data) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Document updated successfully")
+                completion?()
+            }
+        }
+    }
 }

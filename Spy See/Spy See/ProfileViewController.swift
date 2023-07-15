@@ -97,19 +97,14 @@ class ProfileViewController: BaseViewController {
         setNameData()
     }
     func setNameData() {
-        let user = Firestore.firestore().collection("Users")
         guard let userId = Auth.auth().currentUser?.email else {
             return
         }
-        let documentRef = user.document(userId)
-        let name = nameTextField.text
-        documentRef.updateData(["name": name]) { error in
-            if let error = error {
-                print("Error adding document: \(error)")
-            } else {
-                print("Document added successfully")
-            }
-        }
+        let name = nameTextField.text ?? ""
+        let data: [String: Any] = [
+            "name": name
+        ]
+        FirestoreManager.shared.updateData(collection: "Users", document: userId, data: data)
     }
     func getUserName() {
         guard let userId = Auth.auth().currentUser?.email else {
