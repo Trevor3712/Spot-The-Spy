@@ -8,10 +8,12 @@
 import Foundation
 import FirebaseFirestore
 
+private let roomId: String? = UserDefaults.standard.string(forKey: "roomId")
+
 class FirestoreManager {
     static let shared = FirestoreManager()
     private let dataBase = Firestore.firestore()
-    func setData(collection: String, document: String, data: [String: Any], completion: (() -> Void)? = nil) {
+    func setData(collection: String = "Rooms", document: String = roomId ?? "", data: [String: Any], completion: (() -> Void)? = nil) {
         let documentRef = dataBase.collection(collection).document(document)
         documentRef.setData(data) { error in
             if let error = error {
@@ -22,9 +24,9 @@ class FirestoreManager {
             }
         }
     }
-    func getDocument(collection: String, document: String, completion: @escaping (Result<DocumentSnapshot?, Error>) -> Void) {
+    func getDocument(collection: String = "Rooms", document: String = roomId ?? "", completion: @escaping (Result<DocumentSnapshot?, Error>) -> Void) {
         let documentRef = dataBase.collection(collection).document(document)
-        documentRef.getDocument { (document, error) in
+        documentRef.getDocument { document, error in
             if let error = error {
                 completion(.failure(error))
             } else {

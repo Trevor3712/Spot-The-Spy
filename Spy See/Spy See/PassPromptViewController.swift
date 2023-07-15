@@ -98,30 +98,54 @@ class PassPromptViewController: BaseViewController {
             print("Email is missing")
             return
         }
-        documentRef.getDocument { (documentSnapshot, error) in
-            if let error = error {
-                print("Error retrieving document: \(error)")
-                return
-            }
-            guard let document = documentSnapshot, document.exists else {
-                print("Document does not exist")
-                return
-            }
-            var playersReady = document.data()?["playersReady"] as? [String] ?? []
-            if !playersReady.contains(email) {
-                playersReady.append(email)
-            }
-            let data: [String: Any] = [
-                "playersReady": playersReady
-            ]
-            documentRef.updateData(data) { error in
-                if let error = error {
-                    print("Error updating document: \(error)")
-                } else {
-                    print("Document updated successfully")
+        FirestoreManager.shared.getDocument() { result in
+            switch result {
+            case .success(let document):
+                guard let document = document else {
+                    return
                 }
+                var playersReady = document.data()?["playersReady"] as? [String] ?? []
+                if !playersReady.contains(email) {
+                    playersReady.append(email)
+                }
+                let data: [String: Any] = [
+                    "playersReady": playersReady
+                ]
+                documentRef.updateData(data) { error in
+                    if let error = error {
+                        print("Error updating document: \(error)")
+                    } else {
+                        print("Document updated successfully")
+                    }
+                }
+            case .failure(let error):
+                print("Error getting document:\(error)")
             }
         }
+//        documentRef.getDocument { (documentSnapshot, error) in
+//            if let error = error {
+//                print("Error retrieving document: \(error)")
+//                return
+//            }
+////            guard let document = documentSnapshot, document.exists else {
+////                print("Document does not exist")
+////                return
+////            }
+//            var playersReady = document.data()?["playersReady"] as? [String] ?? []
+//            if !playersReady.contains(email) {
+//                playersReady.append(email)
+//            }
+//            let data: [String: Any] = [
+//                "playersReady": playersReady
+//            ]
+//            documentRef.updateData(data) { error in
+//                if let error = error {
+//                    print("Error updating document: \(error)")
+//                } else {
+//                    print("Document updated successfully")
+//                }
+//            }
+//        }
     }
     func loadReadyPlayers() {
         let room = self.dataBase.collection("Rooms")

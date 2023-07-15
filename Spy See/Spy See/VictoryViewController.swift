@@ -94,18 +94,33 @@ class VictoryViewController: BaseViewController {
         }
     }
     func getPrompt() {
-        let room = self.dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
-        documentRef.getDocument { (document, error) in
-            if let document = document,
-               let normalPrompt = document.data()?["normalPrompt"] as? String,
-               let spyPrompt = document.data()?["spyPrompt"] as? String {
-//                self.showPrompt(normalPrompt: normalPrompt, spyPrompt: spyPrompt)
-            } else {
-                print("Failed to retrieve player name")
+//        let room = self.dataBase.collection("Rooms")
+//        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
+//        let documentRef = room.document(roomId)
+        FirestoreManager.shared.getDocument() { result in
+            switch result {
+            case.success(let document):
+                guard let document = document else  {
+                    return
+                }
+                if let normalPrompt = document.data()?["normalPrompt"] as? String,
+                   let spyPrompt = document.data()?["spyPrompt"] as? String {
+ //                self.showPrompt(normalPrompt: normalPrompt, spyPrompt: spyPrompt)
+                    print("===\(normalPrompt)\(spyPrompt)")
+                }
+            case .failure(let error):
+                print("Error getting document:\(error)")
             }
         }
+//        documentRef.getDocument { document, error in
+//            if let document = document,
+//               let normalPrompt = document.data()?["normalPrompt"] as? String,
+//               let spyPrompt = document.data()?["spyPrompt"] as? String {
+////                self.showPrompt(normalPrompt: normalPrompt, spyPrompt: spyPrompt)
+//            } else {
+//                print("Failed to retrieve player name")
+//            }
+//        }
     }
     func showPrompt(normalPrompt: String, spyPrompt: String) {
         self.normalPromptLabel.attributedText = UIFont.fontStyle(
@@ -176,26 +191,29 @@ class VictoryViewController: BaseViewController {
         }
     }
     func getRecords() {
-        let room = dataBase.collection("Users")
         guard let userId = Auth.auth().currentUser?.email else {
             return
         }
-        let documentRef = room.document(userId)
-        documentRef.getDocument { (document, error) in
-            guard let document = document else {
-                return
-            }
-            if let normalWin = document.data()?["normalWin"] as? String {
-                self.normalWin = Int(normalWin)
-            }
-            if let normalLose = document.data()?["normalLose"] as? String {
-                self.normalLose = Int(normalLose)
-            }
-            if let spyWin = document.data()?["spyWin"] as? String {
-                self.spyWin = Int(spyWin)
-            }
-            if let spyLose = document.data()?["spyLose"] as? String {
-                self.spyLose = Int(spyLose)
+        FirestoreManager.shared.getDocument(collection: "Users", document: userId) { result in
+            switch result {
+            case .success(let document):
+                guard let document = document else {
+                    return
+                }
+                if let normalWin = document.data()?["normalWin"] as? String {
+                    self.normalWin = Int(normalWin)
+                }
+                if let normalLose = document.data()?["normalLose"] as? String {
+                    self.normalLose = Int(normalLose)
+                }
+                if let spyWin = document.data()?["spyWin"] as? String {
+                    self.spyWin = Int(spyWin)
+                }
+                if let spyLose = document.data()?["spyLose"] as? String {
+                    self.spyLose = Int(spyLose)
+                }
+            case .failure(let error):
+                print("Error getting document:\(error)")
             }
         }
     }

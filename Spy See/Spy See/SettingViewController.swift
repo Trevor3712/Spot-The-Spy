@@ -163,7 +163,7 @@ class SettingViewController: BaseViewController {
 //            "normalPrompt": "\(choosedPrompt.0[1])",
 //            "spyPrompt": "\(choosedPrompt.1[1])"
         ]
-        FirestoreManager.shared.setData(collection: "Rooms", document: roomId, data: data) {
+        FirestoreManager.shared.setData(data: data) {
             self.updateUserDefaults()
             let inviteVC = InviteViewController()
             self.navigationController?.pushViewController(inviteVC, animated: true)
