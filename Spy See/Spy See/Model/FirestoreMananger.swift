@@ -13,9 +13,9 @@ private let roomId: String? = UserDefaults.standard.string(forKey: "roomId")
 class FirestoreManager {
     static let shared = FirestoreManager()
     private let dataBase = Firestore.firestore()
-    func setData(collection: String = "Rooms", document: String = roomId ?? "", data: [String: Any], completion: (() -> Void)? = nil) {
+    func setData(collection: String = "Rooms", document: String = roomId ?? "", data: [String: Any], merge: Bool = false, completion: (() -> Void)? = nil) {
         let documentRef = dataBase.collection(collection).document(document)
-        documentRef.setData(data) { error in
+        documentRef.setData(data, merge: merge) { error in
             if let error = error {
                 print("Error adding document: \(error)")
             } else {
