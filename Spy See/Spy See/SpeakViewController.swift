@@ -130,7 +130,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     var countdown = 7
     var clues: [String] = []
     var messages: [String] = []
-    var listener: ListenerRegistration?
+    var documentListener: ListenerRegistration?
     var isButtonPressed = false
     let storage = Storage.storage()
     let audioSession = AVAudioSession.sharedInstance()
@@ -244,7 +244,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     func showNextPlayer() {
         guard currentPlayerIndex < players.count else {
             currentPlayerIndex = 0
-            listener?.remove()
+            documentListener?.remove()
             clues = []
             messages = []
             clueTableView.reloadData()
@@ -295,66 +295,39 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     }
     func showClue() {
-        let room = dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
-        listener = documentRef.addSnapshotListener { (documentSnapshot, error) in
-            if let error = error {
-                print(error)
-                return
-            }
-            guard let data = documentSnapshot?.data() else {
-                print("No data available")
-                self.clues = []
-                self.messages = []
-                self.clueTableView.reloadData()
-                self.messageTableView.reloadData()
-                return
-            }
-            if let clue = data["clue"] as? [String] {
-                self.clues = []
-                self.clues.append(contentsOf: clue)
-                if !self.clues.isEmpty {
+        documentListener = FirestoreManager.shared.addSnapShotListener { result in
+            switch result {
+            case .success(let document):
+                guard let document = document else {
+                    self.clues = []
+                    self.messages = []
                     self.clueTableView.reloadData()
-                    let lastRow = self.clueTableView.numberOfRows(inSection: 0) - 1
-                    let indexPath = IndexPath(row: lastRow, section: 0)
-                    self.clueTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-                }
-            }
-            if let message = data["message"] as? [String] {
-                self.messages = []
-                self.messages.append(contentsOf: message)
-                if !self.messages.isEmpty {
                     self.messageTableView.reloadData()
-                    let lastRow = self.messageTableView.numberOfRows(inSection: 0) - 1
-                    let indexPath = IndexPath(row: lastRow, section: 0)
-                    self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                    return
                 }
+                if let clue = document["clue"] as? [String] {
+                    self.clues = []
+                    self.clues.append(contentsOf: clue)
+                    if !self.clues.isEmpty {
+                        self.clueTableView.reloadData()
+                        let lastRow = self.clueTableView.numberOfRows(inSection: 0) - 1
+                        let indexPath = IndexPath(row: lastRow, section: 0)
+                        self.clueTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                    }
+                }
+                if let message = document["message"] as? [String] {
+                    self.messages = []
+                    self.messages.append(contentsOf: message)
+                    if !self.messages.isEmpty {
+                        self.messageTableView.reloadData()
+                        let lastRow = self.messageTableView.numberOfRows(inSection: 0) - 1
+                        let indexPath = IndexPath(row: lastRow, section: 0)
+                        self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                    }
+                }
+            case .failure(let error):
+                print("Error getting document:\(error)")
             }
-//            if let audioClueString = data["audioClue"] as? String {
-//                print("audio clue:\(audioClueString)")
-//                let fileReference = Storage.storage().reference().child("\(self.fileName ?? "").wav")
-//                let destinationURL = self.getDirectoryPath().appendingPathComponent("\(self.fileName ?? "").wav")
-//                fileReference.write(toFile: destinationURL) { url, error in
-//                    if let error = error {
-//                        print(error)
-//                    } else if let url = url {
-//                        print("===url:\(url)")
-//                        self.playSeAudio(from: url)
-//                        do {
-//                            print("url:\(url)")
-//                            self.audioPlayer = try AVAudioPlayer(contentsOf: url)
-//                            self.audioPlayer?.volume = 1.0
-//                            self.audioPlayer?.prepareToPlay()
-//                            self.audioPlayer?.play()
-//                            print("play audio")
-//                        } catch {
-//                            print("Play error", error.localizedDescription)
-//                            print("Play error: \(error)")
-//                        }
-//                    }
-//                }
-//            }
         }
     }
     func currentUserTurn() {
