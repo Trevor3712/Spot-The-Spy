@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseFirestore
 
 class ProfileViewController: BaseViewController {
     lazy var nameLabel: UILabel = {
@@ -166,18 +165,10 @@ class ProfileViewController: BaseViewController {
         }
     }
     func deleteStoreData() {
-        let user = Firestore.firestore().collection("Users")
         guard let userId = Auth.auth().currentUser?.email else {
             return
         }
-        let documentRef = user.document(userId)
-        documentRef.delete { error in
-            if let error = error {
-                print("Error deleting user: \(error.localizedDescription)")
-            } else {
-                print("Delete user successfully")
-            }
-        }
+        FirestoreManager.shared.delete(collection: "Users", document: userId)
     }
 }
 extension ProfileViewController: UITextFieldDelegate {
