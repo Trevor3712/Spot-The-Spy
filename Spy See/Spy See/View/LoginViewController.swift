@@ -107,10 +107,25 @@ class LoginViewController: BaseViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        [logoImage,titleContainerView, accountContainerView].forEach { view.addSubview($0) }
+        [logoImage, titleContainerView, accountContainerView].forEach { view.addSubview($0) }
         [labelCN1, labelCN2, labelEN1, labelEN2, labelEN3].forEach { titleContainerView.addSubview($0) }
-        [accountTextField, passwordTextField,
-         loginButton, signupButton].forEach { accountContainerView.addSubview($0) }
+        [accountTextField, passwordTextField].forEach { accountContainerView.addSubview($0) }
+        [loginButton, signupButton].forEach { accountContainerView.addSubview($0) }
+        configureLayout()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let url = Bundle.main.url(forResource: "main_bgm", withExtension: "wav")
+        guard let url = url else {
+            return
+        }
+        if AudioPlayer.shared.audioPlayer?.isPlaying == nil {
+            AudioPlayer.shared.playAudio(from: url, loop: true)
+        }
+        accountTextField.text = ""
+        passwordTextField.text = ""
+    }
+    func configureLayout() {
         logoImage.snp.makeConstraints { make in
             make.bottom.equalTo(titleContainerView.snp.top).offset(-40)
             make.centerX.equalTo(view)
@@ -171,17 +186,8 @@ class LoginViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let url = Bundle.main.url(forResource: "main_bgm", withExtension: "wav")
-        if ((AudioPlayer.shared.audioPlayer?.isPlaying) == nil) {
-            AudioPlayer.shared.playAudio(from: url!, loop: true)
-        }
-        accountTextField.text = ""
-        passwordTextField.text = ""
-    }
     @objc func logInButtonPressed(_ sender: UIButton) {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
         Auth.auth().signIn(
             withEmail: accountTextField.text ?? "",
@@ -193,7 +199,8 @@ class LoginViewController: BaseViewController {
                 print(error?.localizedDescription ?? "")
                 return
             }
-            guard let tabBarController = self.storyboard?.instantiateViewController(withIdentifier: "TabBarController") as? UITabBarController else {
+            guard let tabBarController = self.storyboard?.instantiateViewController(
+                withIdentifier: "TabBarController") as? UITabBarController else {
                 return
             }
             self.navigationController?.pushViewController(tabBarController, animated: true)
@@ -201,7 +208,7 @@ class LoginViewController: BaseViewController {
         }
     }
     @objc func signupButtonPressed() {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
         let signupVC = SignupViewController()
         navigationController?.pushViewController(signupVC, animated: true)
@@ -209,7 +216,10 @@ class LoginViewController: BaseViewController {
 }
 extension LoginViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        playSeAudio(from: editingUrl!)
+        guard let editingUrl = editingUrl else {
+            return
+        }
+        playSeAudio(from: editingUrl)
         vibrate()
     }
     func textFieldDidEndEditing(_ textField: UITextField) {

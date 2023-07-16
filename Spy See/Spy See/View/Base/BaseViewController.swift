@@ -11,6 +11,10 @@ import IQKeyboardManager
 import AudioToolbox
 import AVFoundation
 
+let clickUrl = Bundle.main.url(forResource: "click_se", withExtension: "wav")
+let editingUrl = Bundle.main.url(forResource: "editing_se", withExtension: "wav")
+let playUrl = Bundle.main.url(forResource: "play_se", withExtension: "wav")
+
 class BaseViewController: UIViewController {
     var isEnableIQKeyboard: Bool {
         return true
@@ -22,9 +26,6 @@ class BaseViewController: UIViewController {
     }()
     var seAudioPlayer: AVAudioPlayer?
     let seAudioEngine = AVAudioEngine()
-    let clickUrl = Bundle.main.url(forResource: "click_se", withExtension: "wav")
-    let editingUrl = Bundle.main.url(forResource: "editing_se", withExtension: "wav")
-    let playUrl = Bundle.main.url(forResource: "play_se", withExtension: "wav")
     override func viewDidLoad() {
         super.viewDidLoad()
         configBackground()
@@ -55,8 +56,11 @@ class BaseViewController: UIViewController {
     func vibrateHard() {
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
-    func playSeAudio(from url: URL) {
+    func playSeAudio(from url: URL? = clickUrl) {
         do {
+            guard let url = url else {
+                return
+            }
             let audioFile = try AVAudioFile(forReading: url)
             let audioPlayerNode = AVAudioPlayerNode()
             seAudioEngine.attach(audioPlayerNode)
