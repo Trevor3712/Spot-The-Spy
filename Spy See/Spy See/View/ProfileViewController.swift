@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 
 class ProfileViewController: BaseViewController {
     lazy var nameLabel: UILabel = {
@@ -56,6 +55,7 @@ class ProfileViewController: BaseViewController {
     }()
     var userName: String?
     let alertVC = AlertViewController()
+    var profileViewModel = ProfileViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.navigationItem.hidesBackButton = true
@@ -89,59 +89,37 @@ class ProfileViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getUserName()
+        profileViewModel.getUserName { result in
+            switch result {
+            case .success(let name):
+                self.nameTextField.attributedText = UIFont.fontStyle(
+                    font: .semibold,
+                    title: name,
+                    size: 35,
+                    textColor: .B2 ?? .black,
+                    letterSpacing: 5)
+            case .failure(let error):
+                print("Error getting name:\(error)")
+                self.nameTextField.attributedText = UIFont.fontStyle(
+                    font: .semibold,
+                    title: "超帥的暱稱",
+                    size: 35,
+                    textColor: .B2 ?? .black,
+                    letterSpacing: 5)
+            }
+        }
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        setNameData()
-    }
-    func setNameData() {
-        guard let userId = Auth.auth().currentUser?.email else {
-            return
-        }
         let name = nameTextField.text ?? ""
-        let data: [String: Any] = [
-            "name": name
-        ]
-        FirestoreManager.shared.updateData(collection: "Users", document: userId, data: data)
-    }
-    func getUserName() {
-        guard let userId = Auth.auth().currentUser?.email else {
-            return
-        }
-        FirestoreManager.shared.getDocument(collection: "Users", document: userId) { result in
-            switch result {
-            case .success(let document):
-                guard let document = document else {
-                    return
-                }
-                if let name = document.data()?["name"] as? String, !name.isEmpty {
-                    self.nameTextField.attributedText = UIFont.fontStyle(
-                        font: .semibold,
-                        title: name,
-                        size: 35,
-                        textColor: .B2 ?? .black,
-                        letterSpacing: 5)
-                } else {
-                    print("Failed to retrieve player name")
-                    self.nameTextField.attributedText = UIFont.fontStyle(
-                        font: .semibold,
-                        title: "超帥的暱稱",
-                        size: 35,
-                        textColor: .B2 ?? .black,
-                        letterSpacing: 5)
-                }
-            case .failure(let error):
-                print("Error getting document:\(error)")
-            }
-        }
+        profileViewModel.setNameData(name: name)
     }
     @objc func deleteButtonPressed() {
         playSeAudio(from: clickUrl!)
         vibrate()
         let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要刪除帳號嗎？", confirmCompletion: {
-            self.deleteAuthData()
-            self.deleteStoreData()
+            self.profileViewModel.deleteAuthData()
+            self.profileViewModel.deleteStoreData()
             self.navigationController?.popToRootViewController(animated: true)
         })
         present(alert, animated: true)
@@ -154,21 +132,6 @@ class ProfileViewController: BaseViewController {
             self.navigationController?.popToRootViewController(animated: true)
         })
         present(alert, animated: true)
-    }
-    func deleteAuthData() {
-        Auth.auth().currentUser?.delete { error in
-            if let error = error {
-                print("Error deleting user: \(error.localizedDescription)")
-            } else {
-                print("Delete user successfully")
-            }
-        }
-    }
-    func deleteStoreData() {
-        guard let userId = Auth.auth().currentUser?.email else {
-            return
-        }
-        FirestoreManager.shared.delete(collection: "Users", document: userId)
     }
 }
 extension ProfileViewController: UITextFieldDelegate {

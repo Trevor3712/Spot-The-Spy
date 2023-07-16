@@ -18,6 +18,7 @@
 		B522AF1D2A3CBF2200FF956C /* SpeakViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522AF1C2A3CBF2200FF956C /* SpeakViewController.swift */; };
 		B54212EE2A40030200D7C90C /* DiedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54212ED2A40030200D7C90C /* DiedViewController.swift */; };
 		B5437B862A618F6E003986C9 /* FirestoreMananger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5437B852A618F6E003986C9 /* FirestoreMananger.swift */; };
+		B5437B882A63E215003986C9 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5437B872A63E215003986C9 /* ProfileViewModel.swift */; };
 		B550132E2A472C0A00FCEFFC /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132D2A472C0A00FCEFFC /* BaseButton.swift */; };
 		B55013302A47320500FCEFFC /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132F2A47320500FCEFFC /* UIFont+Extension.swift */; };
 		B55013322A47387100FCEFFC /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55013312A47387100FCEFFC /* BaseTextField.swift */; };
@@ -70,6 +71,7 @@
 		B522AF1C2A3CBF2200FF956C /* SpeakViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakViewController.swift; sourceTree = "<group>"; };
 		B54212ED2A40030200D7C90C /* DiedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiedViewController.swift; sourceTree = "<group>"; };
 		B5437B852A618F6E003986C9 /* FirestoreMananger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreMananger.swift; sourceTree = "<group>"; };
+		B5437B872A63E215003986C9 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		B550132D2A472C0A00FCEFFC /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		B550132F2A47320500FCEFFC /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		B55013312A47387100FCEFFC /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
@@ -138,17 +140,9 @@
 		B5437B812A615528003986C9 /* View Model */ = {
 			isa = PBXGroup;
 			children = (
+				B5437B872A63E215003986C9 /* ProfileViewModel.swift */,
 			);
 			path = "View Model";
-			sourceTree = "<group>";
-		};
-		B5437B822A6155F3003986C9 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				B5D2B0A42A39C8E800ED3516 /* Main.storyboard */,
-				B5D2B0A92A39C8ED00ED3516 /* LaunchScreen.storyboard */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		B571FE652A5A9328007EADE2 /* Resource */ = {
@@ -181,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				B5437B852A618F6E003986C9 /* FirestoreMananger.swift */,
+				B5D2B0B52A3A98A000ED3516 /* Prompt.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -209,11 +204,33 @@
 				B571FE652A5A9328007EADE2 /* Resource */,
 				B5FAE71E2A45AD3D00C69CAA /* Extensions */,
 				B58B763D2A5EDB3500228500 /* Model */,
-				B5437B822A6155F3003986C9 /* View */,
+				B5FAE7232A45C4A300C69CAA /* View */,
 				B5437B812A615528003986C9 /* View Model */,
-				B5FAE7232A45C4A300C69CAA /* Controller */,
 				B5D2B09E2A39C8E800ED3516 /* AppDelegate.swift */,
 				B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */,
+				B5D2B0A42A39C8E800ED3516 /* Main.storyboard */,
+				B5D2B0A92A39C8ED00ED3516 /* LaunchScreen.storyboard */,
+				B5D2B0A72A39C8ED00ED3516 /* Assets.xcassets */,
+				B5D2B0AC2A39C8ED00ED3516 /* Info.plist */,
+				B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */,
+			);
+			path = "Spy See";
+			sourceTree = "<group>";
+		};
+		B5FAE71E2A45AD3D00C69CAA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */,
+				B5FAE72B2A46044F00C69CAA /* UIImage+Extension.swift */,
+				B550132F2A47320500FCEFFC /* UIFont+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B5FAE7232A45C4A300C69CAA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B5FAE7242A45C4B600C69CAA /* Base */,
 				B5D2B0A22A39C8E800ED3516 /* LoginViewController.swift */,
 				B5FAE7272A45C68900C69CAA /* ProfileViewController.swift */,
 				B571FE5B2A56BF32007EADE2 /* RecordsViewController.swift */,
@@ -233,30 +250,8 @@
 				B522AF182A3C113900FF956C /* PlayerCell.swift */,
 				B5C6732B2A4EAAF100D9BBF5 /* MessageHeaderView.swift */,
 				B57DE3B52A49A63600AEC8EC /* MessageCell.swift */,
-				B5D2B0B52A3A98A000ED3516 /* Prompt.swift */,
-				B5D2B0A72A39C8ED00ED3516 /* Assets.xcassets */,
-				B5D2B0AC2A39C8ED00ED3516 /* Info.plist */,
-				B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */,
 			);
-			path = "Spy See";
-			sourceTree = "<group>";
-		};
-		B5FAE71E2A45AD3D00C69CAA /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				B5FAE71F2A45AD8000C69CAA /* UIColor+Extension.swift */,
-				B5FAE72B2A46044F00C69CAA /* UIImage+Extension.swift */,
-				B550132F2A47320500FCEFFC /* UIFont+Extension.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		B5FAE7232A45C4A300C69CAA /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				B5FAE7242A45C4B600C69CAA /* Base */,
-			);
-			path = Controller;
+			path = View;
 			sourceTree = "<group>";
 		};
 		B5FAE7242A45C4B600C69CAA /* Base */ = {
@@ -477,6 +472,7 @@
 				B5BAAB9C2A4C2A6600C1A770 /* AlertViewController.swift in Sources */,
 				B5BAAB9A2A4BF06500C1A770 /* SignupViewController.swift in Sources */,
 				B571FE5E2A57BE88007EADE2 /* RecordsChartView.swift in Sources */,
+				B5437B882A63E215003986C9 /* ProfileViewModel.swift in Sources */,
 				B522AF152A3B67E800FF956C /* InviteViewController.swift in Sources */,
 				B522AF132A3AC3CF00FF956C /* SettingViewController.swift in Sources */,
 				B522AF1D2A3CBF2200FF956C /* SpeakViewController.swift in Sources */,
