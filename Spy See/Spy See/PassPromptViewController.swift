@@ -98,7 +98,7 @@ class PassPromptViewController: BaseViewController {
             print("Email is missing")
             return
         }
-        FirestoreManager.shared.getDocument() { result in
+        FirestoreManager.shared.getDocument { result in
             switch result {
             case .success(let document):
                 guard let document = document else {
@@ -118,14 +118,11 @@ class PassPromptViewController: BaseViewController {
         }
     }
     func loadReadyPlayers() {
-        let room = self.dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
         var existingPlayers: Set<String> = Set(self.readyPlayers)
-        documentListener = documentRef.addSnapshotListener { (documentSnapshot, error) in
-            DispatchQueue.main.async {
-                guard let document = documentSnapshot else {
-                    print("Error fetching document: \(error)")
+        documentListener = FirestoreManager.shared.addSnapShotListener { result in
+            switch result {
+            case .success(let document):
+                guard let document = document else {
                     return
                 }
                 if let players = document.data()?["player"] as? [String] {
@@ -136,11 +133,13 @@ class PassPromptViewController: BaseViewController {
                 let newPlayers = playersReady.filter { !existingPlayers.contains($0) }
                 self.readyPlayers.append(contentsOf: newPlayers)
                 if self.isAllPlayersReady() {
-                    FirestoreManager.shared.updateData(data: ["playersReady": []])
+                    FirestoreManager.shared.updateData(data: ["playersReady": [String]()])
                     let speakVC = SpeakViewController()
                     self.vibrateHard()
                     self.navigationController?.pushViewController(speakVC, animated: true)
                 }
+            case .failure(let error):
+                print("Error getting document:\(error)")
             }
         }
     }
