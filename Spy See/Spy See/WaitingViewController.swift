@@ -28,7 +28,6 @@ class WaitingViewController: BaseViewController {
         tableView.register(PlayerCell.self, forCellReuseIdentifier: PlayerCell.reuseIdentifier)
         return tableView
     }()
-    let dataBase = Firestore.firestore()
     var documentListener: ListenerRegistration?
     var players: [String] = []
     var playerNumber: Int?

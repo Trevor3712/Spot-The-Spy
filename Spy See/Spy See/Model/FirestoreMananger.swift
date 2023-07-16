@@ -56,4 +56,14 @@ class FirestoreManager {
         }
         return documentListener
     }
+    func delete(collection: String = "Rooms", document: String = roomId ?? "") {
+        let documentRef = dataBase.collection(collection).document(document)
+        documentRef.delete { error in
+            if let error = error {
+                print("Delete error：\(error.localizedDescription)")
+            } else {
+                print("Delete successfully")
+            }
+        }
+    }
 }

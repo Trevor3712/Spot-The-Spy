@@ -8,7 +8,6 @@
 import UIKit
 import SwiftUI
 import FirebaseAuth
-import FirebaseFirestore
 
 class RecordsViewController: BaseViewController, ObservableObject {
     lazy var titleLabel: UILabel = {
@@ -102,7 +101,6 @@ class RecordsViewController: BaseViewController, ObservableObject {
     var spyLose = 0
     var normalWin = 0
     var normalLose = 0
-    let dataBase = Firestore.firestore()
     var recordsChartView = RecordsChartView()
     private var hostingController: UIHostingController<RecordsChartView>?
     override func viewDidLoad() {

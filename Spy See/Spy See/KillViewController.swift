@@ -64,7 +64,6 @@ class KillViewController: BaseViewController {
         nextRoundButton.addTarget(self, action: #selector(nextRoundButtonPressed), for: .touchUpInside)
         return nextRoundButton
     }()
-    let dataBase = Firestore.firestore()
     var votedArray: [[String: String]] = []
     var identitiesArray: [String] = []
     var arrayIndex: Int?

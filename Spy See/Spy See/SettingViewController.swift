@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseFirestore
 import FirebaseAuth
 import CryptoKit
 
@@ -77,7 +76,6 @@ class SettingViewController: BaseViewController {
     }()
     let playersCount = [3, 4, 5, 6, 7, 8, 9, 10]
     let spysCount = [1, 2, 3]
-    let dataBase = Firestore.firestore()
     var promptArray: [String] = []
     var identityArray: [String] = []
     var shuffledIndices: [Int] = []

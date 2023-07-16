@@ -26,7 +26,6 @@ class WaitForNextViewController: BaseViewController {
         remindLabel.textAlignment = .center
         return remindLabel
     }()
-    let dataBase = Firestore.firestore()
     var documentListener: ListenerRegistration?
     let currentPlayers = UserDefaults.standard.stringArray(forKey: "playersArray")
     var readyPlayers: [String] = []

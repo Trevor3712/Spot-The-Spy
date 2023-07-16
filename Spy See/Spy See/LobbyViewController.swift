@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseFirestore
 
 class LobbyViewController: BaseViewController {
     lazy var logoImage: UIImageView = {
@@ -48,7 +47,6 @@ class LobbyViewController: BaseViewController {
         goButton.addTarget(self, action: #selector(goButtonPressed), for: .touchUpInside)
         return goButton
     }()
-    let dataBase = Firestore.firestore()
     var userName: String?
     let alertVC = AlertViewController()
     override func viewDidLoad() {

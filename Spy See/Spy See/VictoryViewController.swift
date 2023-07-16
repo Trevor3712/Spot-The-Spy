@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseFirestore
 
 class VictoryViewController: BaseViewController {
     lazy var identityImageView = UIImageView()
@@ -49,7 +48,6 @@ class VictoryViewController: BaseViewController {
         spyPromptLabel.textAlignment = .center
         return spyPromptLabel
     }()
-    let dataBase = Firestore.firestore()
     var isSpyWin = true
     let playerIdentity = UserDefaults.standard.string(forKey: "playerIdentity")
     var spyWin: Int?
@@ -179,16 +177,7 @@ class VictoryViewController: BaseViewController {
         }
     }
     func deleteGameData() {
-        let room = dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
-        documentRef.delete { error in
-            if let error = error {
-                print("Delete error：\(error.localizedDescription)")
-            } else {
-                print("Delete successfully")
-            }
-        }
+        FirestoreManager.shared.delete()
     }
     func getRecords() {
         guard let userId = Auth.auth().currentUser?.email else {

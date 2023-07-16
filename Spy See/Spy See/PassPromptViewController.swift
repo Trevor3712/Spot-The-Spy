@@ -39,7 +39,6 @@ class PassPromptViewController: BaseViewController {
         return readyButton
     }()
     var playerPrompt: String?
-    let dataBase = Firestore.firestore()
     var readyPlayers: [String] = []
     var playerNumber: Int?
     var documentListener: ListenerRegistration?
@@ -91,9 +90,6 @@ class PassPromptViewController: BaseViewController {
     @objc func readyButtonPressed() {
         playSeAudio(from: clickUrl!)
         vibrate()
-        let room = self.dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
         guard let email = Auth.auth().currentUser?.email else {
             print("Email is missing")
             return

@@ -120,7 +120,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     var players: [String] = []
     var currentPlayerIndex: Int = 0
     var timer: Timer?
-    let dataBase = Firestore.firestore()
     var audioRecoder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
     var player: AVPlayer?

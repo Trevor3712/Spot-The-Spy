@@ -36,7 +36,6 @@ class DiedViewController: BaseViewController {
             letterSpacing: 0)
         return remindLabel
     }()
-    let dataBase = Firestore.firestore()
     var documentListener: ListenerRegistration?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,9 +71,6 @@ class DiedViewController: BaseViewController {
         }
     }
     func checkIfEndGame() {
-//        let room = dataBase.collection("Rooms")
-//        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-//        let documentRef = room.document(roomId)
         documentListener = FirestoreManager.shared.addSnapShotListener { result in
             switch result {
             case .success(let document):
@@ -92,23 +88,6 @@ class DiedViewController: BaseViewController {
                 print("Error getting document:\(error)")
             }
         }
-//        documentRef.addSnapshotListener { (documentSnapshot, error) in
-//            if let error = error {
-//                print(error)
-//                return
-//            }
-//            guard let data = documentSnapshot?.data() else {
-//                print("No data available")
-//                return
-//            }
-//            if let isSpyWin = data["isSpyWin"] as? Bool {
-//                if isSpyWin == false {
-//                    self.goToVictoryPage(false)
-//                } else {
-//                    self.goToVictoryPage(true)
-//                }
-//            }
-//        }
     }
     func goToVictoryPage(_ isSpyWin: Bool) {
         let victoryVC = VictoryViewController()

@@ -8,7 +8,6 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
-import AVFoundation
 
 class VoteViewController: BaseViewController {
     lazy var scrollView: UIScrollView = {
@@ -45,7 +44,6 @@ class VoteViewController: BaseViewController {
         return voteButton
     }()
     var players = UserDefaults.standard.stringArray(forKey: "playersArray")
-    let dataBase = Firestore.firestore()
     var votedPlayer: String?
     var selectedIndexPath: IndexPath?
     override func viewDidLoad() {
