@@ -8,9 +8,9 @@
 import UIKit
 
 class AlertViewController: UIViewController {
-    func showAlert(title: String, message: String, completion: (() ->Void)? = nil) -> UIAlertController {
+    func showAlert(title: String, message: String, completion: (() -> Void)? = nil) -> UIAlertController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "OK", style: .default) { _ in 
+        let confirmAction = UIAlertAction(title: "OK", style: .default) { _ in
             completion?()
         }
         alertController.addAction(confirmAction)

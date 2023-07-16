@@ -15,7 +15,7 @@ class BaseViewController: UIViewController {
     var isEnableIQKeyboard: Bool {
         return true
     }
-    lazy var backgroundImageView: UIImageView =  {
+    lazy var backgroundImageView: UIImageView = {
         let backgroundImageView = UIImageView()
         backgroundImageView.image = .asset(.background)
         return backgroundImageView

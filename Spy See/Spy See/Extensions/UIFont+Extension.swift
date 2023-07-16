@@ -29,4 +29,5 @@ extension UIFont {
     private static func Font(_ font: FontName, size: CGFloat) -> UIFont? {
         return UIFont(name: font.rawValue, size: size)
     }
+    // swiftlint:enable identifier_name
 }

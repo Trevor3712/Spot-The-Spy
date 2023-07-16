@@ -27,5 +27,5 @@ extension UIColor {
     private static func Color(_ color: Color) -> UIColor? {
         return UIColor(named: color.rawValue)
     }
-    // swiftlint:disable identifier_name
+    // swiftlint:enable identifier_name
 }
