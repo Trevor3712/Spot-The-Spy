@@ -20,16 +20,7 @@ class RecordsViewController: BaseViewController, ObservableObject {
             letterSpacing: 10)
         return titleLabel
     }()
-    lazy var totalRecordsLabel: UILabel = {
-        let totalRecordsLabel = UILabel()
-        totalRecordsLabel.backgroundColor = .white
-        totalRecordsLabel.layer.borderWidth = 1
-        totalRecordsLabel.layer.borderColor = UIColor.B1?.cgColor
-        totalRecordsLabel.layer.cornerRadius = 20
-        totalRecordsLabel.clipsToBounds = true
-        totalRecordsLabel.textAlignment = .center
-        return totalRecordsLabel
-    }()
+    lazy var totalRecordsLabel = BaseLabel()
     lazy var winRateLabel: UILabel = {
         let winRateLabel = UILabel()
         winRateLabel.attributedText = UIFont.fontStyle(
@@ -40,14 +31,9 @@ class RecordsViewController: BaseViewController, ObservableObject {
             letterSpacing: 10)
         return winRateLabel
     }()
-    lazy var totalWinRateLabel: UILabel = {
-        let totalWinRateLabel = UILabel()
+    lazy var totalWinRateLabel: BaseLabel = {
+        let totalWinRateLabel = BaseLabel()
         totalWinRateLabel.backgroundColor = .Y
-        totalWinRateLabel.layer.borderWidth = 1
-        totalWinRateLabel.layer.borderColor = UIColor.B1?.cgColor
-        totalWinRateLabel.layer.cornerRadius = 20
-        totalWinRateLabel.clipsToBounds = true
-        totalWinRateLabel.textAlignment = .center
         return totalWinRateLabel
     }()
     lazy var chartView: UIView = {
@@ -59,14 +45,8 @@ class RecordsViewController: BaseViewController, ObservableObject {
         chartView.clipsToBounds = true
         return chartView
     }()
-    lazy var normalLabel: UILabel = {
-        let normalLabel = UILabel()
-        normalLabel.backgroundColor = .white
-        normalLabel.layer.borderWidth = 1
-        normalLabel.layer.borderColor = UIColor.B1?.cgColor
-        normalLabel.layer.cornerRadius = 20
-        normalLabel.clipsToBounds = true
-        normalLabel.textAlignment = .center
+    lazy var normalLabel: BaseLabel = {
+        let normalLabel = BaseLabel()
         normalLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "平民",
@@ -75,14 +55,8 @@ class RecordsViewController: BaseViewController, ObservableObject {
             letterSpacing: 5)
         return normalLabel
     }()
-    lazy var spyLabel: UILabel = {
-        let spyLabel = UILabel()
-        spyLabel.backgroundColor = .white
-        spyLabel.layer.borderWidth = 1
-        spyLabel.layer.borderColor = UIColor.B1?.cgColor
-        spyLabel.layer.cornerRadius = 20
-        spyLabel.clipsToBounds = true
-        spyLabel.textAlignment = .center
+    lazy var spyLabel: BaseLabel = {
+        let spyLabel = BaseLabel()
         spyLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "臥底",
@@ -106,24 +80,27 @@ class RecordsViewController: BaseViewController, ObservableObject {
     override func viewDidLoad() {
         super.viewDidLoad()
         hostingController = UIHostingController(rootView: recordsChartView)
-        self.addChild(hostingController!)
-        hostingController!.didMove(toParent: self)
-        [titleLabel, totalRecordsLabel, winRateLabel, totalWinRateLabel,
-         chartView, normalContainerView, spyContainerViwe].forEach { view.addSubview($0) }
+        guard let hostingController = hostingController else {
+            return
+        }
+        self.addChild(hostingController)
+        hostingController.didMove(toParent: self)
+        [titleLabel, totalRecordsLabel, winRateLabel, totalWinRateLabel].forEach { view.addSubview($0) }
+        [chartView, normalContainerView, spyContainerViwe].forEach { view.addSubview($0) }
         [normalLabel, normalRecordsLabel, normalWinRateLabel].forEach { normalContainerView.addSubview($0) }
         [spyLabel, spyRecordsLabel, spyWinRateLabel].forEach { spyContainerViwe.addSubview($0) }
-        chartView.addSubview(hostingController!.view)
+        chartView.addSubview(hostingController.view)
         chartView.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.centerY.equalTo(view)
             make.width.equalTo(350)
             make.height.equalTo(250)
         }
-        hostingController?.view.snp.makeConstraints { make in
+        hostingController.view.snp.makeConstraints { make in
             make.edges.equalTo(chartView).inset(5)
         }
         winRateLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(hostingController!.view.snp.top).offset(-30)
+            make.bottom.equalTo(hostingController.view.snp.top).offset(-30)
             make.right.equalTo(view.snp.centerX).offset(-20)
         }
         totalWinRateLabel.snp.makeConstraints { make in
@@ -135,7 +112,7 @@ class RecordsViewController: BaseViewController, ObservableObject {
         totalRecordsLabel.snp.makeConstraints { make in
             make.bottom.equalTo(winRateLabel.snp.top).offset(-20)
             make.centerX.equalTo(view)
-            make.width.equalTo(hostingController!.view)
+            make.width.equalTo(hostingController.view)
             make.height.equalTo(50)
         }
         titleLabel.snp.makeConstraints { make in
@@ -143,11 +120,18 @@ class RecordsViewController: BaseViewController, ObservableObject {
             make.centerX.equalTo(view)
         }
         normalContainerView.snp.makeConstraints { make in
-            make.top.equalTo(hostingController!.view.snp.bottom).offset(30)
+            make.top.equalTo(hostingController.view.snp.bottom).offset(30)
             make.centerX.equalTo(view)
             make.width.equalTo(350)
             make.height.equalTo(50)
         }
+        configureLayout()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getRecords()
+    }
+    func configureLayout() {
         normalLabel.snp.makeConstraints { make in
             make.top.equalTo(normalContainerView)
             make.left.equalTo(normalContainerView)
@@ -183,10 +167,6 @@ class RecordsViewController: BaseViewController, ObservableObject {
             make.centerY.equalTo(spyLabel)
         }
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        getRecords()
-    }
     func getRecords() {
         guard let userId = Auth.auth().currentUser?.email else {
             return
@@ -209,21 +189,48 @@ class RecordsViewController: BaseViewController, ObservableObject {
                 if let spyLose = document.data()?["spyLose"] as? String {
                     self.spyLose = Int(spyLose) ?? 0
                 }
-                self.showRecords()
+                self.showTotalRecords()
+                self.showIdentityRecord()
                 self.hostingController?.rootView.spyWin = self.spyWin
                 self.hostingController?.rootView.spyLose = self.spyLose
                 self.hostingController?.rootView.normalWin = self.normalWin
                 self.hostingController?.rootView.normalLose = self.normalLose
-                self.spyWin = self.spyWin
-                self.spyLose = self.spyLose
-                self.normalWin = self.normalWin
-                self.normalLose = self.normalLose
             case .failure(let error):
                 print("Error getting document:\(error)")
             }
         }
     }
-    func showRecords() {
+}
+extension RecordsViewController {
+    func showTotalRecords() {
+        let totalWin = normalWin + spyWin
+        let totalLose = normalLose + spyLose
+        totalRecordsLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "\(totalWin)勝 \(totalLose)敗",
+            size: 25,
+            textColor: .B2 ?? .black,
+            letterSpacing: 10)
+        let totalGames = totalWin + totalLose
+        if totalGames != 0 {
+            let totalRecords = (Float(totalWin) / Float(totalGames) * 100)
+            let roundedTotalRecords = String(format: "%.0f", totalRecords)
+            totalWinRateLabel.attributedText = UIFont.fontStyle(
+                font: .semibold,
+                title: roundedTotalRecords + "%",
+                size: 25,
+                textColor: .B2 ?? .black,
+                letterSpacing: 10)
+        } else {
+            totalWinRateLabel.attributedText = UIFont.fontStyle(
+                font: .semibold,
+                title: "-",
+                size: 25,
+                textColor: .B2 ?? .black,
+                letterSpacing: 10)
+        }
+    }
+    func showIdentityRecord() {
         normalRecordsLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "\(normalWin)勝 \(normalLose)敗",
@@ -269,32 +276,6 @@ class RecordsViewController: BaseViewController, ObservableObject {
                 size: 25,
                 textColor: .Y ?? .black,
                 letterSpacing: 5)
-        }
-        let totalWin = normalWin + spyWin
-        let totalLose = normalLose + spyLose
-        totalRecordsLabel.attributedText = UIFont.fontStyle(
-            font: .semibold,
-            title: "\(totalWin)勝 \(totalLose)敗",
-            size: 25,
-            textColor: .B2 ?? .black,
-            letterSpacing: 10)
-        let totalGames = totalWin + totalLose
-        if totalGames != 0 {
-            let totalRecords = (Float(totalWin) / Float(totalGames) * 100)
-            let roundedTotalRecords = String(format: "%.0f", totalRecords)
-            totalWinRateLabel.attributedText = UIFont.fontStyle(
-                font: .semibold,
-                title: roundedTotalRecords + "%",
-                size: 25,
-                textColor: .B2 ?? .black,
-                letterSpacing: 10)
-        } else {
-            totalWinRateLabel.attributedText = UIFont.fontStyle(
-                font: .semibold,
-                title: "-",
-                size: 25,
-                textColor: .B2 ?? .black,
-                letterSpacing: 10)
         }
     }
 }

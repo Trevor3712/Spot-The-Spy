@@ -23,13 +23,12 @@ struct RecordsChartView: View {
     var spyLose: Int?
     var normalWin: Int?
     var normalLose: Int?
-//    @State private var animatedRecordsData: [RecordsData] = recordsData
     var body: some View {
-        var winData = [
+        let winData = [
             RecordsCount(type: "平民", count: normalWin ?? 0),
             RecordsCount(type: "臥底", count: spyWin ?? 0)
         ]
-        var loseData = [
+        let loseData = [
             RecordsCount(type: "平民", count: normalLose ?? 0),
             RecordsCount(type: "臥底", count: spyLose ?? 0)
         ]
@@ -37,8 +36,10 @@ struct RecordsChartView: View {
             RecordsData(type: "Win", data: winData),
             RecordsData(type: "Lose", data: loseData)
         ]
-        let maxValue = max(winData.max(by: { $0.count < $1.count })?.count ?? 0,
-                                   loseData.max(by: { $0.count < $1.count })?.count ?? 0)
+        let maxValue = max(
+            winData.max { $0.count < $1.count }?.count ?? 0,
+            loseData.max { $0.count < $1.count }?.count ?? 0
+        )
         Chart(recordsData, id: \.type) { records in
             ForEach(records.data) {
                 let count = $0.count
@@ -64,15 +65,6 @@ struct RecordsChartView: View {
             "Lose": Color(UIColor.R ?? .black).gradient
         ])
         .chartYScale(domain: 0...maxValue)
-//        .onAppear {
-//            for (index,_) in animatedRecordsData[0].data.enumerated() {
-//                DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.05) {
-//                    withAnimation(.interactiveSpring(response: 0.8, dampingFraction: 0.8, blendDuration: 0.8)) {
-//                        animatedRecordsData[index].data[0].animate = true
-//                    }
-//                }
-//            }
-//        }
         .padding()
     }
 }

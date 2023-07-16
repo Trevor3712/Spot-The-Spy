@@ -19,6 +19,7 @@
 		B54212EE2A40030200D7C90C /* DiedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54212ED2A40030200D7C90C /* DiedViewController.swift */; };
 		B5437B862A618F6E003986C9 /* FirestoreMananger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5437B852A618F6E003986C9 /* FirestoreMananger.swift */; };
 		B5437B882A63E215003986C9 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5437B872A63E215003986C9 /* ProfileViewModel.swift */; };
+		B5437B8A2A641D7C003986C9 /* BaseLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5437B892A641D7C003986C9 /* BaseLabel.swift */; };
 		B550132E2A472C0A00FCEFFC /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132D2A472C0A00FCEFFC /* BaseButton.swift */; };
 		B55013302A47320500FCEFFC /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B550132F2A47320500FCEFFC /* UIFont+Extension.swift */; };
 		B55013322A47387100FCEFFC /* BaseTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55013312A47387100FCEFFC /* BaseTextField.swift */; };
@@ -72,6 +73,7 @@
 		B54212ED2A40030200D7C90C /* DiedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiedViewController.swift; sourceTree = "<group>"; };
 		B5437B852A618F6E003986C9 /* FirestoreMananger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreMananger.swift; sourceTree = "<group>"; };
 		B5437B872A63E215003986C9 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		B5437B892A641D7C003986C9 /* BaseLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLabel.swift; sourceTree = "<group>"; };
 		B550132D2A472C0A00FCEFFC /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		B550132F2A47320500FCEFFC /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		B55013312A47387100FCEFFC /* BaseTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextField.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				B5FAE7292A46024200C69CAA /* BaseViewController.swift */,
 				B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */,
 				B550132D2A472C0A00FCEFFC /* BaseButton.swift */,
+				B5437B892A641D7C003986C9 /* BaseLabel.swift */,
 				B55013312A47387100FCEFFC /* BaseTextField.swift */,
 				B5BAAB9B2A4C2A6600C1A770 /* AlertViewController.swift */,
 				B571FE632A5A835B007EADE2 /* AudioPlayer.swift */,
@@ -471,6 +474,7 @@
 				B571FE5C2A56BF32007EADE2 /* RecordsViewController.swift in Sources */,
 				B5BAAB9C2A4C2A6600C1A770 /* AlertViewController.swift in Sources */,
 				B5BAAB9A2A4BF06500C1A770 /* SignupViewController.swift in Sources */,
+				B5437B8A2A641D7C003986C9 /* BaseLabel.swift in Sources */,
 				B571FE5E2A57BE88007EADE2 /* RecordsChartView.swift in Sources */,
 				B5437B882A63E215003986C9 /* ProfileViewModel.swift in Sources */,
 				B522AF152A3B67E800FF956C /* InviteViewController.swift in Sources */,
