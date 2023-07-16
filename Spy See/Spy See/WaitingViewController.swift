@@ -54,34 +54,29 @@ class WaitingViewController: BaseViewController {
         UserDefaults.standard.setValue(players, forKey: "playersArray")
     }
     func loadRoomData() {
-        guard let roomId = UserDefaults.standard.string(forKey: "roomId"), !roomId.isEmpty else {
-            print("Invalid roomId")
-            return
-        }
-        let documentRef = dataBase.collection("Rooms").document(roomId)
-        var existingPlayers: Set<String> = Set(self.players)
-        documentListener = documentRef.addSnapshotListener { (documentSnapshot, error) in
-            if let error = error {
-                print(error)
-                return
-            }
-            guard let data = documentSnapshot?.data() else {
-                print("No data available")
-                return
-            }
-            if let playerNumberData = data["playerNumber"] as? String {
-                self.playerNumber = Int(playerNumberData)
-            }
-            if let playersData = data["player"] as? [String] {
-                self.players = []
-                let newPlayers = playersData.filter { !existingPlayers.contains($0) }
-                self.players.append(contentsOf: newPlayers)
-                self.tableView.reloadData()
-                if self.allPlayersJoined() {
-                    let promptVC = PassPromptViewController()
-                    self.vibrateHard()
-                    self.navigationController?.pushViewController(promptVC, animated: true)
+        let existingPlayers: Set<String> = Set(self.players)
+        documentListener = FirestoreManager.shared.addSnapShotListener { result in
+            switch result {
+            case .success(let document):
+                guard let document = document else {
+                    return
                 }
+                if let playerNumberData = document["playerNumber"] as? String {
+                    self.playerNumber = Int(playerNumberData)
+                }
+                if let playersData = document["player"] as? [String] {
+                    self.players = []
+                    let newPlayers = playersData.filter { !existingPlayers.contains($0) }
+                    self.players.append(contentsOf: newPlayers)
+                    self.tableView.reloadData()
+                    if self.allPlayersJoined() {
+                        let promptVC = PassPromptViewController()
+                        self.vibrateHard()
+                        self.navigationController?.pushViewController(promptVC, animated: true)
+                    }
+                }
+            case .failure(let error):
+                print("Error getting document:\(error)")
             }
         }
     }

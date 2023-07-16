@@ -45,4 +45,15 @@ class FirestoreManager {
             }
         }
     }
+    func addSnapShotListener(collection: String = "Rooms", document: String = roomId ?? "", completion: @escaping (Result<DocumentSnapshot?, Error>) -> Void) -> ListenerRegistration {
+        let documentRef = dataBase.collection(collection).document(document)
+        let documentListener = documentRef.addSnapshotListener { document, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(document))
+            }
+        }
+        return documentListener
+    }
 }
