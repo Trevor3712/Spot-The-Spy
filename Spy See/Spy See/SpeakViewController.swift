@@ -277,37 +277,21 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     @objc func sendClue() {
         playSeAudio(from: clickUrl!)
         vibrate()
-        let room = dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
         let data: [String: Any] = [
             "clue": FieldValue.arrayUnion(["\(userName ?? "") : \(messageTextField.text ?? "")"])
         ]
-        documentRef.updateData(data) { error in
-            if let error = error {
-                print("Error adding document: \(error)")
-            } else {
-                print("Document added successfully")
-                self.messageTextField.text = ""
-            }
+        FirestoreManager.shared.updateData(data: data) {
+            self.messageTextField.text = ""
         }
     }
     @objc func sendMesssge() {
         playSeAudio(from: clickUrl!)
         vibrate()
-        let room = dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
         let data: [String: Any] = [
             "message": FieldValue.arrayUnion(["\(userName ?? "") : \(messageTextField.text ?? "")"])
         ]
-        documentRef.updateData(data) { error in
-            if let error = error {
-                print("Error adding document: \(error)")
-            } else {
-                print("Document added successfully")
-                self.messageTextField.text = ""
-            }
+        FirestoreManager.shared.updateData(data: data) {
+            self.messageTextField.text = ""
         }
     }
     func showClue() {
@@ -417,21 +401,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             uploadAudio(audioURL: audioUrl!) { result in
                switch result {
                case .success(let url):
-                   print("****** Firestore audioClue", url)
-                   let room = self.dataBase.collection("Rooms")
-                   let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-                   let documentRef = room.document(roomId)
                    let data: [String: Any] = [
                        "audioClue": url.absoluteString
                    ]
-                   documentRef.updateData(data) { error in
-                       if let error = error {
-                           print("Error adding document: \(error)")
-                       } else {
-                           print("Document added successfully")
-                           print("upload local audioUrl:\(url)")
-                       }
-                   }
+                   FirestoreManager.shared.updateData(data: data)
                case .failure(let error):
                   print(error)
                }
@@ -606,14 +579,11 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     }
     func deleteMessage() {
-        let room = dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
         let data: [String: Any] = [
-            "clue": [],
-            "message": []
+            "clue": [String](),
+            "message": [String]()
         ]
-        documentRef.updateData(data)
+        FirestoreManager.shared.updateData(data: data)
     }
 }
 extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {

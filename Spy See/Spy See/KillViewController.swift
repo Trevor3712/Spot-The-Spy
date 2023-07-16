@@ -261,21 +261,12 @@ class KillViewController: BaseViewController {
         }
     }
     func updateData() {
-        let room = dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
         let data: [String: Any] = [
             "player": playersArray,
             "identities": identitiesArray,
             "voted": votedArray
         ]
-        documentRef.updateData(data) { error in
-            if let error = error {
-                print("Error updating document: \(error)")
-            } else {
-                print("Document updated successfully")
-            }
-        }
+        FirestoreManager.shared.updateData(data: data)
     }
     func goToVictoryVC(_ bool: Bool) {
         let victoryVC = VictoryViewController()
@@ -283,41 +274,16 @@ class KillViewController: BaseViewController {
         navigationController?.pushViewController(victoryVC, animated: true)
     }
     func updateWinMessage(_ isSpyWin: Bool) {
-        let room = dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
         if isSpyWin {
             let data: [String: Any] = [
                 "isSpyWin": true
             ]
-            documentRef.updateData(data) { error in
-                if let error = error {
-                    print("Error adding document: \(error)")
-                } else {
-                    print("Document added successfully")
-                }
-            }
+            FirestoreManager.shared.updateData(data: data)
         } else {
             let data: [String: Any] = [
                 "isSpyWin": false
             ]
-            documentRef.updateData(data) { error in
-                if let error = error {
-                    print("Error adding document: \(error)")
-                } else {
-                    print("Document added successfully")
-                }
-            }
+            FirestoreManager.shared.updateData(data: data)
         }
     }
-//    func playAudio(from url: URL, loop: Bool = false) {
-//        do {
-//            gunShotAudioPlayer.audioPlayer = try AVAudioPlayer(contentsOf: url)
-//            gunShotAudioPlayer.audioPlayer?.numberOfLoops = loop ? -1 : 0
-//            gunShotAudioPlayer.audioPlayer?.prepareToPlay()
-//            gunShotAudioPlayer.audioPlayer?.play()
-//        } catch {
-//            print("Failed to play audio: \(error.localizedDescription)")
-//        }
-//    }
 }

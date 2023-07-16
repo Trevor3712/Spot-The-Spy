@@ -44,16 +44,8 @@ class WaitForNextViewController: BaseViewController {
         loadReadyPlayer()
     }
     func readyToGO() {
-        let room = self.dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
-        documentRef.updateData(["playersReady": FieldValue.arrayUnion([currentUser])]) { error in
-            if let error = error {
-                print("Error updating document: \(error)")
-            } else {
-                print("Document updated successfully")
-            }
-        }
+        let data = ["playersReady": FieldValue.arrayUnion([currentUser])]
+        FirestoreManager.shared.updateData(data: data)
     }
     func loadReadyPlayer() {
         let room = self.dataBase.collection("Rooms")
@@ -72,10 +64,11 @@ class WaitForNextViewController: BaseViewController {
                 self.readyPlayers.append(contentsOf: newPlayers)
                 if self.isAllPlayersReady() {
                     self.readyListener?.remove()
-                    documentRef.updateData(["playersReady": []])
-                    if let targetViewController = self.navigationController?.viewControllers.filter({ $0 is SpeakViewController }).first {
-                        self.vibrateHard()
-                        self.navigationController?.popToViewController(targetViewController, animated: true)
+                    FirestoreManager.shared.updateData(data: ["playersReady": [String]()]) {
+                        if let targetViewController = self.navigationController?.viewControllers.filter({ $0 is SpeakViewController }).first {
+                            self.vibrateHard()
+                            self.navigationController?.popToViewController(targetViewController, animated: true)
+                        }
                     }
                 }
             }
