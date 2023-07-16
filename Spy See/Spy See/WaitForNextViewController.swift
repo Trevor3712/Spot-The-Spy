@@ -27,7 +27,7 @@ class WaitForNextViewController: BaseViewController {
         return remindLabel
     }()
     let dataBase = Firestore.firestore()
-    var readyListener: ListenerRegistration?
+    var documentListener: ListenerRegistration?
     let currentPlayers = UserDefaults.standard.stringArray(forKey: "playersArray")
     var readyPlayers: [String] = []
     let currentUser = Auth.auth().currentUser?.email ?? ""
@@ -48,29 +48,29 @@ class WaitForNextViewController: BaseViewController {
         FirestoreManager.shared.updateData(data: data)
     }
     func loadReadyPlayer() {
-        let room = self.dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
-        var existingPlayers: Set<String> = Set(self.readyPlayers)
-        readyListener = documentRef.addSnapshotListener { (documentSnapshot, error) in
-            DispatchQueue.main.async {
-                guard let document = documentSnapshot else {
-                    print("Error fetching document: \(error)")
+        let existingPlayers: Set<String> = Set(self.readyPlayers)
+        documentListener = FirestoreManager.shared.addSnapShotListener { result in
+            switch result {
+            case .success(let document):
+                guard let document = document else {
                     return
                 }
-                let playersReady = document.data()?["playersReady"] as? [String] ?? []
+                let playersReady = document["playersReady"] as? [String] ?? []
                 self.readyPlayers = []
                 let newPlayers = playersReady.filter { !existingPlayers.contains($0) }
                 self.readyPlayers.append(contentsOf: newPlayers)
                 if self.isAllPlayersReady() {
-                    self.readyListener?.remove()
+                    self.documentListener?.remove()
                     FirestoreManager.shared.updateData(data: ["playersReady": [String]()]) {
-                        if let targetViewController = self.navigationController?.viewControllers.filter({ $0 is SpeakViewController }).first {
+                        if let targetViewController =
+                            self.navigationController?.viewControllers.first(where: { $0 is SpeakViewController }) {
                             self.vibrateHard()
                             self.navigationController?.popToViewController(targetViewController, animated: true)
                         }
                     }
                 }
+            case .failure(let error):
+                print("Error getting document:\(error)")
             }
         }
     }

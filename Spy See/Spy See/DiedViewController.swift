@@ -37,6 +37,7 @@ class DiedViewController: BaseViewController {
         return remindLabel
     }()
     let dataBase = Firestore.firestore()
+    var documentListener: ListenerRegistration?
     override func viewDidLoad() {
         super.viewDidLoad()
         [diedImageView, diedLabel, remindLabel].forEach { view.addSubview($0) }
@@ -59,6 +60,9 @@ class DiedViewController: BaseViewController {
         checkIfEndGame()
         showImage()
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        documentListener?.remove()
+    }
     func showImage() {
         let playerIdentity = UserDefaults.standard.string(forKey: "playerIdentity")
         if playerIdentity == "平民" {
@@ -68,26 +72,43 @@ class DiedViewController: BaseViewController {
         }
     }
     func checkIfEndGame() {
-        let room = dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
-        documentRef.addSnapshotListener { (documentSnapshot, error) in
-            if let error = error {
-                print(error)
-                return
-            }
-            guard let data = documentSnapshot?.data() else {
-                print("No data available")
-                return
-            }
-            if let isSpyWin = data["isSpyWin"] as? Bool {
-                if isSpyWin == false {
-                    self.goToVictoryPage(false)
-                } else {
-                    self.goToVictoryPage(true)
+//        let room = dataBase.collection("Rooms")
+//        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
+//        let documentRef = room.document(roomId)
+        documentListener = FirestoreManager.shared.addSnapShotListener { result in
+            switch result {
+            case .success(let document):
+                guard let document = document else {
+                    return
                 }
+                if let isSpyWin = document["isSpyWin"] as? Bool {
+                    if isSpyWin == false {
+                        self.goToVictoryPage(false)
+                    } else {
+                        self.goToVictoryPage(true)
+                    }
+                }
+            case .failure(let error):
+                print("Error getting document:\(error)")
             }
         }
+//        documentRef.addSnapshotListener { (documentSnapshot, error) in
+//            if let error = error {
+//                print(error)
+//                return
+//            }
+//            guard let data = documentSnapshot?.data() else {
+//                print("No data available")
+//                return
+//            }
+//            if let isSpyWin = data["isSpyWin"] as? Bool {
+//                if isSpyWin == false {
+//                    self.goToVictoryPage(false)
+//                } else {
+//                    self.goToVictoryPage(true)
+//                }
+//            }
+//        }
     }
     func goToVictoryPage(_ isSpyWin: Bool) {
         let victoryVC = VictoryViewController()

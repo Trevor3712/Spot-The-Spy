@@ -70,7 +70,7 @@ class KillViewController: BaseViewController {
     var arrayIndex: Int?
     var playersArray: [String] = []
     let players = UserDefaults.standard.stringArray(forKey: "playersArray")
-    var votedListener: ListenerRegistration?
+    var documentListener: ListenerRegistration?
     let currentUser = Auth.auth().currentUser?.email ?? ""
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,37 +116,56 @@ class KillViewController: BaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         AudioPlayer.shared.stopAudio()
+        documentListener?.remove()
     }
-//    override func viewWillDisappear(_ animated: Bool) {
-//       super.viewWillDisappear(animated)
-//       votedListener?.remove()
-//   }
     func loadVotedPlayers() {
-        let room = dataBase.collection("Rooms")
-        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-        let documentRef = room.document(roomId)
-        votedListener = documentRef.addSnapshotListener { (documentSnapshot, error) in
-            if let error = error {
-                print(error)
-                return
-            }
-            guard let data = documentSnapshot?.data() else {
-                print("No data available")
-                return
-            }
-            if let voted = data["voted"] as? [[String: String]] {
-                self.votedArray = voted
-                print(self.votedArray)
-            }
-            if let identities = data["identities"] as? [String] {
-                self.identitiesArray = identities
-                print(self.identitiesArray)
-            }
-            if self.isAllPlayersVote() {
-                self.killWhichPlayer()
-                self.votedListener?.remove()
+//        let room = dataBase.collection("Rooms")
+//        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
+//        let documentRef = room.document(roomId)
+        documentListener = FirestoreManager.shared.addSnapShotListener { result in
+            switch result {
+            case .success(let document):
+                guard let document = document else {
+                    return
+                }
+                if let voted = document["voted"] as? [[String: String]] {
+                    self.votedArray = voted
+                    print(self.votedArray)
+                }
+                if let identities = document["identities"] as? [String] {
+                    self.identitiesArray = identities
+                    print(self.identitiesArray)
+                }
+                if self.isAllPlayersVote() {
+                    self.killWhichPlayer()
+                    self.documentListener?.remove()
+                }
+            case .failure(let error):
+                print("Error getting document:\(error)")
             }
         }
+//        documentListener = documentRef.addSnapshotListener { (documentSnapshot, error) in
+//            if let error = error {
+//                print(error)
+//                return
+//            }
+//            guard let data = documentSnapshot?.data() else {
+//                print("No data available")
+//                return
+//            }
+//            if let voted = data["voted"] as? [[String: String]] {
+//                self.votedArray = voted
+//                print(self.votedArray)
+//            }
+//            if let identities = data["identities"] as? [String] {
+//                self.identitiesArray = identities
+//                print(self.identitiesArray)
+//            }
+//            if self.isAllPlayersVote() {
+//                self.killWhichPlayer()
+//                self.documentListener?.remove()
+//            }
+//        }
     }
     func isAllPlayersVote() -> Bool {
         return self.votedArray.count == self.playersArray.count
