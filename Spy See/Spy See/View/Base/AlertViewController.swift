@@ -16,15 +16,13 @@ class AlertViewController: UIViewController {
         alertController.addAction(confirmAction)
         return alertController
     }
-    func showTwoAlert(title: String, message: String, confirmCompletion: (() -> Void)? = nil, cancelCompletion: (() -> Void)? = nil) -> UIAlertController {
+    func showTwoAlert(title: String, message: String, confirmCompletion: (() -> Void)? = nil) -> UIAlertController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "確認", style: .default) { _ in
             confirmCompletion?()
         }
         alertController.addAction(confirmAction)
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { _ in
-            cancelCompletion?()
-        }
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel)
         alertController.addAction(cancelAction)
         return alertController
     }

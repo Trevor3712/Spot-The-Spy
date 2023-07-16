@@ -115,28 +115,31 @@ class ProfileViewController: BaseViewController {
         profileViewModel.setNameData(name: name)
     }
     @objc func deleteButtonPressed() {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
-        let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要刪除帳號嗎？", confirmCompletion: {
+        let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要刪除帳號嗎？") {
             self.profileViewModel.deleteAuthData()
             self.profileViewModel.deleteStoreData()
             self.navigationController?.popToRootViewController(animated: true)
-        })
+        }
         present(alert, animated: true)
     }
     @objc func logoutButtonPressed() {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
-        let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要登出帳號嗎？", confirmCompletion: {
+        let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要登出帳號嗎？") {
             UserDefaults.standard.removeObject(forKey: "userEmail")
             self.navigationController?.popToRootViewController(animated: true)
-        })
+        }
         present(alert, animated: true)
     }
 }
 extension ProfileViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        playSeAudio(from: editingUrl!)
+        guard let editingUrl = editingUrl else {
+            return
+        }
+        playSeAudio(from: editingUrl)
         vibrate()
         nameTextField.text = ""
     }
