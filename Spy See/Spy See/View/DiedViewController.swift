@@ -60,6 +60,7 @@ class DiedViewController: BaseViewController {
         showImage()
     }
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         documentListener?.remove()
     }
     func showImage() {

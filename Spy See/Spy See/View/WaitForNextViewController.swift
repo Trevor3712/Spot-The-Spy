@@ -55,9 +55,8 @@ class WaitForNextViewController: BaseViewController {
                     return
                 }
                 let playersReady = document["playersReady"] as? [String] ?? []
-                self.readyPlayers = []
                 let newPlayers = playersReady.filter { !existingPlayers.contains($0) }
-                self.readyPlayers.append(contentsOf: newPlayers)
+                self.readyPlayers = newPlayers
                 if self.isAllPlayersReady() {
                     self.documentListener?.remove()
                     FirestoreManager.shared.updateData(data: ["playersReady": [String]()]) {
@@ -74,8 +73,6 @@ class WaitForNextViewController: BaseViewController {
         }
     }
     func isAllPlayersReady() -> Bool {
-       print(self.currentPlayers)
-       print(self.readyPlayers.count)
         return self.readyPlayers.count == self.currentPlayers?.count
-   }
+    }
 }
