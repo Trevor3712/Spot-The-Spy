@@ -8,7 +8,6 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
-import FirebaseStorage
 import AVFoundation
 import Speech
 import AudioToolbox
@@ -40,7 +39,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         let clueTableView = BaseMessageTableView()
         clueTableView.layer.borderColor = UIColor.white.cgColor
         clueTableView.backgroundColor = .B1
-        clueTableView.register(MessageHeaderView.self, forHeaderFooterViewReuseIdentifier: MessageHeaderView.reuseIdentifier)
+        clueTableView.register(
+            MessageHeaderView.self,
+            forHeaderFooterViewReuseIdentifier: MessageHeaderView.reuseIdentifier
+        )
         clueTableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseIdentifier)
         clueTableView.dataSource = self
         clueTableView.delegate = self
@@ -49,7 +51,10 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }()
     lazy var messageTableView: BaseMessageTableView = {
         let messageTableView = BaseMessageTableView()
-        messageTableView.register(MessageHeaderView.self, forHeaderFooterViewReuseIdentifier: MessageHeaderView.reuseIdentifier)
+        messageTableView.register(
+            MessageHeaderView.self,
+            forHeaderFooterViewReuseIdentifier: MessageHeaderView.reuseIdentifier
+        )
         messageTableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseIdentifier)
         messageTableView.dataSource = self
         messageTableView.delegate = self
@@ -121,17 +126,11 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     var currentPlayerIndex: Int = 0
     var timer: Timer?
     var audioRecoder: AVAudioRecorder?
-    var audioPlayer: AVAudioPlayer?
-    var player: AVPlayer?
-    var fileName: String?
-    var audioUrl: URL?
-    var audioUrlFromFS: URL?
     var countdown = 7
     var clues: [String] = []
     var messages: [String] = []
     var documentListener: ListenerRegistration?
     var isButtonPressed = false
-    let storage = Storage.storage()
     let audioSession = AVAudioSession.sharedInstance()
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "zh-TW"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
@@ -141,13 +140,9 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         super.viewDidLoad()
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        [playerLabel, speakLabel,
-         clueTableView, messageTableView,
-         messageTextField,
-         sendButton1, sendButton2,
-         progressView, timeImageView,
-         speakButton1, speakButton2,
-        remindLabel].forEach { contentView.addSubview($0) }
+        [playerLabel, speakLabel, clueTableView, messageTableView].forEach { contentView.addSubview($0) }
+        [messageTextField, sendButton1, sendButton2, progressView].forEach { contentView.addSubview($0) }
+        [timeImageView, speakButton1, speakButton2, remindLabel].forEach { contentView.addSubview($0) }
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -160,6 +155,29 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentView.heightAnchor.constraint(equalToConstant: 750)
         ])
+        configureLayout()
+        speechAuth()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
+            players = storedPlayers
+        }
+        guard let url = Bundle.main.url(forResource: "vote_long_bgm", withExtension: "wav") else {
+            return
+        }
+        AudioPlayer.shared.playAudio(from: url, loop: true)
+        showClue()
+        showNextPlayer()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        deleteMessage()
+        audioRecoder?.stop()
+        audioEngine.stop()
+        configPlaySession()
+    }
+    func configureLayout() {
         playerLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView)
             make.centerX.equalTo(contentView)
@@ -219,26 +237,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             make.top.equalTo(messageTextField.snp.bottom).offset(12)
             make.right.equalTo(speakButton2).offset(-5)
         }
-//        configRecordSession()
-        speechAuth()
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
-            players = storedPlayers
-        }
-        let url = Bundle.main.url(forResource: "vote_long_bgm", withExtension: "wav")
-        AudioPlayer.shared.playAudio(from: url!, loop: true)
-        showClue()
-        showNextPlayer()
-    }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        deleteMessage()
-        audioRecoder?.stop()
-        audioEngine.stop()
-        audioPlayer?.stop()
-        configPlaySession()
     }
     func showNextPlayer() {
         guard currentPlayerIndex < players.count else {
@@ -261,7 +259,13 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             letterSpacing: 10)
         countdown = 7
         progressView.setProgress(1, animated: true)
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateProgress), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(
+            timeInterval: 1,
+            target: self,
+            selector: #selector(updateProgress),
+            userInfo: nil,
+            repeats: true
+        )
     }
     @objc func updateProgress() {
         countdown -= 1
@@ -274,7 +278,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     }
     @objc func sendClue() {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
         let data: [String: Any] = [
             "clue": FieldValue.arrayUnion(["\(userName ?? "") : \(messageTextField.text ?? "")"])
@@ -284,7 +288,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     }
     @objc func sendMesssge() {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
         let data: [String: Any] = [
             "message": FieldValue.arrayUnion(["\(userName ?? "") : \(messageTextField.text ?? "")"])
@@ -358,7 +362,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
         isButtonPressed.toggle()
     }
-    // MARK: - Audio Record
+    // MARK: - Speech Recognize
     @objc func recordAudioClue() {
         vibrate()
         configRecordSession()
@@ -370,48 +374,11 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             speakButton1.isEnabled = false
             speakButton2.isEnabled = false
             messageTextField.text = ""
-            uploadAudio(audioURL: audioUrl!) { result in
-               switch result {
-               case .success(let url):
-                   let data: [String: Any] = [
-                       "audioClue": url.absoluteString
-                   ]
-                   FirestoreManager.shared.updateData(data: data)
-               case .failure(let error):
-                  print(error)
-               }
-           }
         } else {
             speechRecognize()
         }
-        guard audioRecoder == nil else {
-            audioRecoder?.stop()
-            audioRecoder = nil
-            return
-        }
-        fileName = UUID().uuidString
-        let destinationUrl = getDirectoryPath().appendingPathComponent("\(fileName ?? "").wav")
-        audioUrl = destinationUrl
-        let settings: [String: Any] = [
-            AVFormatIDKey: kAudioFormatLinearPCM,
-            AVSampleRateKey: 44100,
-            AVNumberOfChannelsKey: 2,
-            AVLinearPCMBitDepthKey: 16,
-            AVLinearPCMIsBigEndianKey: false,
-            AVLinearPCMIsFloatKey: false
-        ]
-        do {
-            audioRecoder = try AVAudioRecorder(url: destinationUrl, settings: settings)
-            audioRecoder?.record()
-        } catch {
-            print("Record error:", error.localizedDescription)
-        }
         configPlaySession()
     }
-    func getDirectoryPath() -> URL {
-            let fileDiretoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            return fileDiretoryURL
-        }
     func configRecordSession() {
         do {
             try audioSession.setCategory(
@@ -431,15 +398,13 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             print("Session error:", error.localizedDescription)
         }
     }
-    // MARK: - Speech Recognize
     func speechAuth() {
         speakButton1.isEnabled = false
         speakButton2.isEnabled = false
 
         speechRecognizer?.delegate = self
 
-        SFSpeechRecognizer.requestAuthorization { (authStatus) in  //4
-
+        SFSpeechRecognizer.requestAuthorization { authStatus in
             var isButtonEnabled = false
 
             switch authStatus {
@@ -457,9 +422,11 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             case .notDetermined:
                 isButtonEnabled = false
                 print("Speech recognition not yet authorized")
+            @unknown default:
+                fatalError("Speech unknown error")
             }
 
-            OperationQueue.main.addOperation() {
+            OperationQueue.main.addOperation {
                 self.speakButton1.isEnabled = isButtonEnabled
                 self.speakButton2.isEnabled = isButtonEnabled
             }
@@ -485,12 +452,11 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
 
         recognitionRequest.shouldReportPartialResults = true
 
-        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in
+        recognitionTask = speechRecognizer?.recognitionTask( with: recognitionRequest) { result, error in
             var isFinal = false
-
-            if result != nil {
-                self.messageTextField.text = result?.bestTranscription.formattedString
-                isFinal = (result?.isFinal)!
+            if let result = result {
+                self.messageTextField.text = result.bestTranscription.formattedString
+                isFinal = result.isFinal
             }
 
             if error != nil || isFinal {
@@ -503,9 +469,9 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
                 self.speakButton1.isEnabled = true
                 self.speakButton2.isEnabled = true
             }
-        })
+        }
         let recordingFormat = inputNode.outputFormat(forBus: 0)
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, _ in
             self.recognitionRequest?.append(buffer)
         }
 
@@ -526,30 +492,6 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             speakButton2.isEnabled = true
         }
     }
-    // MARK: - Upload audio and play
-    func uploadAudio(audioURL: URL, completion: @escaping (Result<URL, Error>) -> Void) {
-        let fileReference = Storage.storage().reference().child("\(fileName ?? "").wav")
-        let metaData = StorageMetadata()
-        metaData.contentType = "audio/wav"
-        if let data = try? Data(contentsOf: audioURL) {
-            fileReference.putData(data, metadata: metaData) { result in
-                switch result {
-                case .success(_):
-                    fileReference.downloadURL { url, error in
-                        if let downloadURL = url {
-                            self.audioUrlFromFS = downloadURL
-                            print("audioUrlFromFS:\(self.audioUrlFromFS)")
-                            completion(.success(downloadURL))
-                        } else if let error = error {
-                            completion(.failure(error))
-                        }
-                    }
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        }
-    }
     func deleteMessage() {
         let data: [String: Any] = [
             "clue": [String](),
@@ -558,6 +500,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         FirestoreManager.shared.updateData(data: data)
     }
 }
+// swiftlint:enable type_body_length
 extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView.tag == 1 {
@@ -567,7 +510,8 @@ extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MessageCell.reuseIdentifier) as? MessageCell else {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: MessageCell.reuseIdentifier) as? MessageCell else {
             fatalError("Can't create cell")
         }
         if tableView.tag == 1 {
@@ -599,7 +543,8 @@ extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
         1
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MessageHeaderView.reuseIdentifier) as? MessageHeaderView else {
+        guard let header = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: MessageHeaderView.reuseIdentifier) as? MessageHeaderView else {
             fatalError("Can't create header")
         }
         if tableView.tag == 1 {
@@ -623,6 +568,10 @@ extension SpeakViewController: UITableViewDelegate, UITableViewDataSource {
 }
 extension SpeakViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        playSeAudio(from: editingUrl!)
+        guard let editingUrl = editingUrl else {
+            return
+        }
+        playSeAudio(from: editingUrl)
     }
 }
+
