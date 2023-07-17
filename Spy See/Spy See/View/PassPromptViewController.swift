@@ -88,7 +88,7 @@ class PassPromptViewController: BaseViewController {
         documentListener?.remove()
     }
     @objc func readyButtonPressed() {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
         guard let email = Auth.auth().currentUser?.email else {
             print("Email is missing")
@@ -114,25 +114,26 @@ class PassPromptViewController: BaseViewController {
         }
     }
     func loadReadyPlayers() {
-        var existingPlayers: Set<String> = Set(self.readyPlayers)
-        documentListener = FirestoreManager.shared.addSnapShotListener { result in
+        let existingPlayers: Set<String> = Set(self.readyPlayers)
+        documentListener = FirestoreManager.shared.addSnapShotListener { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let document):
                 guard let document = document else {
                     return
                 }
-                if let players = document.data()?["player"] as? [String] {
-                    self.playerNumber = players.count
+                if let players = document["player"] as? [String] {
+                    playerNumber = players.count
                 }
-                let playersReady = document.data()?["playersReady"] as? [String] ?? []
-                self.readyPlayers = []
-                let newPlayers = playersReady.filter { !existingPlayers.contains($0) }
-                self.readyPlayers.append(contentsOf: newPlayers)
-                if self.isAllPlayersReady() {
+                if let playersReady = document["playersReady"] as? [String] {
+                    let newPlayers = playersReady.filter { !existingPlayers.contains($0) }
+                    readyPlayers = newPlayers
+                }
+                if isAllPlayersReady() {
                     FirestoreManager.shared.updateData(data: ["playersReady": [String]()])
                     let speakVC = SpeakViewController()
-                    self.vibrateHard()
-                    self.navigationController?.pushViewController(speakVC, animated: true)
+                    vibrateHard()
+                    navigationController?.pushViewController(speakVC, animated: true)
                 }
             case .failure(let error):
                 print("Error getting document:\(error)")
@@ -140,8 +141,6 @@ class PassPromptViewController: BaseViewController {
         }
     }
     func isAllPlayersReady() -> Bool {
-        print("playerNumber\(Int(playerNumber ?? 0))")
-        print("readyPlayers:\(self.readyPlayers.count)")
         return self.readyPlayers.count == playerNumber
     }
 }

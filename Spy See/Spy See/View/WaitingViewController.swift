@@ -89,7 +89,8 @@ extension WaitingViewController: UITableViewDataSource {
         players.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlayerCell.reuseIdentifier) as? PlayerCell else { fatalError("Can't create cell") }
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: PlayerCell.reuseIdentifier) as? PlayerCell else { fatalError("Can't create cell") }
         cell.titleLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: players[indexPath.row],
