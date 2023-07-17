@@ -76,22 +76,21 @@ class InviteViewController: BaseViewController {
         }
     }
     @objc func shareButtonPressed() {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
-//        let copyText = invitationLabel.text
-//        UIPasteboard.general.string = "我想邀請你來玩誰是臥底，邀請碼：\(copyText ?? "")"
         presentShareSheet()
     }
     @objc func readyButtonPressed() {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
         let waitingVC = WaitingViewController()
         navigationController?.pushViewController(waitingVC, animated: true)
     }
     func presentShareSheet() {
-        let url = URL(string: "SpotTheSpyOnline://lobby/\(roomId ?? "")")
-        let text = "趕快來跟我玩誰是臥底，邀請碼：\(roomId ?? "")"
-        let shareSheetVC = UIActivityViewController(activityItems: [text, url], applicationActivities: nil)
-        present(shareSheetVC, animated: true)
+        if let url = URL(string: "SpotTheSpyOnline://lobby/\(roomId ?? "")") {
+            let text = "趕快來跟我玩誰是臥底，邀請碼：\(roomId ?? "")"
+            let shareSheetVC = UIActivityViewController(activityItems: [text, url], applicationActivities: nil)
+            present(shareSheetVC, animated: true)
+        }
     }
 }
