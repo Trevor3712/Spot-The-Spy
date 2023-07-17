@@ -118,9 +118,6 @@ class KillViewController: BaseViewController {
         documentListener?.remove()
     }
     func loadVotedPlayers() {
-//        let room = dataBase.collection("Rooms")
-//        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-//        let documentRef = room.document(roomId)
         documentListener = FirestoreManager.shared.addSnapShotListener { result in
             switch result {
             case .success(let document):
@@ -143,28 +140,6 @@ class KillViewController: BaseViewController {
                 print("Error getting document:\(error)")
             }
         }
-//        documentListener = documentRef.addSnapshotListener { (documentSnapshot, error) in
-//            if let error = error {
-//                print(error)
-//                return
-//            }
-//            guard let data = documentSnapshot?.data() else {
-//                print("No data available")
-//                return
-//            }
-//            if let voted = data["voted"] as? [[String: String]] {
-//                self.votedArray = voted
-//                print(self.votedArray)
-//            }
-//            if let identities = data["identities"] as? [String] {
-//                self.identitiesArray = identities
-//                print(self.identitiesArray)
-//            }
-//            if self.isAllPlayersVote() {
-//                self.killWhichPlayer()
-//                self.documentListener?.remove()
-//            }
-//        }
     }
     func isAllPlayersVote() -> Bool {
         return self.votedArray.count == self.playersArray.count
@@ -186,66 +161,47 @@ class KillViewController: BaseViewController {
             let selectedIndex = sortedIndexes.first ?? 0
             let selectedPlayer = playersArray[selectedIndex]
             print("Selected player: \(selectedPlayer), index: \(selectedIndex)")
-            self.waitLabel.text = ""
-            containerView.isHidden = false
-            identityImageView.isHidden = false
-            nextRoundButton.isHidden = false
-            killLabel.isHidden = false
-            self.votedLabel.attributedText = UIFont.fontStyle(
-                font: .boldItalicEN,
-                title: selectedPlayer,
-                size: 45,
-                textColor: .R ?? .black,
-                letterSpacing: 10)
-            self.identityLabel.attributedText = UIFont.fontStyle(
-                font: .semibold,
-                title: "他的身份是\(identitiesArray[selectedIndex])",
-                size: 35,
-                textColor: .R ?? .black,
-                letterSpacing: 10)
-            if identitiesArray[selectedIndex] == "平民" {
-                identityImageView.image = .asset(.normalKilled)
-            } else {
-                identityImageView.image = .asset(.spyKilled)
-            }
-            let url = Bundle.main.url(forResource: "gunShot_se", withExtension: "wav")
-            playSeAudio(from: url!)
+            showKilledPlayer(nameTitle: selectedPlayer, identityIndex: selectedIndex)
         } else {
             // 查找出現次數最多的值
             if let (mostFrequentValue, _) = voteCount.max(by: { $0.value < $1.value }) {
                 if let index = players?.firstIndex(of: mostFrequentValue) {
                     arrayIndex = index
                     print("mostFrequentValue: \(mostFrequentValue), index: \(index)")
-                    containerView.isHidden = false
-                    identityImageView.isHidden = false
-                    nextRoundButton.isHidden = false
-                    killLabel.isHidden = false
-                    self.waitLabel.text = ""
-                    self.votedLabel.attributedText = UIFont.fontStyle(
-                        font: .boldItalicEN,
-                        title: mostFrequentValue,
-                        size: 45,
-                        textColor: .R ?? .black,
-                        letterSpacing: 10)
-                    self.identityLabel.attributedText = UIFont.fontStyle(
-                        font: .semibold,
-                        title: "他的身份是\(identitiesArray[index])",
-                        size: 35,
-                        textColor: .R ?? .black,
-                        letterSpacing: 10)
-                    if identitiesArray[index] == "平民" {
-                        identityImageView.image = .asset(.normalKilled)
-                    } else {
-                        identityImageView.image = .asset(.spyKilled)
-                    }
-                    let url = Bundle.main.url(forResource: "gunShot_se", withExtension: "wav")
-                    playSeAudio(from: url!)
+                    showKilledPlayer(nameTitle: mostFrequentValue, identityIndex: index)
                 }
             }
         }
     }
+    func showKilledPlayer(nameTitle: String, identityIndex: Int) {
+        containerView.isHidden = false
+        identityImageView.isHidden = false
+        nextRoundButton.isHidden = false
+        killLabel.isHidden = false
+        self.waitLabel.text = ""
+        self.votedLabel.attributedText = UIFont.fontStyle(
+            font: .boldItalicEN,
+            title: nameTitle,
+            size: 45,
+            textColor: .R ?? .black,
+            letterSpacing: 10)
+        self.identityLabel.attributedText = UIFont.fontStyle(
+            font: .semibold,
+            title: "他的身份是\(identitiesArray[identityIndex])",
+            size: 35,
+            textColor: .R ?? .black,
+            letterSpacing: 10)
+        if identitiesArray[identityIndex] == "平民" {
+            identityImageView.image = .asset(.normalKilled)
+        } else {
+            identityImageView.image = .asset(.spyKilled)
+        }
+        if let url = Bundle.main.url(forResource: "gunShot_se", withExtension: "wav") {
+            playSeAudio(from: url)
+        }
+    }
     @objc func nextRoundButtonPressed() {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
         self.playersArray.remove(at: arrayIndex ?? 0)
         self.identitiesArray.remove(at: arrayIndex ?? 0)
