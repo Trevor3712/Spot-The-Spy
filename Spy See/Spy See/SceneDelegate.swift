@@ -16,37 +16,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         window?.overrideUserInterfaceStyle = .light
-        guard let _ = (scene as? UIWindowScene) else { return }
-        if userEmail != nil {
-            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-            let loginVC = storyBoard.instantiateViewController(identifier: "LoginViewController")
-            let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController")
-            let navigationController = UINavigationController(rootViewController: loginVC)
-            window?.rootViewController = navigationController
-            if let url = connectionOptions.urlContexts.first?.url {
-                let urlString = url.absoluteString
-                let component = urlString.components(separatedBy: "/")
-                if component.count > 1 {
-                    let page = component[component.count - 2]
-                    print(page)
-                    let roomId = component.last
-                    print(roomId)
-                    if page == "lobby" {
-                        let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController") as? UITabBarController
-                        let lobbyVC = tabBarVC?.viewControllers?.first as? LobbyViewController
-                        lobbyVC?.invitationTextFileld.attributedText = UIFont.fontStyle(
-                            font: .regular,
-                            title: roomId ?? "",
-                            size: 20,
-                            textColor: .B2 ?? .black,
-                            letterSpacing: 3)
-                        navigationController.pushViewController(tabBarVC!, animated: true)
-                        window?.makeKeyAndVisible()
+        if scene as? UIWindowScene != nil {
+            if userEmail != nil {
+                let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                let loginVC = storyBoard.instantiateViewController(identifier: "LoginViewController")
+                let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController")
+                let navigationController = UINavigationController(rootViewController: loginVC)
+                window?.rootViewController = navigationController
+                if let url = connectionOptions.urlContexts.first?.url {
+                    let urlString = url.absoluteString
+                    let component = urlString.components(separatedBy: "/")
+                    if component.count > 1 {
+                        let page = component[component.count - 2]
+                        let roomId = component.last
+                        if page == "lobby" {
+                            if let tabBarVC = storyBoard.instantiateViewController(
+                                identifier: "TabBarController") as? UITabBarController {
+                                let lobbyVC = tabBarVC.viewControllers?.first as? LobbyViewController
+                                lobbyVC?.invitationTextFileld.attributedText = UIFont.fontStyle(
+                                    font: .regular,
+                                    title: roomId ?? "",
+                                    size: 20,
+                                    textColor: .B2 ?? .black,
+                                    letterSpacing: 3)
+                                navigationController.pushViewController(tabBarVC, animated: true)
+                                window?.makeKeyAndVisible()
+                            }
+                        }
                     }
+                } else {
+                    navigationController.pushViewController(tabBarVC, animated: true)
+                    self.window?.makeKeyAndVisible()
                 }
-            } else {
-                navigationController.pushViewController(tabBarVC, animated: true)
-                self.window?.makeKeyAndVisible()
             }
         }
     }
@@ -90,15 +91,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 let component = urlString.components(separatedBy: "/")
                 if component.count > 1 {
                     let page = component[component.count - 2]
-                    print(page)
                     let roomId = component.last
-                    print(roomId)
                     if page == "lobby" {
-                        let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController") as? UITabBarController
-                        let lobbyVC = tabBarVC?.viewControllers?.first as? LobbyViewController
-                        lobbyVC?.invitationTextFileld.text = roomId
-                        navigationController.pushViewController(tabBarVC!, animated: true)
-                        window?.makeKeyAndVisible()
+                        if let tabBarVC = storyBoard.instantiateViewController(
+                            identifier: "TabBarController") as? UITabBarController {
+                            let lobbyVC = tabBarVC.viewControllers?.first as? LobbyViewController
+                            lobbyVC?.invitationTextFileld.text = roomId
+                            navigationController.pushViewController(tabBarVC, animated: true)
+                            window?.makeKeyAndVisible()
+                        }
                     }
                 }
             }
