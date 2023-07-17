@@ -52,11 +52,8 @@ class LobbyViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.navigationItem.hidesBackButton = true
-        [logoImage,
-         createRoomButton,
-         joinLabel,
-         invitationTextFileld,
-         goButton].forEach { view.addSubview($0) }
+        [logoImage, createRoomButton, joinLabel].forEach { view.addSubview($0) }
+        [invitationTextFileld, goButton].forEach { view.addSubview($0) }
         logoImage.snp.makeConstraints { make in
             make.bottom.equalTo(createRoomButton.snp.top).offset(-30)
             make.left.equalTo(view).offset(50)
@@ -89,8 +86,11 @@ class LobbyViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let url = Bundle.main.url(forResource: "main_bgm", withExtension: "wav")
-        if ((AudioPlayer.shared.audioPlayer?.isPlaying) == nil) {
-            AudioPlayer.shared.playAudio(from: url!, loop: true)
+        guard let url = url else {
+            return
+        }
+        if AudioPlayer.shared.audioPlayer?.isPlaying == nil {
+            AudioPlayer.shared.playAudio(from: url, loop: true)
         }
         getUserName()
     }
@@ -99,13 +99,13 @@ class LobbyViewController: BaseViewController {
         navigationItem.hidesBackButton = false
     }
     @objc func createRoomButtonPressed() {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
         let settingVC = SettingViewController()
         navigationController?.pushViewController(settingVC, animated: true)
     }
     @objc func goButtonPressed() {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
         guard let invitationText = invitationTextFileld.text, !invitationText.isEmpty, invitationText != "請輸入邀請碼" else {
             let alert = alertVC.showAlert(title: "輸入錯誤", message: "請輸入邀請碼")
@@ -149,28 +149,30 @@ class LobbyViewController: BaseViewController {
         }
     }
     func getUserPrompt() {
-        FirestoreManager.shared.getDocument() { result in
+        FirestoreManager.shared.getDocument { result in
             switch result {
             case .success(let document):
                 guard let document = document else {
                     return
                 }
-                if let playerIndex = document.data()?["playerIndex"] as? Int,
-                   let prompts = document.data()?["prompts"] as? [String],
-                   let identities = document.data()?["identities"] as? [String] {
-                    self.handlePlayerIndex(playerIndex, prompts, identities)
-                    UserDefaults.standard.removeObject(forKey: "userName")
-                    UserDefaults.standard.setValue(self.userName, forKey: "userName")
+                if let playerIndex = document.data()?["playerIndex"] as? Int {
+                    if let prompts = document.data()?["prompts"] as? [String] {
+                        if let identities = document.data()?["identities"] as? [String] {
+                            self.handlePlayerIndex(playerIndex, prompts, identities)
+                            UserDefaults.standard.removeObject(forKey: "userName")
+                            UserDefaults.standard.setValue(self.userName, forKey: "userName")
+                        }
+                    }
                 }
             case .failure(let error):
                 print("Error getting document:\(error)")
             }
         }
     }
-    func handlePlayerIndex(_ playerIndex: Int, _ prompts: [String], _ identities: [String]) -> String? {
+    func handlePlayerIndex(_ playerIndex: Int, _ prompts: [String], _ identities: [String]) {
         guard playerIndex >= 0 && playerIndex < prompts.count else {
             print("Invalid player index")
-            return nil
+            return
         }
         let playerIdentity = identities[playerIndex]
         UserDefaults.standard.removeObject(forKey: "playerIdentity")
@@ -180,7 +182,6 @@ class LobbyViewController: BaseViewController {
         UserDefaults.standard.removeObject(forKey: "hostPrompt")
         UserDefaults.standard.removeObject(forKey: "playerPrompt")
         UserDefaults.standard.setValue(selectedPrompt, forKey: "playerPrompt")
-        return selectedPrompt
     }
     func getUserName() {
         guard let userId = Auth.auth().currentUser?.email else {
@@ -194,7 +195,6 @@ class LobbyViewController: BaseViewController {
                 }
                 if let name = document.data()?["name"] as? String {
                     self.userName = name
-                    print(self.userName)
                 }
             case .failure(let error):
                 print("Error getting document:\(error)")
@@ -204,7 +204,10 @@ class LobbyViewController: BaseViewController {
 }
 extension LobbyViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        playSeAudio(from: editingUrl!)
+        guard let editingUrl = editingUrl else {
+            return
+        }
+        playSeAudio(from: editingUrl)
         vibrate()
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
