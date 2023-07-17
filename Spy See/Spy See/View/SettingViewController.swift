@@ -135,12 +135,14 @@ class SettingViewController: BaseViewController {
         getUserName()
     }
     @objc func invitationButtonPressed(_ sender: UIButton) {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
-        guard let playersCount = playersCountTextFileld.text, !playersCount.isEmpty, playersCount != "玩家人數",
-              let spysCount = spysCountTextFileld.text, !spysCount.isEmpty, spysCount != "臥底人數" else {
-            let alert = alertVC.showAlert(title: "設定錯誤", message: "請選擇玩家人數、臥底人數")
-            present(alert, animated: true, completion: nil)
+        guard let playersCount = playersCountTextFileld.text, !playersCount.isEmpty else {
+            settingErrorAlert()
+            return
+        }
+        guard let spysCount = spysCountTextFileld.text, !spysCount.isEmpty else {
+            settingErrorAlert()
             return
         }
         let roomId = generateRoomId()
@@ -157,7 +159,7 @@ class SettingViewController: BaseViewController {
             "prompts": prompts,
             "identities": identities,
             "player": [name],
-            "playerNumber": playersCountTextFileld.text ?? "",
+            "playerNumber": playersCountTextFileld.text ?? ""
 //            "normalPrompt": "\(choosedPrompt.0[1])",
 //            "spyPrompt": "\(choosedPrompt.1[1])"
         ]
@@ -170,10 +172,14 @@ class SettingViewController: BaseViewController {
     func generateRoomId() -> String {
         let inviteCodeLength = 4
         let fullCode = UUID().uuidString
-        let hash = SHA256.hash(data: fullCode.data(using: .utf8)!)
-        let hashedString = hash.compactMap { String(format: "%02x", $0) }.joined()
-        let roomId = String(hashedString.prefix(inviteCodeLength))
-        return roomId
+        if let data = fullCode.data(using: .utf8) {
+            let hash = SHA256.hash(data: data)
+            let hashedString = hash.compactMap { String(format: "%02x", $0) }.joined()
+            let roomId = String(hashedString.prefix(inviteCodeLength))
+            return roomId
+        } else {
+            return "0000"
+        }
     }
 //    func generatePromptArray() -> [String] {
 //        promptArray = []
@@ -231,6 +237,10 @@ class SettingViewController: BaseViewController {
         UserDefaults.standard.set("平民", forKey: "playerIdentity")
 //                UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
     }
+    func settingErrorAlert() {
+        let alert = alertVC.showAlert(title: "設定錯誤", message: "請選擇玩家人數、臥底人數")
+        present(alert, animated: true, completion: nil)
+    }
 }
 extension SettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -270,11 +280,14 @@ extension SettingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 }
 extension SettingViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        playSeAudio(from: editingUrl!)
+        guard let editingUrl = editingUrl else {
+            return
+        }
+        playSeAudio(from: editingUrl)
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.tag == 1 {
-            if playersCountTextFileld.text == "" {
+            if playersCountTextFileld.text?.isEmpty != nil {
                 playersCountTextFileld.attributedText = UIFont.fontStyle(
                     font: .regular,
                     title: "\(String(playersCount[0]))",
@@ -283,7 +296,7 @@ extension SettingViewController: UITextFieldDelegate {
                     letterSpacing: 5)
             }
         } else {
-            if spysCountTextFileld.text == "" {
+            if spysCountTextFileld.text?.isEmpty != nil {
                 spysCountTextFileld.attributedText = UIFont.fontStyle(
                     font: .regular,
                     title: "\(String(spysCount[0]))",
