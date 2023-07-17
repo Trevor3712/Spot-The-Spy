@@ -204,7 +204,7 @@ class SignupViewController: BaseViewController {
         }
         let name = nameTextField.text
         let data: [String: Any] = ["name": name as Any]
-        FirestoreManager.shared.setData(collection: "Users", document: userId, data: data)
+        FirestoreManager.shared.setData(collection: "Users", key: "userEmail", data: data)
     }
     @objc func backButtonPressed() {
         navigationController?.popViewController(animated: true)

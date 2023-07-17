@@ -8,13 +8,16 @@
 import Foundation
 import FirebaseFirestore
 
-private let roomId: String? = UserDefaults.standard.string(forKey: "roomId")
-
 class FirestoreManager {
     static let shared = FirestoreManager()
     private let dataBase = Firestore.firestore()
-    func setData(collection: String = "Rooms", document: String = roomId ?? "", data: [String: Any], merge: Bool = false, completion: (() -> Void)? = nil) {
-        let documentRef = dataBase.collection(collection).document(document)
+    func setRoomId() -> String {
+        guard let roomId = UserDefaults.standard.string(forKey: "roomId") else { return "" }
+        return roomId
+    }
+    func setData(collection: String = "Rooms", key: String = "roomId", data: [String: Any], merge: Bool = false, completion: (() -> Void)? = nil) {
+        guard let documentId = UserDefaults.standard.string(forKey: key) else { return }
+        let documentRef = dataBase.collection(collection).document(documentId)
         documentRef.setData(data, merge: merge) { error in
             if let error = error {
                 print("Error adding document: \(error)")
@@ -24,8 +27,9 @@ class FirestoreManager {
             }
         }
     }
-    func getDocument(collection: String = "Rooms", document: String = roomId ?? "", completion: @escaping (Result<DocumentSnapshot?, Error>) -> Void) {
-        let documentRef = dataBase.collection(collection).document(document)
+    func getDocument(collection: String = "Rooms", key: String = "roomId", completion: @escaping (Result<DocumentSnapshot?, Error>) -> Void) {
+        guard let documentId = UserDefaults.standard.string(forKey: key) else { return }
+        let documentRef = dataBase.collection(collection).document(documentId)
         documentRef.getDocument { document, error in
             if let error = error {
                 completion(.failure(error))
@@ -34,8 +38,9 @@ class FirestoreManager {
             }
         }
     }
-    func updateData(collection: String = "Rooms", document: String = roomId ?? "", data: [String: Any], completion: (() -> Void)? = nil) {
-        let documentRef = dataBase.collection(collection).document(document)
+    func updateData(collection: String = "Rooms", key: String = "roomId", data: [String: Any], completion: (() -> Void)? = nil) {
+        guard let documentId = UserDefaults.standard.string(forKey: key) else { return }
+        let documentRef = dataBase.collection(collection).document(documentId)
         documentRef.updateData(data) { error in
             if let error = error {
                 print("Error updating document: \(error)")
@@ -45,8 +50,9 @@ class FirestoreManager {
             }
         }
     }
-    func addSnapShotListener(collection: String = "Rooms", document: String = roomId ?? "", completion: @escaping (Result<DocumentSnapshot?, Error>) -> Void) -> ListenerRegistration {
-        let documentRef = dataBase.collection(collection).document(document)
+    func addSnapShotListener(collection: String = "Rooms", key: String = "roomId", completion: @escaping (Result<DocumentSnapshot?, Error>) -> Void) -> ListenerRegistration {
+        let documentId = UserDefaults.standard.string(forKey: key)
+        let documentRef = dataBase.collection(collection).document(documentId ?? "")
         let documentListener = documentRef.addSnapshotListener { document, error in
             if let error = error {
                 completion(.failure(error))
@@ -56,8 +62,9 @@ class FirestoreManager {
         }
         return documentListener
     }
-    func delete(collection: String = "Rooms", document: String = roomId ?? "") {
-        let documentRef = dataBase.collection(collection).document(document)
+    func delete(collection: String = "Rooms", key: String = "roomId") {
+        guard let documentId = UserDefaults.standard.string(forKey: key) else { return }
+        let documentRef = dataBase.collection(collection).document(documentId)
         documentRef.delete { error in
             if let error = error {
                 print("Delete error：\(error.localizedDescription)")

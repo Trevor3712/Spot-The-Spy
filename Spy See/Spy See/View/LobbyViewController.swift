@@ -85,6 +85,7 @@ class LobbyViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        UserDefaults.standard.setValue(Auth.auth().currentUser?.email, forKey: "userEmail")
         let url = Bundle.main.url(forResource: "main_bgm", withExtension: "wav")
         guard let url = url else {
             return
@@ -113,7 +114,7 @@ class LobbyViewController: BaseViewController {
             return
         }
         UserDefaults.standard.setValue(invitationText, forKey: "roomId")
-        FirestoreManager.shared.getDocument(document: invitationText) { result in
+        FirestoreManager.shared.getDocument { result in
             switch result {
             case .success(let document):
                 guard let document = document else {
@@ -187,7 +188,7 @@ class LobbyViewController: BaseViewController {
         guard let userId = Auth.auth().currentUser?.email else {
             return
         }
-        FirestoreManager.shared.getDocument(collection: "Users", document: userId) { result in
+        FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { result in
             switch result {
             case .success(let document):
                 guard let document = document else {

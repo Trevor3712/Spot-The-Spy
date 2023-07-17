@@ -97,6 +97,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                             identifier: "TabBarController") as? UITabBarController {
                             let lobbyVC = tabBarVC.viewControllers?.first as? LobbyViewController
                             lobbyVC?.invitationTextFileld.text = roomId
+                            UserDefaults.standard.set(roomId, forKey: "roomId")
                             navigationController.pushViewController(tabBarVC, animated: true)
                             window?.makeKeyAndVisible()
                         }

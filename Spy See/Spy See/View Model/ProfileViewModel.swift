@@ -22,14 +22,14 @@ class ProfileViewModel {
         let data: [String: Any] = [
             "name": name
         ]
-        FirestoreManager.shared.updateData(collection: "Users", document: userId, data: data)
+        FirestoreManager.shared.updateData(collection: "Users", key: "userEmail", data: data)
     }
     func getUserName(completion: @escaping (Result<String, Error>) -> Void) {
         guard let userId = Auth.auth().currentUser?.email else {
             completion(.failure(ProfileError.userIdNotFound))
             return
         }
-        FirestoreManager.shared.getDocument(collection: "Users", document: userId) { result in
+        FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { result in
             switch result {
             case .success(let document):
                 guard let document = document else {
@@ -59,6 +59,6 @@ class ProfileViewModel {
         guard let userId = Auth.auth().currentUser?.email else {
             return
         }
-        FirestoreManager.shared.delete(collection: "Users", document: userId)
+        FirestoreManager.shared.delete(collection: "Users", key: "userEmail")
     }
 }
