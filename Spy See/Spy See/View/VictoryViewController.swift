@@ -64,8 +64,9 @@ class VictoryViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let url = Bundle.main.url(forResource: "victory_bgm", withExtension: "wav")
-        AudioPlayer.shared.playAudio(from: url!, loop: true)
+        if let url = Bundle.main.url(forResource: "victory_bgm", withExtension: "wav") {
+            AudioPlayer.shared.playAudio(from: url, loop: true)
+        }
         getRecords()
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -92,33 +93,21 @@ class VictoryViewController: BaseViewController {
         }
     }
     func getPrompt() {
-//        let room = self.dataBase.collection("Rooms")
-//        let roomId = UserDefaults.standard.string(forKey: "roomId") ?? ""
-//        let documentRef = room.document(roomId)
-        FirestoreManager.shared.getDocument() { result in
+        FirestoreManager.shared.getDocument { result in
             switch result {
             case.success(let document):
-                guard let document = document else  {
+                guard let document = document else {
                     return
                 }
-                if let normalPrompt = document.data()?["normalPrompt"] as? String,
-                   let spyPrompt = document.data()?["spyPrompt"] as? String {
- //                self.showPrompt(normalPrompt: normalPrompt, spyPrompt: spyPrompt)
-                    print("===\(normalPrompt)\(spyPrompt)")
+                if let normalPrompt = document.data()?["normalPrompt"] as? String {
+                    if let spyPrompt = document.data()?["spyPrompt"] as? String {
+//                        self.showPrompt(normalPrompt: normalPrompt, spyPrompt: spyPrompt)
+                    }
                 }
             case .failure(let error):
                 print("Error getting document:\(error)")
             }
         }
-//        documentRef.getDocument { document, error in
-//            if let document = document,
-//               let normalPrompt = document.data()?["normalPrompt"] as? String,
-//               let spyPrompt = document.data()?["spyPrompt"] as? String {
-////                self.showPrompt(normalPrompt: normalPrompt, spyPrompt: spyPrompt)
-//            } else {
-//                print("Failed to retrieve player name")
-//            }
-//        }
     }
     func showPrompt(normalPrompt: String, spyPrompt: String) {
         self.normalPromptLabel.attributedText = UIFont.fontStyle(
@@ -135,7 +124,8 @@ class VictoryViewController: BaseViewController {
             letterSpacing: 5)
     }
     func configureLayout() {
-        [identityImageView, victoryLabel, normalPromptLabel, spyPromptLabel, backToLobbyButton].forEach { view.addSubview($0) }
+        [identityImageView, victoryLabel].forEach { view.addSubview($0) }
+        [normalPromptLabel, spyPromptLabel, backToLobbyButton].forEach { view.addSubview($0) }
         self.victoryLabel.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.centerY.equalTo(view)
@@ -168,7 +158,7 @@ class VictoryViewController: BaseViewController {
         }
     }
     @objc func backToLobbyButtonPressed() {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
         if let targetViewController = navigationController?.viewControllers[1] {
             navigationController?.popToViewController(targetViewController, animated: true)
