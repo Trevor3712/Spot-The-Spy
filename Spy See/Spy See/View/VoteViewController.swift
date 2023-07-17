@@ -86,9 +86,9 @@ class VoteViewController: BaseViewController {
         super.viewWillAppear(animated)
     }
     @objc func voteButtonPressed() {
-        playSeAudio(from: clickUrl!)
+        playSeAudio()
         vibrate()
-        guard let voted = votedPlayer else {
+        guard votedPlayer != nil else {
             let alertVC = AlertViewController()
             let alert = alertVC.showAlert(title: "投票錯誤", message: "請選擇你想殺死的玩家")
             present(alert, animated: true)
@@ -108,7 +108,8 @@ extension VoteViewController: UITableViewDataSource {
         players?.count ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlayerCell.reuseIdentifier) as? PlayerCell else { fatalError("Can't create cell") }
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: PlayerCell.reuseIdentifier) as? PlayerCell else { fatalError("Can't create cell") }
         cell.titleLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: players?[indexPath.row] ?? "",
@@ -120,8 +121,9 @@ extension VoteViewController: UITableViewDataSource {
         if let selectedIndexPath = selectedIndexPath, selectedIndexPath == indexPath {
             cell.knifeImageView.isHidden = false
             vibrate()
-            let url = Bundle.main.url(forResource: "gunLoaded_se", withExtension: "wav")
-            playSeAudio(from: url!)
+            if let url = Bundle.main.url(forResource: "gunLoaded_se", withExtension: "wav") {
+                playSeAudio(from: url)
+            }
         } else {
             cell.knifeImageView.isHidden = true
         }
