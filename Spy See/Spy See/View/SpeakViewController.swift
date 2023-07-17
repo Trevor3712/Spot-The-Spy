@@ -493,10 +493,12 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     }
     func deleteMessage() {
+        // swiftlint:disable array_constructor
         let data: [String: Any] = [
             "clue": [String](),
             "message": [String]()
         ]
+        // swiftlint:enable array_constructor
         FirestoreManager.shared.updateData(data: data)
     }
 }
@@ -574,4 +576,3 @@ extension SpeakViewController: UITextFieldDelegate {
         playSeAudio(from: editingUrl)
     }
 }
-

@@ -104,9 +104,11 @@ class PassPromptViewController: BaseViewController {
                 if !playersReady.contains(email) {
                     playersReady.append(email)
                 }
+                // swiftlint:disable array_constructor
                 let data: [String: Any] = [
                     "playersReady": playersReady
                 ]
+                // swiftlint:enable array_constructor
                 FirestoreManager.shared.updateData(data: data)
             case .failure(let error):
                 print("Error getting document:\(error)")

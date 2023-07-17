@@ -206,9 +206,6 @@ class SettingViewController: BaseViewController {
 //        return identityArray
 //    }
     func getUserName() {
-        guard let userId = Auth.auth().currentUser?.email else {
-            return
-        }
         FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { result in
             switch result {
             case .success(let document):

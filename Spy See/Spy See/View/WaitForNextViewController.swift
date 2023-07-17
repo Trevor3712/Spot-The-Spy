@@ -43,7 +43,9 @@ class WaitForNextViewController: BaseViewController {
         loadReadyPlayer()
     }
     func readyToGO() {
+        // swiftlint:disable array_constructor
         let data = ["playersReady": FieldValue.arrayUnion([currentUser])]
+        // swiftlint:enable array_constructor
         FirestoreManager.shared.updateData(data: data)
     }
     func loadReadyPlayer() {

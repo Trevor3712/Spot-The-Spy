@@ -170,9 +170,6 @@ class VictoryViewController: BaseViewController {
         FirestoreManager.shared.delete()
     }
     func getRecords() {
-        guard let userId = Auth.auth().currentUser?.email else {
-            return
-        }
         FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { result in
             switch result {
             case .success(let document):
@@ -212,9 +209,6 @@ class VictoryViewController: BaseViewController {
         }
     }
     func updateRecord(_ string: String, _ int: Int) {
-        guard let userId = Auth.auth().currentUser?.email else {
-            return
-        }
         let data: [String: Any] = [
             string: String(int + 1)
         ]

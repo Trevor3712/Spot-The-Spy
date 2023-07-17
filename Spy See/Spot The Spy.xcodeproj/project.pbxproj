@@ -286,11 +286,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B5D2B0AF2A39C8ED00ED3516 /* Build configuration list for PBXNativeTarget "Spot The Spy" */;
 			buildPhases = (
-				F2C4448E002E7ED21703FED8 /* [CP] Check Pods Manifest.lock */,
 				B59E71082A565699001BFEE8 /* ShellScript */,
 				B5D2B0972A39C8E800ED3516 /* Sources */,
 				B5D2B0982A39C8E800ED3516 /* Frameworks */,
 				B5D2B0992A39C8E800ED3516 /* Resources */,
+				F2C4448E002E7ED21703FED8 /* [CP] Check Pods Manifest.lock */,
 				55EB881633CE96297E795CF4 /* [CP] Embed Pods Frameworks */,
 				B5D2B0B22A39EFE300ED3516 /* FirebaseCrashlytics */,
 			);
@@ -381,6 +381,7 @@
 		};
 		B59E71082A565699001BFEE8 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -398,6 +399,7 @@
 		};
 		B5D2B0B22A39EFE300ED3516 /* FirebaseCrashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 12;
 			files = (
 			);

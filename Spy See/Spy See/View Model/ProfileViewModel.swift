@@ -16,19 +16,12 @@ enum ProfileError: Error {
 
 class ProfileViewModel {
     func setNameData(name: String) {
-        guard let userId = Auth.auth().currentUser?.email else {
-            return
-        }
         let data: [String: Any] = [
             "name": name
         ]
         FirestoreManager.shared.updateData(collection: "Users", key: "userEmail", data: data)
     }
     func getUserName(completion: @escaping (Result<String, Error>) -> Void) {
-        guard let userId = Auth.auth().currentUser?.email else {
-            completion(.failure(ProfileError.userIdNotFound))
-            return
-        }
         FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { result in
             switch result {
             case .success(let document):
@@ -56,9 +49,6 @@ class ProfileViewModel {
         }
     }
     func deleteStoreData() {
-        guard let userId = Auth.auth().currentUser?.email else {
-            return
-        }
         FirestoreManager.shared.delete(collection: "Users", key: "userEmail")
     }
 }
