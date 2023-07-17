@@ -118,23 +118,24 @@ class KillViewController: BaseViewController {
         documentListener?.remove()
     }
     func loadVotedPlayers() {
-        documentListener = FirestoreManager.shared.addSnapShotListener { result in
+        documentListener = FirestoreManager.shared.addSnapShotListener { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let document):
                 guard let document = document else {
                     return
                 }
                 if let voted = document["voted"] as? [[String: String]] {
-                    self.votedArray = voted
+                    votedArray = voted
                     print(self.votedArray)
                 }
                 if let identities = document["identities"] as? [String] {
-                    self.identitiesArray = identities
+                    identitiesArray = identities
                     print(self.identitiesArray)
                 }
-                if self.isAllPlayersVote() {
-                    self.killWhichPlayer()
-                    self.documentListener?.remove()
+                if isAllPlayersVote() {
+                    killWhichPlayer()
+                    documentListener?.remove()
                 }
             case .failure(let error):
                 print("Error getting document:\(error)")

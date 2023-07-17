@@ -50,7 +50,8 @@ class WaitForNextViewController: BaseViewController {
     }
     func loadReadyPlayer() {
         let existingPlayers: Set<String> = Set(self.readyPlayers)
-        documentListener = FirestoreManager.shared.addSnapShotListener { result in
+        documentListener = FirestoreManager.shared.addSnapShotListener { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let document):
                 guard let document = document else {
@@ -58,14 +59,15 @@ class WaitForNextViewController: BaseViewController {
                 }
                 let playersReady = document["playersReady"] as? [String] ?? []
                 let newPlayers = playersReady.filter { !existingPlayers.contains($0) }
-                self.readyPlayers = newPlayers
-                if self.isAllPlayersReady() {
-                    self.documentListener?.remove()
-                    FirestoreManager.shared.updateData(data: ["playersReady": [String]()]) {
+                readyPlayers = newPlayers
+                if isAllPlayersReady() {
+                    documentListener?.remove()
+                    FirestoreManager.shared.updateData(data: ["playersReady": [String]()]) { [weak self] in
+                        guard let self = self else { return }
                         if let targetViewController =
-                            self.navigationController?.viewControllers.first(where: { $0 is SpeakViewController }) {
-                            self.vibrateHard()
-                            self.navigationController?.popToViewController(targetViewController, animated: true)
+                            navigationController?.viewControllers.first(where: { $0 is SpeakViewController }) {
+                            vibrateHard()
+                            navigationController?.popToViewController(targetViewController, animated: true)
                         }
                     }
                 }

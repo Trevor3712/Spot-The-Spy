@@ -293,39 +293,41 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         let data: [String: Any] = [
             "message": FieldValue.arrayUnion(["\(userName ?? "") : \(messageTextField.text ?? "")"])
         ]
-        FirestoreManager.shared.updateData(data: data) {
-            self.messageTextField.text = ""
+        FirestoreManager.shared.updateData(data: data) { [weak self] in
+            guard let self = self else { return }
+            messageTextField.text = ""
         }
     }
     func showClue() {
-        documentListener = FirestoreManager.shared.addSnapShotListener { result in
+        documentListener = FirestoreManager.shared.addSnapShotListener { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let document):
                 guard let document = document else {
-                    self.clues = []
-                    self.messages = []
-                    self.clueTableView.reloadData()
-                    self.messageTableView.reloadData()
+                    clues = []
+                    messages = []
+                    clueTableView.reloadData()
+                    messageTableView.reloadData()
                     return
                 }
                 if let clue = document["clue"] as? [String] {
-                    self.clues = []
-                    self.clues.append(contentsOf: clue)
-                    if !self.clues.isEmpty {
-                        self.clueTableView.reloadData()
-                        let lastRow = self.clueTableView.numberOfRows(inSection: 0) - 1
+                    clues = []
+                    clues.append(contentsOf: clue)
+                    if !clues.isEmpty {
+                        clueTableView.reloadData()
+                        let lastRow = clueTableView.numberOfRows(inSection: 0) - 1
                         let indexPath = IndexPath(row: lastRow, section: 0)
-                        self.clueTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                        clueTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                     }
                 }
                 if let message = document["message"] as? [String] {
-                    self.messages = []
-                    self.messages.append(contentsOf: message)
-                    if !self.messages.isEmpty {
-                        self.messageTableView.reloadData()
+                    messages = []
+                    messages.append(contentsOf: message)
+                    if !messages.isEmpty {
+                        messageTableView.reloadData()
                         let lastRow = self.messageTableView.numberOfRows(inSection: 0) - 1
                         let indexPath = IndexPath(row: lastRow, section: 0)
-                        self.messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                        messageTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                     }
                 }
             case .failure(let error):

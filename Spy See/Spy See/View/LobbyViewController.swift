@@ -114,25 +114,26 @@ class LobbyViewController: BaseViewController {
             return
         }
         UserDefaults.standard.setValue(invitationText, forKey: "roomId")
-        FirestoreManager.shared.getDocument { result in
+        FirestoreManager.shared.getDocument { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let document):
                 guard let document = document else {
                     return
                 }
                 if var players = document.data()?["player"] as? [String] {
-                    guard let name = self.userName else {
+                    guard let name = userName else {
                         print("Name is missing")
                         return
                     }
                     players.append(name)
                     // 計算玩家的index
                     let playerIndex = players.count - 1
-                    self.setPlayer(player: players, playerIndex: playerIndex)
+                    setPlayer(player: players, playerIndex: playerIndex)
                 }
             case .failure(let error):
                 let alert = self.alertVC.showAlert(title: "輸入錯誤", message: "查無此邀請碼")
-                self.present(alert, animated: true)
+                present(alert, animated: true)
                 print("Document does not exist or there was an error: \(error.localizedDescription )")
             }
         }
@@ -150,7 +151,8 @@ class LobbyViewController: BaseViewController {
         }
     }
     func getUserPrompt() {
-        FirestoreManager.shared.getDocument { result in
+        FirestoreManager.shared.getDocument { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let document):
                 guard let document = document else {
@@ -159,7 +161,7 @@ class LobbyViewController: BaseViewController {
                 if let playerIndex = document.data()?["playerIndex"] as? Int {
                     if let prompts = document.data()?["prompts"] as? [String] {
                         if let identities = document.data()?["identities"] as? [String] {
-                            self.handlePlayerIndex(playerIndex, prompts, identities)
+                            handlePlayerIndex(playerIndex, prompts, identities)
                             UserDefaults.standard.removeObject(forKey: "userName")
                             UserDefaults.standard.setValue(self.userName, forKey: "userName")
                         }
@@ -185,14 +187,15 @@ class LobbyViewController: BaseViewController {
         UserDefaults.standard.setValue(selectedPrompt, forKey: "playerPrompt")
     }
     func getUserName() {
-        FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { result in
+        FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let document):
                 guard let document = document else {
                     return
                 }
                 if let name = document.data()?["name"] as? String {
-                    self.userName = name
+                    userName = name
                 }
             case .failure(let error):
                 print("Error getting document:\(error)")

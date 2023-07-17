@@ -168,7 +168,8 @@ class RecordsViewController: BaseViewController, ObservableObject {
         }
     }
     func getRecords() {
-        FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { result in
+        FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let document):
                 guard let document = document else {
@@ -186,12 +187,12 @@ class RecordsViewController: BaseViewController, ObservableObject {
                 if let spyLose = document.data()?["spyLose"] as? String {
                     self.spyLose = Int(spyLose) ?? 0
                 }
-                self.showTotalRecords()
-                self.showIdentityRecord()
-                self.hostingController?.rootView.spyWin = self.spyWin
-                self.hostingController?.rootView.spyLose = self.spyLose
-                self.hostingController?.rootView.normalWin = self.normalWin
-                self.hostingController?.rootView.normalLose = self.normalLose
+                showTotalRecords()
+                showIdentityRecord()
+                hostingController?.rootView.spyWin = self.spyWin
+                hostingController?.rootView.spyLose = self.spyLose
+                hostingController?.rootView.normalWin = self.normalWin
+                hostingController?.rootView.normalLose = self.normalLose
             case .failure(let error):
                 print("Error getting document:\(error)")
             }

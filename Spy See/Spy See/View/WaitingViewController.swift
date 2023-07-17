@@ -54,24 +54,25 @@ class WaitingViewController: BaseViewController {
     }
     func loadRoomData() {
         let existingPlayers: Set<String> = Set(self.players)
-        documentListener = FirestoreManager.shared.addSnapShotListener { result in
+        documentListener = FirestoreManager.shared.addSnapShotListener { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let document):
                 guard let document = document else {
                     return
                 }
                 if let playerNumberData = document["playerNumber"] as? String {
-                    self.playerNumber = Int(playerNumberData)
+                    playerNumber = Int(playerNumberData)
                 }
                 if let playersData = document["player"] as? [String] {
-                    self.players = []
+                    players = []
                     let newPlayers = playersData.filter { !existingPlayers.contains($0) }
-                    self.players.append(contentsOf: newPlayers)
-                    self.tableView.reloadData()
+                    players.append(contentsOf: newPlayers)
+                    tableView.reloadData()
                     if self.allPlayersJoined() {
                         let promptVC = PassPromptViewController()
-                        self.vibrateHard()
-                        self.navigationController?.pushViewController(promptVC, animated: true)
+                        vibrateHard()
+                        navigationController?.pushViewController(promptVC, animated: true)
                     }
                 }
             case .failure(let error):

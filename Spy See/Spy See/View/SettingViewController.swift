@@ -163,10 +163,11 @@ class SettingViewController: BaseViewController {
 //            "normalPrompt": "\(choosedPrompt.0[1])",
 //            "spyPrompt": "\(choosedPrompt.1[1])"
         ]
-        FirestoreManager.shared.setData(data: data) {
-            self.updateUserDefaults()
+        FirestoreManager.shared.setData(data: data) { [weak self] in
+            guard let self = self else { return }
+            updateUserDefaults()
             let inviteVC = InviteViewController()
-            self.navigationController?.pushViewController(inviteVC, animated: true)
+            navigationController?.pushViewController(inviteVC, animated: true)
         }
     }
     func generateRoomId() -> String {
@@ -206,14 +207,15 @@ class SettingViewController: BaseViewController {
 //        return identityArray
 //    }
     func getUserName() {
-        FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { result in
+        FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let document):
                 guard let document = document else {
                     return
                 }
                 if let name = document.data()?["name"] as? String {
-                    self.userName = name
+                    userName = name
                 }
             case .failure(let error):
                 print("Error getting document:\(error)")
@@ -284,7 +286,8 @@ extension SettingViewController: UITextFieldDelegate {
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.tag == 1 {
-            if playersCountTextFileld.text?.isEmpty != nil {
+            // swiftlint:disable empty_string
+            if playersCountTextFileld.text == "" {
                 playersCountTextFileld.attributedText = UIFont.fontStyle(
                     font: .regular,
                     title: "\(String(playersCount[0]))",
@@ -293,7 +296,7 @@ extension SettingViewController: UITextFieldDelegate {
                     letterSpacing: 5)
             }
         } else {
-            if spysCountTextFileld.text?.isEmpty != nil {
+            if spysCountTextFileld.text == "" {
                 spysCountTextFileld.attributedText = UIFont.fontStyle(
                     font: .regular,
                     title: "\(String(spysCount[0]))",
@@ -301,6 +304,7 @@ extension SettingViewController: UITextFieldDelegate {
                     textColor: .B2 ?? .black,
                     letterSpacing: 5)
             }
+            // swiftlint:enable empty_string
         }
     }
 }

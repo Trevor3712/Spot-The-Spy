@@ -72,7 +72,8 @@ class DiedViewController: BaseViewController {
         }
     }
     func checkIfEndGame() {
-        documentListener = FirestoreManager.shared.addSnapShotListener { result in
+        documentListener = FirestoreManager.shared.addSnapShotListener { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let document):
                 guard let document = document else {
@@ -80,9 +81,9 @@ class DiedViewController: BaseViewController {
                 }
                 if let isSpyWin = document["isSpyWin"] as? Bool {
                     if isSpyWin == false {
-                        self.goToVictoryPage(false)
+                        goToVictoryPage(false)
                     } else {
-                        self.goToVictoryPage(true)
+                        goToVictoryPage(true)
                     }
                 }
             case .failure(let error):
