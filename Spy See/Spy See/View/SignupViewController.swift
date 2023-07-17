@@ -106,11 +106,9 @@ class SignupViewController: BaseViewController {
     let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
-        [signupLabel,
-         accountLabel, accountTextField,
-         passwordLabel, passwordTextField,
-         nameLabel, nameTextField,
-         signupButton].forEach { view.addSubview($0) }
+        [signupLabel, accountLabel, accountTextField].forEach { view.addSubview($0) }
+        [passwordLabel, passwordTextField].forEach { view.addSubview($0) }
+        [nameLabel, nameTextField, signupButton].forEach { view.addSubview($0) }
         signupLabel.snp.makeConstraints { make in
             make.top.equalTo(view).offset(100)
             make.centerX.equalTo(view)
@@ -151,39 +149,54 @@ class SignupViewController: BaseViewController {
             make.width.equalTo(150)
             make.height.equalTo(40)
         }
-        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backButtonPressed))
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.left"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonPressed)
+        )
         backButton.tintColor = .B1
         navigationItem.leftBarButtonItem = backButton
     }
     @objc func signupButtonPressed() {
-        playSeAudio(from: clickUrl!)
+        guard let clickUrl = clickUrl else {
+            return
+        }
+        playSeAudio(from: clickUrl)
         vibrate()
-        guard let account = accountTextField.text, !account.isEmpty, account != "請輸入你的e-mail",
-                let password = passwordTextField.text, !password.isEmpty, password != "請輸入至少６位數密碼",
-                let name = nameTextField.text, !name.isEmpty, name != "暱稱之後可在個人頁面更改"
-        else {
-            let alert = alertVC.showAlert(title: "註冊錯誤", message: "請輸入帳號、密碼及暱稱")
-            present(alert, animated: true, completion: nil)
+        guard let account = accountTextField.text, !account.isEmpty, account != "請輸入你的e-mail" else {
+            signUpErrorAlert()
+            return
+        }
+        guard let password = passwordTextField.text, !password.isEmpty, password != "請輸入至少６位數密碼" else {
+            signUpErrorAlert()
+            return
+        }
+        guard let name = nameTextField.text, !name.isEmpty, name != "暱稱之後可在個人頁面更改" else {
+            signUpErrorAlert()
             return
         }
         Auth.auth().createUser(withEmail: account, password: password) { result, error in
-            guard let user = result?.user,
-                  error == nil else {
+            guard result?.user != nil, error == nil else {
                 let alert = self.alertVC.showAlert(title: "註冊錯誤", message: error?.localizedDescription ?? "")
                 self.present(alert, animated: true, completion: nil)
-                print(error?.localizedDescription)
                 return
             }
             let alert = self.alertVC.showAlert(title: "註冊成功", message: "馬上開始遊戲！") {
                 self.setNameData()
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                guard let tabBarController = storyboard.instantiateViewController(withIdentifier: "TabBarController") as? UITabBarController else {
+                guard let tabBarController = storyboard.instantiateViewController(
+                    withIdentifier: "TabBarController") as? UITabBarController else {
                     return
                 }
                 self.navigationController?.pushViewController(tabBarController, animated: true)
             }
             self.present(alert, animated: true)
-       }
+        }
+    }
+    func signUpErrorAlert() {
+        let alert = alertVC.showAlert(title: "註冊錯誤", message: "請輸入帳號、密碼及暱稱")
+        present(alert, animated: true, completion: nil)
     }
     func setNameData() {
         guard let userId = Auth.auth().currentUser?.email else {
@@ -199,7 +212,10 @@ class SignupViewController: BaseViewController {
 }
 extension SignupViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        playSeAudio(from: editingUrl!)
+        guard let editingUrl = editingUrl else {
+            return
+        }
+        playSeAudio(from: editingUrl)
         vibrate()
         if textField.tag == 1 {
             accountTextField.text = ""
