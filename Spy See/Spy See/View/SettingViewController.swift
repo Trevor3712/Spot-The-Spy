@@ -145,8 +145,10 @@ class SettingViewController: BaseViewController {
             settingErrorAlert()
             return
         }
-        let roomId = generateRoomId()
-        UserDefaults.standard.setValue(roomId, forKey: "roomId")
+//        let roomId = generateRoomId()
+        let roomId = "0818"
+        UserDefaults.standard.setValue("0818", forKey: "roomId")
+//        UserDefaults.standard.setValue(roomId, forKey: "roomId")
         guard let name = self.userName else {
             print("Name is missing")
             return
