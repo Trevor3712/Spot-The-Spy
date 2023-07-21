@@ -145,25 +145,20 @@ class SettingViewController: BaseViewController {
             settingErrorAlert()
             return
         }
-//        let roomId = generateRoomId()
-        let roomId = "0818"
-        UserDefaults.standard.setValue("0818", forKey: "roomId")
-//        UserDefaults.standard.setValue(roomId, forKey: "roomId")
+        let roomId = generateRoomId()
+        UserDefaults.standard.setValue(roomId, forKey: "roomId")
         guard let name = self.userName else {
-            print("Name is missing")
             return
         }
-//        let prompts = generatePromptArray()
-        let prompts = ["工程師", "工程師", "工具人", "工程師"]
-        let identities = ["平民", "平民", "臥底", "平民"]
-//        let identities = generateIdentityArray()
+        let prompts = generatePromptArray()
+        let identities = generateIdentityArray()
         let data: [String: Any] = [
             "prompts": prompts,
             "identities": identities,
             "player": [name],
-            "playerNumber": playersCountTextFileld.text ?? ""
-//            "normalPrompt": "\(choosedPrompt.0[1])",
-//            "spyPrompt": "\(choosedPrompt.1[1])"
+            "playerNumber": playersCountTextFileld.text ?? "",
+            "normalPrompt": "\(choosedPrompt.0[1])",
+            "spyPrompt": "\(choosedPrompt.1[1])"
         ]
         FirestoreManager.shared.setData(data: data) { [weak self] in
             guard let self = self else { return }
@@ -184,30 +179,30 @@ class SettingViewController: BaseViewController {
             return "0000"
         }
     }
-//    func generatePromptArray() -> [String] {
-//        promptArray = []
-//        choosedPrompt = prompt.randomElement() ?? ([""], [""])
-//        for _ in 0...(Int(playersCountTextFileld.text ?? "") ?? 0) - (Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
-//            promptArray.append(choosedPrompt.0[1])
-//        }
-//        for _ in 0...(Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
-//            promptArray.append(choosedPrompt.1[1])
-//        }
-//        shuffledIndices = Array(promptArray.indices).shuffled()
-//        promptArray = shuffledIndices.map { promptArray[$0] }
-//        return promptArray
-//    }
-//    func generateIdentityArray() -> [String] {
-//        identityArray = []
-//        for _ in 0...(Int(playersCountTextFileld.text ?? "") ?? 0) - (Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
-//            identityArray.append(choosedPrompt.0[0])
-//        }
-//        for _ in 0...(Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
-//            identityArray.append(choosedPrompt.1[0])
-//        }
-//        identityArray = shuffledIndices.map { identityArray[$0] }
-//        return identityArray
-//    }
+    func generatePromptArray() -> [String] {
+        promptArray = []
+        choosedPrompt = prompt.randomElement() ?? ([""], [""])
+        for _ in 0...(Int(playersCountTextFileld.text ?? "") ?? 0) - (Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
+            promptArray.append(choosedPrompt.0[1])
+        }
+        for _ in 0...(Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
+            promptArray.append(choosedPrompt.1[1])
+        }
+        shuffledIndices = Array(promptArray.indices).shuffled()
+        promptArray = shuffledIndices.map { promptArray[$0] }
+        return promptArray
+    }
+    func generateIdentityArray() -> [String] {
+        identityArray = []
+        for _ in 0...(Int(playersCountTextFileld.text ?? "") ?? 0) - (Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
+            identityArray.append(choosedPrompt.0[0])
+        }
+        for _ in 0...(Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
+            identityArray.append(choosedPrompt.1[0])
+        }
+        identityArray = shuffledIndices.map { identityArray[$0] }
+        return identityArray
+    }
     func getUserName() {
         FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { [weak self] result in
             guard let self = self else { return }
@@ -232,11 +227,9 @@ class SettingViewController: BaseViewController {
         UserDefaults.standard.removeObject(forKey: "hostPrompt")
         UserDefaults.standard.removeObject(forKey: "userName")
         UserDefaults.standard.removeObject(forKey: "playerIdentity")
-        UserDefaults.standard.setValue("工程師", forKey: "hostPrompt")
-//                UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
+        UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
         UserDefaults.standard.setValue(self.userName, forKey: "userName")
-        UserDefaults.standard.set("平民", forKey: "playerIdentity")
-//                UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
+        UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
     }
     func settingErrorAlert() {
         let alert = alertVC.showAlert(title: "設定錯誤", message: "請選擇玩家人數、臥底人數")

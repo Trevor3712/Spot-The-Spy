@@ -63,7 +63,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }()
     lazy var messageTextField: BaseTextField = {
         let messageTextField = BaseTextField()
-        messageTextField.placeholder = "討論輸入區"
+        messageTextField.placeholder = "在這裡輸入文字"
         messageTextField.delegate = self
         return messageTextField
     }()
@@ -126,7 +126,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     var currentPlayerIndex: Int = 0
     var timer: Timer?
     var audioRecoder: AVAudioRecorder?
-    var countdown = 7
+    var countdown = 20
     var clues: [String] = []
     var messages: [String] = []
     var documentListener: ListenerRegistration?
@@ -257,7 +257,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             size: 35,
             textColor: .B2 ?? .black,
             letterSpacing: 10)
-        countdown = 7
+        countdown = 20
         progressView.setProgress(1, animated: true)
         timer = Timer.scheduledTimer(
             timeInterval: 1,
@@ -269,7 +269,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }
     @objc func updateProgress() {
         countdown -= 1
-        let progress = Float(countdown) / Float(7)
+        let progress = Float(countdown) / Float(20)
         progressView.setProgress(progress, animated: true)
         if countdown <= 0 {
             timer?.invalidate()

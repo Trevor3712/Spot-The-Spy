@@ -32,7 +32,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     let roomId = component.last
                     print(roomId)
                     if page == "lobby" {
-                        let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController") as? UITabBarController
+                        let tabBarVC = storyBoard.instantiateViewController(
+                            identifier: "TabBarController") as? UITabBarController
                         let lobbyVC = tabBarVC?.viewControllers?.first as? LobbyViewController
                         lobbyVC?.invitationTextFileld.attributedText = UIFont.fontStyle(
                             font: .regular,
@@ -94,7 +95,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     let roomId = component.last
                     print(roomId)
                     if page == "lobby" {
-                        let tabBarVC = storyBoard.instantiateViewController(identifier: "TabBarController") as? UITabBarController
+                        let tabBarVC = storyBoard.instantiateViewController(
+                            identifier: "TabBarController") as? UITabBarController
                         let lobbyVC = tabBarVC?.viewControllers?.first as? LobbyViewController
                         lobbyVC?.invitationTextFileld.text = roomId
                         navigationController.pushViewController(tabBarVC!, animated: true)

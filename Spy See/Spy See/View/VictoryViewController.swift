@@ -60,7 +60,6 @@ class VictoryViewController: BaseViewController {
         whoWins()
         configureLayout()
         getPrompt()
-        showPrompt(normalPrompt: "工程師", spyPrompt: "工具人")
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -101,7 +100,7 @@ class VictoryViewController: BaseViewController {
                 }
                 if let normalPrompt = document.data()?["normalPrompt"] as? String {
                     if let spyPrompt = document.data()?["spyPrompt"] as? String {
-//                        self.showPrompt(normalPrompt: normalPrompt, spyPrompt: spyPrompt)
+                        self.showPrompt(normalPrompt: normalPrompt, spyPrompt: spyPrompt)
                     }
                 }
             case .failure(let error):

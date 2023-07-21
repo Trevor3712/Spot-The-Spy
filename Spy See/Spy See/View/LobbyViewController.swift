@@ -85,8 +85,6 @@ class LobbyViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //測試版
-        UserDefaults.standard.setValue("0818", forKey: "roomId")
         UserDefaults.standard.setValue(Auth.auth().currentUser?.email, forKey: "userEmail")
         let url = Bundle.main.url(forResource: "main_bgm", withExtension: "wav")
         guard let url = url else {
@@ -115,8 +113,7 @@ class LobbyViewController: BaseViewController {
             present(alert, animated: true)
             return
         }
-        //正式版
-//        UserDefaults.standard.setValue(invitationText, forKey: "roomId")
+        UserDefaults.standard.setValue(invitationText, forKey: "roomId")
         FirestoreManager.shared.getDocument { [weak self] result in
             guard let self = self else { return }
             switch result {
