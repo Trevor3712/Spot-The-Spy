@@ -200,6 +200,8 @@ class SignupViewController: BaseViewController {
     }
     func setNameData() {
         let name = nameTextField.text
+        let userEmail = accountTextField.text
+        UserDefaults.standard.setValue(userEmail, forKey: "userEmail")
         let data: [String: Any] = ["name": name as Any]
         FirestoreManager.shared.setData(collection: "Users", key: "userEmail", data: data)
     }

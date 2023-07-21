@@ -27,21 +27,6 @@
             </objects>
             <point key="canvasLocation" x="112" y="4"/>
         </scene>
-        <!--Signup View Controller-->
-        <scene sceneID="Z3p-fR-VMr">
-            <objects>
-                <viewController id="zD0-sl-S5s" customClass="SignupViewController" customModule="Spot_The_Spy" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="m09-7a-UAI">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="3xC-A8-DV9"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nvC-Q2-nIe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="514" y="723"/>
-        </scene>
         <!--Profile View Controller-->
         <scene sceneID="4Z1-pE-bsg">
             <objects>
