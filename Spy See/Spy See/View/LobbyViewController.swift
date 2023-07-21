@@ -105,17 +105,20 @@ class LobbyViewController: BaseViewController {
         let settingVC = SettingViewController()
         navigationController?.pushViewController(settingVC, animated: true)
     }
-    @objc func goButtonPressed() {
+    @objc func goButtonPressed(_ sender: UIButton) {
+        sender.isEnabled = false
         playSeAudio()
         vibrate()
         guard let invitationText = invitationTextFileld.text, !invitationText.isEmpty, invitationText != "請輸入邀請碼" else {
             let alert = alertVC.showAlert(title: "輸入錯誤", message: "請輸入邀請碼")
             present(alert, animated: true)
+            sender.isEnabled = true
             return
         }
         UserDefaults.standard.setValue(invitationText, forKey: "roomId")
         FirestoreManager.shared.getDocument { [weak self] result in
             guard let self = self else { return }
+            sender.isEnabled = true
             switch result {
             case .success(let document):
                 guard let document = document else {
@@ -126,10 +129,15 @@ class LobbyViewController: BaseViewController {
                         print("Name is missing")
                         return
                     }
+                    guard !players.contains(name) else {
+                        return
+                    }
                     players.append(name)
                     // 計算玩家的index
                     let playerIndex = players.count - 1
                     setPlayer(player: players, playerIndex: playerIndex)
+                    let waitingVC = WaitingViewController()
+                    self.navigationController?.pushViewController(waitingVC, animated: true)
                 }
             case .failure(let error):
                 let alert = self.alertVC.showAlert(title: "輸入錯誤", message: "查無此邀請碼")
@@ -146,8 +154,6 @@ class LobbyViewController: BaseViewController {
         FirestoreManager.shared.setData(data: data, merge: true) {
             self.getUserPrompt()
             self.invitationTextFileld.text = ""
-            let waitingVC = WaitingViewController()
-            self.navigationController?.pushViewController(waitingVC, animated: true)
         }
     }
     func getUserPrompt() {
