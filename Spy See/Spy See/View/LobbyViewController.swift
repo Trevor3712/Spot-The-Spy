@@ -184,12 +184,9 @@ class LobbyViewController: BaseViewController {
             return
         }
         let playerIdentity = identities[playerIndex]
-        UserDefaults.standard.removeObject(forKey: "playerIdentity")
         UserDefaults.standard.setValue(playerIdentity, forKey: "playerIdentity")
-        print("===playerIdentity:\(playerIdentity)")
         let selectedPrompt = prompts[playerIndex]
         UserDefaults.standard.removeObject(forKey: "hostPrompt")
-        UserDefaults.standard.removeObject(forKey: "playerPrompt")
         UserDefaults.standard.setValue(selectedPrompt, forKey: "playerPrompt")
     }
     func getUserName() {

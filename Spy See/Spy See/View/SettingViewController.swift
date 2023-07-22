@@ -224,9 +224,6 @@ class SettingViewController: BaseViewController {
     }
     func updateUserDefaults() {
         UserDefaults.standard.removeObject(forKey: "playerPrompt")
-        UserDefaults.standard.removeObject(forKey: "hostPrompt")
-        UserDefaults.standard.removeObject(forKey: "userName")
-        UserDefaults.standard.removeObject(forKey: "playerIdentity")
         UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
         UserDefaults.standard.setValue(self.userName, forKey: "userName")
         UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
