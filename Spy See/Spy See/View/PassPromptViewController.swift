@@ -100,13 +100,13 @@ class PassPromptViewController: BaseViewController {
                 guard let document = document else {
                     return
                 }
-                var playersReady = document.data()?["playersReady"] as? [String] ?? []
+                var playersReady = document.data()?[FirestoreConstans.playersReady] as? [String] ?? []
                 if !playersReady.contains(email) {
                     playersReady.append(email)
                 }
                 // swiftlint:disable array_constructor
                 let data: [String: Any] = [
-                    "playersReady": playersReady
+                    FirestoreConstans.playersReady: playersReady
                 ]
                 // swiftlint:enable array_constructor
                 FirestoreManager.shared.updateData(data: data)
@@ -124,15 +124,15 @@ class PassPromptViewController: BaseViewController {
                 guard let document = document else {
                     return
                 }
-                if let players = document["player"] as? [String] {
+                if let players = document[FirestoreConstans.player] as? [String] {
                     playerNumber = players.count
                 }
-                if let playersReady = document["playersReady"] as? [String] {
+                if let playersReady = document[FirestoreConstans.playersReady] as? [String] {
                     let newPlayers = playersReady.filter { !existingPlayers.contains($0) }
                     readyPlayers = newPlayers
                 }
                 if isAllPlayersReady() {
-                    FirestoreManager.shared.updateData(data: ["playersReady": [String]()])
+                    FirestoreManager.shared.updateData(data: [FirestoreConstans.playersReady: [String]()])
                     let speakVC = SpeakViewController()
                     vibrateHard()
                     navigationController?.pushViewController(speakVC, animated: true)

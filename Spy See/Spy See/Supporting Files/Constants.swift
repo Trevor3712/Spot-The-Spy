@@ -20,3 +20,18 @@ enum SoundConstant {
     static let gunShot = "gunShot_se"
     static let wav = "wav"
 }
+
+enum FirestoreConstans {
+    static let voted = "voted"
+    static let playersReady = "playersReady"
+    static let clue = "clue"
+    static let identities = "identities"
+    static let message = "message"
+    static let player = "player"
+    static let playerIndex = "playerIndex"
+    static let playerNumber = "playerNumber"
+    static let prompts = "prompts"
+    static let normalPrompt = "normalPrompt"
+    static let spyPrompt = "spyPrompt"
+    static let isSpyWin = "isSpyWin"
+}

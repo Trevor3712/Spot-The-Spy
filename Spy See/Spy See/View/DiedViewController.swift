@@ -79,7 +79,7 @@ class DiedViewController: BaseViewController {
                 guard let document = document else {
                     return
                 }
-                if let isSpyWin = document["isSpyWin"] as? Bool {
+                if let isSpyWin = document[FirestoreConstans.isSpyWin] as? Bool {
                     if isSpyWin == false {
                         goToVictoryPage(false)
                     } else {

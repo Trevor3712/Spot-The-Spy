@@ -95,7 +95,7 @@ class VoteViewController: BaseViewController {
             return
         }
         let email = Auth.auth().currentUser?.email
-        let data = ["voted": FieldValue.arrayUnion([["\(email ?? "")": votedPlayer ?? ""]])]
+        let data = [FirestoreConstans.voted: FieldValue.arrayUnion([["\(email ?? "")": votedPlayer ?? ""]])]
         FirestoreManager.shared.updateData(data: data) { [weak self] in
             guard let self = self else { return }
             let killVC = KillViewController()

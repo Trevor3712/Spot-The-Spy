@@ -153,12 +153,12 @@ class SettingViewController: BaseViewController {
         let prompts = generatePromptArray()
         let identities = generateIdentityArray()
         let data: [String: Any] = [
-            "prompts": prompts,
-            "identities": identities,
-            "player": [name],
-            "playerNumber": playersCountTextFileld.text ?? "",
-            "normalPrompt": "\(choosedPrompt.0[1])",
-            "spyPrompt": "\(choosedPrompt.1[1])"
+            FirestoreConstans.prompts: prompts,
+            FirestoreConstans.identities: identities,
+            FirestoreConstans.player: [name],
+            FirestoreConstans.playerNumber: playersCountTextFileld.text ?? "",
+            FirestoreConstans.normalPrompt: "\(choosedPrompt.0[1])",
+            FirestoreConstans.spyPrompt: "\(choosedPrompt.1[1])"
         ]
         FirestoreManager.shared.setData(data: data) { [weak self] in
             guard let self = self else { return }

@@ -44,7 +44,7 @@ class WaitForNextViewController: BaseViewController {
     }
     private func readyToGO() {
         // swiftlint:disable array_constructor
-        let data = ["playersReady": FieldValue.arrayUnion([currentUser])]
+        let data = [FirestoreConstans.playersReady: FieldValue.arrayUnion([currentUser])]
         // swiftlint:enable array_constructor
         FirestoreManager.shared.updateData(data: data)
     }
@@ -57,12 +57,12 @@ class WaitForNextViewController: BaseViewController {
                 guard let document = document else {
                     return
                 }
-                let playersReady = document["playersReady"] as? [String] ?? []
+                let playersReady = document[FirestoreConstans.playersReady] as? [String] ?? []
                 let newPlayers = playersReady.filter { !existingPlayers.contains($0) }
                 readyPlayers = newPlayers
                 if isAllPlayersReady() {
                     documentListener?.remove()
-                    FirestoreManager.shared.updateData(data: ["playersReady": [String]()]) { [weak self] in
+                    FirestoreManager.shared.updateData(data: [FirestoreConstans.playersReady: [String]()]) { [weak self] in
                         guard let self = self else { return }
                         if let targetViewController =
                             navigationController?.viewControllers.first(where: { $0 is SpeakViewController }) {

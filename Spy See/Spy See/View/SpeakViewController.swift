@@ -281,7 +281,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         playSeAudio()
         vibrate()
         let data: [String: Any] = [
-            "clue": FieldValue.arrayUnion(["\(userName ?? "") : \(messageTextField.text ?? "")"])
+            FirestoreConstans.clue: FieldValue.arrayUnion(["\(userName ?? "") : \(messageTextField.text ?? "")"])
         ]
         FirestoreManager.shared.updateData(data: data) {
             self.messageTextField.text = ""
@@ -291,7 +291,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         playSeAudio()
         vibrate()
         let data: [String: Any] = [
-            "message": FieldValue.arrayUnion(["\(userName ?? "") : \(messageTextField.text ?? "")"])
+            FirestoreConstans.message: FieldValue.arrayUnion(["\(userName ?? "") : \(messageTextField.text ?? "")"])
         ]
         FirestoreManager.shared.updateData(data: data) { [weak self] in
             guard let self = self else { return }
@@ -310,7 +310,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
                     messageTableView.reloadData()
                     return
                 }
-                if let clue = document["clue"] as? [String] {
+                if let clue = document[FirestoreConstans.clue] as? [String] {
                     clues = []
                     clues.append(contentsOf: clue)
                     if !clues.isEmpty {
@@ -320,7 +320,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
                         clueTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                     }
                 }
-                if let message = document["message"] as? [String] {
+                if let message = document[FirestoreConstans.message] as? [String] {
                     messages = []
                     messages.append(contentsOf: message)
                     if !messages.isEmpty {
@@ -497,8 +497,8 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     private func deleteMessage() {
         // swiftlint:disable array_constructor
         let data: [String: Any] = [
-            "clue": [String](),
-            "message": [String]()
+            FirestoreConstans.clue: [String](),
+            FirestoreConstans.message: [String]()
         ]
         // swiftlint:enable array_constructor
         FirestoreManager.shared.updateData(data: data)

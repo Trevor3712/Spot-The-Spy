@@ -61,10 +61,10 @@ class WaitingViewController: BaseViewController {
                 guard let document = document else {
                     return
                 }
-                if let playerNumberData = document["playerNumber"] as? String {
+                if let playerNumberData = document[FirestoreConstans.playerNumber] as? String {
                     playerNumber = Int(playerNumberData)
                 }
-                if let playersData = document["player"] as? [String] {
+                if let playersData = document[FirestoreConstans.player] as? [String] {
                     players = []
                     let newPlayers = playersData.filter { !existingPlayers.contains($0) }
                     players.append(contentsOf: newPlayers)

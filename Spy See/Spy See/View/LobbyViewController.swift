@@ -124,7 +124,7 @@ class LobbyViewController: BaseViewController {
                 guard let document = document else {
                     return
                 }
-                if var players = document.data()?["player"] as? [String] {
+                if var players = document.data()?[FirestoreConstans.player] as? [String] {
                     guard let name = userName else {
                         print("Name is missing")
                         return
@@ -148,8 +148,8 @@ class LobbyViewController: BaseViewController {
     }
     private func setPlayer(player: [String], playerIndex: Int) {
         let data: [String: Any] = [
-            "player": player,
-            "playerIndex": playerIndex // 存入玩家的index
+            FirestoreConstans.player: player,
+            FirestoreConstans.playerIndex: playerIndex // 存入玩家的index
         ]
         FirestoreManager.shared.setData(data: data, merge: true) {
             self.getUserPrompt()
@@ -164,9 +164,9 @@ class LobbyViewController: BaseViewController {
                 guard let document = document else {
                     return
                 }
-                if let playerIndex = document.data()?["playerIndex"] as? Int {
-                    if let prompts = document.data()?["prompts"] as? [String] {
-                        if let identities = document.data()?["identities"] as? [String] {
+                if let playerIndex = document.data()?[FirestoreConstans.playerIndex] as? Int {
+                    if let prompts = document.data()?[FirestoreConstans.prompts] as? [String] {
+                        if let identities = document.data()?[FirestoreConstans.identities] as? [String] {
                             handlePlayerIndex(playerIndex, prompts, identities)
                             UserDefaults.standard.removeObject(forKey: "userName")
                             UserDefaults.standard.setValue(self.userName, forKey: "userName")

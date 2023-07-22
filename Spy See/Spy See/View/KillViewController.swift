@@ -125,11 +125,11 @@ class KillViewController: BaseViewController {
                 guard let document = document else {
                     return
                 }
-                if let voted = document["voted"] as? [[String: String]] {
+                if let voted = document[FirestoreConstans.voted] as? [[String: String]] {
                     votedArray = voted
                     print(self.votedArray)
                 }
-                if let identities = document["identities"] as? [String] {
+                if let identities = document[FirestoreConstans.identities] as? [String] {
                     identitiesArray = identities
                     print(self.identitiesArray)
                 }
@@ -237,9 +237,9 @@ class KillViewController: BaseViewController {
     }
     private func updateData() {
         let data: [String: Any] = [
-            "player": playersArray,
-            "identities": identitiesArray,
-            "voted": votedArray
+            FirestoreConstans.player: playersArray,
+            FirestoreConstans.identities: identitiesArray,
+            FirestoreConstans.voted: votedArray
         ]
         FirestoreManager.shared.updateData(data: data)
     }
@@ -251,12 +251,12 @@ class KillViewController: BaseViewController {
     private func updateWinMessage(_ isSpyWin: Bool) {
         if isSpyWin {
             let data: [String: Any] = [
-                "isSpyWin": true
+                FirestoreConstans.isSpyWin: true
             ]
             FirestoreManager.shared.updateData(data: data)
         } else {
             let data: [String: Any] = [
-                "isSpyWin": false
+                FirestoreConstans.isSpyWin: false
             ]
             FirestoreManager.shared.updateData(data: data)
         }
