@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class WaitForNextViewController: BaseViewController {
-    lazy var remindLabel: UILabel = {
+    private lazy var remindLabel: UILabel = {
         let remindLabel = UILabel()
         remindLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -26,10 +26,10 @@ class WaitForNextViewController: BaseViewController {
         remindLabel.textAlignment = .center
         return remindLabel
     }()
-    var documentListener: ListenerRegistration?
-    let currentPlayers = UserDefaults.standard.stringArray(forKey: "playersArray")
-    var readyPlayers: [String] = []
-    let currentUser = Auth.auth().currentUser?.email ?? ""
+    private var documentListener: ListenerRegistration?
+    private let currentPlayers = UserDefaults.standard.stringArray(forKey: "playersArray")
+    private var readyPlayers: [String] = []
+    private let currentUser = Auth.auth().currentUser?.email ?? ""
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.addSubview(remindLabel)
@@ -42,13 +42,13 @@ class WaitForNextViewController: BaseViewController {
         readyToGO()
         loadReadyPlayer()
     }
-    func readyToGO() {
+    private func readyToGO() {
         // swiftlint:disable array_constructor
         let data = ["playersReady": FieldValue.arrayUnion([currentUser])]
         // swiftlint:enable array_constructor
         FirestoreManager.shared.updateData(data: data)
     }
-    func loadReadyPlayer() {
+    private func loadReadyPlayer() {
         let existingPlayers: Set<String> = Set(self.readyPlayers)
         documentListener = FirestoreManager.shared.addSnapShotListener { [weak self] result in
             guard let self = self else { return }
@@ -76,7 +76,7 @@ class WaitForNextViewController: BaseViewController {
             }
         }
     }
-    func isAllPlayersReady() -> Bool {
+    private func isAllPlayersReady() -> Bool {
         return self.readyPlayers.count == self.currentPlayers?.count
     }
 }

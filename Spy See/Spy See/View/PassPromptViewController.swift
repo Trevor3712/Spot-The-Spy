@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class PassPromptViewController: BaseViewController {
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -20,7 +20,7 @@ class PassPromptViewController: BaseViewController {
             letterSpacing: 10)
         return titleLabel
     }()
-    lazy var promotLabel: UILabel = {
+    private lazy var promotLabel: UILabel = {
         let promotLabel = UILabel()
         promotLabel.backgroundColor = .white
         promotLabel.layer.borderWidth = 1
@@ -30,7 +30,7 @@ class PassPromptViewController: BaseViewController {
         promotLabel.textAlignment = .center
         return promotLabel
     }()
-    lazy var readyButton: BaseButton = {
+    private lazy var readyButton: BaseButton = {
         let readyButton = BaseButton()
         readyButton.setNormal("我記住了")
         readyButton.setHighlighted("我記住了")
@@ -38,10 +38,10 @@ class PassPromptViewController: BaseViewController {
         readyButton.addTarget(self, action: #selector(readyButtonPressed), for: .touchUpInside)
         return readyButton
     }()
-    var playerPrompt: String?
-    var readyPlayers: [String] = []
-    var playerNumber: Int?
-    var documentListener: ListenerRegistration?
+    private var playerPrompt: String?
+    private var readyPlayers: [String] = []
+    private var playerNumber: Int?
+    private var documentListener: ListenerRegistration?
     override func viewDidLoad() {
         super.viewDidLoad()
         [titleLabel, promotLabel, readyButton].forEach { view.addSubview($0) }
@@ -87,7 +87,7 @@ class PassPromptViewController: BaseViewController {
         AudioPlayer.shared.stopAudio()
         documentListener?.remove()
     }
-    @objc func readyButtonPressed() {
+    @objc private func readyButtonPressed() {
         playSeAudio()
         vibrate()
         guard let email = Auth.auth().currentUser?.email else {
@@ -115,7 +115,7 @@ class PassPromptViewController: BaseViewController {
             }
         }
     }
-    func loadReadyPlayers() {
+    private func loadReadyPlayers() {
         let existingPlayers: Set<String> = Set(self.readyPlayers)
         documentListener = FirestoreManager.shared.addSnapShotListener { [weak self] result in
             guard let self = self else { return }
@@ -142,7 +142,7 @@ class PassPromptViewController: BaseViewController {
             }
         }
     }
-    func isAllPlayersReady() -> Bool {
+    private func isAllPlayersReady() -> Bool {
         return self.readyPlayers.count == playerNumber
     }
 }

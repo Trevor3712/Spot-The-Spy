@@ -9,8 +9,8 @@ import UIKit
 import FirebaseFirestore
 
 class DiedViewController: BaseViewController {
-    lazy var diedImageView = UIImageView()
-    lazy var diedLabel: UILabel = {
+    private lazy var diedImageView = UIImageView()
+    private lazy var diedLabel: UILabel = {
         let diedLabel = UILabel()
         diedLabel.backgroundColor = .white
         diedLabel.layer.borderWidth = 1
@@ -26,7 +26,7 @@ class DiedViewController: BaseViewController {
             letterSpacing: 10)
         return diedLabel
     }()
-    lazy var remindLabel: UILabel = {
+    private lazy var remindLabel: UILabel = {
         let remindLabel = UILabel()
         remindLabel.attributedText = UIFont.fontStyle(
             font: .regular,
@@ -36,7 +36,7 @@ class DiedViewController: BaseViewController {
             letterSpacing: 0)
         return remindLabel
     }()
-    var documentListener: ListenerRegistration?
+    private var documentListener: ListenerRegistration?
     override func viewDidLoad() {
         super.viewDidLoad()
         [diedImageView, diedLabel, remindLabel].forEach { view.addSubview($0) }
@@ -63,7 +63,7 @@ class DiedViewController: BaseViewController {
         super.viewWillDisappear(animated)
         documentListener?.remove()
     }
-    func showImage() {
+    private func showImage() {
         let playerIdentity = UserDefaults.standard.string(forKey: "playerIdentity")
         if playerIdentity == "平民" {
             diedImageView.image = .asset(.normalKilled)
@@ -71,7 +71,7 @@ class DiedViewController: BaseViewController {
             diedImageView.image = .asset(.spyKilled)
         }
     }
-    func checkIfEndGame() {
+    private func checkIfEndGame() {
         documentListener = FirestoreManager.shared.addSnapShotListener { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -91,7 +91,7 @@ class DiedViewController: BaseViewController {
             }
         }
     }
-    func goToVictoryPage(_ isSpyWin: Bool) {
+    private func goToVictoryPage(_ isSpyWin: Bool) {
         let victoryVC = VictoryViewController()
         victoryVC.isSpyWin = isSpyWin
         vibrateHard()

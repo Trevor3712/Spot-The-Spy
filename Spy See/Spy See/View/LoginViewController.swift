@@ -10,13 +10,13 @@ import FirebaseAuth
 import SnapKit
 
 class LoginViewController: BaseViewController {
-    lazy var logoImage: UIImageView = {
+    private lazy var logoImage: UIImageView = {
         let logoImage = UIImageView()
         logoImage.image = .asset(.spy)
         return logoImage
     }()
-    lazy var titleContainerView = UIView()
-    lazy var labelCN1: UILabel = {
+    private lazy var titleContainerView = UIView()
+    private lazy var labelCN1: UILabel = {
         let labelCN1 = UILabel()
         labelCN1.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -27,7 +27,7 @@ class LoginViewController: BaseViewController {
             obliqueness: 0.2)
         return labelCN1
     }()
-    lazy var labelCN2: UILabel = {
+    private lazy var labelCN2: UILabel = {
         let labelCN2 = UILabel()
         labelCN2.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -38,7 +38,7 @@ class LoginViewController: BaseViewController {
             obliqueness: 0.2 )
         return labelCN2
     }()
-    lazy var labelEN1: UILabel = {
+    private lazy var labelEN1: UILabel = {
         let labelEN1 = UILabel()
         labelEN1.attributedText = UIFont.fontStyle(
             font: .boldItalicEN,
@@ -49,7 +49,7 @@ class LoginViewController: BaseViewController {
             obliqueness: 0.1)
         return labelEN1
     }()
-    lazy var labelEN2: UILabel = {
+    private lazy var labelEN2: UILabel = {
         let labelEN2 = UILabel()
         labelEN2.attributedText = UIFont.fontStyle(
             font: .boldItalicEN,
@@ -60,7 +60,7 @@ class LoginViewController: BaseViewController {
             obliqueness: 0.1)
         return labelEN2
     }()
-    lazy var labelEN3: UILabel = {
+    private lazy var labelEN3: UILabel = {
         let labelEN3 = UILabel()
         labelEN3.attributedText = UIFont.fontStyle(
             font: .boldItalicEN,
@@ -71,8 +71,8 @@ class LoginViewController: BaseViewController {
             obliqueness: 0.1)
         return labelEN3
     }()
-    lazy var accountContainerView = UIView()
-    lazy var accountTextField: BaseTextField = {
+    private lazy var accountContainerView = UIView()
+    private lazy var accountTextField: BaseTextField = {
         let accountTextField = BaseTextField()
         accountTextField.placeholder = "請輸入帳號"
         accountTextField.keyboardType = .emailAddress
@@ -81,7 +81,7 @@ class LoginViewController: BaseViewController {
         accountTextField.tag = 1
         return accountTextField
     }()
-    lazy var passwordTextField: BaseTextField = {
+    private lazy var passwordTextField: BaseTextField = {
         let passwordTextField = BaseTextField()
         passwordTextField.placeholder = "請輸入密碼"
         passwordTextField.isSecureTextEntry = true
@@ -90,7 +90,7 @@ class LoginViewController: BaseViewController {
         passwordTextField.tag = 2
         return passwordTextField
     }()
-    lazy var loginButton: BaseButton = {
+    private lazy var loginButton: BaseButton = {
         let loginButton = BaseButton()
         loginButton.setNormal("登入")
         loginButton.setHighlighted("登入")
@@ -98,7 +98,7 @@ class LoginViewController: BaseViewController {
         loginButton.addTarget(self, action: #selector(logInButtonPressed), for: .touchUpInside)
         return loginButton
     }()
-    lazy var signupButton: BaseButton = {
+    private lazy var signupButton: BaseButton = {
         let signupButton = BaseButton()
         signupButton.setNormal("註冊")
         signupButton.setHighlighted("註冊")
@@ -125,7 +125,7 @@ class LoginViewController: BaseViewController {
         accountTextField.text = ""
         passwordTextField.text = ""
     }
-    func configureLayout() {
+    private func configureLayout() {
         logoImage.snp.makeConstraints { make in
             make.bottom.equalTo(titleContainerView.snp.top).offset(-40)
             make.centerX.equalTo(view)
@@ -186,7 +186,7 @@ class LoginViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
-    @objc func logInButtonPressed(_ sender: UIButton) {
+    @objc private func logInButtonPressed(_ sender: UIButton) {
         playSeAudio()
         vibrate()
         Auth.auth().signIn(
@@ -207,7 +207,7 @@ class LoginViewController: BaseViewController {
             UserDefaults.standard.setValue(Auth.auth().currentUser?.email, forKey: "userEmail")
         }
     }
-    @objc func signupButtonPressed() {
+    @objc private func signupButtonPressed() {
         playSeAudio()
         vibrate()
         let signupVC = SignupViewController()

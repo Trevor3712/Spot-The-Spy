@@ -9,7 +9,7 @@ import UIKit
 
 class MessageHeaderView: UITableViewHeaderFooterView {
     static let reuseIdentifier = String(describing: MessageHeaderView.self)
-    let titleLabel = UILabel()
+    lazy var titleLabel = UILabel()
     override init(reuseIdentifier: String?) {
         super .init(reuseIdentifier: reuseIdentifier)
         contentView.addSubview(titleLabel)

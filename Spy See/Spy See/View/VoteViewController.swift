@@ -10,14 +10,14 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class VoteViewController: BaseViewController {
-    lazy var scrollView: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.contentSize.width = 0
         scrollView.contentSize.height = 750
         return scrollView
     }()
-    lazy var contentView = UIView()
-    lazy var titleLabel: UILabel = {
+    private lazy var contentView = UIView()
+    private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -27,7 +27,7 @@ class VoteViewController: BaseViewController {
             letterSpacing: 5)
         return titleLabel
     }()
-    lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
@@ -36,16 +36,16 @@ class VoteViewController: BaseViewController {
         tableView.register(PlayerCell.self, forCellReuseIdentifier: PlayerCell.reuseIdentifier)
         return tableView
     }()
-    lazy var voteButton: BaseButton = {
+    private lazy var voteButton: BaseButton = {
         let voteButton = BaseButton()
         voteButton.setNormal("投票")
         voteButton.setHighlighted("投票")
         voteButton.addTarget(self, action: #selector(voteButtonPressed), for: .touchUpInside)
         return voteButton
     }()
-    var players = UserDefaults.standard.stringArray(forKey: "playersArray")
-    var votedPlayer: String?
-    var selectedIndexPath: IndexPath?
+    private var players = UserDefaults.standard.stringArray(forKey: "playersArray")
+    private var votedPlayer: String?
+    private var selectedIndexPath: IndexPath?
     override func viewDidLoad() {
         super.viewDidLoad()
         let currentUser = UserDefaults.standard.string(forKey: "userName")
@@ -85,7 +85,7 @@ class VoteViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-    @objc func voteButtonPressed() {
+    @objc private func voteButtonPressed() {
         playSeAudio()
         vibrate()
         guard votedPlayer != nil else {

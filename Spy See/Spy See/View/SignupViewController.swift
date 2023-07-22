@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 
 class SignupViewController: BaseViewController {
-    lazy var signupLabel: UILabel = {
+    private lazy var signupLabel: UILabel = {
         let signupLabel = UILabel()
         signupLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -20,7 +20,7 @@ class SignupViewController: BaseViewController {
         signupLabel.textAlignment = .center
         return signupLabel
     }()
-    lazy var accountLabel: UILabel = {
+    private lazy var accountLabel: UILabel = {
         let accountLabel = UILabel()
         accountLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -31,7 +31,7 @@ class SignupViewController: BaseViewController {
         accountLabel.textAlignment = .center
         return accountLabel
     }()
-    lazy var accountTextField: BaseTextField = {
+    private lazy var accountTextField: BaseTextField = {
         let accountTextField = BaseTextField()
         accountTextField.attributedText = UIFont.fontStyle(
             font: .regular,
@@ -46,7 +46,7 @@ class SignupViewController: BaseViewController {
         accountTextField.tag = 1
         return accountTextField
     }()
-    lazy var passwordLabel: UILabel = {
+    private lazy var passwordLabel: UILabel = {
         let passwordLabel = UILabel()
         passwordLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -57,7 +57,7 @@ class SignupViewController: BaseViewController {
         passwordLabel.textAlignment = .center
         return passwordLabel
     }()
-    lazy var passwordTextField: BaseTextField = {
+    private lazy var passwordTextField: BaseTextField = {
         let passwordTextField = BaseTextField()
         passwordTextField.attributedText = UIFont.fontStyle(
             font: .regular,
@@ -72,7 +72,7 @@ class SignupViewController: BaseViewController {
         passwordTextField.tag = 2
         return passwordTextField
     }()
-    lazy var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -83,7 +83,7 @@ class SignupViewController: BaseViewController {
         nameLabel.textAlignment = .center
         return nameLabel
     }()
-    lazy var nameTextField: BaseTextField = {
+    private lazy var nameTextField: BaseTextField = {
         let nameTextField = BaseTextField()
         nameTextField.attributedText = UIFont.fontStyle(
             font: .regular,
@@ -96,14 +96,14 @@ class SignupViewController: BaseViewController {
         nameTextField.tag = 3
         return nameTextField
     }()
-    lazy var signupButton: BaseButton = {
+    private lazy var signupButton: BaseButton = {
         let signupButton = BaseButton()
         signupButton.setNormal("確定註冊")
         signupButton.setHighlighted("確定註冊")
         signupButton.addTarget(self, action: #selector(signupButtonPressed), for: .touchUpInside)
         return signupButton
     }()
-    let alertVC = AlertViewController()
+    private let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         [signupLabel, accountLabel, accountTextField].forEach { view.addSubview($0) }
@@ -158,7 +158,7 @@ class SignupViewController: BaseViewController {
         backButton.tintColor = .B1
         navigationItem.leftBarButtonItem = backButton
     }
-    @objc func signupButtonPressed() {
+    @objc private func signupButtonPressed() {
         guard let clickUrl = clickUrl else {
             return
         }
@@ -194,18 +194,18 @@ class SignupViewController: BaseViewController {
             self.present(alert, animated: true)
         }
     }
-    func signUpErrorAlert() {
+    private func signUpErrorAlert() {
         let alert = alertVC.showAlert(title: "註冊錯誤", message: "請輸入帳號、密碼及暱稱")
         present(alert, animated: true, completion: nil)
     }
-    func setNameData() {
+    private func setNameData() {
         let name = nameTextField.text
         let userEmail = accountTextField.text
         UserDefaults.standard.setValue(userEmail, forKey: "userEmail")
         let data: [String: Any] = ["name": name as Any]
         FirestoreManager.shared.setData(collection: "Users", key: "userEmail", data: data)
     }
-    @objc func backButtonPressed() {
+    @objc private func backButtonPressed() {
         navigationController?.popViewController(animated: true)
     }
 }

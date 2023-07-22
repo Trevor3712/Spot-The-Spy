@@ -11,7 +11,7 @@ import FirebaseFirestore
 import AVFoundation
 
 class KillViewController: BaseViewController {
-    lazy var waitLabel: UILabel = {
+    private lazy var waitLabel: UILabel = {
         let waitLabel = UILabel()
         waitLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -21,7 +21,7 @@ class KillViewController: BaseViewController {
             letterSpacing: 5)
         return waitLabel
     }()
-    lazy var containerView: UIView = {
+    private lazy var containerView: UIView = {
         let containerView = UIView()
         containerView.backgroundColor = .white
         containerView.layer.borderWidth = 1
@@ -31,11 +31,11 @@ class KillViewController: BaseViewController {
         containerView.isHidden = true
         return containerView
     }()
-    lazy var votedLabel: UILabel = {
+    private lazy var votedLabel: UILabel = {
         let votedLabel = UILabel()
         return votedLabel
     }()
-    lazy var killLabel: UILabel = {
+    private lazy var killLabel: UILabel = {
         let killLabel = UILabel()
         killLabel.attributedText = UIFont.fontStyle(
             font: .boldItalicEN,
@@ -46,17 +46,17 @@ class KillViewController: BaseViewController {
         killLabel.isHidden = true
         return killLabel
     }()
-    lazy var identityImageView: UIImageView = {
+    private lazy var identityImageView: UIImageView = {
         let identityImageView = UIImageView()
         identityImageView.image = .asset(.normalKilled)
         identityImageView.isHidden = true
         return identityImageView
     }()
-    lazy var identityLabel: UILabel = {
+    private lazy var identityLabel: UILabel = {
         let identityLabel = UILabel()
         return identityLabel
     }()
-    lazy var nextRoundButton: BaseButton = {
+    private lazy var nextRoundButton: BaseButton = {
         let nextRoundButton = BaseButton()
         nextRoundButton.setNormal("下一輪")
         nextRoundButton.setHighlighted("下一輪")
@@ -64,13 +64,13 @@ class KillViewController: BaseViewController {
         nextRoundButton.addTarget(self, action: #selector(nextRoundButtonPressed), for: .touchUpInside)
         return nextRoundButton
     }()
-    var votedArray: [[String: String]] = []
-    var identitiesArray: [String] = []
-    var arrayIndex: Int?
-    var playersArray: [String] = []
-    let players = UserDefaults.standard.stringArray(forKey: "playersArray")
-    var documentListener: ListenerRegistration?
-    let currentUser = Auth.auth().currentUser?.email ?? ""
+    private var votedArray: [[String: String]] = []
+    private var identitiesArray: [String] = []
+    private var arrayIndex: Int?
+    private var playersArray: [String] = []
+    private let players = UserDefaults.standard.stringArray(forKey: "playersArray")
+    private var documentListener: ListenerRegistration?
+    private let currentUser = Auth.auth().currentUser?.email ?? ""
     override func viewDidLoad() {
         super.viewDidLoad()
         [waitLabel, containerView, identityImageView, nextRoundButton].forEach { view.addSubview($0) }
@@ -117,7 +117,7 @@ class KillViewController: BaseViewController {
         AudioPlayer.shared.stopAudio()
         documentListener?.remove()
     }
-    func loadVotedPlayers() {
+    private func loadVotedPlayers() {
         documentListener = FirestoreManager.shared.addSnapShotListener { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -142,10 +142,10 @@ class KillViewController: BaseViewController {
             }
         }
     }
-    func isAllPlayersVote() -> Bool {
+    private func isAllPlayersVote() -> Bool {
         return self.votedArray.count == self.playersArray.count
     }
-    func killWhichPlayer() {
+    private func killWhichPlayer() {
         var voteCount: [String: Int] = [:]
         // 計算每個值的出現次數
         for dict in votedArray {
@@ -174,7 +174,7 @@ class KillViewController: BaseViewController {
             }
         }
     }
-    func showKilledPlayer(nameTitle: String, identityIndex: Int) {
+    private func showKilledPlayer(nameTitle: String, identityIndex: Int) {
         containerView.isHidden = false
         identityImageView.isHidden = false
         nextRoundButton.isHidden = false
@@ -201,7 +201,7 @@ class KillViewController: BaseViewController {
             playSeAudio(from: url)
         }
     }
-    @objc func nextRoundButtonPressed() {
+    @objc private func nextRoundButtonPressed() {
         playSeAudio()
         vibrate()
         self.playersArray.remove(at: arrayIndex ?? 0)
@@ -235,7 +235,7 @@ class KillViewController: BaseViewController {
             }
         }
     }
-    func updateData() {
+    private func updateData() {
         let data: [String: Any] = [
             "player": playersArray,
             "identities": identitiesArray,
@@ -243,12 +243,12 @@ class KillViewController: BaseViewController {
         ]
         FirestoreManager.shared.updateData(data: data)
     }
-    func goToVictoryVC(_ bool: Bool) {
+    private func goToVictoryVC(_ bool: Bool) {
         let victoryVC = VictoryViewController()
         victoryVC.isSpyWin = bool
         navigationController?.pushViewController(victoryVC, animated: true)
     }
-    func updateWinMessage(_ isSpyWin: Bool) {
+    private func updateWinMessage(_ isSpyWin: Bool) {
         if isSpyWin {
             let data: [String: Any] = [
                 "isSpyWin": true

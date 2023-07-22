@@ -10,12 +10,12 @@ import FirebaseAuth
 import CryptoKit
 
 class SettingViewController: BaseViewController {
-    lazy var logoImage: UIImageView = {
+    private lazy var logoImage: UIImageView = {
         let logoImage = UIImageView()
         logoImage.image = .asset(.spy)
         return logoImage
     }()
-    lazy var playersCountLabel: UILabel = {
+    private lazy var playersCountLabel: UILabel = {
         let playersCountLabel = UILabel()
         playersCountLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -25,7 +25,7 @@ class SettingViewController: BaseViewController {
             letterSpacing: 5)
         return playersCountLabel
     }()
-    lazy var playersCountTextFileld: BaseTextField = {
+    private lazy var playersCountTextFileld: BaseTextField = {
         let playersCountTextFileld = BaseTextField()
         playersCountTextFileld.placeholder = "請選擇人數"
         playersCountTextFileld.textAlignment = .center
@@ -34,14 +34,14 @@ class SettingViewController: BaseViewController {
         playersCountTextFileld.tag = 1
         return playersCountTextFileld
     }()
-    lazy var playersCountPickerView: UIPickerView = {
+    private lazy var playersCountPickerView: UIPickerView = {
         let playersCountPickerView = UIPickerView()
         playersCountPickerView.delegate = self
         playersCountPickerView.dataSource = self
         playersCountPickerView.tag = 1
         return playersCountPickerView
     }()
-    lazy var spysCountLabel: UILabel = {
+    private lazy var spysCountLabel: UILabel = {
         let spysCountLabel = UILabel()
         spysCountLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -51,7 +51,7 @@ class SettingViewController: BaseViewController {
             letterSpacing: 5)
         return spysCountLabel
     }()
-    lazy var spysCountTextFileld: BaseTextField = {
+    private lazy var spysCountTextFileld: BaseTextField = {
         let spysCountTextFileld = BaseTextField()
         spysCountTextFileld.placeholder = "請選擇人數"
         spysCountTextFileld.textAlignment = .center
@@ -60,28 +60,28 @@ class SettingViewController: BaseViewController {
         spysCountTextFileld.tag = 2
         return spysCountTextFileld
     }()
-    lazy var spysCountPickerView: UIPickerView = {
+    private lazy var spysCountPickerView: UIPickerView = {
         let spysCountPickerView = UIPickerView()
         spysCountPickerView.delegate = self
         spysCountPickerView.dataSource = self
         spysCountPickerView.tag = 2
         return spysCountPickerView
     }()
-    lazy var invitationButton: BaseButton = {
+    private lazy var invitationButton: BaseButton = {
         let invitationButton = BaseButton()
         invitationButton.setNormal("取得邀請碼")
         invitationButton.setHighlighted("取得邀請碼")
         invitationButton.addTarget(self, action: #selector(invitationButtonPressed), for: .touchUpInside)
         return invitationButton
     }()
-    let playersCount = [3, 4, 5, 6, 7, 8, 9, 10]
-    let spysCount = [1, 2, 3]
-    var promptArray: [String] = []
-    var identityArray: [String] = []
-    var shuffledIndices: [Int] = []
-    var choosedPrompt: ([String], [String]) = ([], [])
-    var userName: String?
-    let alertVC = AlertViewController()
+    private let playersCount = [3, 4, 5, 6, 7, 8, 9, 10]
+    private let spysCount = [1, 2, 3]
+    private var promptArray: [String] = []
+    private var identityArray: [String] = []
+    private var shuffledIndices: [Int] = []
+    private var choosedPrompt: ([String], [String]) = ([], [])
+    private var userName: String?
+    private let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         let backButton = UIBarButtonItem(
@@ -134,7 +134,7 @@ class SettingViewController: BaseViewController {
         super.viewWillAppear(animated)
         getUserName()
     }
-    @objc func invitationButtonPressed(_ sender: UIButton) {
+    @objc private func invitationButtonPressed(_ sender: UIButton) {
         playSeAudio()
         vibrate()
         guard let playersCount = playersCountTextFileld.text, !playersCount.isEmpty else {
@@ -167,7 +167,7 @@ class SettingViewController: BaseViewController {
             navigationController?.pushViewController(inviteVC, animated: true)
         }
     }
-    func generateRoomId() -> String {
+    private func generateRoomId() -> String {
         let inviteCodeLength = 4
         let fullCode = UUID().uuidString
         if let data = fullCode.data(using: .utf8) {
@@ -179,7 +179,7 @@ class SettingViewController: BaseViewController {
             return "0000"
         }
     }
-    func generatePromptArray() -> [String] {
+    private func generatePromptArray() -> [String] {
         promptArray = []
         choosedPrompt = prompt.randomElement() ?? ([""], [""])
         for _ in 0...(Int(playersCountTextFileld.text ?? "") ?? 0) - (Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
@@ -192,7 +192,7 @@ class SettingViewController: BaseViewController {
         promptArray = shuffledIndices.map { promptArray[$0] }
         return promptArray
     }
-    func generateIdentityArray() -> [String] {
+    private func generateIdentityArray() -> [String] {
         identityArray = []
         for _ in 0...(Int(playersCountTextFileld.text ?? "") ?? 0) - (Int(spysCountTextFileld.text ?? "") ?? 0) - 1 {
             identityArray.append(choosedPrompt.0[0])
@@ -203,7 +203,7 @@ class SettingViewController: BaseViewController {
         identityArray = shuffledIndices.map { identityArray[$0] }
         return identityArray
     }
-    func getUserName() {
+    private func getUserName() {
         FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -219,16 +219,16 @@ class SettingViewController: BaseViewController {
             }
         }
     }
-    @objc func backButtonPressed() {
+    @objc private func backButtonPressed() {
         navigationController?.popViewController(animated: true)
     }
-    func updateUserDefaults() {
+    private func updateUserDefaults() {
         UserDefaults.standard.removeObject(forKey: "playerPrompt")
         UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
         UserDefaults.standard.setValue(self.userName, forKey: "userName")
         UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
     }
-    func settingErrorAlert() {
+    private func settingErrorAlert() {
         let alert = alertVC.showAlert(title: "設定錯誤", message: "請選擇玩家人數、臥底人數")
         present(alert, animated: true, completion: nil)
     }

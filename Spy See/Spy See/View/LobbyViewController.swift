@@ -9,19 +9,19 @@ import UIKit
 import FirebaseAuth
 
 class LobbyViewController: BaseViewController {
-    lazy var logoImage: UIImageView = {
+    private lazy var logoImage: UIImageView = {
         let logoImage = UIImageView()
         logoImage.image = .asset(.spy)
         return logoImage
     }()
-    lazy var createRoomButton: BaseButton = {
+    private lazy var createRoomButton: BaseButton = {
         let createRoomButton = BaseButton()
         createRoomButton.setNormal("建立遊戲")
         createRoomButton.setHighlighted("建立遊戲")
         createRoomButton.addTarget(self, action: #selector(createRoomButtonPressed), for: .touchUpInside)
         return createRoomButton
     }()
-    lazy var joinLabel: UILabel = {
+    private lazy var joinLabel: UILabel = {
         let joinLabel = UILabel()
         joinLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -40,15 +40,15 @@ class LobbyViewController: BaseViewController {
         invitationTextFileld.delegate = self
         return invitationTextFileld
     }()
-    lazy var goButton: BaseButton = {
+    private lazy var goButton: BaseButton = {
         let goButton = BaseButton()
         goButton.setNormal("GO!")
         goButton.setHighlighted("GO!")
         goButton.addTarget(self, action: #selector(goButtonPressed), for: .touchUpInside)
         return goButton
     }()
-    var userName: String?
-    let alertVC = AlertViewController()
+    private var userName: String?
+    private let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.navigationItem.hidesBackButton = true
@@ -99,13 +99,13 @@ class LobbyViewController: BaseViewController {
         super.viewWillDisappear(animated)
         navigationItem.hidesBackButton = false
     }
-    @objc func createRoomButtonPressed() {
+    @objc private func createRoomButtonPressed() {
         playSeAudio()
         vibrate()
         let settingVC = SettingViewController()
         navigationController?.pushViewController(settingVC, animated: true)
     }
-    @objc func goButtonPressed(_ sender: UIButton) {
+    @objc private func goButtonPressed(_ sender: UIButton) {
         sender.isEnabled = false
         playSeAudio()
         vibrate()
@@ -146,7 +146,7 @@ class LobbyViewController: BaseViewController {
             }
         }
     }
-    func setPlayer(player: [String], playerIndex: Int) {
+    private func setPlayer(player: [String], playerIndex: Int) {
         let data: [String: Any] = [
             "player": player,
             "playerIndex": playerIndex // 存入玩家的index
@@ -156,7 +156,7 @@ class LobbyViewController: BaseViewController {
             self.invitationTextFileld.text = ""
         }
     }
-    func getUserPrompt() {
+    private func getUserPrompt() {
         FirestoreManager.shared.getDocument { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -178,7 +178,7 @@ class LobbyViewController: BaseViewController {
             }
         }
     }
-    func handlePlayerIndex(_ playerIndex: Int, _ prompts: [String], _ identities: [String]) {
+    private func handlePlayerIndex(_ playerIndex: Int, _ prompts: [String], _ identities: [String]) {
         guard playerIndex >= 0 && playerIndex < prompts.count else {
             print("Invalid player index")
             return
@@ -189,7 +189,7 @@ class LobbyViewController: BaseViewController {
         UserDefaults.standard.removeObject(forKey: "hostPrompt")
         UserDefaults.standard.setValue(selectedPrompt, forKey: "playerPrompt")
     }
-    func getUserName() {
+    private func getUserName() {
         FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { [weak self] result in
             guard let self = self else { return }
             switch result {

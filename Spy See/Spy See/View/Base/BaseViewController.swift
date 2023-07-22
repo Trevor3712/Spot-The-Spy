@@ -19,13 +19,13 @@ class BaseViewController: UIViewController {
     var isEnableIQKeyboard: Bool {
         return true
     }
-    lazy var backgroundImageView: UIImageView = {
+    private lazy var backgroundImageView: UIImageView = {
         let backgroundImageView = UIImageView()
         backgroundImageView.image = .asset(.background)
         return backgroundImageView
     }()
-    var seAudioPlayer: AVAudioPlayer?
-    let seAudioEngine = AVAudioEngine()
+    private var seAudioPlayer: AVAudioPlayer?
+    private let seAudioEngine = AVAudioEngine()
     override func viewDidLoad() {
         super.viewDidLoad()
         configBackground()

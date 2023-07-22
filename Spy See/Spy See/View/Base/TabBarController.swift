@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 
 class TabBarController: UITabBarController, UITabBarControllerDelegate {
-    var audioPlayer: AVAudioPlayer?
+    private var audioPlayer: AVAudioPlayer?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
@@ -43,7 +43,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
             playAudio(from: url)
         }
     }
-    func playAudio(from url: URL) {
+    private func playAudio(from url: URL) {
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer?.prepareToPlay()

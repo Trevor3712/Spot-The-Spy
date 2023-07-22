@@ -13,19 +13,19 @@ import Speech
 import AudioToolbox
 // swiftlint:disable type_body_length
 class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
-    lazy var scrollView: UIScrollView = {
+    private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.isScrollEnabled = true
         scrollView.contentSize.width = 0
         scrollView.contentSize.height = 750
         return scrollView
     }()
-    lazy var contentView = UIView()
-    lazy var playerLabel: UILabel = {
+    private lazy var contentView = UIView()
+    private lazy var playerLabel: UILabel = {
         let playerLabel = UILabel()
         return playerLabel
     }()
-    lazy var speakLabel: UILabel = {
+    private lazy var speakLabel: UILabel = {
         let speakLabel = UILabel()
         speakLabel.attributedText = UIFont.fontStyle(
             font: .regular,
@@ -35,7 +35,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             letterSpacing: 10)
         return speakLabel
     }()
-    lazy var clueTableView: BaseMessageTableView = {
+    private lazy var clueTableView: BaseMessageTableView = {
         let clueTableView = BaseMessageTableView()
         clueTableView.layer.borderColor = UIColor.white.cgColor
         clueTableView.backgroundColor = .B1
@@ -49,7 +49,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         clueTableView.tag = 1
         return clueTableView
     }()
-    lazy var messageTableView: BaseMessageTableView = {
+    private lazy var messageTableView: BaseMessageTableView = {
         let messageTableView = BaseMessageTableView()
         messageTableView.register(
             MessageHeaderView.self,
@@ -61,13 +61,13 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         messageTableView.tag = 2
         return messageTableView
     }()
-    lazy var messageTextField: BaseTextField = {
+    private lazy var messageTextField: BaseTextField = {
         let messageTextField = BaseTextField()
         messageTextField.placeholder = "在這裡輸入文字"
         messageTextField.delegate = self
         return messageTextField
     }()
-    lazy var sendButton1: UIButton = {
+    private lazy var sendButton1: UIButton = {
         let sendButton1 = UIButton()
         sendButton1.setBackgroundImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         sendButton1.setBackgroundImage(UIImage(systemName: "paperplane"), for: .highlighted)
@@ -75,7 +75,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         sendButton1.addTarget(self, action: #selector(sendClue), for: .touchUpInside)
         return sendButton1
     }()
-    lazy var sendButton2: UIButton = {
+    private lazy var sendButton2: UIButton = {
         let sendButton2 = UIButton()
         sendButton2.setBackgroundImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         sendButton2.setBackgroundImage(UIImage(systemName: "paperplane"), for: .highlighted)
@@ -83,7 +83,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         sendButton2.addTarget(self, action: #selector(sendMesssge), for: .touchUpInside)
         return sendButton2
     }()
-    lazy var progressView: UIProgressView = {
+    private lazy var progressView: UIProgressView = {
         let progressView = UIProgressView()
         progressView.progressViewStyle = .default
         progressView.progressTintColor = .Y
@@ -91,27 +91,27 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         progressView.setProgress(1, animated: false)
         return progressView
     }()
-    lazy var timeImageView: UIImageView = {
+    private lazy var timeImageView: UIImageView = {
         let timeImageView = UIImageView()
         timeImageView.image = UIImage(systemName: "hourglass")
         timeImageView.tintColor = .B4
         return timeImageView
     }()
-    lazy var speakButton1: UIButton = {
+    private lazy var speakButton1: UIButton = {
         let speakButton1 = UIButton()
         speakButton1.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
         speakButton1.tintColor = .B4
         speakButton1.addTarget(self, action: #selector(recordAudioClue), for: .touchUpInside)
         return speakButton1
     }()
-    lazy var speakButton2: UIButton = {
+    private lazy var speakButton2: UIButton = {
         let speakButton2 = UIButton()
         speakButton2.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
         speakButton2.tintColor = .B4
         speakButton2.addTarget(self, action: #selector(recordAudioClue), for: .touchUpInside)
         return speakButton2
     }()
-    lazy var remindLabel: UILabel = {
+    private lazy var remindLabel: UILabel = {
         let remindLabel = UILabel()
         remindLabel.attributedText = UIFont.fontStyle(
             font: .light,
@@ -121,17 +121,17 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             letterSpacing: 0)
         return remindLabel
     }()
-    let userName = UserDefaults.standard.string(forKey: "userName")
-    var players: [String] = []
-    var currentPlayerIndex: Int = 0
-    var timer: Timer?
-    var audioRecoder: AVAudioRecorder?
-    var countdown = 20
-    var clues: [String] = []
-    var messages: [String] = []
-    var documentListener: ListenerRegistration?
-    var isButtonPressed = false
-    let audioSession = AVAudioSession.sharedInstance()
+    private let userName = UserDefaults.standard.string(forKey: "userName")
+    private var players: [String] = []
+    private var currentPlayerIndex: Int = 0
+    private var timer: Timer?
+    private var audioRecoder: AVAudioRecorder?
+    private var countdown = 7
+    private var clues: [String] = []
+    private var messages: [String] = []
+    private var documentListener: ListenerRegistration?
+    private var isButtonPressed = false
+    private let audioSession = AVAudioSession.sharedInstance()
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "zh-TW"))
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
@@ -177,7 +177,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         audioEngine.stop()
         configPlaySession()
     }
-    func configureLayout() {
+    private func configureLayout() {
         playerLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView)
             make.centerX.equalTo(contentView)
@@ -238,7 +238,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             make.right.equalTo(speakButton2).offset(-5)
         }
     }
-    func showNextPlayer() {
+    private func showNextPlayer() {
         guard currentPlayerIndex < players.count else {
             currentPlayerIndex = 0
             documentListener?.remove()
@@ -257,7 +257,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             size: 35,
             textColor: .B2 ?? .black,
             letterSpacing: 10)
-        countdown = 20
+        countdown = 7
         progressView.setProgress(1, animated: true)
         timer = Timer.scheduledTimer(
             timeInterval: 1,
@@ -267,9 +267,9 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             repeats: true
         )
     }
-    @objc func updateProgress() {
+    @objc private func updateProgress() {
         countdown -= 1
-        let progress = Float(countdown) / Float(20)
+        let progress = Float(countdown) / Float(7)
         progressView.setProgress(progress, animated: true)
         if countdown <= 0 {
             timer?.invalidate()
@@ -277,7 +277,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             showNextPlayer()
         }
     }
-    @objc func sendClue() {
+    @objc private func sendClue() {
         playSeAudio()
         vibrate()
         let data: [String: Any] = [
@@ -287,7 +287,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             self.messageTextField.text = ""
         }
     }
-    @objc func sendMesssge() {
+    @objc private func sendMesssge() {
         playSeAudio()
         vibrate()
         let data: [String: Any] = [
@@ -298,7 +298,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             messageTextField.text = ""
         }
     }
-    func showClue() {
+    private func showClue() {
         documentListener = FirestoreManager.shared.addSnapShotListener { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -335,7 +335,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             }
         }
     }
-    func currentUserTurn() {
+    private func currentUserTurn() {
         if players[currentPlayerIndex] == UserDefaults.standard.string(forKey: "userName") {
             sendButton1.isHidden = false
             speakButton1.isHidden = false
@@ -350,7 +350,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             speakButton1.isHidden = true
         }
     }
-    func changeButtonStyle() {
+    private func changeButtonStyle() {
         if isButtonPressed {
             speakButton1.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
             speakButton1.tintColor = .B4
@@ -365,7 +365,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         isButtonPressed.toggle()
     }
     // MARK: - Speech Recognize
-    @objc func recordAudioClue() {
+    @objc private func recordAudioClue() {
         vibrate()
         configRecordSession()
         changeButtonStyle()
@@ -381,7 +381,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
         configPlaySession()
     }
-    func configRecordSession() {
+    private func configRecordSession() {
         do {
             try audioSession.setCategory(
                 .playAndRecord,
@@ -392,7 +392,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             print("Session error:", error.localizedDescription)
         }
     }
-    func configPlaySession() {
+    private func configPlaySession() {
         do {
             try audioSession.setCategory(.playback)
             try audioSession.setActive(true)
@@ -400,7 +400,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             print("Session error:", error.localizedDescription)
         }
     }
-    func speechAuth() {
+    private func speechAuth() {
         speakButton1.isEnabled = false
         speakButton2.isEnabled = false
 
@@ -434,7 +434,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             }
         }
     }
-    func speechRecognize() {
+    private func speechRecognize() {
         let audioSession = AVAudioSession.sharedInstance()
         do {
             try audioSession.setCategory(AVAudioSession.Category.record)
@@ -494,7 +494,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             speakButton2.isEnabled = true
         }
     }
-    func deleteMessage() {
+    private func deleteMessage() {
         // swiftlint:disable array_constructor
         let data: [String: Any] = [
             "clue": [String](),

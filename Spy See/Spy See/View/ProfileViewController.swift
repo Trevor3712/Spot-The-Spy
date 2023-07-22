@@ -8,7 +8,7 @@
 import UIKit
 
 class ProfileViewController: BaseViewController {
-    lazy var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -18,7 +18,7 @@ class ProfileViewController: BaseViewController {
             letterSpacing: 3)
         return nameLabel
     }()
-    lazy var nameTextField: BaseTextField = {
+    private lazy var nameTextField: BaseTextField = {
         let nameTextField = BaseTextField()
         nameTextField.layer.borderWidth = 1
         nameTextField.layer.borderColor = UIColor.B1?.cgColor
@@ -28,7 +28,7 @@ class ProfileViewController: BaseViewController {
         nameTextField.delegate = self
         return nameTextField
     }()
-    lazy var infoLabel: UILabel = {
+    private lazy var infoLabel: UILabel = {
         let infoLabel = UILabel()
         infoLabel.attributedText = UIFont.fontStyle(
             font: .regular,
@@ -39,23 +39,23 @@ class ProfileViewController: BaseViewController {
         nameTextField.textAlignment = .center
         return infoLabel
     }()
-    lazy var logoutButton: BaseButton = {
+    private lazy var logoutButton: BaseButton = {
         let logoutButton = BaseButton()
         logoutButton.setNormal("登出帳號")
         logoutButton.setHighlighted("登出帳號")
         logoutButton.addTarget(self, action: #selector(logoutButtonPressed), for: .touchUpInside)
         return logoutButton
     }()
-    lazy var deleteButton: BaseButton = {
+    private lazy var deleteButton: BaseButton = {
         let deleteButton = BaseButton()
         deleteButton.setNormal("刪除帳號")
         deleteButton.setHighlighted("刪除帳號")
         deleteButton.addTarget(self, action: #selector(deleteButtonPressed), for: .touchUpInside)
         return deleteButton
     }()
-    var userName: String?
-    let alertVC = AlertViewController()
-    var profileViewModel = ProfileViewModel()
+    private var userName: String?
+    private let alertVC = AlertViewController()
+    private var profileViewModel = ProfileViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.navigationItem.hidesBackButton = true
@@ -114,7 +114,7 @@ class ProfileViewController: BaseViewController {
         let name = nameTextField.text ?? ""
         profileViewModel.setNameData(name: name)
     }
-    @objc func deleteButtonPressed() {
+    @objc private func deleteButtonPressed() {
         playSeAudio()
         vibrate()
         let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要刪除帳號嗎？") {
@@ -124,7 +124,7 @@ class ProfileViewController: BaseViewController {
         }
         present(alert, animated: true)
     }
-    @objc func logoutButtonPressed() {
+    @objc private func logoutButtonPressed() {
         playSeAudio()
         vibrate()
         let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要登出帳號嗎？") {

@@ -8,7 +8,7 @@
 import UIKit
 
 class InviteViewController: BaseViewController {
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -18,7 +18,7 @@ class InviteViewController: BaseViewController {
             letterSpacing: 10)
         return titleLabel
     }()
-    lazy var invitationLabel: UILabel = {
+    private lazy var invitationLabel: UILabel = {
         let invitationLabel = UILabel()
         invitationLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -34,21 +34,21 @@ class InviteViewController: BaseViewController {
         invitationLabel.textAlignment = .center
         return invitationLabel
     }()
-    lazy var shareButton: BaseButton = {
+    private lazy var shareButton: BaseButton = {
         let shareButton = BaseButton()
         shareButton.setNormal("分享邀請碼")
         shareButton.setHighlighted("分享邀請碼")
         shareButton.addTarget(self, action: #selector(shareButtonPressed), for: .touchUpInside)
         return shareButton
     }()
-    lazy var readyButton: BaseButton = {
+    private lazy var readyButton: BaseButton = {
         let readyButton = BaseButton()
         readyButton.setNormal("進入房間")
         readyButton.setHighlighted("進入房間")
         readyButton.addTarget(self, action: #selector(readyButtonPressed), for: .touchUpInside)
         return readyButton
     }()
-    let roomId = UserDefaults.standard.string(forKey: "roomId")
+    private let roomId = UserDefaults.standard.string(forKey: "roomId")
     override func viewDidLoad() {
         super.viewDidLoad()
         [titleLabel, invitationLabel, shareButton, readyButton].forEach { view.addSubview($0) }
@@ -75,18 +75,18 @@ class InviteViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
-    @objc func shareButtonPressed() {
+    @objc private func shareButtonPressed() {
         playSeAudio()
         vibrate()
         presentShareSheet()
     }
-    @objc func readyButtonPressed() {
+    @objc private func readyButtonPressed() {
         playSeAudio()
         vibrate()
         let waitingVC = WaitingViewController()
         navigationController?.pushViewController(waitingVC, animated: true)
     }
-    func presentShareSheet() {
+    private func presentShareSheet() {
         if let url = URL(string: "SpotTheSpyOnline://lobby/\(roomId ?? "")") {
             let text = "趕快來跟我玩誰是臥底，邀請碼：\(roomId ?? "")"
             let shareSheetVC = UIActivityViewController(activityItems: [text, url], applicationActivities: nil)

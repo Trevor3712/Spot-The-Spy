@@ -9,8 +9,8 @@ import UIKit
 import FirebaseAuth
 
 class VictoryViewController: BaseViewController {
-    lazy var identityImageView = UIImageView()
-    lazy var victoryLabel: UILabel = {
+    private lazy var identityImageView = UIImageView()
+    private lazy var victoryLabel: UILabel = {
         let victoryLabel = UILabel()
         victoryLabel.backgroundColor = .Y
         victoryLabel.layer.borderWidth = 1
@@ -20,7 +20,7 @@ class VictoryViewController: BaseViewController {
         victoryLabel.textAlignment = .center
         return victoryLabel
     }()
-    lazy var backToLobbyButton: BaseButton = {
+    private lazy var backToLobbyButton: BaseButton = {
         let backToLobbyButton = BaseButton()
         backToLobbyButton.setNormal("回到大廳")
         backToLobbyButton.setHighlighted("回到大廳")
@@ -28,7 +28,7 @@ class VictoryViewController: BaseViewController {
         backToLobbyButton.addTarget(self, action: #selector(backToLobbyButtonPressed), for: .touchUpInside)
         return backToLobbyButton
     }()
-    lazy var normalPromptLabel: UILabel = {
+    private lazy var normalPromptLabel: UILabel = {
         let normalPromptLabel = UILabel()
         normalPromptLabel.backgroundColor = .white
         normalPromptLabel.layer.borderWidth = 1
@@ -38,7 +38,7 @@ class VictoryViewController: BaseViewController {
         normalPromptLabel.textAlignment = .center
         return normalPromptLabel
     }()
-    lazy var spyPromptLabel: UILabel = {
+    private lazy var spyPromptLabel: UILabel = {
         let spyPromptLabel = UILabel()
         spyPromptLabel.backgroundColor = .white
         spyPromptLabel.layer.borderWidth = 1
@@ -49,11 +49,11 @@ class VictoryViewController: BaseViewController {
         return spyPromptLabel
     }()
     var isSpyWin = true
-    let playerIdentity = UserDefaults.standard.string(forKey: "playerIdentity")
-    var spyWin: Int?
-    var spyLose: Int?
-    var normalWin: Int?
-    var normalLose: Int?
+    private let playerIdentity = UserDefaults.standard.string(forKey: "playerIdentity")
+    private var spyWin: Int?
+    private var spyLose: Int?
+    private var normalWin: Int?
+    private var normalLose: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -72,7 +72,7 @@ class VictoryViewController: BaseViewController {
         super.viewWillDisappear(animated)
         AudioPlayer.shared.stopAudio()
     }
-    func whoWins() {
+    private func whoWins() {
         if isSpyWin {
             victoryLabel.attributedText = UIFont.fontStyle(
                 font: .boldItalicEN,
@@ -91,7 +91,7 @@ class VictoryViewController: BaseViewController {
             identityImageView.image = .asset(.normalWin)
         }
     }
-    func getPrompt() {
+    private func getPrompt() {
         FirestoreManager.shared.getDocument { result in
             switch result {
             case.success(let document):
@@ -108,7 +108,7 @@ class VictoryViewController: BaseViewController {
             }
         }
     }
-    func showPrompt(normalPrompt: String, spyPrompt: String) {
+    private func showPrompt(normalPrompt: String, spyPrompt: String) {
         self.normalPromptLabel.attributedText = UIFont.fontStyle(
             font: .regular,
             title: "平民題目：\(normalPrompt)",
@@ -122,7 +122,7 @@ class VictoryViewController: BaseViewController {
             textColor: .B2 ?? .black,
             letterSpacing: 5)
     }
-    func configureLayout() {
+    private func configureLayout() {
         [identityImageView, victoryLabel].forEach { view.addSubview($0) }
         [normalPromptLabel, spyPromptLabel, backToLobbyButton].forEach { view.addSubview($0) }
         self.victoryLabel.snp.makeConstraints { make in
@@ -156,7 +156,7 @@ class VictoryViewController: BaseViewController {
             make.height.equalTo(40)
         }
     }
-    @objc func backToLobbyButtonPressed() {
+    @objc private func backToLobbyButtonPressed() {
         playSeAudio()
         vibrate()
         if let targetViewController = navigationController?.viewControllers[1] {
@@ -165,10 +165,10 @@ class VictoryViewController: BaseViewController {
             updateRecords()
         }
     }
-    func deleteGameData() {
+    private func deleteGameData() {
         FirestoreManager.shared.delete()
     }
-    func getRecords() {
+    private func getRecords() {
         FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { result in
             switch result {
             case .success(let document):
@@ -192,7 +192,7 @@ class VictoryViewController: BaseViewController {
             }
         }
     }
-    func updateRecords() {
+    private func updateRecords() {
         if isSpyWin {
             if playerIdentity == "臥底" {
                 updateRecord("spyWin", spyWin ?? 0)
@@ -207,7 +207,7 @@ class VictoryViewController: BaseViewController {
             }
         }
     }
-    func updateRecord(_ string: String, _ int: Int) {
+    private func updateRecord(_ string: String, _ int: Int) {
         let data: [String: Any] = [
             string: String(int + 1)
         ]

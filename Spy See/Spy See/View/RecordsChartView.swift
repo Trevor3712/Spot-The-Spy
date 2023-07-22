@@ -8,12 +8,12 @@
 import SwiftUI
 import Charts
 
-struct RecordsCount: Identifiable {
+private struct RecordsCount: Identifiable {
     var type: String
     var count: Int
     var id = UUID()
 }
-struct RecordsData: Identifiable {
+private struct RecordsData: Identifiable {
     var type: String
     var data: [RecordsCount]
     var id = UUID()

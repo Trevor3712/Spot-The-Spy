@@ -9,7 +9,7 @@ import UIKit
 import FirebaseFirestore
 
 class WaitingViewController: BaseViewController {
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -19,7 +19,7 @@ class WaitingViewController: BaseViewController {
             letterSpacing: 5)
         return titleLabel
     }()
-    lazy var tableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
@@ -28,9 +28,9 @@ class WaitingViewController: BaseViewController {
         tableView.register(PlayerCell.self, forCellReuseIdentifier: PlayerCell.reuseIdentifier)
         return tableView
     }()
-    var documentListener: ListenerRegistration?
-    var players: [String] = []
-    var playerNumber: Int?
+    private var documentListener: ListenerRegistration?
+    private var players: [String] = []
+    private var playerNumber: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         [titleLabel, tableView].forEach { view.addSubview($0) }
@@ -52,7 +52,7 @@ class WaitingViewController: BaseViewController {
         documentListener?.remove()
         UserDefaults.standard.setValue(players, forKey: "playersArray")
     }
-    func loadRoomData() {
+    private func loadRoomData() {
         let existingPlayers: Set<String> = Set(self.players)
         documentListener = FirestoreManager.shared.addSnapShotListener { [weak self] result in
             guard let self = self else { return }
@@ -80,7 +80,7 @@ class WaitingViewController: BaseViewController {
             }
         }
     }
-    func allPlayersJoined() -> Bool {
+    private func allPlayersJoined() -> Bool {
         return self.players.count == playerNumber
     }
 }

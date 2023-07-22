@@ -10,7 +10,7 @@ import SwiftUI
 import FirebaseAuth
 
 class RecordsViewController: BaseViewController, ObservableObject {
-    lazy var titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -20,8 +20,8 @@ class RecordsViewController: BaseViewController, ObservableObject {
             letterSpacing: 10)
         return titleLabel
     }()
-    lazy var totalRecordsLabel = BaseLabel()
-    lazy var winRateLabel: UILabel = {
+    private lazy var totalRecordsLabel = BaseLabel()
+    private lazy var winRateLabel: UILabel = {
         let winRateLabel = UILabel()
         winRateLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -31,12 +31,12 @@ class RecordsViewController: BaseViewController, ObservableObject {
             letterSpacing: 10)
         return winRateLabel
     }()
-    lazy var totalWinRateLabel: BaseLabel = {
+    private lazy var totalWinRateLabel: BaseLabel = {
         let totalWinRateLabel = BaseLabel()
         totalWinRateLabel.backgroundColor = .Y
         return totalWinRateLabel
     }()
-    lazy var chartView: UIView = {
+    private lazy var chartView: UIView = {
         let chartView = UIView()
         chartView.backgroundColor = .white
         chartView.layer.borderWidth = 1
@@ -45,7 +45,7 @@ class RecordsViewController: BaseViewController, ObservableObject {
         chartView.clipsToBounds = true
         return chartView
     }()
-    lazy var normalLabel: BaseLabel = {
+    private lazy var normalLabel: BaseLabel = {
         let normalLabel = BaseLabel()
         normalLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -55,7 +55,7 @@ class RecordsViewController: BaseViewController, ObservableObject {
             letterSpacing: 5)
         return normalLabel
     }()
-    lazy var spyLabel: BaseLabel = {
+    private lazy var spyLabel: BaseLabel = {
         let spyLabel = BaseLabel()
         spyLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
@@ -65,17 +65,17 @@ class RecordsViewController: BaseViewController, ObservableObject {
             letterSpacing: 5)
         return spyLabel
     }()
-    lazy var normalRecordsLabel = UILabel()
-    lazy var spyRecordsLabel = UILabel()
-    lazy var normalWinRateLabel = UILabel()
-    lazy var spyWinRateLabel = UILabel()
-    lazy var normalContainerView = UIView()
-    lazy var spyContainerViwe = UIView()
-    var spyWin = 0
-    var spyLose = 0
-    var normalWin = 0
-    var normalLose = 0
-    var recordsChartView = RecordsChartView()
+    private lazy var normalRecordsLabel = UILabel()
+    private lazy var spyRecordsLabel = UILabel()
+    private lazy var normalWinRateLabel = UILabel()
+    private lazy var spyWinRateLabel = UILabel()
+    private lazy var normalContainerView = UIView()
+    private lazy var spyContainerViwe = UIView()
+    private var spyWin = 0
+    private var spyLose = 0
+    private var normalWin = 0
+    private var normalLose = 0
+    private var recordsChartView = RecordsChartView()
     private var hostingController: UIHostingController<RecordsChartView>?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,7 +131,7 @@ class RecordsViewController: BaseViewController, ObservableObject {
         super.viewWillAppear(animated)
         getRecords()
     }
-    func configureLayout() {
+    private func configureLayout() {
         normalLabel.snp.makeConstraints { make in
             make.top.equalTo(normalContainerView)
             make.left.equalTo(normalContainerView)
@@ -167,7 +167,7 @@ class RecordsViewController: BaseViewController, ObservableObject {
             make.centerY.equalTo(spyLabel)
         }
     }
-    func getRecords() {
+    private func getRecords() {
         FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -200,7 +200,7 @@ class RecordsViewController: BaseViewController, ObservableObject {
     }
 }
 extension RecordsViewController {
-    func showTotalRecords() {
+    private func showTotalRecords() {
         let totalWin = normalWin + spyWin
         let totalLose = normalLose + spyLose
         totalRecordsLabel.attributedText = UIFont.fontStyle(
@@ -228,7 +228,7 @@ extension RecordsViewController {
                 letterSpacing: 10)
         }
     }
-    func showIdentityRecord() {
+    private func showIdentityRecord() {
         normalRecordsLabel.attributedText = UIFont.fontStyle(
             font: .semibold,
             title: "\(normalWin)勝 \(normalLose)敗",
