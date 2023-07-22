@@ -115,7 +115,7 @@ class LoginViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let url = Bundle.main.url(forResource: "main_bgm", withExtension: "wav")
+        let url = Bundle.main.url(forResource: SoundConstant.main, withExtension: SoundConstant.wav)
         guard let url = url else {
             return
         }

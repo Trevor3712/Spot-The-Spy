@@ -63,7 +63,7 @@ class VictoryViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let url = Bundle.main.url(forResource: "victory_bgm", withExtension: "wav") {
+        if let url = Bundle.main.url(forResource: SoundConstant.victory, withExtension: SoundConstant.wav) {
             AudioPlayer.shared.playAudio(from: url, loop: true)
         }
         getRecords()

@@ -11,9 +11,9 @@ import IQKeyboardManager
 import AudioToolbox
 import AVFoundation
 
-let clickUrl = Bundle.main.url(forResource: "click_se", withExtension: "wav")
-let editingUrl = Bundle.main.url(forResource: "editing_se", withExtension: "wav")
-let playUrl = Bundle.main.url(forResource: "play_se", withExtension: "wav")
+let clickUrl = Bundle.main.url(forResource: SoundConstant.click, withExtension: SoundConstant.wav)
+let editingUrl = Bundle.main.url(forResource: SoundConstant.editing, withExtension: SoundConstant.wav)
+let playUrl = Bundle.main.url(forResource: SoundConstant.play, withExtension: SoundConstant.wav)
 
 class BaseViewController: UIViewController {
     var isEnableIQKeyboard: Bool {

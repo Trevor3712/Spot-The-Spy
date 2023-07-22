@@ -33,12 +33,12 @@
 		B571FE802A5A93B5007EADE2 /* click_se.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE7A2A5A93B1007EADE2 /* click_se.wav */; };
 		B571FE812A5A93B5007EADE2 /* profile_se.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE7B2A5A93B2007EADE2 /* profile_se.wav */; };
 		B571FE832A5A93B5007EADE2 /* record_se.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE7D2A5A93B4007EADE2 /* record_se.wav */; };
-		B571FE8B2A5AAED2007EADE2 /* vote_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE892A5AAED0007EADE2 /* vote_bgm.wav */; };
 		B571FE8C2A5AAED2007EADE2 /* victory_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE8A2A5AAED2007EADE2 /* victory_bgm.wav */; };
 		B571FE902A5AB54E007EADE2 /* vote_long_bgm.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE8F2A5AB54E007EADE2 /* vote_long_bgm.wav */; };
 		B571FE942A5AF4CC007EADE2 /* editing_se.wav in Resources */ = {isa = PBXBuildFile; fileRef = B571FE932A5AF4CC007EADE2 /* editing_se.wav */; };
 		B57DE3B22A496D1D00AEC8EC /* BaseMessageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */; };
 		B57DE3B62A49A63600AEC8EC /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B52A49A63600AEC8EC /* MessageCell.swift */; };
+		B58891832A6C32020028D385 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58891822A6C32020028D385 /* Constants.swift */; };
 		B59588952A3D98430058E170 /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588942A3D98430058E170 /* VoteViewController.swift */; };
 		B59588972A3DDD630058E170 /* KillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588962A3DDD630058E170 /* KillViewController.swift */; };
 		B5BAAB9A2A4BF06500C1A770 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BAAB992A4BF06500C1A770 /* SignupViewController.swift */; };
@@ -87,12 +87,12 @@
 		B571FE7A2A5A93B1007EADE2 /* click_se.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click_se.wav; sourceTree = "<group>"; };
 		B571FE7B2A5A93B2007EADE2 /* profile_se.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = profile_se.wav; sourceTree = "<group>"; };
 		B571FE7D2A5A93B4007EADE2 /* record_se.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = record_se.wav; sourceTree = "<group>"; };
-		B571FE892A5AAED0007EADE2 /* vote_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = vote_bgm.wav; sourceTree = "<group>"; };
 		B571FE8A2A5AAED2007EADE2 /* victory_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = victory_bgm.wav; sourceTree = "<group>"; };
 		B571FE8F2A5AB54E007EADE2 /* vote_long_bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = vote_long_bgm.wav; sourceTree = "<group>"; };
 		B571FE932A5AF4CC007EADE2 /* editing_se.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = editing_se.wav; sourceTree = "<group>"; };
 		B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMessageTableView.swift; sourceTree = "<group>"; };
 		B57DE3B52A49A63600AEC8EC /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		B58891822A6C32020028D385 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B59588942A3D98430058E170 /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
 		B59588962A3DDD630058E170 /* KillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillViewController.swift; sourceTree = "<group>"; };
 		B5BAAB992A4BF06500C1A770 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 		B5D2B0A72A39C8ED00ED3516 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5D2B0AA2A39C8ED00ED3516 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5D2B0AC2A39C8ED00ED3516 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5D2B0B52A3A98A000ED3516 /* Prompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prompt.swift; sourceTree = "<group>"; };
 		B5DD1EB82A5BD0ED00A2B520 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B5F20BE92A4550E900FFECA1 /* WaitForNextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitForNextViewController.swift; sourceTree = "<group>"; };
@@ -167,10 +167,18 @@
 				B571FE6C2A5A9382007EADE2 /* main_bgm.wav */,
 				B571FE8A2A5AAED2007EADE2 /* victory_bgm.wav */,
 				B571FE8F2A5AB54E007EADE2 /* vote_long_bgm.wav */,
-				B571FE892A5AAED0007EADE2 /* vote_bgm.wav */,
 				B571FE6A2A5A937E007EADE2 /* gunShot_se.wav */,
 			);
 			path = "Sound Effect";
+			sourceTree = "<group>";
+		};
+		B58891812A6C315D0028D385 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */,
+				B58891822A6C32020028D385 /* Constants.swift */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B58B763D2A5EDB3500228500 /* Model */ = {
@@ -203,6 +211,7 @@
 		B5D2B09D2A39C8E800ED3516 /* Spy See */ = {
 			isa = PBXGroup;
 			children = (
+				B58891812A6C315D0028D385 /* Supporting Files */,
 				B571FE652A5A9328007EADE2 /* Resource */,
 				B5FAE71E2A45AD3D00C69CAA /* Extensions */,
 				B58B763D2A5EDB3500228500 /* Model */,
@@ -212,9 +221,8 @@
 				B5D2B0A02A39C8E800ED3516 /* SceneDelegate.swift */,
 				B5D2B0A42A39C8E800ED3516 /* Main.storyboard */,
 				B5D2B0A92A39C8ED00ED3516 /* LaunchScreen.storyboard */,
-				B5D2B0A72A39C8ED00ED3516 /* Assets.xcassets */,
 				B5D2B0AC2A39C8ED00ED3516 /* Info.plist */,
-				B5D2B0B32A3A017D00ED3516 /* GoogleService-Info.plist */,
+				B5D2B0A72A39C8ED00ED3516 /* Assets.xcassets */,
 			);
 			path = "Spy See";
 			sourceTree = "<group>";
@@ -354,7 +362,6 @@
 				B571FE752A5A9388007EADE2 /* main_bgm.wav in Resources */,
 				B571FE7F2A5A93B5007EADE2 /* play_se.wav in Resources */,
 				B5D2B0A62A39C8E800ED3516 /* Main.storyboard in Resources */,
-				B571FE8B2A5AAED2007EADE2 /* vote_bgm.wav in Resources */,
 				B571FE902A5AB54E007EADE2 /* vote_long_bgm.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,6 +488,7 @@
 				B522AF152A3B67E800FF956C /* InviteViewController.swift in Sources */,
 				B522AF132A3AC3CF00FF956C /* SettingViewController.swift in Sources */,
 				B522AF1D2A3CBF2200FF956C /* SpeakViewController.swift in Sources */,
+				B58891832A6C32020028D385 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -122,7 +122,7 @@ extension VoteViewController: UITableViewDataSource {
         if let selectedIndexPath = selectedIndexPath, selectedIndexPath == indexPath {
             cell.knifeImageView.isHidden = false
             vibrate()
-            if let url = Bundle.main.url(forResource: "gunLoaded_se", withExtension: "wav") {
+            if let url = Bundle.main.url(forResource: SoundConstant.gunLoaded, withExtension: SoundConstant.wav) {
                 playSeAudio(from: url)
             }
         } else {

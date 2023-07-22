@@ -18,25 +18,25 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         let selectedIndex = tabBarController.selectedIndex
         switch selectedIndex {
         case 0:
-            let url = Bundle.main.url(forResource: "gunLoaded_se", withExtension: "wav")
+            let url = Bundle.main.url(forResource: SoundConstant.gunLoaded, withExtension: SoundConstant.wav)
             guard let url = url else {
                 return
             }
             playAudio(from: url)
         case 1:
-            let url = Bundle.main.url(forResource: "profile_se", withExtension: "wav")
+            let url = Bundle.main.url(forResource: SoundConstant.profile, withExtension: SoundConstant.wav)
             guard let url = url else {
                 return
             }
             playAudio(from: url)
         case 2:
-            let url = Bundle.main.url(forResource: "record_se", withExtension: "wav")
+            let url = Bundle.main.url(forResource: SoundConstant.record, withExtension: SoundConstant.wav)
             guard let url = url else {
                 return
             }
             playAudio(from: url)
         default:
-            let url = Bundle.main.url(forResource: "profile_se", withExtension: "wav")
+            let url = Bundle.main.url(forResource: SoundConstant.profile, withExtension: SoundConstant.wav)
             guard let url = url else {
                 return
             }

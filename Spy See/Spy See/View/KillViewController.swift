@@ -197,7 +197,7 @@ class KillViewController: BaseViewController {
         } else {
             identityImageView.image = .asset(.spyKilled)
         }
-        if let url = Bundle.main.url(forResource: "gunShot_se", withExtension: "wav") {
+        if let url = Bundle.main.url(forResource: SoundConstant.gunShot, withExtension: SoundConstant.wav) {
             playSeAudio(from: url)
         }
     }

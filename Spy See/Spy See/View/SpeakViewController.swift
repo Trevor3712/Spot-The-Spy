@@ -163,7 +163,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
             players = storedPlayers
         }
-        guard let url = Bundle.main.url(forResource: "vote_long_bgm", withExtension: "wav") else {
+        guard let url = Bundle.main.url(forResource: SoundConstant.vote, withExtension: SoundConstant.wav) else {
             return
         }
         AudioPlayer.shared.playAudio(from: url, loop: true)

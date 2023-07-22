@@ -86,7 +86,7 @@ class LobbyViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UserDefaults.standard.setValue(Auth.auth().currentUser?.email, forKey: "userEmail")
-        let url = Bundle.main.url(forResource: "main_bgm", withExtension: "wav")
+        let url = Bundle.main.url(forResource: SoundConstant.main, withExtension: SoundConstant.wav)
         guard let url = url else {
             return
         }
