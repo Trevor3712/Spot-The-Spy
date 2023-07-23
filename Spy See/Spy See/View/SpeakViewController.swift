@@ -69,16 +69,16 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }()
     private lazy var sendButton1: UIButton = {
         let sendButton1 = UIButton()
-        sendButton1.setBackgroundImage(UIImage(systemName: "paperplane.fill"), for: .normal)
-        sendButton1.setBackgroundImage(UIImage(systemName: "paperplane"), for: .highlighted)
+        sendButton1.setBackgroundImage(UIImage(systemName: SystemImageConstants.paperplaneFill), for: .normal)
+        sendButton1.setBackgroundImage(UIImage(systemName: SystemImageConstants.paperplane), for: .highlighted)
         sendButton1.tintColor = .B4
         sendButton1.addTarget(self, action: #selector(sendClue), for: .touchUpInside)
         return sendButton1
     }()
     private lazy var sendButton2: UIButton = {
         let sendButton2 = UIButton()
-        sendButton2.setBackgroundImage(UIImage(systemName: "paperplane.fill"), for: .normal)
-        sendButton2.setBackgroundImage(UIImage(systemName: "paperplane"), for: .highlighted)
+        sendButton2.setBackgroundImage(UIImage(systemName: SystemImageConstants.paperplaneFill), for: .normal)
+        sendButton2.setBackgroundImage(UIImage(systemName: SystemImageConstants.paperplane), for: .highlighted)
         sendButton2.tintColor = .B4
         sendButton2.addTarget(self, action: #selector(sendMesssge), for: .touchUpInside)
         return sendButton2
@@ -93,20 +93,20 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }()
     private lazy var timeImageView: UIImageView = {
         let timeImageView = UIImageView()
-        timeImageView.image = UIImage(systemName: "hourglass")
+        timeImageView.image = UIImage(systemName: SystemImageConstants.hourglass)
         timeImageView.tintColor = .B4
         return timeImageView
     }()
     private lazy var speakButton1: UIButton = {
         let speakButton1 = UIButton()
-        speakButton1.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
+        speakButton1.setBackgroundImage(UIImage(systemName: SystemImageConstants.micFill), for: .normal)
         speakButton1.tintColor = .B4
         speakButton1.addTarget(self, action: #selector(recordAudioClue), for: .touchUpInside)
         return speakButton1
     }()
     private lazy var speakButton2: UIButton = {
         let speakButton2 = UIButton()
-        speakButton2.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
+        speakButton2.setBackgroundImage(UIImage(systemName: SystemImageConstants.micFill), for: .normal)
         speakButton2.tintColor = .B4
         speakButton2.addTarget(self, action: #selector(recordAudioClue), for: .touchUpInside)
         return speakButton2
@@ -352,14 +352,14 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }
     private func changeButtonStyle() {
         if isButtonPressed {
-            speakButton1.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
+            speakButton1.setBackgroundImage(UIImage(systemName: SystemImageConstants.micFill), for: .normal)
             speakButton1.tintColor = .B4
-            speakButton2.setBackgroundImage(UIImage(systemName: "mic.fill"), for: .normal)
+            speakButton2.setBackgroundImage(UIImage(systemName: SystemImageConstants.micFill), for: .normal)
             speakButton2.tintColor = .B4
         } else {
-            speakButton1.setBackgroundImage(UIImage(systemName: "record.circle"), for: .normal)
+            speakButton1.setBackgroundImage(UIImage(systemName: SystemImageConstants.recordCircle), for: .normal)
             speakButton1.tintColor = .R
-            speakButton2.setBackgroundImage(UIImage(systemName: "record.circle"), for: .normal)
+            speakButton2.setBackgroundImage(UIImage(systemName: SystemImageConstants.recordCircle), for: .normal)
             speakButton2.tintColor = .R
         }
         isButtonPressed.toggle()

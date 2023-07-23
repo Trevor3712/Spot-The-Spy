@@ -7,20 +7,6 @@
 
 import Foundation
 
-enum SoundConstant {
-    static let click = "click_se"
-    static let profile = "profile_se"
-    static let play = "play_se"
-    static let record = "record_se"
-    static let editing = "editing_se"
-    static let gunLoaded = "gunLoaded_se"
-    static let main = "main_bgm"
-    static let victory = "victory_bgm"
-    static let vote = "vote_long_bgm"
-    static let gunShot = "gunShot_se"
-    static let wav = "wav"
-}
-
 enum FirestoreConstans {
     static let rooms = "Rooms"
     static let roomId = "roomId"
@@ -50,4 +36,27 @@ enum UDConstants {
     static let hostPrompt = "hostPrompt"
     static let playerPrompt = "playerPrompt"
     static let playersArray = "playersArray"
+}
+
+enum SoundConstant {
+    static let click = "click_se"
+    static let profile = "profile_se"
+    static let play = "play_se"
+    static let record = "record_se"
+    static let editing = "editing_se"
+    static let gunLoaded = "gunLoaded_se"
+    static let main = "main_bgm"
+    static let victory = "victory_bgm"
+    static let vote = "vote_long_bgm"
+    static let gunShot = "gunShot_se"
+    static let wav = "wav"
+}
+
+enum SystemImageConstants {
+    static let micFill = "mic.fill"
+    static let recordCircle = "record.circle"
+    static let chevronLeft = "chevron.left"
+    static let paperplaneFill = "paperplane.fill"
+    static let paperplane = "paperplane"
+    static let hourglass = "hourglass"
 }

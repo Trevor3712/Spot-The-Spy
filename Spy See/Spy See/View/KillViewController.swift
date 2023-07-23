@@ -207,7 +207,6 @@ class KillViewController: BaseViewController {
         self.playersArray.remove(at: arrayIndex ?? 0)
         self.identitiesArray.remove(at: arrayIndex ?? 0)
         self.votedArray.removeAll()
-//        UserDefaults.standard.removeObject(forKey: UDConstants.playersArray)
         UserDefaults.standard.setValue(playersArray, forKey: UDConstants.playersArray)
         print(playersArray)
         self.updateData()

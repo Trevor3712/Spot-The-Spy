@@ -150,7 +150,7 @@ class SignupViewController: BaseViewController {
             make.height.equalTo(40)
         }
         let backButton = UIBarButtonItem(
-            image: UIImage(systemName: "chevron.left"),
+            image: UIImage(systemName: SystemImageConstants.chevronLeft),
             style: .plain,
             target: self,
             action: #selector(backButtonPressed)

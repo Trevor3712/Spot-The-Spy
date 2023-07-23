@@ -168,7 +168,6 @@ class LobbyViewController: BaseViewController {
                     if let prompts = document.data()?[FirestoreConstans.prompts] as? [String] {
                         if let identities = document.data()?[FirestoreConstans.identities] as? [String] {
                             handlePlayerIndex(playerIndex, prompts, identities)
-//                            UserDefaults.standard.removeObject(forKey: "userName")
                             UserDefaults.standard.setValue(self.userName, forKey: UDConstants.userName)
                         }
                     }

@@ -85,7 +85,7 @@ class SettingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let backButton = UIBarButtonItem(
-            image: UIImage(systemName: "chevron.left"),
+            image: UIImage(systemName: SystemImageConstants.chevronLeft),
             style: .plain,
             target: self,
             action: #selector(backButtonPressed))
