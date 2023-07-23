@@ -168,7 +168,9 @@ class RecordsViewController: BaseViewController, ObservableObject {
         }
     }
     private func getRecords() {
-        FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { [weak self] result in
+        FirestoreManager.shared.getDocument(
+            collection: FirestoreConstans.users,
+            key: FirestoreConstans.userEmail) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let document):

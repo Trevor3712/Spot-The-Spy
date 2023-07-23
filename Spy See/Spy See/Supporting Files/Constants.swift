@@ -22,6 +22,11 @@ enum SoundConstant {
 }
 
 enum FirestoreConstans {
+    static let rooms = "Rooms"
+    static let roomId = "roomId"
+    static let users = "Users"
+    static let userEmail = "userEmail"
+    static let name = "name"
     static let voted = "voted"
     static let playersReady = "playersReady"
     static let clue = "clue"
@@ -34,4 +39,15 @@ enum FirestoreConstans {
     static let normalPrompt = "normalPrompt"
     static let spyPrompt = "spyPrompt"
     static let isSpyWin = "isSpyWin"
+}
+
+// UD equals to UserDefaults
+enum UDConstants {
+    static let roomId = "roomId"
+    static let userEmail = "userEmail"
+    static let userName = "userName"
+    static let playerIdentity = "playerIdentity"
+    static let hostPrompt = "hostPrompt"
+    static let playerPrompt = "playerPrompt"
+    static let playersArray = "playersArray"
 }

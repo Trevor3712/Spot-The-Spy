@@ -9,7 +9,7 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    let userEmail = UserDefaults.standard.string(forKey: "userEmail")
+    let userEmail = UserDefaults.standard.string(forKey: UDConstants.userEmail)
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -97,7 +97,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                             identifier: "TabBarController") as? UITabBarController {
                             let lobbyVC = tabBarVC.viewControllers?.first as? LobbyViewController
                             lobbyVC?.invitationTextFileld.text = roomId
-                            UserDefaults.standard.set(roomId, forKey: "roomId")
+                            UserDefaults.standard.set(roomId, forKey: UDConstants.roomId)
                             navigationController.pushViewController(tabBarVC, animated: true)
                             window?.makeKeyAndVisible()
                         }

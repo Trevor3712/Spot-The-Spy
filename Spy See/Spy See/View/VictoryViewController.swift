@@ -49,7 +49,7 @@ class VictoryViewController: BaseViewController {
         return spyPromptLabel
     }()
     var isSpyWin = true
-    private let playerIdentity = UserDefaults.standard.string(forKey: "playerIdentity")
+    private let playerIdentity = UserDefaults.standard.string(forKey: UDConstants.playerIdentity)
     private var spyWin: Int?
     private var spyLose: Int?
     private var normalWin: Int?
@@ -169,7 +169,9 @@ class VictoryViewController: BaseViewController {
         FirestoreManager.shared.delete()
     }
     private func getRecords() {
-        FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { result in
+        FirestoreManager.shared.getDocument(
+            collection: FirestoreConstans.users,
+            key: FirestoreConstans.userEmail) { result in
             switch result {
             case .success(let document):
                 guard let document = document else {
@@ -211,6 +213,9 @@ class VictoryViewController: BaseViewController {
         let data: [String: Any] = [
             string: String(int + 1)
         ]
-        FirestoreManager.shared.updateData(collection: "Users", key: "userEmail", data: data)
+        FirestoreManager.shared.updateData(
+            collection: FirestoreConstans.users,
+            key: FirestoreConstans.userEmail,
+            data: data)
     }
 }

@@ -204,7 +204,7 @@ class LoginViewController: BaseViewController {
                 return
             }
             self.navigationController?.pushViewController(tabBarController, animated: true)
-            UserDefaults.standard.setValue(Auth.auth().currentUser?.email, forKey: "userEmail")
+                UserDefaults.standard.setValue(Auth.auth().currentUser?.email, forKey: UDConstants.userEmail)
         }
     }
     @objc private func signupButtonPressed() {

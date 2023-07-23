@@ -62,8 +62,8 @@ class PassPromptViewController: BaseViewController {
             make.height.equalTo(40)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let playerPrompt = UserDefaults.standard.string(forKey: "playerPrompt")
-            let hostPrompt = UserDefaults.standard.string(forKey: "hostPrompt")
+            let playerPrompt = UserDefaults.standard.string(forKey: UDConstants.playerPrompt)
+            let hostPrompt = UserDefaults.standard.string(forKey: UDConstants.hostPrompt)
             if playerPrompt != nil {
                 self.promotLabel.attributedText = UIFont.fontStyle(
                     font: .semibold,

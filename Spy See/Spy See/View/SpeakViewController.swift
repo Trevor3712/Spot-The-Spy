@@ -121,7 +121,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
             letterSpacing: 0)
         return remindLabel
     }()
-    private let userName = UserDefaults.standard.string(forKey: "userName")
+    private let userName = UserDefaults.standard.string(forKey: UDConstants.userName)
     private var players: [String] = []
     private var currentPlayerIndex: Int = 0
     private var timer: Timer?
@@ -160,7 +160,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let storedPlayers = UserDefaults.standard.stringArray(forKey: "playersArray") {
+        if let storedPlayers = UserDefaults.standard.stringArray(forKey: UDConstants.playersArray) {
             players = storedPlayers
         }
         guard let url = Bundle.main.url(forResource: SoundConstant.vote, withExtension: SoundConstant.wav) else {
@@ -336,7 +336,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         }
     }
     private func currentUserTurn() {
-        if players[currentPlayerIndex] == UserDefaults.standard.string(forKey: "userName") {
+        if players[currentPlayerIndex] == UserDefaults.standard.string(forKey: UDConstants.userName) {
             sendButton1.isHidden = false
             speakButton1.isHidden = false
             sendButton2.isHidden = true

@@ -128,7 +128,7 @@ class ProfileViewController: BaseViewController {
         playSeAudio()
         vibrate()
         let alert = alertVC.showTwoAlert(title: "提示", message: "你確定要登出帳號嗎？") {
-            UserDefaults.standard.removeObject(forKey: "userEmail")
+            UserDefaults.standard.removeObject(forKey: UDConstants.userEmail)
             self.navigationController?.popToRootViewController(animated: true)
         }
         present(alert, animated: true)

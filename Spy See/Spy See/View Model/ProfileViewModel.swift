@@ -17,19 +17,24 @@ enum ProfileError: Error {
 class ProfileViewModel {
     func setNameData(name: String) {
         let data: [String: Any] = [
-            "name": name
+            FirestoreConstans.name: name
         ]
-        FirestoreManager.shared.updateData(collection: "Users", key: "userEmail", data: data)
+        FirestoreManager.shared.updateData(
+            collection: FirestoreConstans.users,
+            key: FirestoreConstans.userEmail,
+            data: data)
     }
     func getUserName(completion: @escaping (Result<String, Error>) -> Void) {
-        FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { result in
+        FirestoreManager.shared.getDocument(
+            collection: FirestoreConstans.users,
+            key: FirestoreConstans.userEmail) { result in
             switch result {
             case .success(let document):
                 guard let document = document else {
                     completion(.failure(ProfileError.documentNotFound))
                     return
                 }
-                if let name = document.data()?["name"] as? String, !name.isEmpty {
+                if let name = document.data()?[FirestoreConstans.name] as? String, !name.isEmpty {
                     completion(.success(name))
                 } else {
                     completion(.failure(ProfileError.nameNotFound))
@@ -49,6 +54,6 @@ class ProfileViewModel {
         }
     }
     func deleteStoreData() {
-        FirestoreManager.shared.delete(collection: "Users", key: "userEmail")
+        FirestoreManager.shared.delete(collection: FirestoreConstans.users, key: FirestoreConstans.userEmail)
     }
 }

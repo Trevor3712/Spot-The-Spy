@@ -146,7 +146,7 @@ class SettingViewController: BaseViewController {
             return
         }
         let roomId = generateRoomId()
-        UserDefaults.standard.setValue(roomId, forKey: "roomId")
+        UserDefaults.standard.setValue(roomId, forKey: UDConstants.roomId)
         guard let name = self.userName else {
             return
         }
@@ -204,14 +204,16 @@ class SettingViewController: BaseViewController {
         return identityArray
     }
     private func getUserName() {
-        FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { [weak self] result in
+        FirestoreManager.shared.getDocument(
+            collection: FirestoreConstans.users,
+            key: FirestoreConstans.userEmail) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let document):
                 guard let document = document else {
                     return
                 }
-                if let name = document.data()?["name"] as? String {
+                if let name = document.data()?[FirestoreConstans.name] as? String {
                     userName = name
                 }
             case .failure(let error):
@@ -223,10 +225,10 @@ class SettingViewController: BaseViewController {
         navigationController?.popViewController(animated: true)
     }
     private func updateUserDefaults() {
-        UserDefaults.standard.removeObject(forKey: "playerPrompt")
-        UserDefaults.standard.setValue(self.promptArray[0], forKey: "hostPrompt")
-        UserDefaults.standard.setValue(self.userName, forKey: "userName")
-        UserDefaults.standard.set(self.promptArray[0], forKey: "playerIdentity")
+        UserDefaults.standard.removeObject(forKey: UDConstants.playerPrompt)
+        UserDefaults.standard.setValue(self.promptArray[0], forKey: UDConstants.hostPrompt)
+        UserDefaults.standard.setValue(self.userName, forKey: UDConstants.userName)
+        UserDefaults.standard.set(self.promptArray[0], forKey: UDConstants.playerIdentity)
     }
     private func settingErrorAlert() {
         let alert = alertVC.showAlert(title: "設定錯誤", message: "請選擇玩家人數、臥底人數")

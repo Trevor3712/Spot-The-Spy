@@ -68,7 +68,7 @@ class KillViewController: BaseViewController {
     private var identitiesArray: [String] = []
     private var arrayIndex: Int?
     private var playersArray: [String] = []
-    private let players = UserDefaults.standard.stringArray(forKey: "playersArray")
+    private let players = UserDefaults.standard.stringArray(forKey: UDConstants.playersArray)
     private var documentListener: ListenerRegistration?
     private let currentUser = Auth.auth().currentUser?.email ?? ""
     override func viewDidLoad() {
@@ -207,8 +207,8 @@ class KillViewController: BaseViewController {
         self.playersArray.remove(at: arrayIndex ?? 0)
         self.identitiesArray.remove(at: arrayIndex ?? 0)
         self.votedArray.removeAll()
-        UserDefaults.standard.removeObject(forKey: "playersArray")
-        UserDefaults.standard.setValue(playersArray, forKey: "playersArray")
+//        UserDefaults.standard.removeObject(forKey: UDConstants.playersArray)
+        UserDefaults.standard.setValue(playersArray, forKey: UDConstants.playersArray)
         print(playersArray)
         self.updateData()
         let countCivilian = identitiesArray.filter { $0 == "平民" }.count
@@ -223,7 +223,7 @@ class KillViewController: BaseViewController {
             updateWinMessage(true)
         } else {
             print("繼續下一輪")
-            let currentUser = UserDefaults.standard.string(forKey: "userName") ?? ""
+            let currentUser = UserDefaults.standard.string(forKey: UDConstants.userName) ?? ""
             print("currentUser:\(currentUser)")
             print("playersArray: \(playersArray)")
             if playersArray.contains(currentUser) {

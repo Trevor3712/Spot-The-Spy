@@ -27,7 +27,7 @@ class WaitForNextViewController: BaseViewController {
         return remindLabel
     }()
     private var documentListener: ListenerRegistration?
-    private let currentPlayers = UserDefaults.standard.stringArray(forKey: "playersArray")
+    private let currentPlayers = UserDefaults.standard.stringArray(forKey: UDConstants.playersArray)
     private var readyPlayers: [String] = []
     private let currentUser = Auth.auth().currentUser?.email ?? ""
     override func viewWillAppear(_ animated: Bool) {
@@ -62,7 +62,8 @@ class WaitForNextViewController: BaseViewController {
                 readyPlayers = newPlayers
                 if isAllPlayersReady() {
                     documentListener?.remove()
-                    FirestoreManager.shared.updateData(data: [FirestoreConstans.playersReady: [String]()]) { [weak self] in
+                    FirestoreManager.shared.updateData(
+                        data: [FirestoreConstans.playersReady: [String]()]) { [weak self] in
                         guard let self = self else { return }
                         if let targetViewController =
                             navigationController?.viewControllers.first(where: { $0 is SpeakViewController }) {

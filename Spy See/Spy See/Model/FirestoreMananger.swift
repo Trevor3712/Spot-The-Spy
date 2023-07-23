@@ -12,10 +12,10 @@ class FirestoreManager {
     static let shared = FirestoreManager()
     private let dataBase = Firestore.firestore()
     func setRoomId() -> String {
-        guard let roomId = UserDefaults.standard.string(forKey: "roomId") else { return "" }
+        guard let roomId = UserDefaults.standard.string(forKey: UDConstants.roomId) else { return "" }
         return roomId
     }
-    func setData(collection: String = "Rooms", key: String = "roomId", data: [String: Any], merge: Bool = false, completion: (() -> Void)? = nil) {
+    func setData(collection: String = FirestoreConstans.rooms, key: String = FirestoreConstans.roomId, data: [String: Any], merge: Bool = false, completion: (() -> Void)? = nil) {
         guard let documentId = UserDefaults.standard.string(forKey: key) else { return }
         let documentRef = dataBase.collection(collection).document(documentId)
         documentRef.setData(data, merge: merge) { error in
@@ -27,7 +27,7 @@ class FirestoreManager {
             }
         }
     }
-    func getDocument(collection: String = "Rooms", key: String = "roomId", completion: @escaping (Result<DocumentSnapshot?, Error>) -> Void) {
+    func getDocument(collection: String = FirestoreConstans.rooms, key: String = FirestoreConstans.roomId, completion: @escaping (Result<DocumentSnapshot?, Error>) -> Void) {
         guard let documentId = UserDefaults.standard.string(forKey: key) else { return }
         let documentRef = dataBase.collection(collection).document(documentId)
         documentRef.getDocument { document, error in
@@ -38,7 +38,7 @@ class FirestoreManager {
             }
         }
     }
-    func updateData(collection: String = "Rooms", key: String = "roomId", data: [String: Any], completion: (() -> Void)? = nil) {
+    func updateData(collection: String = FirestoreConstans.rooms, key: String = FirestoreConstans.roomId, data: [String: Any], completion: (() -> Void)? = nil) {
         guard let documentId = UserDefaults.standard.string(forKey: key) else { return }
         let documentRef = dataBase.collection(collection).document(documentId)
         documentRef.updateData(data) { error in
@@ -50,7 +50,7 @@ class FirestoreManager {
             }
         }
     }
-    func addSnapShotListener(collection: String = "Rooms", key: String = "roomId", completion: @escaping (Result<DocumentSnapshot?, Error>) -> Void) -> ListenerRegistration {
+    func addSnapShotListener(collection: String = FirestoreConstans.rooms, key: String = FirestoreConstans.roomId, completion: @escaping (Result<DocumentSnapshot?, Error>) -> Void) -> ListenerRegistration {
         let documentId = UserDefaults.standard.string(forKey: key)
         let documentRef = dataBase.collection(collection).document(documentId ?? "")
         let documentListener = documentRef.addSnapshotListener { document, error in
@@ -62,7 +62,7 @@ class FirestoreManager {
         }
         return documentListener
     }
-    func delete(collection: String = "Rooms", key: String = "roomId") {
+    func delete(collection: String = FirestoreConstans.rooms, key: String = FirestoreConstans.roomId) {
         guard let documentId = UserDefaults.standard.string(forKey: key) else { return }
         let documentRef = dataBase.collection(collection).document(documentId)
         documentRef.delete { error in

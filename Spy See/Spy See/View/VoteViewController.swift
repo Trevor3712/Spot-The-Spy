@@ -43,12 +43,12 @@ class VoteViewController: BaseViewController {
         voteButton.addTarget(self, action: #selector(voteButtonPressed), for: .touchUpInside)
         return voteButton
     }()
-    private var players = UserDefaults.standard.stringArray(forKey: "playersArray")
+    private var players = UserDefaults.standard.stringArray(forKey: UDConstants.playersArray)
     private var votedPlayer: String?
     private var selectedIndexPath: IndexPath?
     override func viewDidLoad() {
         super.viewDidLoad()
-        let currentUser = UserDefaults.standard.string(forKey: "userName")
+        let currentUser = UserDefaults.standard.string(forKey: UDConstants.userName)
         players?.removeAll { $0 == currentUser }
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)

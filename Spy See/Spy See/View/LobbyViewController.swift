@@ -85,7 +85,7 @@ class LobbyViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UserDefaults.standard.setValue(Auth.auth().currentUser?.email, forKey: "userEmail")
+        UserDefaults.standard.setValue(Auth.auth().currentUser?.email, forKey: UDConstants.userEmail)
         let url = Bundle.main.url(forResource: SoundConstant.main, withExtension: SoundConstant.wav)
         guard let url = url else {
             return
@@ -115,7 +115,7 @@ class LobbyViewController: BaseViewController {
             sender.isEnabled = true
             return
         }
-        UserDefaults.standard.setValue(invitationText, forKey: "roomId")
+        UserDefaults.standard.setValue(invitationText, forKey: UDConstants.roomId)
         FirestoreManager.shared.getDocument { [weak self] result in
             guard let self = self else { return }
             sender.isEnabled = true
@@ -168,8 +168,8 @@ class LobbyViewController: BaseViewController {
                     if let prompts = document.data()?[FirestoreConstans.prompts] as? [String] {
                         if let identities = document.data()?[FirestoreConstans.identities] as? [String] {
                             handlePlayerIndex(playerIndex, prompts, identities)
-                            UserDefaults.standard.removeObject(forKey: "userName")
-                            UserDefaults.standard.setValue(self.userName, forKey: "userName")
+//                            UserDefaults.standard.removeObject(forKey: "userName")
+                            UserDefaults.standard.setValue(self.userName, forKey: UDConstants.userName)
                         }
                     }
                 }
@@ -184,20 +184,22 @@ class LobbyViewController: BaseViewController {
             return
         }
         let playerIdentity = identities[playerIndex]
-        UserDefaults.standard.setValue(playerIdentity, forKey: "playerIdentity")
+        UserDefaults.standard.setValue(playerIdentity, forKey: UDConstants.playerIdentity)
         let selectedPrompt = prompts[playerIndex]
-        UserDefaults.standard.removeObject(forKey: "hostPrompt")
-        UserDefaults.standard.setValue(selectedPrompt, forKey: "playerPrompt")
+        UserDefaults.standard.removeObject(forKey: UDConstants.hostPrompt)
+        UserDefaults.standard.setValue(selectedPrompt, forKey: UDConstants.playerPrompt)
     }
     private func getUserName() {
-        FirestoreManager.shared.getDocument(collection: "Users", key: "userEmail") { [weak self] result in
+        FirestoreManager.shared.getDocument(
+            collection: FirestoreConstans.users,
+            key: FirestoreConstans.userEmail) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let document):
                 guard let document = document else {
                     return
                 }
-                if let name = document.data()?["name"] as? String {
+                if let name = document.data()?[FirestoreConstans.name] as? String {
                     userName = name
                 }
             case .failure(let error):

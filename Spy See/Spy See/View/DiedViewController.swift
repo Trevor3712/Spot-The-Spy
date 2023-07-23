@@ -64,7 +64,7 @@ class DiedViewController: BaseViewController {
         documentListener?.remove()
     }
     private func showImage() {
-        let playerIdentity = UserDefaults.standard.string(forKey: "playerIdentity")
+        let playerIdentity = UserDefaults.standard.string(forKey: UDConstants.playerIdentity)
         if playerIdentity == "平民" {
             diedImageView.image = .asset(.normalKilled)
         } else {

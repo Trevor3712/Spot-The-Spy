@@ -48,7 +48,7 @@ class InviteViewController: BaseViewController {
         readyButton.addTarget(self, action: #selector(readyButtonPressed), for: .touchUpInside)
         return readyButton
     }()
-    private let roomId = UserDefaults.standard.string(forKey: "roomId")
+    private let roomId = UserDefaults.standard.string(forKey: UDConstants.roomId)
     override func viewDidLoad() {
         super.viewDidLoad()
         [titleLabel, invitationLabel, shareButton, readyButton].forEach { view.addSubview($0) }

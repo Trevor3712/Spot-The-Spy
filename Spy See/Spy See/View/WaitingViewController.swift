@@ -50,7 +50,7 @@ class WaitingViewController: BaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         documentListener?.remove()
-        UserDefaults.standard.setValue(players, forKey: "playersArray")
+        UserDefaults.standard.setValue(players, forKey: UDConstants.playersArray)
     }
     private func loadRoomData() {
         let existingPlayers: Set<String> = Set(self.players)
