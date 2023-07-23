@@ -39,6 +39,8 @@
 		B57DE3B22A496D1D00AEC8EC /* BaseMessageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */; };
 		B57DE3B62A49A63600AEC8EC /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57DE3B52A49A63600AEC8EC /* MessageCell.swift */; };
 		B58891832A6C32020028D385 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58891822A6C32020028D385 /* Constants.swift */; };
+		B58891872A6CE5240028D385 /* SpeakViewController+UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58891862A6CE5240028D385 /* SpeakViewController+UIExtension.swift */; };
+		B58891892A6CE97D0028D385 /* SpeakViewController+SpeechExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58891882A6CE97D0028D385 /* SpeakViewController+SpeechExtension.swift */; };
 		B59588952A3D98430058E170 /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588942A3D98430058E170 /* VoteViewController.swift */; };
 		B59588972A3DDD630058E170 /* KillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588962A3DDD630058E170 /* KillViewController.swift */; };
 		B5BAAB9A2A4BF06500C1A770 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BAAB992A4BF06500C1A770 /* SignupViewController.swift */; };
@@ -93,6 +95,8 @@
 		B57DE3B12A496D1D00AEC8EC /* BaseMessageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMessageTableView.swift; sourceTree = "<group>"; };
 		B57DE3B52A49A63600AEC8EC /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		B58891822A6C32020028D385 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		B58891862A6CE5240028D385 /* SpeakViewController+UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpeakViewController+UIExtension.swift"; sourceTree = "<group>"; };
+		B58891882A6CE97D0028D385 /* SpeakViewController+SpeechExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpeakViewController+SpeechExtension.swift"; sourceTree = "<group>"; };
 		B59588942A3D98430058E170 /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
 		B59588962A3DDD630058E170 /* KillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillViewController.swift; sourceTree = "<group>"; };
 		B5BAAB992A4BF06500C1A770 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -252,6 +256,8 @@
 				B522AF162A3C0F4900FF956C /* WaitingViewController.swift */,
 				B522AF1A2A3C5CAF00FF956C /* PassPromptViewController.swift */,
 				B522AF1C2A3CBF2200FF956C /* SpeakViewController.swift */,
+				B58891862A6CE5240028D385 /* SpeakViewController+UIExtension.swift */,
+				B58891882A6CE97D0028D385 /* SpeakViewController+SpeechExtension.swift */,
 				B59588942A3D98430058E170 /* VoteViewController.swift */,
 				B59588962A3DDD630058E170 /* KillViewController.swift */,
 				B507CD662A3F39CE00434003 /* VictoryViewController.swift */,
@@ -462,6 +468,7 @@
 				B5FAE72A2A46024200C69CAA /* BaseViewController.swift in Sources */,
 				B5FAE7202A45AD8000C69CAA /* UIColor+Extension.swift in Sources */,
 				B5437B862A618F6E003986C9 /* FirestoreMananger.swift in Sources */,
+				B58891892A6CE97D0028D385 /* SpeakViewController+SpeechExtension.swift in Sources */,
 				B5F20BEA2A4550E900FFECA1 /* WaitForNextViewController.swift in Sources */,
 				B5FAE72C2A46044F00C69CAA /* UIImage+Extension.swift in Sources */,
 				B57DE3B22A496D1D00AEC8EC /* BaseMessageTableView.swift in Sources */,
@@ -475,6 +482,7 @@
 				B5FAE7282A45C68900C69CAA /* ProfileViewController.swift in Sources */,
 				B522AF192A3C113900FF956C /* PlayerCell.swift in Sources */,
 				B5D2B0B62A3A98A000ED3516 /* Prompt.swift in Sources */,
+				B58891872A6CE5240028D385 /* SpeakViewController+UIExtension.swift in Sources */,
 				B59588972A3DDD630058E170 /* KillViewController.swift in Sources */,
 				B5D2B09F2A39C8E800ED3516 /* AppDelegate.swift in Sources */,
 				B507CD672A3F39CE00434003 /* VictoryViewController.swift in Sources */,
