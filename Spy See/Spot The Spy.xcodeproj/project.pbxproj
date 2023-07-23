@@ -41,6 +41,7 @@
 		B58891832A6C32020028D385 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58891822A6C32020028D385 /* Constants.swift */; };
 		B58891872A6CE5240028D385 /* SpeakViewController+UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58891862A6CE5240028D385 /* SpeakViewController+UIExtension.swift */; };
 		B58891892A6CE97D0028D385 /* SpeakViewController+SpeechExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58891882A6CE97D0028D385 /* SpeakViewController+SpeechExtension.swift */; };
+		B58891912A6CFAC40028D385 /* KillVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58891902A6CFAC40028D385 /* KillVCTests.swift */; };
 		B59588952A3D98430058E170 /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588942A3D98430058E170 /* VoteViewController.swift */; };
 		B59588972A3DDD630058E170 /* KillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59588962A3DDD630058E170 /* KillViewController.swift */; };
 		B5BAAB9A2A4BF06500C1A770 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BAAB992A4BF06500C1A770 /* SignupViewController.swift */; };
@@ -61,6 +62,16 @@
 		B5FAE72A2A46024200C69CAA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAE7292A46024200C69CAA /* BaseViewController.swift */; };
 		B5FAE72C2A46044F00C69CAA /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FAE72B2A46044F00C69CAA /* UIImage+Extension.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B58891922A6CFAC40028D385 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5D2B0932A39C8E800ED3516 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B5D2B09A2A39C8E800ED3516;
+			remoteInfo = "Spot The Spy";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		08498A8BD867359E36ADCB88 /* Pods_Spot_The_Spy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spot_The_Spy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +108,8 @@
 		B58891822A6C32020028D385 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B58891862A6CE5240028D385 /* SpeakViewController+UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpeakViewController+UIExtension.swift"; sourceTree = "<group>"; };
 		B58891882A6CE97D0028D385 /* SpeakViewController+SpeechExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpeakViewController+SpeechExtension.swift"; sourceTree = "<group>"; };
+		B588918E2A6CFAC40028D385 /* SpotTheSpyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpotTheSpyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B58891902A6CFAC40028D385 /* KillVCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillVCTests.swift; sourceTree = "<group>"; };
 		B59588942A3D98430058E170 /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
 		B59588962A3DDD630058E170 /* KillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillViewController.swift; sourceTree = "<group>"; };
 		B5BAAB992A4BF06500C1A770 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -123,6 +136,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B588918B2A6CFAC40028D385 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B5D2B0982A39C8E800ED3516 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -185,6 +205,14 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B588918F2A6CFAC40028D385 /* SpotTheSpyTests */ = {
+			isa = PBXGroup;
+			children = (
+				B58891902A6CFAC40028D385 /* KillVCTests.swift */,
+			);
+			path = SpotTheSpyTests;
+			sourceTree = "<group>";
+		};
 		B58B763D2A5EDB3500228500 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				B5D2B09D2A39C8E800ED3516 /* Spy See */,
+				B588918F2A6CFAC40028D385 /* SpotTheSpyTests */,
 				B5D2B09C2A39C8E800ED3516 /* Products */,
 				9C5F9C7F45BBBBE800D1D379 /* Pods */,
 				BB5679EE6E7291CAFEF3E28E /* Frameworks */,
@@ -208,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				B5D2B09B2A39C8E800ED3516 /* Spot The Spy.app */,
+				B588918E2A6CFAC40028D385 /* SpotTheSpyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -296,6 +326,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B588918D2A6CFAC40028D385 /* SpotTheSpyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B58891962A6CFAC40028D385 /* Build configuration list for PBXNativeTarget "SpotTheSpyTests" */;
+			buildPhases = (
+				B588918A2A6CFAC40028D385 /* Sources */,
+				B588918B2A6CFAC40028D385 /* Frameworks */,
+				B588918C2A6CFAC40028D385 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B58891932A6CFAC40028D385 /* PBXTargetDependency */,
+			);
+			name = SpotTheSpyTests;
+			productName = SpotTheSpyTests;
+			productReference = B588918E2A6CFAC40028D385 /* SpotTheSpyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B5D2B09A2A39C8E800ED3516 /* Spot The Spy */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B5D2B0AF2A39C8ED00ED3516 /* Build configuration list for PBXNativeTarget "Spot The Spy" */;
@@ -324,9 +372,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1410;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1410;
 				TargetAttributes = {
+					B588918D2A6CFAC40028D385 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = B5D2B09A2A39C8E800ED3516;
+					};
 					B5D2B09A2A39C8E800ED3516 = {
 						CreatedOnToolsVersion = 14.1;
 					};
@@ -346,11 +398,19 @@
 			projectRoot = "";
 			targets = (
 				B5D2B09A2A39C8E800ED3516 /* Spot The Spy */,
+				B588918D2A6CFAC40028D385 /* SpotTheSpyTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B588918C2A6CFAC40028D385 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B5D2B0992A39C8E800ED3516 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -455,6 +515,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B588918A2A6CFAC40028D385 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B58891912A6CFAC40028D385 /* KillVCTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B5D2B0972A39C8E800ED3516 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -502,6 +570,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B58891932A6CFAC40028D385 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B5D2B09A2A39C8E800ED3516 /* Spot The Spy */;
+			targetProxy = B58891922A6CFAC40028D385 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		B5D2B0A42A39C8E800ED3516 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -522,6 +598,45 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B58891942A6CFAC40028D385 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = TC57AN3V9C;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.trevoryang.SpotTheSpyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spot The Spy.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Spot The Spy";
+			};
+			name = Debug;
+		};
+		B58891952A6CFAC40028D385 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TC57AN3V9C;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.trevoryang.SpotTheSpyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Spot The Spy.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Spot The Spy";
+			};
+			name = Release;
+		};
 		B5D2B0AD2A39C8ED00ED3516 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -713,6 +828,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B58891962A6CFAC40028D385 /* Build configuration list for PBXNativeTarget "SpotTheSpyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B58891942A6CFAC40028D385 /* Debug */,
+				B58891952A6CFAC40028D385 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B5D2B0962A39C8E800ED3516 /* Build configuration list for PBXProject "Spot The Spy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

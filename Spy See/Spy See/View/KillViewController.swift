@@ -64,10 +64,10 @@ class KillViewController: BaseViewController {
         nextRoundButton.addTarget(self, action: #selector(nextRoundButtonPressed), for: .touchUpInside)
         return nextRoundButton
     }()
-    private var votedArray: [[String: String]] = []
+    var votedArray: [[String: String]] = []
     private var identitiesArray: [String] = []
     private var arrayIndex: Int?
-    private var playersArray: [String] = []
+    var playersArray: [String] = []
     private let players = UserDefaults.standard.stringArray(forKey: UDConstants.playersArray)
     private var documentListener: ListenerRegistration?
     private let currentUser = Auth.auth().currentUser?.email ?? ""
@@ -134,7 +134,9 @@ class KillViewController: BaseViewController {
                     print(self.identitiesArray)
                 }
                 if isAllPlayersVote() {
-                    killWhichPlayer()
+                    showKilledPlayer(
+                        nameTitle: killWhichPlayer().selectedPlayer,
+                        identityIndex: killWhichPlayer().selectedIndex)
                     documentListener?.remove()
                 }
             case .failure(let error):
@@ -145,7 +147,7 @@ class KillViewController: BaseViewController {
     private func isAllPlayersVote() -> Bool {
         return self.votedArray.count == self.playersArray.count
     }
-    private func killWhichPlayer() {
+    func killWhichPlayer() -> (selectedPlayer: String, selectedIndex: Int) {
         var voteCount: [String: Int] = [:]
         // 計算每個值的出現次數
         for dict in votedArray {
@@ -161,17 +163,17 @@ class KillViewController: BaseViewController {
             let sortedIndexes = tiedPlayers.keys.compactMap { playersArray.firstIndex(of: $0) }.sorted()
             let selectedIndex = sortedIndexes.first ?? 0
             let selectedPlayer = playersArray[selectedIndex]
-            print("Selected player: \(selectedPlayer), index: \(selectedIndex)")
-            showKilledPlayer(nameTitle: selectedPlayer, identityIndex: selectedIndex)
+            return (selectedPlayer: selectedPlayer, selectedIndex: selectedIndex)
         } else {
             // 查找出現次數最多的值
-            if let (mostFrequentValue, _) = voteCount.max(by: { $0.value < $1.value }) {
-                if let index = players?.firstIndex(of: mostFrequentValue) {
-                    arrayIndex = index
-                    print("mostFrequentValue: \(mostFrequentValue), index: \(index)")
-                    showKilledPlayer(nameTitle: mostFrequentValue, identityIndex: index)
-                }
+            var selectedPlayer = ""
+            var selectedIndex = 0
+            if let maxVote = voteCount.max(by: { $0.value < $1.value }) {
+                selectedPlayer = maxVote.key
+                selectedIndex = playersArray.firstIndex(of: selectedPlayer) ?? 0
+                arrayIndex = selectedIndex
             }
+            return (selectedPlayer: selectedPlayer, selectedIndex: selectedIndex)
         }
     }
     private func showKilledPlayer(nameTitle: String, identityIndex: Int) {
