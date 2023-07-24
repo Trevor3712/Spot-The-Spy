@@ -5,12 +5,12 @@
 </p>
 
 <p align="center">
-    <b>Spot the Spy</b> is an engaging <b>online multiplayer game</b>,  
+    <b>Spot the Spy</b> is an engaging <b>online multiplayer game</b>,<br>  
         adapted from the popular 'Who is the Spy?' party icebreaker.
 </p>
 
 <p align="center">
-    <img src="https://github.com/Trevor3712/Spot-The-Spy/blob/dev/Spy%20See/screenshots/App-Store-icon.jpg">
+    <img src="https://github.com/Trevor3712/Spot-The-Spy/blob/dev/Spy%20See/screenshots/App-Store-Icon.png">
 </p>
 
 ## Features
