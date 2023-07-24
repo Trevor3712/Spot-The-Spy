@@ -6,8 +6,7 @@
 
 <p align="center">
     <b>Spot the Spy</b> is an engaging <b>online multiplayer game</b>,  
-        
-adapted from the popular 'Who is the Spy?' party icebreaker.
+        adapted from the popular 'Who is the Spy?' party icebreaker.
 </p>
 
 <p align="center">
