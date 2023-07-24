@@ -126,7 +126,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     private var currentPlayerIndex: Int = 0
     private var timer: Timer?
     var audioRecoder: AVAudioRecorder?
-    private var countdown = 7
+    private var countdown = 20
     var clues: [String] = []
     var messages: [String] = []
     private var documentListener: ListenerRegistration?
@@ -264,7 +264,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
         messages = []
     }
     private func setTimer() {
-        countdown = 7
+        countdown = 20
         timer = Timer.scheduledTimer(
             timeInterval: 1,
             target: self,
@@ -275,7 +275,7 @@ class SpeakViewController: BaseViewController, SFSpeechRecognizerDelegate {
     }
     @objc private func updateProgress() {
         countdown -= 1
-        let progress = Float(countdown) / Float(7)
+        let progress = Float(countdown) / Float(20)
         progressView.setProgress(progress, animated: true)
         if countdown <= 0 {
             timer?.invalidate()
