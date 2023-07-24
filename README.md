@@ -1,18 +1,18 @@
 # Spot the Spy
 
-<div style="display: flex; justify-content: center;">
-    <img src="https://hackmd.io/_uploads/B1fNf6i5n.png" alt="Image" width="150" height="150">
-</div>
+<p align="center">
+    <img src="https://github.com/Trevor3712/Spot-The-Spy/blob/dev/Spy%20See/screenshots/appIcon-rounded.png" width="150" height="150">
+</p>
 
-<div style="text-align: center;">
-    <p style="margin-top: 20px;"><strong>Spot the Spy</strong> is an engaging online multiplayer game,  
+<p align="center">
+    <b>Spot the Spy</b> is an engaging <b>online multiplayer game</b>,  
         
-adapted from the popular 'Who is the Spy?' party icebreaker.</p>
-</div>
+adapted from the popular 'Who is the Spy?' party icebreaker.
+</p>
 
-<div style="display: flex; justify-content: center;">
-    <img src="https://hackmd.io/_uploads/rkBxtTi53.jpg">
-</div>
+<p align="center">
+    <img src="https://github.com/Trevor3712/Spot-The-Spy/blob/dev/Spy%20See/screenshots/App-Store-icon.jpg">
+</p>
 
 ## Features
 
