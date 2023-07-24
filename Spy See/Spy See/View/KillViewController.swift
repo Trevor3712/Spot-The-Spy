@@ -127,11 +127,9 @@ class KillViewController: BaseViewController {
                 }
                 if let voted = document[FirestoreConstans.voted] as? [[String: String]] {
                     votedArray = voted
-                    print(self.votedArray)
                 }
                 if let identities = document[FirestoreConstans.identities] as? [String] {
                     identitiesArray = identities
-                    print(self.identitiesArray)
                 }
                 if isAllPlayersVote() {
                     showKilledPlayer(
@@ -210,23 +208,20 @@ class KillViewController: BaseViewController {
         self.identitiesArray.remove(at: arrayIndex ?? 0)
         self.votedArray.removeAll()
         UserDefaults.standard.setValue(playersArray, forKey: UDConstants.playersArray)
-        print(playersArray)
         self.updateData()
         let countCivilian = identitiesArray.filter { $0 == "平民" }.count
         let countSpy = identitiesArray.filter { $0 == "臥底" }.count
         if countSpy == 0 {
-            print("平民獲勝！")
+            // 平民獲勝
             goToVictoryVC(false)
             updateWinMessage(false)
         } else if countSpy >= countCivilian {
-            print("臥底獲勝！")
+            // 臥底獲勝
             goToVictoryVC(true)
             updateWinMessage(true)
         } else {
-            print("繼續下一輪")
+            // 繼續下一輪
             let currentUser = UserDefaults.standard.string(forKey: UDConstants.userName) ?? ""
-            print("currentUser:\(currentUser)")
-            print("playersArray: \(playersArray)")
             if playersArray.contains(currentUser) {
                 let waitForNextVC = WaitForNextViewController()
                 navigationController?.pushViewController(waitForNextVC, animated: true)
