@@ -24,7 +24,6 @@ class BaseViewController: UIViewController {
         backgroundImageView.image = .asset(.background)
         return backgroundImageView
     }()
-    private var seAudioPlayer: AVAudioPlayer?
     private let seAudioEngine = AVAudioEngine()
     override func viewDidLoad() {
         super.viewDidLoad()
