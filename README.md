@@ -15,6 +15,13 @@
     <a href="https://apps.apple.com/tw/app/spot-the-spy/id6450439766"><img src="https://github.com/Trevor3712/Spot-The-Spy/blob/dev/Spy%20See/screenshots/App-Store-Icon.png"></a>
 </p>
 
+<p align="center">
+    <img src="https://img.shields.io/badge/platform-iOS-lightgray">
+    <img src="https://img.shields.io/badge/license-MIT-informational">
+    <img src="https://img.shields.io/badge/release-v1.0.2-green">
+    <img src="https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat">
+</p>
+
 ## Features
 
 ### Highlights
