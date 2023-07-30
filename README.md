@@ -88,6 +88,7 @@
 
 ## Release Notes
 | Version | Notes |
+| :-----: | ----- |
 | 1.0.3   | Fix bug: SignUp page layout |
 | 1.0.2   | Update app name |
 | 1.0.1   | 1. Update the official app icon and images </br> 2. Add background music and sound effects. </br> 3. Introduce a new records page|
