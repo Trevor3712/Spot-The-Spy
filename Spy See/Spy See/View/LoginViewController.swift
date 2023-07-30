@@ -127,7 +127,7 @@ class LoginViewController: BaseViewController {
     }
     private func configureLayout() {
         logoImage.snp.makeConstraints { make in
-            make.bottom.equalTo(titleContainerView.snp.top).offset(-40)
+            make.bottom.equalTo(titleContainerView.snp.top).offset(-35)
             make.centerX.equalTo(view)
             make.width.equalTo(200)
             make.height.equalTo(200)
@@ -158,7 +158,7 @@ class LoginViewController: BaseViewController {
         }
         accountContainerView.snp.makeConstraints { make in
             make.left.right.equalTo(view)
-            make.top.lessThanOrEqualTo(titleContainerView.snp.bottom).offset(50)
+            make.top.lessThanOrEqualTo(titleContainerView.snp.bottom).offset(40)
             make.height.equalTo(200)
         }
         accountTextField.snp.makeConstraints { make in

@@ -20,6 +20,7 @@ class SignupViewController: BaseViewController {
         signupLabel.textAlignment = .center
         return signupLabel
     }()
+    private lazy var containerView = UIView()
     private lazy var accountLabel: UILabel = {
         let accountLabel = UILabel()
         accountLabel.attributedText = UIFont.fontStyle(
@@ -106,15 +107,23 @@ class SignupViewController: BaseViewController {
     private let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
-        [signupLabel, accountLabel, accountTextField].forEach { view.addSubview($0) }
-        [passwordLabel, passwordTextField].forEach { view.addSubview($0) }
-        [nameLabel, nameTextField, signupButton].forEach { view.addSubview($0) }
+        view.addSubview(containerView)
+        [signupLabel, containerView].forEach { view.addSubview($0) }
+        [accountLabel, accountTextField].forEach { containerView.addSubview($0) }
+        [passwordLabel, passwordTextField].forEach { containerView.addSubview($0) }
+        [nameLabel, nameTextField, signupButton].forEach { containerView.addSubview($0) }
         signupLabel.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(100)
+            make.bottom.equalTo(containerView.snp.top).offset(-50)
             make.centerX.equalTo(view)
         }
+        containerView.snp.makeConstraints { make in
+            make.top.equalTo(signupLabel.snp.bottom).offset(50)
+            make.centerX.centerY.equalTo(view)
+            make.width.equalTo(300)
+            make.height.equalTo(400)
+        }
         accountLabel.snp.makeConstraints { make in
-            make.top.equalTo(signupLabel.snp.bottom).offset(80)
+            make.top.equalTo(containerView)
             make.left.equalTo(accountTextField)
         }
         accountTextField.snp.makeConstraints { make in
@@ -144,7 +153,7 @@ class SignupViewController: BaseViewController {
             make.height.equalTo(40)
         }
         signupButton.snp.makeConstraints { make in
-            make.top.equalTo(nameTextField.snp.bottom).offset(100)
+            make.top.equalTo(nameTextField.snp.bottom).offset(80)
             make.centerX.equalTo(view)
             make.width.equalTo(150)
             make.height.equalTo(40)
