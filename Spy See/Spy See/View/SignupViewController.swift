@@ -107,11 +107,10 @@ class SignupViewController: BaseViewController {
     private let alertVC = AlertViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(containerView)
-        [signupLabel, containerView].forEach { view.addSubview($0) }
+        [signupLabel, containerView, signupButton].forEach { view.addSubview($0) }
         [accountLabel, accountTextField].forEach { containerView.addSubview($0) }
         [passwordLabel, passwordTextField].forEach { containerView.addSubview($0) }
-        [nameLabel, nameTextField, signupButton].forEach { containerView.addSubview($0) }
+        [nameLabel, nameTextField].forEach { containerView.addSubview($0) }
         signupLabel.snp.makeConstraints { make in
             make.bottom.equalTo(containerView.snp.top).offset(-50)
             make.centerX.equalTo(view)
@@ -153,7 +152,7 @@ class SignupViewController: BaseViewController {
             make.height.equalTo(40)
         }
         signupButton.snp.makeConstraints { make in
-            make.top.equalTo(nameTextField.snp.bottom).offset(80)
+            make.top.equalTo(containerView.snp.bottom).offset(80)
             make.centerX.equalTo(view)
             make.width.equalTo(150)
             make.height.equalTo(40)

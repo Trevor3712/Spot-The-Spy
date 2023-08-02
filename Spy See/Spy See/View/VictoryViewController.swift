@@ -159,7 +159,16 @@ class VictoryViewController: BaseViewController {
     @objc private func backToLobbyButtonPressed() {
         playSeAudio()
         vibrate()
-        if let targetViewController = navigationController?.viewControllers[1] {
+        if let signupViewControllerIndex = navigationController?.viewControllers.firstIndex(
+            where: { $0 is SignupViewController }) {
+            guard let targetViewController =
+                navigationController?.viewControllers[signupViewControllerIndex + 1] else {
+                return }
+            navigationController?.popToViewController(targetViewController, animated: true)
+            deleteGameData()
+            updateRecords()
+        } else {
+            guard let targetViewController = navigationController?.viewControllers[1] else { return }
             navigationController?.popToViewController(targetViewController, animated: true)
             deleteGameData()
             updateRecords()
